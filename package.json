@@ -1,0 +1,28 @@
+{
+  "name": "yaca",
+  "version": "0.1.0",
+  "description": "Yet Another Collection Approach",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rabanti-github/yaca.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "Collections"
+  ],
+  "author": "Raphael Stoeckli",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rabanti-github/yaca/issues"
+  },
+  "homepage": "https://github.com/rabanti-github/yaca#readme",
+  "devDependencies": {
+    "typescript": "^2.4.1",
+    "@types/node":"^8.0.8",
+    "ts-node": "^3.2.0"
+  }
+}
