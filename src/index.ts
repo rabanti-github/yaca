@@ -20,11 +20,14 @@ test.add(22);
 test.add(6);
 test.add(57);
 
+test.insertAtIndex(666, 8);
+
 test.forEach(value => {
     console.log(value);
 });
 
 test.sort(sorter);
+
 
 
 test.remove(22);

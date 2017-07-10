@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Item_1 = require("./Item");
+var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
 var List = (function () {
     function List(values) {
@@ -19,21 +19,10 @@ var List = (function () {
             }
         }
     }
+    // Implemented
     List.prototype.sort = function (sortFunction) {
-        var indicator;
-        if (this._length < 2) {
-            return;
-        }
-        var base = new Sorter_1.Sorter(this._iList[0], 0);
-        var level;
-        var bottomLevel = 0;
-        for (var i = 1; i < this._length; i++) {
-            level = base.addNextValue(sortFunction, this._iList[i]);
-            if (level < bottomLevel) {
-                bottomLevel = level;
-            }
-        }
-        var x = 0;
+        var qSort = new Sorter_1.Sorter();
+        qSort.quickSort(sortFunction, this._iList, 0, this._length);
     };
     List.prototype.forEach = function (callback) {
         var done = false;
@@ -55,7 +44,7 @@ var List = (function () {
             this._iCounter = 0;
             lastItem = true;
         }
-        return new Item_1.Item(val, lastItem);
+        return new IteratorItem_1.IteratorItem(val, lastItem);
     };
     Object.defineProperty(List.prototype, "length", {
         get: function () {
@@ -90,6 +79,34 @@ var List = (function () {
             throw new Error("The index " + index + " was not found in the list");
         }
     };
+    List.prototype.set = function (index, value) {
+        if (index < 0 || index > this._length - 1) {
+            throw new Error("The index " + index + " is out of range.");
+        }
+        this._iList[index] = value;
+    };
+    List.prototype.push = function (value) {
+        this.insertAtIndex(0, value);
+    };
+    List.prototype.pop = function () {
+        if (this._length == 0) {
+            return undefined;
+        }
+        var value = this._iList[0];
+        this.removeAt(0);
+        return value;
+    };
+    List.prototype.enqueu = function (value) {
+        this.add(value);
+    };
+    List.prototype.dequeue = function () {
+        if (this._length == 0) {
+            return undefined;
+        }
+        var value = this._iList[this._length - 1];
+        this.removeAt(this._length - 1);
+        return value;
+    };
     List.prototype.clear = function () {
         if (this._length == 0) {
             return;
@@ -99,8 +116,40 @@ var List = (function () {
             this._length = 0;
         }
     };
+    List.prototype.insertAtIndex = function (index, value) {
+        if (index < 0 || index > this._length) {
+            throw new Error("The index " + index + " is out of range.");
+        }
+        var firstPart, secondPart;
+        if (index == 0) {
+            firstPart = [];
+        }
+        else {
+            firstPart = this.copyTo(0, index - 1, true);
+        }
+        if (index == this._length) {
+            secondPart = [];
+        }
+        else {
+            secondPart = this.copyTo(index, this._length - 1, true);
+        }
+        this.clear();
+        var len = firstPart.length;
+        var len2 = secondPart.length;
+        this.addRange(firstPart);
+        this.add(value);
+        this.addRange(secondPart);
+    };
     List.prototype.indexOf = function (value) {
         return this._iList.indexOf(value);
+    };
+    List.prototype.lastIndexOf = function (value) {
+        var indices = this.indicesOf(value, true);
+        var len = indices.length;
+        if (len == 0) {
+            return -1;
+        }
+        return indices.get(len - 1);
     };
     List.prototype.indicesOf = function (value, asList) {
         var indices = new List();
@@ -209,9 +258,11 @@ var List = (function () {
         else {
             output = new List();
         }
+        var counter = 0;
         for (var i = startIndex; i <= endIndex; i++) {
             if (toArray == true) {
-                output[i] = this._iList[i];
+                output[counter] = this._iList[i];
+                counter++;
             }
             else {
                 output.add(this._iList[i]);

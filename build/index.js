@@ -24,6 +24,7 @@ test.add(55);
 test.add(22);
 test.add(6);
 test.add(57);
+test.insertAtIndex(666, 8);
 test.forEach(function (value) {
     console.log(value);
 });

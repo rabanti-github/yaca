@@ -1,4 +1,4 @@
-export class Item<T> implements IteratorResult<T>
+export class IteratorItem<T> implements IteratorResult<T>
 {
     public isLastEntry: boolean;
     public value: T;

@@ -1,7 +1,7 @@
 import IForEachInterface from './interfaces/IForEachInterface';
 import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
-import { Item } from './Item';
+import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
 
 
@@ -9,35 +9,19 @@ export class List<T> implements Iterator<T>, IList<T>
 {
 
 
+    // Implemented
+
     sort(sortFunction: ISortInterFace<T>) {
-        let indicator: number;
-        if (this._length < 2) { return; }
-        
-
-        let base: Sorter<T> = new Sorter(this._iList[0], 0);
-        let level: number;
-        let bottomLevel : number = 0;
-        for(let i: number = 1; i < this._length; i++)
-        {
-           level = base.addNextValue(sortFunction, this._iList[i]);
-           if (level < bottomLevel) { bottomLevel = level; }
-        }
-        let x: number = 0;
-        
+        let qSort: Sorter<T> = new Sorter();
+        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
     }
-
-
-
-
-
-
 
    public forEach(callback: IForEachInterface<T>) {
         let done: boolean = false;
-        let item: Item<T>;
+        let item: IteratorItem<T>;
         while(done == false)
         {
-           item = this.next() as Item<T>;
+           item = this.next() as IteratorItem<T>;
            done = item.isLastEntry;
            callback(item.value);
         }
@@ -89,7 +73,7 @@ export class List<T> implements Iterator<T>, IList<T>
             this._iCounter = 0;
             lastItem = true;
         }
-        return new Item(val, lastItem);
+        return new IteratorItem(val, lastItem);
     }
 
     public get length(): number
@@ -136,6 +120,41 @@ export class List<T> implements Iterator<T>, IList<T>
             throw new Error("The index " + index + " was not found in the list");
         }
     }
+
+    public set(index: number, value: T)
+    {
+        if (index < 0 || index > this._length - 1)
+        {
+            throw new Error("The index " + index + " is out of range.");           
+        }
+        this._iList[index] = value;
+    }
+
+    public push(value: T)
+    {
+        this.insertAtIndex(0,value);
+    }
+
+    public pop(): T
+    {
+        if (this._length == 0) { return undefined; }
+        let value: T = this._iList[0];
+        this.removeAt(0);
+        return value;
+    }
+
+    public enqueu(value: T)
+    {
+        this.add(value);
+    }
+
+    public dequeue(): T
+    {
+        if (this._length == 0) { return undefined; }
+        let value: T = this._iList[this._length -1];
+        this.removeAt(this._length -1);
+        return value;
+    }
     
     public clear()
     {
@@ -147,9 +166,48 @@ export class List<T> implements Iterator<T>, IList<T>
         }
     }
 
+    public insertAtIndex(index: number, value: T)
+    {
+        if (index < 0 || index > this._length) // allowed 0 to length (insert after last item)
+        {
+            throw new Error("The index " + index + " is out of range.");
+        }
+        let firstPart, secondPart: T[];
+        if (index == 0)
+        {
+            firstPart = [];
+        }
+        else
+        {
+            firstPart = this.copyTo(0,index - 1, true);
+        }
+        if (index == this._length)
+        {
+            secondPart = [];
+        }
+        else
+        {
+            secondPart = this.copyTo(index, this._length - 1, true);
+        }
+        this.clear();
+        let len: number = (firstPart as T[]).length;
+        let len2: number = (secondPart as T[]).length;
+        this.addRange(firstPart);
+        this.add(value);
+        this.addRange(secondPart);
+    }
+
     public indexOf (value: T): number
     {
-        return (this._iList as any).indexOf(value);
+        return (this._iList as T[]).indexOf(value);
+    }
+
+    public lastIndexOf(value: T): number
+    {
+        let indices: List<number> = this.indicesOf(value, true);
+        let len: number = indices.length;
+        if (len == 0) { return -1; }
+        return indices.get(len - 1);
     }
 
     public indicesOf(value: T): number[]
@@ -278,11 +336,13 @@ export class List<T> implements Iterator<T>, IList<T>
         else
         { output =  new List<T>();  }
          
+        let counter: number = 0; 
         for(let i: number = startIndex; i <= endIndex; i++)
         {
             if (toArray == true)
             {
-                output[i] = this._iList[i];
+                output[counter] = this._iList[i];
+                counter++;
             }
             else
             {

@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Sorter = (function () {
-    function Sorter(baseValue, level) {
-        this.baseValue = baseValue;
-        this.level = level;
+    function Sorter() {
     }
-    Sorter.prototype.addNextValue = function (sortFunction, nextValue) {
-        if (sortFunction(this.baseValue, nextValue) > 0) {
-            if (this.previousBucket == undefined) {
-                this.previousBucket = new Sorter(nextValue, this.level - 1);
-                return this.level - 1;
-            }
-            else {
-                return this.previousBucket.addNextValue(sortFunction, nextValue);
+    Sorter.prototype.quickSort = function (comparerFunction, data, lowIndex, highIndex) {
+        if (highIndex - lowIndex <= 1) {
+            return;
+        }
+        var pivot = data[highIndex - 1];
+        var splitIndex = lowIndex;
+        for (var i = lowIndex; i < highIndex - 1; i++) {
+            if (comparerFunction(data[i], pivot) <= 0) {
+                this.swap(data, i, splitIndex);
+                splitIndex++;
             }
         }
-        else {
-            if (this.nextBucket == undefined) {
-                this.nextBucket = new Sorter(nextValue, this.level + 1);
-                return this.level + 1;
-            }
-            else {
-                return this.nextBucket.addNextValue(sortFunction, nextValue);
-            }
-        }
+        this.swap(data, highIndex - 1, splitIndex);
+        this.quickSort(comparerFunction, data, lowIndex, splitIndex);
+        this.quickSort(comparerFunction, data, splitIndex + 1, highIndex);
+        return;
+    };
+    Sorter.prototype.swap = function (data, index1, index2) {
+        var temp = data[index1];
+        data[index1] = data[index2];
+        data[index2] = temp;
     };
     return Sorter;
 }());
