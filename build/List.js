@@ -96,7 +96,7 @@ var List = (function () {
         this.removeAt(0);
         return value;
     };
-    List.prototype.enqueu = function (value) {
+    List.prototype.enqueue = function (value) {
         this.add(value);
     };
     List.prototype.dequeue = function () {
@@ -295,6 +295,19 @@ var List = (function () {
         tempParameter = this._iList[index1];
         this._iList[index1] = this._iList[index2];
         this._iList[index2] = tempParameter;
+    };
+    List.prototype.distinct = function () {
+        if (this._length == 0) {
+            return;
+        }
+        var newList = new List();
+        for (var i = 0; i < this._length; i++) {
+            if (newList.contains(this._iList[i]) == false) {
+                newList.add(this._iList[i]);
+            }
+        }
+        this.clear();
+        this.addRange(newList);
     };
     return List;
 }());

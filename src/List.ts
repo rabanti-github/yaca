@@ -143,7 +143,7 @@ export class List<T> implements Iterator<T>, IList<T>
         return value;
     }
 
-    public enqueu(value: T)
+    public enqueue(value: T)
     {
         this.add(value);
     }
@@ -384,6 +384,20 @@ export class List<T> implements Iterator<T>, IList<T>
         this._iList[index2] = tempParameter;
     }
 
+    public distinct()
+    {
+        if (this._length == 0) { return; }
+        let newList: List<T> = new List<T>();
+        for(let i = 0; i < this._length; i++)
+        {
+            if (newList.contains(this._iList[i]) == false)
+            {
+                newList.add(this._iList[i]);
+            }
+        }
+        this.clear()
+        this.addRange(newList);
+    }
 
     
 

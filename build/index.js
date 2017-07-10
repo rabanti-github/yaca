@@ -21,10 +21,12 @@ test.add(22);
 test.add(33);
 test.add(66);
 test.add(55);
+test.add(6);
 test.add(22);
 test.add(6);
 test.add(57);
-test.insertAtIndex(666, 8);
+test.insertAtIndex(8, 666);
+test.distinct();
 test.forEach(function (value) {
     console.log(value);
 });
