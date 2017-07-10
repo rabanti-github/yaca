@@ -33,9 +33,6 @@ export class Sorter<T> implements ISorter<T>
     }
 
 
-
-
-
     public previousBucket: Sorter<T>;
     public nextBucket: Sorter<T>;
     public level: number;
