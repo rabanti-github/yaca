@@ -25,6 +25,8 @@ test.add(6);
 test.add(22);
 test.add(6);
 test.add(57);
+var newList = test.indicesOfAsList(22);
+var nA = test.indicesOf(22);
 test.insertAtIndex(8, 666);
 test.distinct();
 test.forEach(function (value) {
