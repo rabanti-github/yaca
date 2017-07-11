@@ -8,33 +8,26 @@ import { Sorter } from './Sorter';
 export class List<T> implements Iterator<T>, IList<T>
 {
 
-
-    // Implemented
-
-    sort(sortFunction: ISortInterFace<T>) {
-        let qSort: Sorter<T> = new Sorter();
-        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
-    }
-
-   public forEach(callback: IForEachInterface<T>) {
-        let done: boolean = false;
-        let item: IteratorItem<T>;
-        while(done == false)
-        {
-           item = this.next() as IteratorItem<T>;
-           done = item.isLastEntry;
-           callback(item.value);
-        }
-    }
-
-   // readonly [index: number]: T;
     private _iList: object;
     private _length: number;
     private _iCounter: number;
 
+/** Default constructor */
     constructor();
+/**
+ * Constructor with initial value
+ * @param value Value of type T
+ */
     constructor(value: T);
+/**
+ * Constructor with an array as initial value
+ * @param values Array of elements with type T
+ */
     constructor(values: T[]);
+/**
+ * Constructor with a List<T> as initial value
+ * @param values List of elements with type T
+ */
     constructor(values: List<T>);
     constructor(values?: T | T[] | List<T>)
     {
@@ -59,36 +52,35 @@ export class List<T> implements Iterator<T>, IList<T>
     }
 
     
-     public next(value?: any): IteratorResult<T>
-     {
-        let val: any = this._iList[this._iCounter];
-        let lastItem: boolean;
-        if (this._iCounter < this.length - 1)
-        {
-            this._iCounter++;
-            lastItem = false;           
-        }
-        else
-        {
-            this._iCounter = 0;
-            lastItem = true;
-        }
-        return new IteratorItem(val, lastItem);
-    }
 
+/**
+ * Gets the number of elements of the List
+ */
     public get length(): number
     {
         this._length = Object.keys(this._iList).length
         return this._length;
     }
 
+/**
+ * Adds an element at the end of the List
+ * @param value Value to add
+ */
     public add(value: T)
     {
         this._iList[this._length] = value;
         this._length++;
     }
 
+/**
+ * Adds a range of values
+ * @param values Values as List<T>
+ */
     public addRange(values: List<T>);
+/**
+ * Adds a range of values
+ * @param values Values as array of the type T
+ */
     public addRange(values: T[]);
     public addRange(values: T[] | List<T>)
     {
@@ -108,6 +100,10 @@ export class List<T> implements Iterator<T>, IList<T>
         }
     }
 
+/**
+ * Gets the value of the List at the specified index position
+ * @param index Index position (0 to n)
+ */
     public get(index: number): T
     {
         let value: T = this._iList[index];
@@ -121,6 +117,11 @@ export class List<T> implements Iterator<T>, IList<T>
         }
     }
 
+/**
+ * Updates a value of the List at the specified index position
+ * @param index Index position (0 to n)
+ * @param value New value
+ */
     public set(index: number, value: T)
     {
         if (index < 0 || index > this._length - 1)
@@ -130,11 +131,27 @@ export class List<T> implements Iterator<T>, IList<T>
         this._iList[index] = value;
     }
 
+/**
+ * Inserts a new value at the bottom position of the List (index position 0)
+ * @param value Value to insert
+ */
     public push(value: T)
     {
         this.insertAtIndex(0,value);
     }
 
+/**
+ * Inserts a new value at the top position of the List (end position / last element). This method is synonymou with add()
+ * @param value Value to insert
+ */
+    public enqueue(value: T)
+    {
+        this.add(value);
+    }    
+
+/**
+ * Removes the bottom element of the list and returns its value (index position 0). undefined will be returned if the List is empty
+ */
     public pop(): T
     {
         if (this._length == 0) { return undefined; }
@@ -143,11 +160,9 @@ export class List<T> implements Iterator<T>, IList<T>
         return value;
     }
 
-    public enqueue(value: T)
-    {
-        this.add(value);
-    }
-
+/**
+ * Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the List is empty
+ */
     public dequeue(): T
     {
         if (this._length == 0) { return undefined; }
@@ -156,6 +171,9 @@ export class List<T> implements Iterator<T>, IList<T>
         return value;
     }
     
+/**
+ * Removes all elements of the List
+ */
     public clear()
     {
         if (this._length == 0) { return; }
@@ -399,9 +417,40 @@ export class List<T> implements Iterator<T>, IList<T>
         this.addRange(newList);
     }
 
-    
+    // Implemented Interfaces
 
-   
+    sort(sortFunction: ISortInterFace<T>) {
+        let qSort: Sorter<T> = new Sorter();
+        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
+    }
+
+   public forEach(callback: IForEachInterface<T>) {
+        let done: boolean = false;
+        let item: IteratorItem<T>;
+        while(done == false)
+        {
+           item = this.next() as IteratorItem<T>;
+           done = item.isLastEntry;
+           callback(item.value);
+        }
+    }    
+
+     public next(value?: any): IteratorResult<T>
+     {
+        let val: any = this._iList[this._iCounter];
+        let lastItem: boolean;
+        if (this._iCounter < this.length - 1)
+        {
+            this._iCounter++;
+            lastItem = false;           
+        }
+        else
+        {
+            this._iCounter = 0;
+            lastItem = true;
+        }
+        return new IteratorItem(val, lastItem);
+    }   
 
 }
 

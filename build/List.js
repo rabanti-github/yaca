@@ -19,34 +19,10 @@ var List = (function () {
             }
         }
     }
-    // Implemented
-    List.prototype.sort = function (sortFunction) {
-        var qSort = new Sorter_1.Sorter();
-        qSort.quickSort(sortFunction, this._iList, 0, this._length);
-    };
-    List.prototype.forEach = function (callback) {
-        var done = false;
-        var item;
-        while (done == false) {
-            item = this.next();
-            done = item.isLastEntry;
-            callback(item.value);
-        }
-    };
-    List.prototype.next = function (value) {
-        var val = this._iList[this._iCounter];
-        var lastItem;
-        if (this._iCounter < this.length - 1) {
-            this._iCounter++;
-            lastItem = false;
-        }
-        else {
-            this._iCounter = 0;
-            lastItem = true;
-        }
-        return new IteratorItem_1.IteratorItem(val, lastItem);
-    };
     Object.defineProperty(List.prototype, "length", {
+        /**
+         * Gets the number of elements of the List
+         */
         get: function () {
             this._length = Object.keys(this._iList).length;
             return this._length;
@@ -54,6 +30,10 @@ var List = (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * Adds an element at the end of the List
+     * @param value Value to add
+     */
     List.prototype.add = function (value) {
         this._iList[this._length] = value;
         this._length++;
@@ -70,6 +50,10 @@ var List = (function () {
             }
         }
     };
+    /**
+     * Gets the value of the List at the specified index position
+     * @param index Index position (0 to n)
+     */
     List.prototype.get = function (index) {
         var value = this._iList[index];
         if (value != undefined) {
@@ -79,15 +63,34 @@ var List = (function () {
             throw new Error("The index " + index + " was not found in the list");
         }
     };
+    /**
+     * Updates a value of the List at the specified index position
+     * @param index Index position (0 to n)
+     * @param value New value
+     */
     List.prototype.set = function (index, value) {
         if (index < 0 || index > this._length - 1) {
             throw new Error("The index " + index + " is out of range.");
         }
         this._iList[index] = value;
     };
+    /**
+     * Inserts a new value at the bottom position of the List (index position 0)
+     * @param value Value to insert
+     */
     List.prototype.push = function (value) {
         this.insertAtIndex(0, value);
     };
+    /**
+     * Inserts a new value at the top position of the List (end position / last element). This method is synonymou with add()
+     * @param value Value to insert
+     */
+    List.prototype.enqueue = function (value) {
+        this.add(value);
+    };
+    /**
+     * Removes the bottom element of the list and returns its value (index position 0). undefined will be returned if the List is empty
+     */
     List.prototype.pop = function () {
         if (this._length == 0) {
             return undefined;
@@ -96,9 +99,9 @@ var List = (function () {
         this.removeAt(0);
         return value;
     };
-    List.prototype.enqueue = function (value) {
-        this.add(value);
-    };
+    /**
+     * Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the List is empty
+     */
     List.prototype.dequeue = function () {
         if (this._length == 0) {
             return undefined;
@@ -107,6 +110,9 @@ var List = (function () {
         this.removeAt(this._length - 1);
         return value;
     };
+    /**
+     * Removes all elements of the List
+     */
     List.prototype.clear = function () {
         if (this._length == 0) {
             return;
@@ -308,6 +314,33 @@ var List = (function () {
         }
         this.clear();
         this.addRange(newList);
+    };
+    // Implemented Interfaces
+    List.prototype.sort = function (sortFunction) {
+        var qSort = new Sorter_1.Sorter();
+        qSort.quickSort(sortFunction, this._iList, 0, this._length);
+    };
+    List.prototype.forEach = function (callback) {
+        var done = false;
+        var item;
+        while (done == false) {
+            item = this.next();
+            done = item.isLastEntry;
+            callback(item.value);
+        }
+    };
+    List.prototype.next = function (value) {
+        var val = this._iList[this._iCounter];
+        var lastItem;
+        if (this._iCounter < this.length - 1) {
+            this._iCounter++;
+            lastItem = false;
+        }
+        else {
+            this._iCounter = 0;
+            lastItem = true;
+        }
+        return new IteratorItem_1.IteratorItem(val, lastItem);
     };
     return List;
 }());
