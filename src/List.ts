@@ -4,7 +4,9 @@ import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
 
-
+/**
+ * Class represents a standard ArrayList for generic Types with various List operations
+ */
 export class List<T> implements Iterator<T>, IList<T>
 {
 
