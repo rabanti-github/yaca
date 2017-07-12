@@ -299,7 +299,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         }
         else
         {
-            throw new Error("The index " + index + " was not found in the list");
+            throw new Error("The index " + index + " was not found in the List");
         }
     }
 
@@ -508,7 +508,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
 /**
- * Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed
+ * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
  */
     public distinct()
     {
@@ -538,7 +538,7 @@ export default class List<T> implements Iterator<T>, IList<T>
 
 /**
  * Implementation of a forEach loop
- * @param callback Callback function to process the items of the list
+ * @param callback Callback function to process the items of the List
  */
    public forEach(callback: IForEachInterface<T>) {
         let done: boolean = false;
@@ -553,7 +553,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     }    
 
 /**
- * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the the position to 0.
+ * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
  * @param value Can be ignored
  */
      public next(value?: any): IteratorResult<T>
