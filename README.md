@@ -1,7 +1,7 @@
 # YACA
-Yet Another Collection Approach
-----
+**Y**et **A**nother **C**ollection **A**pproach
 
+## Introduction
 YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.
 
 YACA contains at the moment only <b>List&lt;T&gt;</b> as collection type. Further types (e.g. Dictionary or Stack) are planned.
