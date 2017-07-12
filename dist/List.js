@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
+/**
+ * Class representing a standard ArrayList for generic Types with various List operations
+ */
 var List = (function () {
     function List(values) {
         this._iCounter = 0;
@@ -69,7 +72,7 @@ var List = (function () {
         this.insertAtIndex(0, value);
     };
     /**
-     * Inserts a new value at the top position of the List (end position / last element). This method is synonymou with add()
+     * Inserts a new value at the top position of the List (end position / last element). This method is synonymous with add()
      * @param value Value to insert
      */
     List.prototype.enqueue = function (value) {
@@ -217,9 +220,21 @@ var List = (function () {
         }
     };
     List.prototype.getRange = function (start, end) {
+        if (start == undefined) {
+            start = 0;
+        }
+        if (end == undefined) {
+            end = this._length - 1;
+        }
         return this.copyToInternal(start, end, false);
     };
     List.prototype.copyToArray = function (start, end) {
+        if (start == undefined) {
+            start = 0;
+        }
+        if (end == undefined) {
+            end = this._length - 1;
+        }
         return this.copyToInternal(start, end, true);
     };
     /**
@@ -256,7 +271,7 @@ var List = (function () {
         return this.indicesOfInternal(value, true);
     };
     /**
-     * Internam method to get the indices of a value in the List
+     * Internal method to get the indices of a value in the List
      * @param value Value to check
      * @param asList If true, a List of indices will be returned, otherwise an Array
      */
@@ -297,29 +312,21 @@ var List = (function () {
      * @param toArray If true, an Array will be returned, otherwise a List
      */
     List.prototype.copyToInternal = function (start, end, toArray) {
-        var startIndex = 0;
-        var endIndex = this._length - 1;
-        if (start != undefined) {
-            startIndex = start;
-        }
-        if (end != undefined) {
-            endIndex = end;
-        }
-        if (startIndex < 0 || startIndex > endIndex) {
+        if (start < 0 || start > end) {
             throw new Error("The passed start index " + start + " is out of range");
         }
-        if (endIndex < startIndex || endIndex > this._length - 1) {
+        if (end < start || end > this._length - 1) {
             throw new Error("The passed end index " + end + " is out of range");
         }
         var output;
         if (toArray == true) {
-            output = new Array(endIndex - startIndex + 1);
+            output = new Array(end - start + 1);
         }
         else {
             output = new List();
         }
         var counter = 0;
-        for (var i = startIndex; i <= endIndex; i++) {
+        for (var i = start; i <= end; i++) {
             if (toArray == true) {
                 output[counter] = this._iList[i];
                 counter++;
@@ -340,7 +347,7 @@ var List = (function () {
         var halfLength = Math.floor(this._length / 2);
         var i1 = 0;
         var i2 = this._length - 1;
-        var temp;
+        var temp = new Object;
         for (var i = 0; i < halfLength; i++) {
             this.swapValuesInternal(i1, i2, temp);
             i1++;
@@ -356,7 +363,7 @@ var List = (function () {
         if (index1 < 0 || index1 > this._length - 1 || index2 < 0 || index2 > this._length - 1) {
             throw new Error("The passed indices (" + index1 + ", " + index2 + ") are out of range");
         }
-        var temp;
+        var temp = new Object;
         this.swapValuesInternal(index1, index2, temp);
     };
     /**
@@ -386,10 +393,10 @@ var List = (function () {
         this.clear();
         this.addRange(newList);
     };
-    // Implemented Interfaces
+    // *********************************************** Implemented Interfaces
     /**
      * Sorts the List according to the passed function
-     * @param sortFunction Fuction which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
+     * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
      */
     List.prototype.sort = function (sortFunction) {
         var qSort = new Sorter_1.Sorter();
@@ -428,5 +435,5 @@ var List = (function () {
     };
     return List;
 }());
-exports.List = List;
+exports.default = List;
 //# sourceMappingURL=List.js.map

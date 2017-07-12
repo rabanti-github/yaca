@@ -4,8 +4,10 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": true,
-        "outDir": "./build",
+        "outDir": "./dist",
         "moduleResolution": "node",
+        "strict": true,
+        "declaration": true,
         "typeRoots": ["./node_modules/@types"]
     }
 }

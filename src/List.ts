@@ -5,9 +5,9 @@ import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
 
 /**
- * Class represents a standard ArrayList for generic Types with various List operations
+ * Class representing a standard ArrayList for generic Types with various List operations
  */
-export class List<T> implements Iterator<T>, IList<T>
+export default class List<T> implements Iterator<T>, IList<T>
 {
 
     private _iList: object;
@@ -126,7 +126,7 @@ export class List<T> implements Iterator<T>, IList<T>
     }
 
 /**
- * Inserts a new value at the top position of the List (end position / last element). This method is synonymou with add()
+ * Inserts a new value at the top position of the List (end position / last element). This method is synonymous with add()
  * @param value Value to insert
  */
     public enqueue(value: T)
@@ -254,7 +254,7 @@ export class List<T> implements Iterator<T>, IList<T>
 /**
  * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
  */
-    public pop(): T
+    public pop(): T | undefined
     {
         if (this._length == 0) { return undefined; }
         let value: T = this._iList[0];
@@ -265,7 +265,7 @@ export class List<T> implements Iterator<T>, IList<T>
 /**
  * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
  */
-    public dequeue(): T
+    public dequeue(): T | undefined
     {
         if (this._length == 0) { return undefined; }
         let value: T = this._iList[this._length -1];
@@ -321,6 +321,8 @@ export class List<T> implements Iterator<T>, IList<T>
     public getRange(startIndex:number, endIndex: number): List<T>;
     public getRange(start?: number, end?: number): List<T>
     {
+        if (start == undefined) { start = 0; }
+        if (end == undefined) { end = this._length - 1; }
         return this.copyToInternal(start, end, false);       
     }
 
@@ -341,7 +343,8 @@ export class List<T> implements Iterator<T>, IList<T>
     public copyToArray(startIndex:number, endIndex: number): T[];
     public copyToArray(start?: number, end?: number): T[]
     {
-        
+        if (start == undefined) { start = 0; }
+        if (end == undefined) { end = this._length - 1; }    
         return this.copyToInternal(start, end, true);     
     }
 
@@ -384,7 +387,7 @@ export class List<T> implements Iterator<T>, IList<T>
     }
 
 /**
- * Internam method to get the indices of a value in the List
+ * Internal method to get the indices of a value in the List
  * @param value Value to check
  * @param asList If true, a List of indices will be returned, otherwise an Array
  */
@@ -428,26 +431,22 @@ export class List<T> implements Iterator<T>, IList<T>
  */
     private copyToInternal(start: number, end: number, toArray: boolean) : any
     {
-        let startIndex = 0;
-        let endIndex = this._length - 1;
-        if (start != undefined) { startIndex = start;}
-        if (end != undefined) { endIndex = end;}
-        if (startIndex < 0 || startIndex > endIndex)
+        if (start < 0 || start > end)
         {
             throw new Error("The passed start index " + start + " is out of range")
         }
-        if (endIndex < startIndex || endIndex > this._length - 1)
+        if (end < start || end > this._length - 1)
         {
             throw new Error("The passed end index " + end + " is out of range")
         }
         let output: any;
         if (toArray == true)
-        { output = new Array(endIndex - startIndex + 1); }
+        { output = new Array(end - start + 1); }
         else
         { output =  new List<T>();  }
          
         let counter: number = 0; 
-        for(let i: number = startIndex; i <= endIndex; i++)
+        for(let i: number = start; i <= end; i++)
         {
             if (toArray == true)
             {
@@ -471,7 +470,7 @@ export class List<T> implements Iterator<T>, IList<T>
         let halfLength = Math.floor(this._length / 2);
         let i1 = 0;
         let i2 = this._length - 1;
-        var temp: T;
+        var temp: T = new Object as T;
         for(let i = 0; i < halfLength; i++)
         {
             this.swapValuesInternal(i1, i2, temp);
@@ -491,7 +490,7 @@ export class List<T> implements Iterator<T>, IList<T>
         {
             throw new Error("The passed indices (" + index1 + ", " + index2 + ") are out of range");
         }
-        var temp: T;
+        var temp: T = new Object as T;
         this.swapValuesInternal(index1, index2, temp);
     }
 
@@ -526,11 +525,11 @@ export class List<T> implements Iterator<T>, IList<T>
         this.addRange(newList);
     }
 
-    // Implemented Interfaces
+// *********************************************** Implemented Interfaces
 
 /**
  * Sorts the List according to the passed function
- * @param sortFunction Fuction which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
+ * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
  */
     sort(sortFunction: ISortInterFace<T>) {
         let qSort: Sorter<T> = new Sorter();
