@@ -195,7 +195,7 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     private swapValuesInternal(index1, index2, tempParameter);
     /**
-     * Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed
+     * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
      */
     distinct(): void;
     /**
@@ -205,11 +205,11 @@ export default class List<T> implements Iterator<T>, IList<T> {
     sort(sortFunction: ISortInterFace<T>): void;
     /**
      * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the list
+     * @param callback Callback function to process the items of the List
      */
     forEach(callback: IForEachInterface<T>): void;
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
      * @param value Can be ignored
      */
     next(value?: any): IteratorResult<T>;

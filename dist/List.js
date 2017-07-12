@@ -216,7 +216,7 @@ var List = (function () {
             return value;
         }
         else {
-            throw new Error("The index " + index + " was not found in the list");
+            throw new Error("The index " + index + " was not found in the List");
         }
     };
     List.prototype.getRange = function (start, end) {
@@ -378,7 +378,7 @@ var List = (function () {
         this._iList[index2] = tempParameter;
     };
     /**
-     * Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed
+     * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
      */
     List.prototype.distinct = function () {
         if (this._length == 0) {
@@ -404,7 +404,7 @@ var List = (function () {
     };
     /**
      * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the list
+     * @param callback Callback function to process the items of the List
      */
     List.prototype.forEach = function (callback) {
         var done = false;
@@ -417,7 +417,7 @@ var List = (function () {
         }
     };
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
      * @param value Can be ignored
      */
     List.prototype.next = function (value) {
