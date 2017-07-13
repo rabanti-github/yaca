@@ -1,6 +1,6 @@
 {
   "name": "yaca",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,9 @@
   "keywords": [
     "TypeScript",
     "Collections",
-    "List"
+    "List",
+    "ArrayList",
+    "Generics"
   ],
   "author": "Raphael Stoeckli <npm@rabanti.ch> (https://github.com/rabanti-github)",
   "license": "MIT",
