@@ -10,7 +10,7 @@ var List = (function () {
         this._iCounter = 0;
         this._length = 0;
         this._iList = [];
-        if (values != undefined) {
+        if (values !== undefined) {
             if (Array.isArray(values)) {
                 this.addRange(values);
             }
@@ -88,13 +88,13 @@ var List = (function () {
             throw new Error("The index " + index + " is out of range.");
         }
         var firstPart, secondPart;
-        if (index == 0) {
+        if (index === 0) {
             firstPart = [];
         }
         else {
             firstPart = this.copyToInternal(0, index - 1, true);
         }
-        if (index == this._length) {
+        if (index === this._length) {
             secondPart = [];
         }
         else {
@@ -112,7 +112,7 @@ var List = (function () {
      * @param value Value to remove
      */
     List.prototype.remove = function (value) {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return false;
         }
         var oIndex = this.indexOf(value);
@@ -130,11 +130,11 @@ var List = (function () {
      * @param value Value to remove
      */
     List.prototype.removeAll = function (value) {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return false;
         }
         var indices = this.indicesOfAsList(value);
-        if (indices.length == 0) {
+        if (indices.length === 0) {
             return false;
         }
         else {
@@ -158,7 +158,7 @@ var List = (function () {
             list = indices;
         }
         var iLen = list.length;
-        if (this._length == 0 || iLen == 0) {
+        if (this._length === 0 || iLen === 0) {
             return;
         }
         var newList = new List();
@@ -176,7 +176,7 @@ var List = (function () {
      * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
      */
     List.prototype.pop = function () {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return undefined;
         }
         var value = this._iList[0];
@@ -187,7 +187,7 @@ var List = (function () {
      * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
      */
     List.prototype.dequeue = function () {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return undefined;
         }
         var value = this._iList[this._length - 1];
@@ -198,7 +198,7 @@ var List = (function () {
      * Removes all elements of the List
      */
     List.prototype.clear = function () {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return;
         }
         else {
@@ -212,7 +212,7 @@ var List = (function () {
      */
     List.prototype.get = function (index) {
         var value = this._iList[index];
-        if (value != undefined) {
+        if (value !== undefined) {
             return value;
         }
         else {
@@ -220,19 +220,19 @@ var List = (function () {
         }
     };
     List.prototype.getRange = function (start, end) {
-        if (start == undefined) {
+        if (start === undefined) {
             start = 0;
         }
-        if (end == undefined) {
+        if (end === undefined) {
             end = this._length - 1;
         }
         return this.copyToInternal(start, end, false);
     };
     List.prototype.copyToArray = function (start, end) {
-        if (start == undefined) {
+        if (start === undefined) {
             start = 0;
         }
-        if (end == undefined) {
+        if (end === undefined) {
             end = this._length - 1;
         }
         return this.copyToInternal(start, end, true);
@@ -251,7 +251,7 @@ var List = (function () {
     List.prototype.lastIndexOf = function (value) {
         var indices = this.indicesOfAsList(value);
         var len = indices.length;
-        if (len == 0) {
+        if (len === 0) {
             return -1;
         }
         return indices.get(len - 1);
@@ -282,7 +282,7 @@ var List = (function () {
                 indices.add(i);
             }
         }
-        if (asList != undefined && asList == true) {
+        if (asList !== undefined && asList === true) {
             return indices;
         }
         else {
@@ -294,7 +294,7 @@ var List = (function () {
      * @param value True if the value exists, otherwise false
      */
     List.prototype.contains = function (value) {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return false;
         }
         var index = this.indexOf(value);
@@ -319,7 +319,7 @@ var List = (function () {
             throw new Error("The passed end index " + end + " is out of range");
         }
         var output;
-        if (toArray == true) {
+        if (toArray === true) {
             output = new Array(end - start + 1);
         }
         else {
@@ -327,7 +327,7 @@ var List = (function () {
         }
         var counter = 0;
         for (var i = start; i <= end; i++) {
-            if (toArray == true) {
+            if (toArray === true) {
                 output[counter] = this._iList[i];
                 counter++;
             }
@@ -341,7 +341,7 @@ var List = (function () {
      * Method to reverse the List
      */
     List.prototype.reverse = function () {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return;
         }
         var halfLength = Math.floor(this._length / 2);
@@ -381,12 +381,12 @@ var List = (function () {
      * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
      */
     List.prototype.distinct = function () {
-        if (this._length == 0) {
+        if (this._length === 0) {
             return;
         }
         var newList = new List();
         for (var i = 0; i < this._length; i++) {
-            if (newList.contains(this._iList[i]) == false) {
+            if (newList.contains(this._iList[i]) === false) {
                 newList.add(this._iList[i]);
             }
         }
@@ -410,7 +410,7 @@ var List = (function () {
         var done = false;
         var item;
         this._iCounter = 0;
-        while (done == false) {
+        while (done === false) {
             item = this.next();
             done = item.isLastEntry;
             callback(item.value);

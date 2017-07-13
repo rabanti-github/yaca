@@ -1,6 +1,6 @@
 {
   "name": "yaca",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,6 @@
     "prepublish": "npm run build",
     "build": "tsc && typedoc --out ./doc --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "repository": {
     "type": "git",
@@ -28,9 +27,10 @@
   },
   "homepage": "https://github.com/rabanti-github/yaca#readme",
   "devDependencies": {
-    "typescript": "^2.4.1",
-    "@types/node":"^8.0.8",
+    "@types/node": "^8.0.8",
     "ts-node": "^3.2.0",
-    "typedoc": "^0.7.1"
+    "tslint": "^5.5.0",
+    "typedoc": "^0.7.1",
+    "typescript": "^2.4.1"
   }
 }
