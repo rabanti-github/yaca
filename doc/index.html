@@ -1,0 +1,423 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Yet Another Collection Approach</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Yet Another Collection Approach</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Yet Another Collection Approach</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="yaca">YACA</h1>
+				<h2 id="yet-another-collection-approach">Yet Another Collection Approach</h2>
+				<p>YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.</p>
+				<p>YACA contains at the moment only <strong>List&lt;T&gt;</strong> as collection type. Further types (e.g. Dictionary or Stack) are planned.</p>
+				<h2 id="installation">Installation</h2>
+				<pre><code class="lang-bash">npm install -S yaca
+</code></pre>
+				<h2 id="usage-list-t-">Usage (List<T>)</h2>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+
+<span class="hljs-comment">// Default constructor</span>
+<span class="hljs-keyword">let</span> numberList: List&lt;<span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">number</span>&gt;();
+
+<span class="hljs-comment">// Constructor with initial value</span>
+<span class="hljs-keyword">var</span> stringList: List&lt;<span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">"initial value"</span>);
+
+<span class="hljs-comment">// Constructor with array as initial value</span>
+<span class="hljs-keyword">let</span> booelanList: List&lt;<span class="hljs-built_in">boolean</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">boolean</span>&gt;([<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>]);
+
+<span class="hljs-comment">// Usage of more complex types</span>
+<span class="hljs-keyword">var</span> otherList: List&lt;SomeType&gt; = <span class="hljs-keyword">new</span> List&lt;SomeType&gt;();
+
+numberList.add(<span class="hljs-number">22</span>);
+numberList.addRange([<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>]);
+numberList.clear();
+</code></pre>
+				<h2 id="constructors">Constructors</h2>
+				<p>The type <strong>T</strong> is the generic type defined in the constructor (e.g. number, boolean etc.)</p>
+				<table>
+					<thead>
+						<tr>
+							<th style="text-align:left">Name &amp; Arguments</th>
+							<th style="text-align:left">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left"><strong>List&lt;T&gt;()</strong></td>
+							<td style="text-align:left">Default constructor</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>List&lt;T&gt;(T)</strong></td>
+							<td style="text-align:left">Constructor with one initial value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>List&lt;T&gt;(T[])</strong></td>
+							<td style="text-align:left">Constructor with an array of Type T as initial values</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>List&lt;T&gt;(List&lt;T&gt;)</strong></td>
+							<td style="text-align:left">Constructor with a List of Type T as initial values</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2 id="properties">Properties</h2>
+				<table>
+					<thead>
+						<tr>
+							<th style="text-align:left">Name</th>
+							<th style="text-align:left">Type</th>
+							<th style="text-align:left">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left"><strong>length</strong></td>
+							<td style="text-align:left">number</td>
+							<td style="text-align:left">Gets the length of the list (read-only)</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2 id="methods">Methods</h2>
+				<p>The type <strong>T</strong> is the generic type defined in the constructor (e.g. number, boolean etc.)</p>
+				<table>
+					<thead>
+						<tr>
+							<th style="text-align:left">Name &amp; Arguments</th>
+							<th style="text-align:left">Return Type</th>
+							<th style="text-align:left">Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left"><strong>add()</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Adds an element at the end of the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>addRange(T[])</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Adds an array of the type T at the end of the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>addRange(List&lt;T&gt;)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Adds a List of type T at the end of the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>clear()</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Removes all elements from the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>contains(T)</strong></td>
+							<td style="text-align:left">boolean</td>
+							<td style="text-align:left">Checks whether the list contains the specified value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>copyToArray()</strong></td>
+							<td style="text-align:left">T[]</td>
+							<td style="text-align:left">Copies the whole list into an array of type T</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>copyToArray(number)</strong></td>
+							<td style="text-align:left">T[]</td>
+							<td style="text-align:left">Copies the list into an array of type T, beginning from the passed start index of the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>copyToArray(number, number)</strong></td>
+							<td style="text-align:left">T[]</td>
+							<td style="text-align:left">Copies the list into an array of type T, as range between the passed start and end index of the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>dequeue()</strong></td>
+							<td style="text-align:left">T</td>
+							<td style="text-align:left">Removes the top element of the list and returns its value (end index). Undefined will be returned if the list is empty</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>distinct()</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>enqueue(T)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the list will be shifted to a new value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>forEach(<em>callback</em>)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Implementation of a forEach loop. The callback function gets the values</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>get()</strong></td>
+							<td style="text-align:left">T</td>
+							<td style="text-align:left">Gets the value of the List at the specified index position</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>getRange()</strong></td>
+							<td style="text-align:left">List&lt;T&gt;</td>
+							<td style="text-align:left">Copies the whole list into a new list of type T</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>getRange(number)</strong></td>
+							<td style="text-align:left">List&lt;T&gt;</td>
+							<td style="text-align:left">Copies the list into a new list of type T, beginning from the passed start index of the original list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>getRange(number, number)</strong></td>
+							<td style="text-align:left">List&lt;T&gt;</td>
+							<td style="text-align:left">Copies the list into a new list of type T, as range between the passed start and end index of the original list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>indexOf(T)</strong></td>
+							<td style="text-align:left">number</td>
+							<td style="text-align:left">Gets the index of the first occurrence of the passed value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>indicesOf(T)</strong></td>
+							<td style="text-align:left">number[]</td>
+							<td style="text-align:left">Gets an array of the indices of all occurrences of the passed value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>indicesOfAsList(T)</strong></td>
+							<td style="text-align:left">List&lt;T&gt;</td>
+							<td style="text-align:left">Gets a list of the indices of all occurrences of the passed value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>insertAtIndex(number, T)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the list will be shifted to a new value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>lastIndexOf(T)</strong></td>
+							<td style="text-align:left">number</td>
+							<td style="text-align:left">Gets the index of the last occurrence of the passed value</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>next(any?)</strong></td>
+							<td style="text-align:left">IteratorResult</td>
+							<td style="text-align:left">Method to get the next value of an iterator. If the last item of the list is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach() method will also reset the position to 0.</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>pop()</strong></td>
+							<td style="text-align:left">T</td>
+							<td style="text-align:left">Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the list is empty</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>push(T)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Inserts a new value at the top position of the list (end position / last element). This method is synonymous with add()</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>remove(T)</strong></td>
+							<td style="text-align:left">boolean</td>
+							<td style="text-align:left">Removes the passed value at the first occurrence in the list. Returns true if an element was removed</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>removeAll(T)</strong></td>
+							<td style="text-align:left">boolean</td>
+							<td style="text-align:left">Removes the passed value at all positions in the List. Returns true if an element was removed</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>removeAt(T)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Removes the value at the defined index. All values above will be shifted one index position down (index - 1)</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>removeAtIndices(number[])</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>removeAtIndices(List&lt;number&gt;)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>reverse()</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Inverts the list</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>set(number, T)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Updates a value of the list at the specified index position</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>sort(<em>CompareFunction</em>)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Sorts the list according to the passed comparing function. The function has to compare two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.</td>
+						</tr>
+						<tr>
+							<td style="text-align:left"><strong>swapValues(number, number)</strong></td>
+							<td style="text-align:left">void</td>
+							<td style="text-align:left">Swaps the values at the two defined index positions in the list</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_iteratoritem_.html">"<wbr>Iterator<wbr>Item"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_list_.html">"<wbr>List"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_sorter_.html">"<wbr>Sorter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_interfaces_iforeachinterface_.html">"interfaces/IFor<wbr>Each<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_interfaces_ilist_.html">"interfaces/IList"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_interfaces_isortinterface_.html">"interfaces/ISort<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_interfaces_isorter_.html">"interfaces/ISorter"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
