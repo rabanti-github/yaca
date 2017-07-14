@@ -4,13 +4,14 @@
     // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "node",
             "request": "launch",
             "name": "Programm starten",
             "program": "${file}",
             "outFiles": [
-                "${workspaceRoot}/build/**/*.js"
+                "${workspaceRoot}/dist/**/*.js"
             ]
         }
     ]

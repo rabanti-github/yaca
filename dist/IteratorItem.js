@@ -4,14 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Class representing an iterator item
  */
 var IteratorItem = (function () {
-    /**
-     * Default constructor with parameters
-     * @param value Value of the iterator item
-     * @param finished If true, the last item of the iterator is reached
-     */
     function IteratorItem(value, finished) {
-        this.isLastEntry = finished;
-        this.value = value;
+        if (value !== undefined) {
+            this.value = value;
+        }
+        if (finished !== undefined) {
+            this.isLastEntry = finished;
+        }
+        else {
+            this.isLastEntry = false;
+        }
     }
     return IteratorItem;
 }());
