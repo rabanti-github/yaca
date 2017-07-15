@@ -1,4 +1,4 @@
-import IForEachInterface from './interfaces/IForEachInterface';
+import IForEachInterface from './interfaces/IForEachInterfaceList';
 import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';

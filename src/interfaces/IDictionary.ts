@@ -1,4 +1,4 @@
-import IForEachInterface from './IForEachInterface';
+import IForEachInterface from './IForEachInterfaceDictionary';
 import ISortInterface from './ISortInterface';
 
 /**

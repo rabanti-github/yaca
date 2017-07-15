@@ -1,4 +1,5 @@
-import IForEachInterface from './interfaces/IForEachInterface';
+import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
+import {KeyValuePair} from './KeyValuePair';
 import ISortInterFace from './interfaces/ISortInterface';
 import { IDictionary } from './interfaces/IDictionary';
 import { IteratorItem } from './IteratorItem';
@@ -11,8 +12,10 @@ import  List  from './List';
 export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 //export default class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 {
-    next(value?: any): IteratorResult<V> {
-        throw new Error("Method not implemented.");
+
+    private refreshKeyIndex()
+    {
+        this._iKeyIndex = Object.keys(this._iDict);
     }
 
     public getKeys(): K[]
@@ -73,8 +76,8 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         //let item: IteratorItem<object> = new IteratorItem();
         //let output = new Array(this._length) as IteratorItem<object>[];
         let i: number = 0;
-        let keys: string[] = Object.keys(this._iDict);
-        keys.forEach(key => { 
+        //let keys: string[] = Object.keys(this._iDict);
+        this._iKeyIndex.forEach(key => { 
             item = {'key': key, 'value': this._iDict[key]};
 
             //item = new IteratorItem( {'key': key, 'value': this._iDict[key]});
@@ -120,20 +123,20 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         }
         let len: number = val.length;
         if (len === 0) { return list; }
-       let keys: string[] = Object.keys(this._iDict);
-       let len2: number = keys.length;
+       //let keys: string[] = Object.keys(this._iDict);
+       //let len2: number = keys.length;
        let j: number;
        let keyCheck: List<string> = new List<string>();
         for(let i: number = 0; i < len; i++)
         {
-            for(j = 0; j < len2; j++)
+            for(j = 0; j < this._length; j++)
             {
-                if (this._iDict[keys[j]][1] === val[i])
+                if (this._iDict[this._iKeyIndex[j]][1] === val[i])
                 {
-                    if (keyCheck.contains(keys[j])){ continue; }
-                    list.add(this._iDict[keys[j]][0]);
+                    if (keyCheck.contains(this._iKeyIndex[j])){ continue; }
+                    list.add(this._iDict[this._iKeyIndex[j]][0]);
                     if (breakAfterFirst === true) { return list; }
-                    keyCheck.add(keys[j]);
+                    keyCheck.add(this._iKeyIndex[j]);
                 }
             }
         }
@@ -165,6 +168,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     private _iDict: K[]; //{ string, K }[];
     private _length: number;
     private _iCounter: number;
+    private _iKeyIndex: string[];
 
     /** Default constructor */
     constructor();
@@ -195,6 +199,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         this._iCounter = 0;
         this._length = 0;
         this._iDict = [];
+        this._iKeyIndex = [];
         if (keys !== undefined && values !== undefined) {
             if (Array.isArray(keys) && Array.isArray(values)) {
                 this.addRange(keys as K[], values);
@@ -217,7 +222,8 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * Gets the number of elements of the List
      */
     public get length(): number {
-        this._length = Object.keys(this._iDict).length
+        //this._length = Object.keys(this._iDict).length
+        this._length = this._iKeyIndex.length;
         return this._length;
     }
 
@@ -228,14 +234,24 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      */
     public add(key: K, value: V)
     {
+        this.addInternal(key, value);
+        this.refreshKeyIndex();
+    }
+
+    private addInternal(key: K, value: V)
+    {
+        if (key === undefined)
+        {
+            throw new Error("No key was defined to add as Dictionary element");
+        }
         if (value === undefined)
         {
             throw new Error("No value was defined to add as Dictionary element");
-        }
+        }        
         let hashcode: string = this.getHashCode(key);
         this._iDict[hashcode][0] = key;
         this._iDict[hashcode][1] = value;
-        this._length++;
+        this._length++;        
     }
 
 
@@ -286,8 +302,9 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         let len: number = keys.length;
         for(let i: number = 0; i < len; i++)
         {
-            this.add(keys[i], values[i]);
+            this.addInternal(keys[i], values[i]);
         }
+        this.refreshKeyIndex();
     }
 
     /**
@@ -302,18 +319,67 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
     /**
      * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
-     * @param value Key (and attached value) to remove
+     * @param key Key (and attached value) to remove
      */
-    public remove(key: K): boolean {
+    public remove(key: K): boolean;
+       /**
+     * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
+     * @param keys Keys (and attached values) to remove
+     */
+    public remove(keys: K[]): boolean;        
+    /**
+     * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
+     * @param keys Keys (and attached values) to remove
+     */
+    public remove(keys: List<K>): boolean;
+    public remove(keys: K | K[] | List<K>): boolean
+    {
         if (this._length === 0) { return false; }
-        let hashcode: string = this.getHashCode(key);
-        if (this._iDict[hashcode][0] === undefined){ return false }
-        delete this._iDict[hashcode];
-        this._length--;
-        return true;
+        let keylist: K[];
+        if (Array.isArray(keys))
+        {
+            keylist = keys;
         }
+        else if (keys instanceof List)
+        {
+            keylist = keys.copyToArray();
+        }
+        else
+        {
+            keylist = [ keys ];
+        }
+
+        let hashcode: string;
+        let len: number = keylist.length;
+        let status: boolean = false;
+        let status2: boolean = false;
+        for(let i = 0; i < len; i++)
+        {
+            status2 = this.removeInternal(keylist[i]);
+            if (status2 === true) { status = true; }
+            hashcode = this.getHashCode(keylist[i]);
+        }
+        this.refreshKeyIndex();
+        return status;
+    }
+
+    private removeInternal(key: K): boolean
+    {
+        let hashcode: string = this.getHashCode(key);
+        if (this._iDict[hashcode][0] === undefined)
+        {
+            return false;
+        }
+        else
+        {
+            delete this._iDict[hashcode];
+            this._length--;
+            return true;            
+        }
+    }
     
 
+/*
     public removeByValue(value: V): boolean
     {
         if (this.length < 1) { return false; }
@@ -323,43 +389,41 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         let status: boolean = false;
         let status2: boolean;
         if (len === 0) { return false; }
-        for(let i: number = 0; i < len; i++)
-        {
-           status2 = this.remove(keys[i]);
-           if (status2 === true) {status = true;}
-        }
-        return status;
-    }
 
+        return this.remove(keys);
+    }
+*/
 
     /**
-     * Removes all values from the Dictionary.
+     * Removes all entries with the passed value from the Dictionary.
+     * @param values Value to remove
+     */
+    public removeByValue(value: V): boolean;
+    /**
+     * Removes all entries with the passed values from the Dictionary.
      * @param values Array of values to remove
      */
-    public removeByValues(values: V[]): boolean;
+    public removeByValue(values: V[]): boolean;
     /**
-     * Removes all values from the Dictionary.
+     * Removes all entries with the passed values from the Dictionary.
      * @param values List of values to remove
      */
-    public removeByValues(values: List<V>): boolean;
-    public removeByValues(values: List<V> | V[]): boolean {
-       // let array: V[];
-      //  if (Array.isArray(values)) {
-      //      array = values;
-      //  }
-      //  else {
-      //      array = (values as List<V>).copyToArray();
-    //    }
-        let keys: List<K> = this.getKeysByValuesAsListInternal(values, false);
+    public removeByValue(values: List<V>): boolean;
+    public removeByValue(values: V | V[] | List<V>): boolean {
+        if (this._length === 0) { return false; }
+        let keys: List<K>;
+        if (Array.isArray(values)  || values instanceof List)
+        {
+            keys  = this.getKeysByValuesAsListInternal(values, false);
+        }
+        else
+        {
+            keys = this.getKeysByValueAsList(values as V);
+        }
         let len = keys.length;
         if (this._length === 0 || len === 0) { return false; }
-        let status: boolean = false;
-        let status2: boolean;
-        for (let i: number = 0; i < len; i++) {
-            status2 = this.remove(keys[i]);
-            if (status2 === true) {status = true; }
-        }
-        return status;
+
+        return this.remove(keys);
     }
 
     /**
@@ -370,6 +434,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         else {
             this._iDict = [];
             this._length = 0;
+            this._iKeyIndex = [];
         }
     }
 
@@ -388,200 +453,165 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
 
-    // /**
-    //  * Copies the whole List to a new List
-    //  */
-    // public getRange(): List<T>;
-    // /**
-    //  * Copies the List to a new List from the specified starting index until the last entry of the List
-    //  * @param startIndex Start index
-    //  */
-    // public getRange(startIndex: number): List<T>;
-    // /**
-    //  * Copies the List to a new List from the specified starting index to the specified end index of the List
-    //  * @param startIndex Start index
-    //  * @param endIndex End index
-    //  */
-    // public getRange(startIndex: number, endIndex: number): List<T>;
-    // public getRange(start?: number, end?: number): List<T> {
-    //     if (start === undefined) { start = 0; }
-    //     if (end === undefined) { end = this._length - 1; }
-    //     return this.copyToInternal(start, end, false);
-    // }
+    /**
+     * Copies the whole Dictionary to a new Dictionary
+     */
+    public getRange(): Dictionary<K,V>;
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified keys
+     * @param keys Keys to use for the new Dictionary
+     */
+    public getRange(keys: K[]): Dictionary<K,V>;
+        /**
+     * Copies the Dictionary to a new Dictionary using the specified keys
+     * @param keys Keys to use for the new Dictionary
+     */
+    public getRange(keys: List<K>): Dictionary<K,V>;
+    public getRange(keys?: K[] | List<K>): Dictionary<K,V> {
 
-    // /**
-    //  * Copies the whole List to a new Array of the type T
-    //  */
-    // public copyToArray(): T[];
-    // /**
-    //  * Copies the List to a new Array of the type T, from the specified starting index until the last entry of the List
-    //  * @param startIndex Start index
-    //  */
-    // public copyToArray(startIndex: number): T[];
-    // /**
-    //  * Copies the List to a new Array of the type T, from the specified starting index to the specified end index of the List
-    //  * @param startIndex Start index
-    //  * @param endIndex End index
-    //  */
-    // public copyToArray(startIndex: number, endIndex: number): T[];
-    // public copyToArray(start?: number, end?: number): T[] {
-    //     if (start === undefined) { start = 0; }
-    //     if (end === undefined) { end = this._length - 1; }
-    //     return this.copyToInternal(start, end, true);
-    // }
+        if (this._length === 0) { return new Dictionary<K,V>(); }
+        //let allHashcodes: string[] = Object.keys(this._iDict);
+        let hashcodes: List<string> = new List<string>();
+        let temp: K[] = new Array();
+        if (keys !== undefined && Array.isArray(keys))
+        {
+          temp = keys;
+        }
+        else if (keys !== undefined && (Array.isArray(keys) === false))
+        {
+          temp = keys.copyToArray();
+        }
+       // let len = allHashcodes.length;
+        let len2 = temp.length;
+        let j: number;
+        for(let i: number = 0; i < this._length; i++)
+        {
+            if (keys === undefined)
+            { 
+                hashcodes.add(this._iKeyIndex[i]);
+                continue;
+            }
+            for(j = 0; j<len2; j++)
+            {
+                if (this.getHashCode(temp[j]) === this._iKeyIndex[i])
+                {
+                    hashcodes.add(this._iKeyIndex[i]);
+                    break;
+                }
+            }
+        }
+        if (keys !== undefined)
+        {
+            hashcodes.distinct();
+        }
+        return this.copyToInternal(hashcodes);
+    }
 
-    // /**
-    //  * Gets the index of the first occurrence of the passed value
-    //  * @param value Value to check
-    //  */
-    // public indexOf(value: T): number {
-    //     return (this._iList as T[]).indexOf(value);
-    // }
 
-    // /**
-    //  * Gets the index of the last occurrence of the passed value
-    //  * @param value Value to check
-    //  */
-    // public lastIndexOf(value: T): number {
-    //     let indices: List<number> = this.indicesOfAsList(value);
-    //     let len: number = indices.length;
-    //     if (len === 0) { return -1; }
-    //     return indices.get(len - 1);
-    // }
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
+     * @param values Values to use for the new Dictionary
+     */
+    public getRangeByValues(values: V[]): Dictionary<K,V>;
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
+     * @param values Values to use for the new Dictionary
+     */
+    public getRangeByValues(values: List<V>): Dictionary<K,V>;
+    public getRangeByValues(values: V[] | List<V>): Dictionary<K,V>
+    {
+         if (this._length === 0) { return new Dictionary<K,V>(); }
+         let keys: List<K> = this.getKeysByValuesAsListInternal(values, false);
+         return this.getRange(keys);       
+    }
 
-    // /**
-    //  * Gets an Array of the indices of all occurrences of the passed value
-    //  * @param value Value to check
-    //  */
-    // public indicesOf(value: T): number[] {
-    //     return this.indicesOfInternal(value, false);
-    // }
-    // /**
-    //  * Gets a List of the indices of all occurrences of the passed value
-    //  * @param value Value to check
-    //  */
-    // public indicesOfAsList(value: T): List<number> {
-    //     return this.indicesOfInternal(value, true)
-    // }
+    private copyToInternal(keys: List<string>): Dictionary<K,V>
+    {
+        let output: Dictionary<K,V> = new Dictionary<K,V>();
+        let len = keys.length;
+        for(let i: number = 0; i < len; i++)
+        {
+            if (this._iDict[keys[i]][0] !== undefined)
+            {
+                output.addInternal(this._iDict[keys[i]][0], this._iDict[keys[i]][1]);
+            }
+        }
+        output.refreshKeyIndex();
+        return output;
+    }
 
-    // /**
-    //  * Internal method to get the indices of a value in the List
-    //  * @param value Value to check
-    //  * @param asList If true, a List of indices will be returned, otherwise an Array
-    //  */
-    // private indicesOfInternal(value: T, asList: boolean): any {
-    //     let indices: List<number> = new List<number>();
-    //     for (let i = 0; i < this._length; i++) {
-    //         if (this._iList[i] === value) {
-    //             indices.add(i);
-    //         }
-    //     }
-    //     if (asList !== undefined && asList === true) {
-    //         return indices;
-    //     }
-    //     else {
-    //         return indices.copyToArray();
-    //     }
-    // }
 
-    // /**
-    //  * Check whether the List contains the specified value
-    //  * @param value True if the value exists, otherwise false
-    //  */
-    // public contains(value: T): boolean {
-    //     if (this._length === 0) { return false; }
-    //     let index: number = this.indexOf(value);
-    //     if (index < 0) { return false; }
-    //     else { return true; }
-    // }
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key True if the value exists, otherwise false
+     */
+    public containsKey(key: K): boolean {
+        if (this._length === 0) { return false; }
 
-    // /**
-    //  * Internal method to copy a range of values in the List to a List or Array
-    //  * @param start Start index
-    //  * @param end End Index
-    //  * @param toArray If true, an Array will be returned, otherwise a List
-    //  */
-    // private copyToInternal(start: number, end: number, toArray: boolean): any {
-    //     if (start < 0 || start > end) {
-    //         throw new Error("The passed start index " + start + " is out of range")
-    //     }
-    //     if (end < start || end > this._length - 1) {
-    //         throw new Error("The passed end index " + end + " is out of range")
-    //     }
-    //     let output: any;
-    //     if (toArray === true)
-    //     { output = new Array(end - start + 1); }
-    //     else
-    //     { output = new List<T>(); }
+        let keyList: K[] = [ key ];
+        return this.containsKeys(keyList);
+    }
 
-    //     let counter: number = 0;
-    //     for (let i: number = start; i <= end; i++) {
-    //         if (toArray === true) {
-    //             output[counter] = this._iList[i];
-    //             counter++;
-    //         }
-    //         else {
-    //             output.add(this._iList[i]);
-    //         }
-    //     }
-    //     return output;
-    // }
+    /**
+     * Check whether the Dictionary contains the specified keys
+     * @param keys True if the value exists, otherwise false
+     */
+    public containsKeys(keys: K[]): boolean
+    /**
+     * Check whether the Dictionary contains the specified keys
+     * @param keys sTrue if the value exists, otherwise false
+     */
+    public containsKeys(keys: List<K>): boolean;
+    public containsKeys(keys: List<K> | K[]): boolean
+    {
+        if (this._length === 0) { return false; }
+        let keyList: K[];
+        if (Array.isArray(keys))
+        { keyList = keys; }
+        else
+        { keyList = keys.copyToArray(); }
+       // let allHashcodes: string[] = Object.keys(this._iDict);
+        for(let i: number = 0; i < this._length; i++)
+        {
+            if (this._iDict[this.getHashCode(keyList[i])][0] !== undefined )
+            { return true;}
+        }
+        return false;
+    }    
 
-    // /**
-    //  * Method to reverse the List
-    //  */
-    // public reverse() {
-    //     if (this._length === 0) { return; }
-    //     let halfLength = Math.floor(this._length / 2);
-    //     let i1 = 0;
-    //     let i2 = this._length - 1;
-    //     var temp: T = new Object as T;
-    //     for (let i = 0; i < halfLength; i++) {
-    //         this.swapValuesInternal(i1, i2, temp);
-    //         i1++;
-    //         i2--;
-    //     }
-    // }
 
-    // /**
-    //  * Swaps the values at the two defined index positions in the List
-    //  * @param index1 Index position 1
-    //  * @param index2 Index position 1
-    //  */
-    // public swapValues(index1: number, index2: number) {
-    //     if (index1 < 0 || index1 > this._length - 1 || index2 < 0 || index2 > this._length - 1) {
-    //         throw new Error("The passed indices (" + index1 + ", " + index2 + ") are out of range");
-    //     }
-    //     var temp: T = new Object as T;
-    //     this.swapValuesInternal(index1, index2, temp);
-    // }
+    /**
+     * Swaps the values of the two defined keys in the Dictionary
+     * @param key1 Key 1
+     * @param key2 Key 2
+     */
+    public swapValues(key1: K, key2: K) {
+        if (this.containsKey(key1) === false || this.containsKey(key2) === false) {
+            throw new Error("One of the passed keys (" + key1.toString() + ", " + key2.toString() + ") does not exist");
+        }
+        let hc1: string = this.getHashCode(key1);
+        let hc2: string = this.getHashCode(key2);
+        let temp: V = this._iDict[hc1][1];
+        this._iDict[hc1][1] = this._iDict[hc2][1];
+        this._iDict[hc2][1] = temp;
+        }
 
-    // /**
-    //  * Internal method to swap the values at the two defined index positions in the List. The method performs no validation and uses a predefined variable as temporary variable
-    //  * @param index1 Index position 1
-    //  * @param index2 Index position 1
-    //  * @param tempParameter Temporary variable (Define it once outside of this method)
-    //  */
-    // private swapValuesInternal(index1: number, index2: number, tempParameter: T) {
-    //     tempParameter = this._iList[index1];
-    //     this._iList[index1] = this._iList[index2];
-    //     this._iList[index2] = tempParameter;
-    // }
-
-    // /**
-    //  * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
-    //  */
-    // public distinct() {
-    //     if (this._length === 0) { return; }
-    //     let newList: List<T> = new List<T>();
-    //     for (let i = 0; i < this._length; i++) {
-    //         if (newList.contains(this._iList[i]) === false) {
-    //             newList.add(this._iList[i]);
-    //         }
-    //     }
-    //     this.clear()
-    //     this.addRange(newList);
-    // }
+    /**
+     * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
+     */
+    public distinct() {
+        if (this._length === 0) { return; }
+        let newDict: Dictionary<K,V> = new Dictionary<K,V>();
+        //let allHashcodes: string[] = Object.keys(this._iDict);
+        for (let i = 0; i < this._length; i++) {
+            if (newDict.containsKeys(this._iDict[this._iKeyIndex[i]][1]) === false)
+            {
+                newDict.addInternal(this._iDict[this._iKeyIndex[i]][0], this._iDict[this._iKeyIndex[i]][1]);
+            }
+        }
+        this.clear()
+        this.addRange(newDict);
+    }
 
     // // *********************************************** Implemented Interfaces
 
@@ -594,38 +624,38 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     //     qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
     // }
 
-    // /**
-    //  * Implementation of a forEach loop
-    //  * @param callback Callback function to process the items of the List
-    //  */
-    // public forEach(callback: IForEachInterface<T>) {
-    //     let done: boolean = false;
-    //     let item: IteratorItem<T>;
-    //     this._iCounter = 0;
-    //     while (done === false) {
-    //         item = this.next() as IteratorItem<T>;
-    //         done = item.isLastEntry;
-    //         callback(item.value);
-    //     }
-    // }
+    /**
+     * Implementation of a forEach loop
+     * @param callback Callback function to process the items of the List
+     */
+    public forEach(callback: IForEachInterface<K,V>) {
+        let done: boolean = false;
+        let item: IteratorItem<KeyValuePair<K,V>>;
+        this._iCounter = 0;
+        while (done === false) {
+            item = this.next() as IteratorItem<KeyValuePair<K,V>>;
+            done = item.isLastEntry;
+            callback(item.value);
+        }
+    }
 
-    // /**
-    //  * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
-    //  * @param value Can be ignored
-    //  */
-    // public next(value?: any): IteratorResult<T> {
-    //     let val: any = this._iList[this._iCounter];
-    //     let lastItem: boolean;
-    //     if (this._iCounter < this.length - 1) {
-    //         this._iCounter++;
-    //         lastItem = false;
-    //     }
-    //     else {
-    //         this._iCounter = 0;
-    //         lastItem = true;
-    //     }
-    //     return new IteratorItem(val, lastItem);
-    // }
+    /**
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * @param value Can be ignored
+     */
+    public next(value?: any): IteratorResult<KeyValuePair<K,V>> {
+        let val: KeyValuePair<K,V> = new KeyValuePair(this._iDict[this._iKeyIndex[this._iCounter]][0], this._iDict[this._iKeyIndex[this._iCounter]][1]);
+        let lastItem: boolean;
+        if (this._iCounter < this.length - 1) {
+            this._iCounter++;
+            lastItem = false;
+        }
+        else {
+            this._iCounter = 0;
+            lastItem = true;
+        }
+        return new IteratorItem(val, lastItem);
+    }
 
 }
 

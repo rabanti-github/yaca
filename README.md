@@ -53,7 +53,7 @@ The type **T** is the generic type defined in the constructor (e.g. number, bool
 
 | Name & Arguments | Return Type | Description |
 |:---------|:-----|:------------|
-| **add()** | void | Adds an element at the end of the list |
+| **add(T)** | void | Adds an element at the end of the list |
 | **addRange(T[])** | void | Adds an array of the type T at the end of the list |
 | **addRange(List&lt;T&gt;)** | void | Adds a List of type T at the end of the list |
 | **clear()** | void | Removes all elements from the list |
