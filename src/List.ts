@@ -49,7 +49,6 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
 
-
     /**
      * Gets the number of elements of the List
      */

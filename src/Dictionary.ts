@@ -317,19 +317,18 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     public removeByValue(value: V): boolean
     {
         if (this.length < 1) { return false; }
-        let keys: string[] = Object.keys(this._iDict);
-        let len = keys.length;
-        let counter: number = this._length;
+
+        let keys: List<K> = this.getKeysByValueAsList(value);
+        let len: number = keys.length;
+        let status: boolean = false;
+        let status2: boolean;
+        if (len === 0) { return false; }
         for(let i: number = 0; i < len; i++)
         {
-            if (this._iDict[keys[i]][1] === value)
-            {
-                delete this._iDict[keys[i]];
-                this._length--;                
-            }
+           status2 = this.remove(keys[i]);
+           if (status2 === true) {status = true;}
         }
-        if (this._length !== counter) { return true; }
-        else { return false; }
+        return status;
     }
 
 
@@ -337,82 +336,56 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * Removes all values from the Dictionary.
      * @param values Array of values to remove
      */
-    public removeByValues(values: V[]);
+    public removeByValues(values: V[]): boolean;
     /**
      * Removes all values from the Dictionary.
      * @param values List of values to remove
      */
-    public removeByValues(values: List<V>);
-    public removeByValues(values: List<V> | V[]) {
-        let array: V[];
-        if (Array.isArray(values)) {
-            array = values;
+    public removeByValues(values: List<V>): boolean;
+    public removeByValues(values: List<V> | V[]): boolean {
+       // let array: V[];
+      //  if (Array.isArray(values)) {
+      //      array = values;
+      //  }
+      //  else {
+      //      array = (values as List<V>).copyToArray();
+    //    }
+        let keys: List<K> = this.getKeysByValuesAsListInternal(values, false);
+        let len = keys.length;
+        if (this._length === 0 || len === 0) { return false; }
+        let status: boolean = false;
+        let status2: boolean;
+        for (let i: number = 0; i < len; i++) {
+            status2 = this.remove(keys[i]);
+            if (status2 === true) {status = true; }
         }
-        else {
-            array = (values as List<V>).copyToArray();
-        }
-        let iLen = array.length;
-        if (this._length === 0 || iLen === 0) { return; }
-        let keyList: List<K>;
-        for (let i: number = 0; i < iLen; i++) {
-            keyList =
-        }
-
-        //let newList: List<T> = new List<T>();
-
-        for (let i: number = 0; i < this._length; i++) {
-            if (list.containsValue(array[i])) { continue; }
-            newList.add(this._iList[i]);
-        }
-        this.clear();
-        this._iList = newList.copyToArray();
-        this._length = this.length;
+        return status;
     }
 
-    // /**
-    //  * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
-    //  */
-    // public pop(): T | undefined {
-    //     if (this._length === 0) { return undefined; }
-    //     let value: T = this._iList[0];
-    //     this.removeAt(0);
-    //     return value;
-    // }
+    /**
+     * Removes all elements of the Dictionary
+     */
+    public clear() {
+        if (this._length === 0) { return; }
+        else {
+            this._iDict = [];
+            this._length = 0;
+        }
+    }
 
-    // /**
-    //  * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
-    //  */
-    // public dequeue(): T | undefined {
-    //     if (this._length === 0) { return undefined; }
-    //     let value: T = this._iList[this._length - 1];
-    //     this.removeAt(this._length - 1);
-    //     return value;
-    // }
-
-    // /**
-    //  * Removes all elements of the List
-    //  */
-    // public clear() {
-    //     if (this._length === 0) { return; }
-    //     else {
-    //         this._iList = [];
-    //         this._length = 0;
-    //     }
-    // }
-
-    // /**
-    //  * Gets the value of the List at the specified index position
-    //  * @param index Index position (0 to n)
-    //  */
-    // public get(index: number): T {
-    //     let value: T = this._iList[index];
-    //     if (value !== undefined) {
-    //         return value;
-    //     }
-    //     else {
-    //         throw new Error("The index " + index + " was not found in the List");
-    //     }
-    // }
+    /**
+     * Gets the value of the Dictionary by the specified key
+     * @param key Key
+     */
+    public get(key: K): V {
+        let k: string = this.getHashCode(key);
+        if (this._iDict[k][0] !== undefined) {
+            return this._iDict[k][1];
+        }
+        else {
+            throw new Error("The key " + key + " was not found in the Dictionary");
+        }
+    }
 
 
     // /**
