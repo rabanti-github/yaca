@@ -14,4 +14,12 @@ Release type: Cleanup / Non-critical
 * Code clean-up
 * Added further Dev-Dependencies (tslint, typedoc)
 
+***v0.1.4***
+Date: 2017-07-17
+Release type: Cleanup / Non-critical
+---
+* Fixed a bug regarding comparison
+* Code clean-up
+
+
 

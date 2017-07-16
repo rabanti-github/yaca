@@ -3,6 +3,7 @@ import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
+var _ = require('lodash');
 
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
@@ -47,8 +48,6 @@ export default class List<T> implements Iterator<T>, IList<T>
             }
         }
     }
-
-
 
     /**
      * Gets the number of elements of the List
@@ -133,13 +132,13 @@ export default class List<T> implements Iterator<T>, IList<T>
             firstPart = [];
         }
         else {
-            firstPart = this.copyToInternal(0, index - 1, true);
+            firstPart = this.copyToInternal(0, index - 1, true) as T[];
         }
         if (index === this._length) {
             secondPart = [];
         }
         else {
-            secondPart = this.copyToInternal(index, this._length - 1, true);
+            secondPart = this.copyToInternal(index, this._length - 1, true) as T[];
         }
         this.clear();
         let len: number = (firstPart as T[]).length;
@@ -284,7 +283,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     public getRange(start?: number, end?: number): List<T> {
         if (start === undefined) { start = 0; }
         if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, false);
+        return this.copyToInternal(start, end, false) as List<T>;
     }
 
     /**
@@ -303,9 +302,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public copyToArray(startIndex: number, endIndex: number): T[];
     public copyToArray(start?: number, end?: number): T[] {
+        if (this._length === 0) { return new Array() as T[]; }
         if (start === undefined) { start = 0; }
         if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, true);
+        return this.copyToInternal(start, end, true) as T[];
     }
 
     /**
@@ -313,7 +313,15 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value Value to check
      */
     public indexOf(value: T): number {
-        return (this._iList as T[]).indexOf(value);
+
+        for(let i: number = 0; i < this._length; i++)
+        {
+            if (_.isEqual(this._iList[i], value) === true)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -379,7 +387,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param end End Index
      * @param toArray If true, an Array will be returned, otherwise a List
      */
-    private copyToInternal(start: number, end: number, toArray: boolean): any {
+    private copyToInternal(start: number, end: number, toArray: boolean): T[] | List<T> {
         if (start < 0 || start > end) {
             throw new Error("The passed start index " + start + " is out of range")
         }
@@ -506,5 +514,4 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
 }
-
 

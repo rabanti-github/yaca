@@ -2,3 +2,4 @@ src/
 .vscode/
 doc/
 tslint.json
+.esdoc,json
