@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
+//import { object } from 'lodash/fp/object';
+var _ = require('lodash');
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
  */
@@ -245,7 +247,12 @@ var List = (function () {
      * @param value Value to check
      */
     List.prototype.indexOf = function (value) {
-        return this._iList.indexOf(value);
+        for (var i = 0; i < this._length; i++) {
+            if (_.isEqual(this._iList[i], value) === true) {
+                return i;
+            }
+        }
+        return -1;
     };
     /**
      * Gets the index of the last occurrence of the passed value

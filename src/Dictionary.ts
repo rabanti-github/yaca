@@ -64,23 +64,17 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         {
             throw new Error("No valid key was defined. The key must not be empty or undefined");
         }        
-        //let temp = key as Object;
-        return key.toString();
+        return "_" + key.toString(); // _ prevents problems with empty strings / defined types
     }
     
     private getKeyValuePairsInternal(): object[]
     {
         let output: object[] = new Array(this._length) as object[];
         let item: object;
-        //let x: V = this._iDict['asd'];
-        //let item: IteratorItem<object> = new IteratorItem();
-        //let output = new Array(this._length) as IteratorItem<object>[];
         let i: number = 0;
         //let keys: string[] = Object.keys(this._iDict);
         this._iKeyIndex.forEach(key => { 
             item = {'key': key, 'value': this._iDict[key]};
-
-            //item = new IteratorItem( {'key': key, 'value': this._iDict[key]});
             output[i] = item;
             i++;
         });
@@ -165,7 +159,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
        else { return false; }
     }
 
-    private _iDict: K[]; //{ string, K }[];
+    private _iDict: object;//K[]; //{ string, K }[];
     private _length: number;
     private _iCounter: number;
     private _iKeyIndex: string[];
@@ -249,8 +243,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             throw new Error("No value was defined to add as Dictionary element");
         }        
         let hashcode: string = this.getHashCode(key);
-        this._iDict[hashcode][0] = key;
-        this._iDict[hashcode][1] = value;
+        this._iDict[hashcode as string] = {0:key, 1:value};
         this._length++;        
     }
 
@@ -349,7 +342,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             keylist = [ keys ];
         }
 
-        let hashcode: string;
+        //let hashcode: string;
         let len: number = keylist.length;
         let status: boolean = false;
         let status2: boolean = false;
@@ -357,7 +350,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         {
             status2 = this.removeInternal(keylist[i]);
             if (status2 === true) { status = true; }
-            hashcode = this.getHashCode(keylist[i]);
+            //hashcode = this.getHashCode(keylist[i]);
         }
         this.refreshKeyIndex();
         return status;
@@ -366,7 +359,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     private removeInternal(key: K): boolean
     {
         let hashcode: string = this.getHashCode(key);
-        if (this._iDict[hashcode][0] === undefined)
+        if (typeof this._iDict[hashcode] === undefined)
         {
             return false;
         }
@@ -444,7 +437,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      */
     public get(key: K): V {
         let k: string = this.getHashCode(key);
-        if (this._iDict[k][0] !== undefined) {
+        if (typeof this._iDict[k] !== undefined) {
             return this._iDict[k][1];
         }
         else {
@@ -468,7 +461,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      */
     public getRange(keys: List<K>): Dictionary<K,V>;
     public getRange(keys?: K[] | List<K>): Dictionary<K,V> {
-
         if (this._length === 0) { return new Dictionary<K,V>(); }
         //let allHashcodes: string[] = Object.keys(this._iDict);
         let hashcodes: List<string> = new List<string>();
@@ -531,9 +523,9 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         let len = keys.length;
         for(let i: number = 0; i < len; i++)
         {
-            if (this._iDict[keys[i]][0] !== undefined)
+            if (typeof this._iDict[keys[i]] !== undefined)
             {
-                output.addInternal(this._iDict[keys[i]][0], this._iDict[keys[i]][1]);
+                output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
             }
         }
         output.refreshKeyIndex();
@@ -573,7 +565,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
        // let allHashcodes: string[] = Object.keys(this._iDict);
         for(let i: number = 0; i < this._length; i++)
         {
-            if (this._iDict[this.getHashCode(keyList[i])][0] !== undefined )
+            if (this._iDict[this.getHashCode(keyList[i])] !== undefined )
             { return true;}
         }
         return false;

@@ -1,5 +1,8 @@
-import List from './List';
-import {Dictionary} from './Dictionary';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var List_1 = require("./List");
+var Dictionary_1 = require("./Dictionary");
+exports.Dictionary = Dictionary_1.Dictionary;
 /*
 import {KeyValuePair} from './KeyValuePair';
 
@@ -33,9 +36,5 @@ let d2: Dictionary<number, string> = d.getRangeByValues(["y"]);
 
 let output = d.get(4);
 */
-
-export default List;
-export
-{
-    Dictionary   
-};
+exports.default = List_1.default;
+//# sourceMappingURL=index.js.map
