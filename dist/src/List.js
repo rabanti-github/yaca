@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
-//import { object } from 'lodash/fp/object';
 var _ = require('lodash');
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
@@ -150,6 +149,7 @@ var List = (function () {
      */
     List.prototype.removeAt = function (index) {
         var i = new List(index);
+        this.removeAtIndices(i);
     };
     List.prototype.removeAtIndices = function (indices) {
         var list;

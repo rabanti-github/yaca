@@ -118,6 +118,47 @@ describe('contains method', function () {
         chai_1.expect(match).to.equal(true);
     });
 });
+describe('copyToArray method', function () {
+    var list = setupList(Types.string, ["one", "two", "three", "four", "five", "six"]);
+    it('should return an array with 6 elements from a list with this number of elements', function () {
+        var array = list.copyToArray();
+        var length = array.length;
+        chai_1.expect(length).to.equal(6);
+    });
+    it('should return the value "two" at the index position 1 (2nd element) in the copy of a list with 6 entries', function () {
+        var array = list.copyToArray();
+        var value = array[1];
+        chai_1.expect(value).to.equal("two");
+    });
+    it('should return an array with 4 elements from a list with 6 elements and start index of 2', function () {
+        var array = list.copyToArray(2);
+        var length = array.length;
+        chai_1.expect(length).to.equal(4);
+    });
+    it('should return an array with 3 elements from a list with 6 elements and start index of 2 and end index of 4', function () {
+        var array = list.copyToArray(2, 4);
+        var length = array.length;
+        chai_1.expect(length).to.equal(3);
+    });
+    it('should return the value of "five" in the copy from a list with 6 elements and start index of 2 and end index of 4 as last element', function () {
+        var array = list.copyToArray(2, 4);
+        var value = array[array.length - 1];
+        chai_1.expect(value).to.equal("five");
+    });
+});
+describe('dequeue method', function () {
+    var list = setupList(Types.number, [17, 22, 88, 55, 12, 0, -12]);
+    it('should return a -12 as result of the operation', function () {
+        var number = list.dequeue();
+        chai_1.expect(number).to.equal(-12);
+    });
+    it('should return a length of 6 after the operation on a list of 7 elements', function () {
+        list = setupList(Types.number, [17, 22, 88, 55, 12, 0, -12]);
+        list.dequeue();
+        var length = list.length;
+        chai_1.expect(length).to.equal(6);
+    });
+});
 function setupList(t, initialValue) {
     if (initialValue === undefined) {
         if (t === Types.boolean) {

@@ -471,7 +471,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         }
         else if (keys !== undefined && (Array.isArray(keys) === false))
         {
-          temp = keys.copyToArray();
+          temp = (keys as List<K>).copyToArray();
         }
        // let len = allHashcodes.length;
         let len2 = temp.length;

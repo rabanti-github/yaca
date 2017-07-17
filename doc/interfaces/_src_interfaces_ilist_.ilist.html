@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Sorter | Yet Another Collection Approach</title>
+	<title>IList | Yet Another Collection Approach</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_sorter_.html">&quot;Sorter&quot;</a>
+					<a href="../modules/_src_interfaces_ilist_.html">&quot;src/interfaces/IList&quot;</a>
 				</li>
 				<li>
-					<a href="_sorter_.sorter.html">Sorter</a>
+					<a href="_src_interfaces_ilist_.ilist.html">IList</a>
 				</li>
 			</ul>
-			<h1>Class Sorter&lt;T&gt;</h1>
+			<h1>Interface IList&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Class for sorter algorithms</p>
+						<p>Interface for List (Delegating further interfaces)</p>
 					</div>
 				</div>
 			</section>
@@ -88,14 +88,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Sorter</span>
+						<span class="target">IList</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implements</h3>
+				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/_interfaces_isorter_.isorter.html" class="tsd-signature-type">ISorter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../classes/_src_list_.list.html" class="tsd-signature-type">List</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -103,132 +103,70 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_sorter_.sorter.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_sorter_.sorter.html#quicksort" class="tsd-kind-icon">quick<wbr>Sort</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_sorter_.sorter.html#swap" class="tsd-kind-icon">swap</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_src_interfaces_ilist_.ilist.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_src_interfaces_ilist_.ilist.html#sort" class="tsd-kind-icon">sort</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Sorter<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_sorter_.sorter.html" class="tsd-signature-type">Sorter</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/bb82fb1/src/Sorter.ts#L46">Sorter.ts:46</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_sorter_.sorter.html" class="tsd-signature-type">Sorter</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="quicksort" class="tsd-anchor"></a>
-					<h3>quick<wbr>Sort</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">quick<wbr>Sort<span class="tsd-signature-symbol">(</span>comparerFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="foreach" class="tsd-anchor"></a>
+					<h3>for<wbr>Each</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><a href="_src_interfaces_iforeachinterfacelist_.iforeachinterface.html" class="tsd-signature-type">IForEachInterface</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/bb82fb1/src/Sorter.ts#L16">Sorter.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/72660ca/src/interfaces/IList.ts#L12">src/interfaces/IList.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Implementation of a quicksort algorithm. This method is called recursively</p>
+									<p>Interface to handle foeEach loops</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>comparerFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Comparison function to compare the List entry of the passed lower and higher index position</p>
-									</div>
-								</li>
-								<li>
-									<h5>data: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Data as array of the type T</p>
-									</div>
-								</li>
-								<li>
-									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Lower index within the List to check</p>
-									</div>
-								</li>
-								<li>
-									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Higher index within the List to check</p>
-									</div>
+									<h5>callback: <a href="_src_interfaces_iforeachinterfacelist_.iforeachinterface.html" class="tsd-signature-type">IForEachInterface</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="swap" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> swap</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">swap<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, index1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, index2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="sort" class="tsd-anchor"></a>
+					<h3>sort</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">sort<span class="tsd-signature-symbol">(</span>sortFunction<span class="tsd-signature-symbol">: </span><a href="_src_interfaces_isortinterface_.isortinterface.html" class="tsd-signature-type">ISortInterface</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/bb82fb1/src/Sorter.ts#L41">Sorter.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/72660ca/src/interfaces/IList.ts#L17">src/interfaces/IList.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Internal swap method for quicksort</p>
+									<p>Interface to handle sorting</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Data as array of the type T</p>
-									</div>
-								</li>
-								<li>
-									<h5>index1: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Index position 1 of the data to swap</p>
-									</div>
-								</li>
-								<li>
-									<h5>index2: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Index position 2 of the data to swap</p>
-									</div>
+									<h5>sortFunction: <a href="_src_interfaces_isortinterface_.isortinterface.html" class="tsd-signature-type">ISortInterface</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -241,37 +179,43 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_dictionary_.html">"<wbr>Dictionary"</a>
+						<a href="../modules/_src_dictionary_.html">"src/<wbr>Dictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_iteratoritem_.html">"<wbr>Iterator<wbr>Item"</a>
+						<a href="../modules/_src_iteratoritem_.html">"src/<wbr>Iterator<wbr>Item"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_list_.html">"<wbr>List"</a>
+						<a href="../modules/_src_keyvaluepair_.html">"src/<wbr>Key<wbr>Value<wbr>Pair"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_list_.html">"src/<wbr>List"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_sorter_.html">"src/<wbr>Sorter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_index_.html">"src/index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_interfaces_idictionary_.html">"src/interfaces/IDictionary"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_interfaces_iforeachinterfacedictionary_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_src_interfaces_iforeachinterfacelist_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>List"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_sorter_.html">"<wbr>Sorter"</a>
+						<a href="../modules/_src_interfaces_ilist_.html">"src/interfaces/IList"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="../modules/_src_interfaces_isortinterface_.html">"src/interfaces/ISort<wbr>Interface"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_interfaces_idictionary_.html">"interfaces/IDictionary"</a>
+						<a href="../modules/_src_interfaces_isorter_.html">"src/interfaces/ISorter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_interfaces_iforeachinterface_.html">"interfaces/IFor<wbr>Each<wbr>Interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_interfaces_ilist_.html">"interfaces/IList"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_interfaces_isortinterface_.html">"interfaces/ISort<wbr>Interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_interfaces_isorter_.html">"interfaces/ISorter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_.html">"test"</a>
+						<a href="../modules/_test_src_listtest_.html">"test/src/<wbr>List<wbr>Test"</a>
 					</li>
 				</ul>
 			</nav>
@@ -279,17 +223,14 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="_sorter_.sorter.html" class="tsd-kind-icon">Sorter</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="_src_interfaces_ilist_.ilist.html" class="tsd-kind-icon">IList</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_sorter_.sorter.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_src_interfaces_ilist_.ilist.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_sorter_.sorter.html#quicksort" class="tsd-kind-icon">quick<wbr>Sort</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_sorter_.sorter.html#swap" class="tsd-kind-icon">swap</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_src_interfaces_ilist_.ilist.html#sort" class="tsd-kind-icon">sort</a>
 							</li>
 						</ul>
 					</li>

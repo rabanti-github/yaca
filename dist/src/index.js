@@ -3,38 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var List_1 = require("./List");
 var Dictionary_1 = require("./Dictionary");
 exports.Dictionary = Dictionary_1.Dictionary;
-/*
-import {KeyValuePair} from './KeyValuePair';
-
-        let list2: List<Date> = new List<Date>([new Date(2015,2,10,0,0,0), new Date(2017,1,1,0,0,0), new Date(1191,1,8,23,59,59)]);
-        let date = new Date(2017,1,1,0,0,0);
-        let match = list2.contains(date);
-
-
-let d: Dictionary<number, string> = new Dictionary<number, string>();
-
-
-d.add(22,"x");
-d.add(11,"y");
-d.add(4,"z");
-d.add(12,"y");
-
+var list2 = new List_1.default([new Date(2015, 2, 10, 0, 0, 0), new Date(2017, 1, 1, 0, 0, 0), new Date(1191, 1, 8, 23, 59, 59)]);
+var date = new Date(2017, 1, 1, 0, 0, 0);
+var match = list2.contains(date);
+list2.dequeue();
+var d = new Dictionary_1.Dictionary();
+d.add(22, "x");
+d.add(11, "y");
+d.add(4, "z");
+d.add(12, "y");
 //d.removeByValue("y");
-
-d.forEach(item => {
-    
-    xyz(item as KeyValuePair<number, string>);
-})
-
-function xyz(item: KeyValuePair<number, string>)
-{
-console.log(item.key);
-console.log(item.value);
+d.forEach(function (item) {
+    xyz(item);
+});
+function xyz(item) {
+    console.log(item.key);
+    console.log(item.value);
 }
-
-let d2: Dictionary<number, string> = d.getRangeByValues(["y"]);
-
-let output = d.get(4);
-*/
+var d2 = d.getRangeByValues(["y"]);
+var output = d.get(4);
 exports.default = List_1.default;
 //# sourceMappingURL=index.js.map

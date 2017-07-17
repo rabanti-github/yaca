@@ -3,7 +3,6 @@ import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
-//import { object } from 'lodash/fp/object';
 var _ = require('lodash');
 
 /**
@@ -188,6 +187,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public removeAt(index: number) {
         let i: List<number> = new List<number>(index);
+        this.removeAtIndices(i);
     }
 
     /**

@@ -119,10 +119,56 @@ describe('contains method', () => {
         expect(match).to.equal(false);
     });
     it('should return true on a date object (2017-01-01 00:00:00) in a prepared list which contains this value', () => {
-        let list2: List<Date> = setupList(Types.date, [new Date(2015,2,10,0,0,0), new Date(2017,1,1,0,0,0), new Date(1191,1,8,23,59,59)])
+        let list2: List<Date> = setupList(Types.date, [new Date(2015,2,10,0,0,0), new Date(2017,1,1,0,0,0), new Date(1191,1,8,23,59,59)]);
         let date = new Date(2017,1,1,0,0,0);
         let match: boolean = list2.contains(date);
         expect(match).to.equal(true);
+    });
+});
+
+
+describe('copyToArray method', () => {
+    let list: List<string> = setupList(Types.string, ["one", "two", "three", "four", "five", "six"]);
+    it('should return an array with 6 elements from a list with this number of elements', () => {
+        let array: string[] = list.copyToArray();
+        let length: number = array.length;
+        expect(length).to.equal(6);
+    });
+    it('should return the value "two" at the index position 1 (2nd element) in the copy of a list with 6 entries', () => {
+        let array: string[] = list.copyToArray();
+        let value: string = array[1];
+        expect(value).to.equal("two");
+    });
+    it('should return an array with 4 elements from a list with 6 elements and start index of 2', () => {
+        let array: string[] = list.copyToArray(2)
+        let length: number = array.length;
+        expect(length).to.equal(4);
+    });
+    it('should return an array with 3 elements from a list with 6 elements and start index of 2 and end index of 4', () => {
+        let array: string[] = list.copyToArray(2,4)
+        let length: number = array.length;
+        expect(length).to.equal(3);
+    });
+    it('should return the value of "five" in the copy from a list with 6 elements and start index of 2 and end index of 4 as last element', () => {
+        let array: string[] = list.copyToArray(2,4)
+        let value: string = array[array.length - 1];
+        expect(value).to.equal("five");
+    });
+});
+
+
+describe('dequeue method', () => {
+    let list: List<number> = setupList(Types.number, [17,22,88,55,12,0,-12]);
+
+    it('should return a -12 as result of the operation', () => {
+        let number: number = list.dequeue();
+        expect(number).to.equal(-12);
+    });
+    it('should return a length of 6 after the operation on a list of 7 elements', () => {
+        list = setupList(Types.number, [17,22,88,55,12,0,-12]);
+        list.dequeue();
+        let length: number = list.length;
+        expect(length).to.equal(6);
     });
 });
 
