@@ -3,7 +3,7 @@ import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
-var _ = require('lodash');
+var isEqual  = require('lodash.isequal');
 
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
@@ -63,6 +63,19 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value Value to add
      */
     public add(value: T) {
+        if (value === undefined)
+        {
+            throw new Error("An undefined value cannot be added to a list");
+        }
+        this.addInternal(value);
+    }
+
+    /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    private addInternal(value: T)
+    {
         this._iList[this._length] = value;
         this._length++;
     }
@@ -214,10 +227,10 @@ export default class List<T> implements Iterator<T>, IList<T>
 
         for (let i: number = 0; i < this._length; i++) {
             if (list.contains(i)) { continue; }
-            newList.add(this._iList[i]);
+            newList.addInternal(this._iList[i]);
         }
         this.clear();
-        this._iList = newList.copyToArray();
+        this.addRange(newList);
         this._length = this.length;
     }
 
@@ -278,8 +291,8 @@ export default class List<T> implements Iterator<T>, IList<T>
     public getRange(startIndex: number): List<T>;
     /**
      * Copies the List to a new List from the specified starting index to the specified end index of the List
-     * @param startIndex Start index
-     * @param endIndex End index
+     * @param startIndex Start index (0 if undefined)
+     * @param endIndex End index (end index if undefined)
      */
     public getRange(startIndex: number, endIndex: number): List<T>;
     public getRange(start?: number, end?: number): List<T> {
@@ -318,7 +331,7 @@ export default class List<T> implements Iterator<T>, IList<T>
 
         for(let i: number = 0; i < this._length; i++)
         {
-            if (_.isEqual(this._iList[i], value) === true)
+            if (isEqual(this._iList[i], value) === true)
             {
                 return i;
             }
@@ -360,8 +373,8 @@ export default class List<T> implements Iterator<T>, IList<T>
     private indicesOfInternal(value: T, asList: boolean): any {
         let indices: List<number> = new List<number>();
         for (let i = 0; i < this._length; i++) {
-            if (this._iList[i] === value) {
-                indices.add(i);
+            if (isEqual(this._iList[i], value) === true) {
+                indices.addInternal(i);
             }
         }
         if (asList !== undefined && asList === true) {
@@ -409,7 +422,7 @@ export default class List<T> implements Iterator<T>, IList<T>
                 counter++;
             }
             else {
-                output.add(this._iList[i]);
+                output.addInternal(this._iList[i]);
             }
         }
         return output;
@@ -464,7 +477,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         let newList: List<T> = new List<T>();
         for (let i = 0; i < this._length; i++) {
             if (newList.contains(this._iList[i]) === false) {
-                newList.add(this._iList[i]);
+                newList.addInternal(this._iList[i]);
             }
         }
         this.clear()
@@ -487,6 +500,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param callback Callback function to process the items of the List
      */
     public forEach(callback: IForEachInterface<T>) {
+        if (this._length === 0) { return; }
         let done: boolean = false;
         let item: IteratorItem<T>;
         this._iCounter = 0;
