@@ -125,8 +125,8 @@ export default class List<T> implements Iterator<T>, IList<T> {
     getRange(startIndex: number): List<T>;
     /**
      * Copies the List to a new List from the specified starting index to the specified end index of the List
-     * @param startIndex Start index
-     * @param endIndex End index
+     * @param startIndex Start index (0 if undefined)
+     * @param endIndex End index (end index if undefined)
      */
     getRange(startIndex: number, endIndex: number): List<T>;
     /**

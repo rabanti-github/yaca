@@ -39,6 +39,37 @@ describe('constructors', function () {
         chai_1.expect(length).to.equal(0);
     });
 });
+describe('length property', function () {
+    var list;
+    it('should return 0 on an initialized (empty) list', function () {
+        list = setupList(Types.number);
+        chai_1.expect(list.length).to.equal(0);
+    });
+    it('should return 9 on a list with 9 elements', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
+        chai_1.expect(list.length).to.equal(9);
+    });
+    it('should return 10 after adding one element to a list of 9 elements', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
+        list.add(1);
+        chai_1.expect(list.length).to.equal(10);
+    });
+    it('should return 8 after removing one element to a list of 9 elements', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
+        list.removeAt(0);
+        chai_1.expect(list.length).to.equal(8);
+    });
+    it('should return 0 after execution of the clear() method', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
+        list.clear();
+        chai_1.expect(list.length).to.equal(0);
+    });
+    it('should return 0 after removing the last element of a list', function () {
+        list = setupList(Types.number, 17);
+        list.removeAt(0);
+        chai_1.expect(list.length).to.equal(0);
+    });
+});
 describe('add method', function () {
     var list = setupList(Types.string);
     it('should add an element and increase the counter by one', function () {
@@ -162,6 +193,15 @@ describe('copyToArray method', function () {
         var value = array[array.length - 1];
         chai_1.expect(value).to.equal("five");
     });
+    it('should throw an error when the start index is negative', function () {
+        chai_1.expect(function () { var array = list.copyToArray(-2, 4); }).to.throw();
+    });
+    it('should throw an error when the end index is 99 on a list with 6 elements', function () {
+        chai_1.expect(function () { var array = list.copyToArray(1, 99); }).to.throw();
+    });
+    it('should not throw an error when the end index is undefined (interpreted as last index position)', function () {
+        chai_1.expect(function () { var array = list.copyToArray(1, undefined); }).not.to.throw();
+    });
 });
 describe('dequeue method', function () {
     var list = setupList(Types.number, [17, 22, 88, 55, 12, 0, -12]);
@@ -233,6 +273,18 @@ describe('forEach method', function () {
         });
         chai_1.expect(value).to.equal("122333444455555");
     });
+    it('should return the term "1223334444" after concatenation of the forEach values with a break (return) after 4 cycles', function () {
+        var value = "";
+        var counter = 0;
+        list.forEach(function (item) {
+            if (counter >= 4) {
+                return;
+            }
+            value = value + item;
+            counter++;
+        });
+        chai_1.expect(value).to.equal("1223334444");
+    });
     it('should return the number of 5 iterations after the execution', function () {
         var i = 0;
         list.forEach(function (item) {
@@ -301,8 +353,8 @@ describe('getRange method', function () {
     it('should throw an error when the end index is 99 on a list with 6 elements', function () {
         chai_1.expect(function () { var list2 = list.getRange(2, 99); }).to.throw();
     });
-    it('should throw an error when the start index is undefined', function () {
-        chai_1.expect(function () { var list2 = list.getRange(undefined, 2); }).to.throw();
+    it('should not throw an error when the start index is undefined (interpreted as 0)', function () {
+        chai_1.expect(function () { var list2 = list.getRange(undefined, 2); }).not.to.throw();
     });
 });
 describe('indexOf method', function () {
@@ -318,6 +370,223 @@ describe('indexOf method', function () {
     it('should return the index position -1 on undefined as value', function () {
         var index = list.indexOf(undefined);
         chai_1.expect(index).to.equal(-1);
+    });
+});
+describe('indicesOf method', function () {
+    var list = setupList(Types.string, ["one", "two", "three", "two", "four", "five", "six"]);
+    it('should return an array with two elements on the value "two" from a list with 2 such occurrences', function () {
+        var indices = list.indicesOf("two");
+        chai_1.expect(indices.length).to.equal(2);
+    });
+    it('should return an array with two index elements 1 and 3 on the value "two" from a list with 2 such occurrences', function () {
+        var indices = list.indicesOf("two");
+        chai_1.expect(indices[0] === 1 && indices[1] === 3).to.equal(true);
+    });
+    it('should return an empty array on the not existing value "122"', function () {
+        var indices = list.indicesOf("122");
+        chai_1.expect(indices.length).to.equal(0);
+    });
+    it('should return an empty array on undefined as value', function () {
+        var indices = list.indicesOf(undefined);
+        chai_1.expect(indices.length).to.equal(0);
+    });
+});
+describe('indicesOfAsList method', function () {
+    var list = setupList(Types.string, ["one", "two", "three", "two", "four", "five", "six"]);
+    it('should return a list with two elements on the value "two" from a list with 2 such occurrences', function () {
+        var indices = list.indicesOfAsList("two");
+        chai_1.expect(indices.length).to.equal(2);
+    });
+    it('should return a list with two index elements 1 and 3 on the value "two" from a list with 2 such occurrences', function () {
+        var indices = list.indicesOfAsList("two");
+        chai_1.expect(indices.get(0) === 1 && indices.get(1) === 3).to.equal(true);
+    });
+    it('should return an empty list on the not existing value "122"', function () {
+        var indices = list.indicesOfAsList("122");
+        chai_1.expect(indices.length).to.equal(0);
+    });
+    it('should return an empty list on undefined as value', function () {
+        var indices = list.indicesOfAsList(undefined);
+        chai_1.expect(indices.length).to.equal(0);
+    });
+});
+describe('lastIndexOf method', function () {
+    var list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
+    it('should return the index position 7 on value 22', function () {
+        var index = list.lastIndexOf(22);
+        chai_1.expect(index).to.equal(7);
+    });
+    it('should return the index position -1 on not existing value 122', function () {
+        var index = list.lastIndexOf(122);
+        chai_1.expect(index).to.equal(-1);
+    });
+    it('should return the index position -1 on undefined as value', function () {
+        var index = list.lastIndexOf(undefined);
+        chai_1.expect(index).to.equal(-1);
+    });
+});
+describe('next method', function () {
+    var list;
+    it('should return the term "122333444455555" after concatenation of 5 calls (for loop)', function () {
+        list = setupList(Types.string, ["1", "22", "333", "4444", "55555"]);
+        var value = "";
+        for (var i = 0; i < 5; i++) {
+            value = value + list.next().value;
+        }
+        chai_1.expect(value).to.equal("122333444455555");
+    });
+    it('should return the term "122333444455555122" after concatenation of 7 calls in a list of 5 entries (for loop)', function () {
+        list = setupList(Types.string, ["1", "22", "333", "4444", "55555"]);
+        var value = "";
+        for (var i = 0; i < 7; i++) {
+            value = value + list.next().value;
+        }
+        chai_1.expect(value).to.equal("122333444455555122");
+    });
+    it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', function () {
+        list = setupList(Types.string, ["1", "22", "333", "4444", "55555"]);
+        var state;
+        for (var i = 0; i < 5; i++) {
+            state = list.next().isLastEntry;
+        }
+        chai_1.expect(state).to.equal(true);
+    });
+    it('should return the term "122333444455555" after concatenation of a forEach call after two calls of the next method (restart in forEach)', function () {
+        list = setupList(Types.string, ["1", "22", "333", "4444", "55555"]);
+        var value = "";
+        list.next();
+        list.next();
+        list.forEach(function (item) {
+            value = value + item;
+        });
+        chai_1.expect(value).to.equal("122333444455555");
+    });
+});
+describe('pop method', function () {
+    var list;
+    it('should return a length of 7 after execution on a list of 8 entries', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.pop();
+        chai_1.expect(list.length).to.equal(7);
+    });
+    it('should return 17 as value after execution (1st value of initial list)', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        var value = list.pop();
+        chai_1.expect(value).to.equal(17);
+    });
+    it('should return undefined as value after execution on an empty list', function () {
+        list = setupList(Types.number);
+        var value = list.pop();
+        chai_1.expect(value).to.equal(undefined);
+    });
+});
+describe('push method', function () {
+    var list;
+    it('should return a length of 9 after execution on a list of 8 entries', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.push(42);
+        chai_1.expect(list.length).to.equal(9);
+    });
+    it('should return 42 as value  on index position 0 after execution', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.push(42);
+        var value = list.get(0);
+        chai_1.expect(value).to.equal(42);
+    });
+    it('should return 1 as value of the index position 0 in an empty list', function () {
+        list = setupList(Types.number);
+        list.push(1);
+        var value = list.get(0);
+        chai_1.expect(value).to.equal(1);
+    });
+    it('should throw an error when executing push with an undefined value to a list of numbers', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        chai_1.expect(function () { list.push(undefined); }).to.throw();
+    });
+});
+describe('remove method', function () {
+    var list;
+    it('should return a length of 7 after execution with the value 22 on a list of 8 entries with 3 times the values of 22', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.remove(22);
+        chai_1.expect(list.length).to.equal(7);
+    });
+    it('should return true if the existing value 12 of a list was removed', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        var status = list.remove(12);
+        chai_1.expect(status).to.equal(true);
+    });
+    it('should return false if the not existing value 112 of a list was (not) removed', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        var status = list.remove(112);
+        chai_1.expect(status).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty list', function () {
+        list = setupList(Types.number);
+        chai_1.expect(function () { list.remove(42); }).not.to.throw();
+    });
+    it('should return the value 22 (2nd value) at index position 0 if the existing value 17 (1st value) of a list was removed', function () {
+        list = setupList(Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.remove(17);
+        var value = list.get(0);
+        chai_1.expect(value).to.equal(22);
+    });
+});
+describe('removeAll method', function () {
+    var list;
+    it('should return a length of 5 after execution with the value "22" on a list of 8 entries with 3 times the values of "22"', function () {
+        list = setupList(Types.string, ["17", "22", "88", "22", "12", "0", "-12", "22"]);
+        list.removeAll("22");
+        chai_1.expect(list.length).to.equal(5);
+    });
+    it('should return a length of 0 after execution with the value "x" on a list of 3 entries "x"', function () {
+        list = setupList(Types.string, ["x", "x", "x"]);
+        list.removeAll("x");
+        chai_1.expect(list.length).to.equal(0);
+    });
+    it('should return true if the existing value "22" of a list was removed', function () {
+        list = setupList(Types.string, ["17", "22", "88", "22", "12", "0", "-12", "22"]);
+        var status = list.removeAll("22");
+        chai_1.expect(status).to.equal(true);
+    });
+    it('should return false if the not existing value "112" of a list was (not) removed', function () {
+        list = setupList(Types.string, ["17", "22", "88", "22", "12", "0", "-12", "22"]);
+        var status = list.removeAll("112");
+        chai_1.expect(status).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty list', function () {
+        list = setupList(Types.string);
+        chai_1.expect(function () { list.removeAll("42"); }).not.to.throw();
+    });
+    it('should return a length of 5 after execution with the value "" (empty) on a list of 8 entries with 3 empty entries', function () {
+        list = setupList(Types.string, ["17", "", "88", "", "12", "0", "-12", ""]);
+        list.removeAll("");
+        chai_1.expect(list.length).to.equal(5);
+    });
+    it('should return the value "-12" at index position 4 if the existing value "22" of a list was removed', function () {
+        list = setupList(Types.string, ["17", "22", "88", "22", "12", "0", "-12", "22"]);
+        list.removeAll("22");
+        var value = list.get(4);
+        chai_1.expect(value).to.equal("-12");
+    });
+    it('should return the concatenated value "1788120-12" after execution with the value "22"', function () {
+        list = setupList(Types.string, ["17", "22", "88", "22", "12", "0", "-12", "22"]);
+        list.removeAll("22");
+        var value = "";
+        for (var i = 0; i < list.length; i++) {
+            value = value + list.get(i);
+        }
+        chai_1.expect(value).to.equal("1788120-12");
+    });
+    it('should return a length of 3 if a complex class object (custom) in a prepared list of 4 entries is removed', function () {
+        var list2 = new List_1.default();
+        list2.add(TestClass.createRandomObject());
+        list2.add(TestClass.createRandomObject());
+        var value = TestClass.createRandomObject();
+        list2.add(value);
+        list2.add(TestClass.createRandomObject());
+        list2.removeAll(value);
+        chai_1.expect(list2.length).to.equal(3);
     });
 });
 var TestClass = (function () {

@@ -1,4 +1,5 @@
 import List from '../../src/List';
+import {IteratorItem} from '../../src/IteratorItem';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -298,6 +299,16 @@ describe('forEach method', () => {
         });
         expect(value).to.equal("122333444455555");
     });
+    it('should return the term "1223334444" after concatenation of the forEach values with a break (return) after 4 cycles', () => {
+        let value: string = "";
+        let counter:number = 0;
+        list.forEach(item => {
+            if (counter >= 4) { return; }
+            value = value + item;
+            counter++;
+        });
+        expect(value).to.equal("1223334444");
+    });
     it('should return the number of 5 iterations after the execution', () => {
         let i: number = 0;
         list.forEach(item => {
@@ -452,6 +463,185 @@ describe('lastIndexOf method', () => {
     });
 
 
+});
+
+describe('next method', () => {
+    let list: List<string>;
+
+    it('should return the term "122333444455555" after concatenation of 5 calls (for loop)', () => {
+        list = setupList(Types.string, ["1","22","333","4444","55555"]);
+        let value: string = "";
+        for(let i: number = 0; i < 5; i++)
+        {
+            value = value + (list.next() as IteratorItem<string>).value;
+        }
+        expect(value).to.equal("122333444455555");
+    });
+    it('should return the term "122333444455555122" after concatenation of 7 calls in a list of 5 entries (for loop)', () => {
+        list = setupList(Types.string, ["1","22","333","4444","55555"]);
+        let value: string = "";
+        for(let i: number = 0; i < 7; i++)
+        {
+            value = value + (list.next() as IteratorItem<string>).value;
+        }
+        expect(value).to.equal("122333444455555122");
+    });
+    it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', () => {
+        list = setupList(Types.string, ["1","22","333","4444","55555"]);
+        let state: boolean;
+        for(let i: number = 0; i < 5; i++)
+        {
+            state = (list.next() as IteratorItem<string>).isLastEntry;
+        }
+        expect(state).to.equal(true);
+    });
+    it('should return the term "122333444455555" after concatenation of a forEach call after two calls of the next method (restart in forEach)', () => {
+        list = setupList(Types.string, ["1","22","333","4444","55555"]);
+        let value: string = "";
+        list.next();
+        list.next();
+        list.forEach(item => {
+            value = value + item;
+        });
+        expect(value).to.equal("122333444455555");
+    });
+});
+
+
+describe('pop method', () => {
+    let list: List<number>;
+
+    it('should return a length of 7 after execution on a list of 8 entries', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.pop();
+        expect(list.length).to.equal(7);
+    });
+    it('should return 17 as value after execution (1st value of initial list)', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        let value: number = list.pop();
+        expect(value).to.equal(17);
+    });
+    it('should return undefined as value after execution on an empty list', () => {
+        list = setupList(Types.number);
+        let value: number = list.pop();
+        expect(value).to.equal(undefined);
+    });
+});
+
+describe('push method', () => {
+    let list: List<number>;
+
+    it('should return a length of 9 after execution on a list of 8 entries', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.push(42);
+        expect(list.length).to.equal(9);
+    });
+    it('should return 42 as value  on index position 0 after execution', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.push(42);
+        let value: number = list.get(0);
+        expect(value).to.equal(42);
+    });
+    it('should return 1 as value of the index position 0 in an empty list', () => {
+        list = setupList(Types.number);
+        list.push(1);
+        let value: number = list.get(0);
+        expect(value).to.equal(1);
+    });
+    it('should throw an error when executing push with an undefined value to a list of numbers', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+    expect(function() { list.push(undefined); }).to.throw();
+    });
+});
+
+describe('remove method', () => {
+    let list: List<number>;
+
+    it('should return a length of 7 after execution with the value 22 on a list of 8 entries with 3 times the values of 22', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.remove(22);
+        expect(list.length).to.equal(7);
+    });
+    it('should return true if the existing value 12 of a list was removed', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        let status : boolean = list.remove(12);
+        expect(status).to.equal(true);
+    });
+    it('should return false if the not existing value 112 of a list was (not) removed', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        let status : boolean = list.remove(112);
+        expect(status).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty list', () => {
+        list = setupList(Types.number);
+    expect(function() { list.remove(42); }).not.to.throw();
+    });
+    it('should return the value 22 (2nd value) at index position 0 if the existing value 17 (1st value) of a list was removed', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.remove(17);
+        let value : number = list.get(0);
+        expect(value).to.equal(22);
+    });
+});
+
+describe('removeAll method', () => {
+    let list: List<string>;
+
+    it('should return a length of 5 after execution with the value "22" on a list of 8 entries with 3 times the values of "22"', () => {
+        list = setupList(Types.string, ["17","22","88","22","12","0","-12","22"]);
+        list.removeAll("22");
+        expect(list.length).to.equal(5);
+    });
+    it('should return a length of 0 after execution with the value "x" on a list of 3 entries "x"', () => {
+        list = setupList(Types.string, ["x","x","x"]);
+        list.removeAll("x");
+        expect(list.length).to.equal(0);
+    });
+    it('should return true if the existing value "22" of a list was removed', () => {
+        list = setupList(Types.string, ["17","22","88","22","12","0","-12","22"]);
+        let status : boolean = list.removeAll("22");
+        expect(status).to.equal(true);
+    });
+    it('should return false if the not existing value "112" of a list was (not) removed', () => {
+        list = setupList(Types.string, ["17","22","88","22","12","0","-12","22"]);
+        let status : boolean = list.removeAll("112");
+        expect(status).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty list', () => {
+        list = setupList(Types.string);
+    expect(function() { list.removeAll("42"); }).not.to.throw();
+    });
+    it('should return a length of 5 after execution with the value "" (empty) on a list of 8 entries with 3 empty entries',() => {
+        list = setupList(Types.string, ["17","","88","","12","0","-12",""]);
+        list.removeAll("");
+        expect(list.length).to.equal(5);
+    });
+    it('should return the value "-12" at index position 4 if the existing value "22" of a list was removed', () => {
+        list = setupList(Types.string, ["17","22","88","22","12","0","-12","22"]);
+        list.removeAll("22");
+        let value : string = list.get(4);
+        expect(value).to.equal("-12");
+    });
+    it('should return the concatenated value "1788120-12" after execution with the value "22"', () => {
+        list = setupList(Types.string, ["17","22","88","22","12","0","-12","22"]);
+        list.removeAll("22");
+        let value : string = "";
+        for(let i: number = 0; i < list.length; i++)
+        {
+            value = value + list.get(i);
+        }
+        expect(value).to.equal("1788120-12");
+    });
+    it('should return a length of 3 if a complex class object (custom) in a prepared list of 4 entries is removed', () => {
+        let list2: List<TestClass> = new List<TestClass>();
+        list2.add(TestClass.createRandomObject());
+        list2.add(TestClass.createRandomObject());
+        let value: TestClass = TestClass.createRandomObject();
+        list2.add(value);
+        list2.add(TestClass.createRandomObject());
+        list2.removeAll(value);
+        expect(list2.length).to.equal(3);
+    });
 });
 
 class TestClass

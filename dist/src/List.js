@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
-var _ = require('lodash');
+var isEqual = require('lodash.isequal');
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
  */
@@ -181,7 +181,7 @@ var List = (function () {
             newList.addInternal(this._iList[i]);
         }
         this.clear();
-        this._iList = newList.copyToArray();
+        this.addRange(newList);
         this._length = this.length;
     };
     /**
@@ -258,7 +258,7 @@ var List = (function () {
      */
     List.prototype.indexOf = function (value) {
         for (var i = 0; i < this._length; i++) {
-            if (_.isEqual(this._iList[i], value) === true) {
+            if (isEqual(this._iList[i], value) === true) {
                 return i;
             }
         }
@@ -298,7 +298,7 @@ var List = (function () {
     List.prototype.indicesOfInternal = function (value, asList) {
         var indices = new List();
         for (var i = 0; i < this._length; i++) {
-            if (this._iList[i] === value) {
+            if (isEqual(this._iList[i], value) === true) {
                 indices.addInternal(i);
             }
         }

@@ -3,7 +3,7 @@ import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
-var _ = require('lodash');
+var isEqual  = require('lodash.isequal');
 
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
@@ -230,7 +230,7 @@ export default class List<T> implements Iterator<T>, IList<T>
             newList.addInternal(this._iList[i]);
         }
         this.clear();
-        this._iList = newList.copyToArray();
+        this.addRange(newList);
         this._length = this.length;
     }
 
@@ -331,7 +331,7 @@ export default class List<T> implements Iterator<T>, IList<T>
 
         for(let i: number = 0; i < this._length; i++)
         {
-            if (_.isEqual(this._iList[i], value) === true)
+            if (isEqual(this._iList[i], value) === true)
             {
                 return i;
             }
@@ -373,7 +373,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     private indicesOfInternal(value: T, asList: boolean): any {
         let indices: List<number> = new List<number>();
         for (let i = 0; i < this._length; i++) {
-            if (this._iList[i] === value) {
+            if (isEqual(this._iList[i], value) === true) {
                 indices.addInternal(i);
             }
         }
