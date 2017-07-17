@@ -226,6 +226,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         let newList: List<T> = new List<T>();
 
         for (let i: number = 0; i < this._length; i++) {
+            
             if (list.contains(i)) { continue; }
             newList.addInternal(this._iList[i]);
         }

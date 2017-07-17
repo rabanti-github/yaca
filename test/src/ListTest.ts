@@ -644,6 +644,34 @@ describe('removeAll method', () => {
     });
 });
 
+describe('removeAt method', () => {
+    let list: List<number>;
+    it('should return a length of 7 after execution on a list of 8 entries', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.removeAt(1);
+        expect(list.length).to.equal(7);
+    });
+    it('should throw an error when executed with an negative index', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+    expect(function() { list.removeAt(-22); }).to.throw();
+    });
+    it('should throw an error when executed with a floating pint number as index', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+    expect(function() { list.removeAt(1.56); }).to.throw();
+    });
+    it('should throw an error when executed with an index of 10 on a ist of 8 entries', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+    expect(function() { list.removeAt(10); }).to.throw();
+    });
+    it('should return the value 88 at index position 1 after removing the same position', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.removeAt(1);
+        let value : number = list.get(1);
+        expect(value).to.equal(88);
+    });
+});
+
+
 class TestClass
 {
     private static counter: number = 0;
