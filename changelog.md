@@ -11,7 +11,7 @@ Release type: Initial release
 ***v0.1.3***
 
 Date: 2017-07-13
----
+
 Release type: Cleanup / Non-critical
 
 * Fixed an issue with the readme
