@@ -36,6 +36,11 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     add(value: T): void;
     /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    private addInternal(value);
+    /**
      * Adds a range of values
      * @param values Values as List<T>
      */

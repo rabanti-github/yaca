@@ -7,7 +7,10 @@ var list2 = new List_1.default([new Date(2015, 2, 10, 0, 0, 0), new Date(2017, 1
 var date = new Date(2017, 1, 1, 0, 0, 0);
 var match = list2.contains(date);
 list2.dequeue();
+var list3 = list2.getRange(undefined, 1);
 var d = new Dictionary_1.Dictionary();
+var hit = false;
+d.forEach(function (test) { hit = true; });
 d.add(22, "x");
 d.add(11, "y");
 d.add(4, "z");

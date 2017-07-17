@@ -87,4 +87,3 @@ The type **T** is the generic type defined in the constructor (e.g. number, bool
 | **sort(*CompareFunction*)** | void | Sorts the list according to the passed comparing function. The function has to compare two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned. |
 | **swapValues(number, number)** | void | Swaps the values at the two defined index positions in the list |
 
-

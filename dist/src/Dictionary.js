@@ -426,6 +426,9 @@ var Dictionary = (function () {
      * @param callback Callback function to process the items of the List
      */
     Dictionary.prototype.forEach = function (callback) {
+        if (this._length === 0) {
+            return;
+        }
         var done = false;
         var item;
         this._iCounter = 0;

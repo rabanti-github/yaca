@@ -621,6 +621,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param callback Callback function to process the items of the List
      */
     public forEach(callback: IForEachInterface<K,V>) {
+        if (this._length === 0) { return; }
         let done: boolean = false;
         let item: IteratorItem<KeyValuePair<K,V>>;
         this._iCounter = 0;

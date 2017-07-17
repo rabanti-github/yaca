@@ -7,10 +7,14 @@ import {KeyValuePair} from './KeyValuePair';
         let date = new Date(2017,1,1,0,0,0);
         let match = list2.contains(date);
         list2.dequeue();
+        let list3: List<Date> = list2.getRange(undefined,1);
 
+        let list4: List<number> = new List<number>(22);
 
 let d: Dictionary<number, string> = new Dictionary<number, string>();
 
+let hit: boolean = false
+d.forEach(test => { hit = true; });
 
 d.add(22,"x");
 d.add(11,"y");

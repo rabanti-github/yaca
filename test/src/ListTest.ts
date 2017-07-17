@@ -40,6 +40,40 @@ describe('constructors', () => {
     });
 });
 
+describe('length property', () => {
+    let list: List<number>;
+
+    it('should return 0 on an initialized (empty) list', () => {
+        list = setupList(Types.number);
+        expect(list.length).to.equal(0);
+    });
+    it('should return 9 on a list with 9 elements', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
+        expect(list.length).to.equal(9);
+    });
+    it('should return 10 after adding one element to a list of 9 elements', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
+        list.add(1);
+        expect(list.length).to.equal(10);
+    });
+    it('should return 8 after removing one element to a list of 9 elements', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
+        list.removeAt(0);
+        expect(list.length).to.equal(8);
+    });
+    it('should return 0 after execution of the clear() method', () => {
+        list = setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
+        list.clear();
+        expect(list.length).to.equal(0);
+    });
+    it('should return 0 after removing the last element of a list', () => {
+        list = setupList(Types.number,17);
+        list.removeAt(0);
+        expect(list.length).to.equal(0);
+    });
+
+});
+
 describe('add method', () => {
     let list: List<string> = setupList(Types.string);
     it('should add an element and increase the counter by one', () => {
@@ -52,6 +86,9 @@ describe('add method', () => {
         let entry: string = list.get(1);
         expect(entry).to.equal("test2");
     });
+    it('should throw an error when adding undefined to a list of numbers', () => {
+        expect(function() { let list: List<number> = setupList(Types.number); list.add(undefined); }).to.throw();
+    });    
     it('should not throw an error when adding a number to a list of numbers', () => {
         expect(function() { let list: List<number> = setupList(Types.number); list.add(21); }).to.not.throw();
     });
@@ -113,6 +150,11 @@ describe('contains method', () => {
         let match: boolean = list.contains("three");
         expect(match).to.equal(true);
     });
+    it('should return false on undefined as value in a prepared list (cannot contain undefined)', () => {
+        
+        let match: boolean = list.contains(undefined);
+        expect(match).to.equal(false);
+    });
     it('should return false on value "six" in a prepared list which does not contain this value', () => {
         
         let match: boolean = list.contains("six");
@@ -124,6 +166,17 @@ describe('contains method', () => {
         let match: boolean = list2.contains(date);
         expect(match).to.equal(true);
     });
+    it('should return true on a complex class object (custom) in a prepared list which contains this value', () => {
+        let list2: List<TestClass> = new List<TestClass>();
+        list2.add(TestClass.createRandomObject());
+        list2.add(TestClass.createRandomObject());
+        let value: TestClass = TestClass.createRandomObject();
+        list2.add(value);
+        list2.add(TestClass.createRandomObject());
+        let match: boolean = list2.contains(value);
+        expect(match).to.equal(true);
+    });
+
 });
 
 
@@ -140,19 +193,28 @@ describe('copyToArray method', () => {
         expect(value).to.equal("two");
     });
     it('should return an array with 4 elements from a list with 6 elements and start index of 2', () => {
-        let array: string[] = list.copyToArray(2)
+        let array: string[] = list.copyToArray(2);
         let length: number = array.length;
         expect(length).to.equal(4);
     });
     it('should return an array with 3 elements from a list with 6 elements and start index of 2 and end index of 4', () => {
-        let array: string[] = list.copyToArray(2,4)
+        let array: string[] = list.copyToArray(2,4);
         let length: number = array.length;
         expect(length).to.equal(3);
     });
     it('should return the value of "five" in the copy from a list with 6 elements and start index of 2 and end index of 4 as last element', () => {
-        let array: string[] = list.copyToArray(2,4)
+        let array: string[] = list.copyToArray(2,4);
         let value: string = array[array.length - 1];
         expect(value).to.equal("five");
+    });
+    it('should throw an error when the start index is negative', () => {
+        expect(function() {let array: string[] = list.copyToArray(-2,4); }).to.throw();
+    });
+    it('should throw an error when the end index is 99 on a list with 6 elements', () => {
+        expect(function() {let array: string[] = list.copyToArray(1,99); }).to.throw();
+    });
+    it('should not throw an error when the end index is undefined (interpreted as last index position)', () => {
+        expect(function() {let array: string[] = list.copyToArray(1,undefined); }).not.to.throw();
     });
 });
 
@@ -160,7 +222,7 @@ describe('copyToArray method', () => {
 describe('dequeue method', () => {
     let list: List<number> = setupList(Types.number, [17,22,88,55,12,0,-12]);
 
-    it('should return a -12 as result of the operation', () => {
+    it('should return a value of -12 as result of the operation', () => {
         let number: number = list.dequeue();
         expect(number).to.equal(-12);
     });
@@ -170,7 +232,259 @@ describe('dequeue method', () => {
         let length: number = list.length;
         expect(length).to.equal(6);
     });
+    it('should return undefined if executed on an empty list', () => {
+        list = setupList(Types.number);
+        let value: number = list.dequeue();
+        expect(value).to.equal(undefined);
+    });
+    
 });
+
+describe('distinct method', () => {
+    it('should return a length of 6 on a list with 8 entries and 3 identical values after execution', () => {
+        let list: List<number> = setupList(Types.number, [17,22,88,55,22,0,-12,22]);
+        list.distinct();
+        let length: number = list.length;
+        expect(length).to.equal(6);
+    });
+    it('should return length of 5 on a list with 6 entries of a complex class object (custom) with 2 duplicate values', () => {
+        let list2: List<TestClass> = new List<TestClass>();
+        list2.add(TestClass.createRandomObject());
+        list2.add(TestClass.createRandomObject());
+        let value: TestClass = TestClass.createRandomObject();
+        list2.add(value);
+        list2.add(TestClass.createRandomObject());
+        list2.add(value);
+        list2.add(TestClass.createRandomObject());
+        list2.distinct();
+        let length: number = list2.length;
+        expect(length).to.equal(5);
+    });
+    it('should return a length of 8 on a list with 8 entries and no duplicates', () => {
+        let list: List<number> = setupList(Types.number, [17,22.5,88,55,22.50000001,0,-12,22.49999999]);
+        list.distinct();
+        let length: number = list.length;
+        expect(length).to.equal(8);
+    });
+});
+
+
+describe('enqueue method', () => {
+    let list: List<number> = setupList(Types.number, [17,22,88,55,12,0,-12]);
+
+    it('should return a length of 8 if executed on a list of 7 elements', () => {
+        list.enqueue(777);
+        let length: number = list.length;
+        expect(length).to.equal(8);
+    });
+    it('should return the value 42 at the last index position after execution with this value', () => {
+        list.enqueue(42);
+        let value: number = list.get(list.length - 1);
+        expect(value).to.equal(42);
+    });
+    it('should throw an error when enqueueing undefined to a list of numbers', () => {
+        expect(function() { let list: List<number> = setupList(Types.number); list.enqueue(undefined); }).to.throw();
+    });
+});
+
+
+describe('forEach method', () => {
+    let list: List<string> = setupList(Types.string, ["1","22","333","4444","55555"]);
+
+    it('should return the term "122333444455555" after concatenation of the forEach values during the execution', () => {
+        let value: string = "";
+        list.forEach(item => {
+            value = value + item;
+        });
+        expect(value).to.equal("122333444455555");
+    });
+    it('should return the number of 5 iterations after the execution', () => {
+        let i: number = 0;
+        list.forEach(item => {
+            i++;
+        });
+        expect(i).to.equal(5);
+    });
+    it('should not trigger the callback function on a empty list during the execution', () => {
+        list = new List<string>();
+        let hit: boolean = false;
+        list.forEach(item => {
+            hit = true;
+        });
+        expect(hit).to.equal(false);   
+    });
+});
+
+describe('get method', () => {
+    let list: List<number> = setupList(Types.number, [17,22,88,55,12,0,-12]);
+
+    it('should return the value of 55 at the index position 3', () => {
+        let value: number = list.get(3);
+        expect(value).to.equal(55);
+    });
+    it('should throw an error when executed with index position 99 on a list with 7 entries', () => {
+        expect(function() { let value: number = list.get(99); }).to.throw();
+    });
+    it('should throw an error when executed with index position -2 on a list with 7 entries', () => {
+        expect(function() { let value: number = list.get(-2); }).to.throw();
+    });
+    it('should throw an error when executed with index position 3.55 on a list with 7 entries', () => {
+        expect(function() { let value: number = list.get(3.55); }).to.throw();
+    });
+    it('should throw an error when executed with undefined as index position on a list with 7 entries', () => {
+        expect(function() { let value: number = list.get(undefined); }).to.throw();
+    });
+});
+
+
+describe('getRange method', () => {
+    let list: List<string> = setupList(Types.string, ["one", "two", "three", "four", "five", "six"]);
+    it('should return a list with 6 elements from a list with this number of elements', () => {
+        let list2: List<string> = list.getRange();
+        let length: number = list2.length;
+        expect(length).to.equal(6);
+    });
+    it('should return the value "three" at the index position 2 (3rd element) in the copy of a list with 6 entries', () => {
+        let list2: List<string> = list.getRange();
+        let value: string = list2.get(2);
+        expect(value).to.equal("three");
+    });
+    it('should return a list with 4 elements from a list with 6 elements and start index of 2', () => {
+        let list2: List<string> = list.getRange(2);
+        let length: number = list2.length;
+        expect(length).to.equal(4);
+    });
+    it('should return a list with 3 elements from a list with 6 elements and start index of 2 and end index of 4', () => {
+        let list2: List<string> = list.getRange(2,4);
+        let length: number = list2.length;
+        expect(length).to.equal(3);
+    });
+    it('should return the value of "five" in the copy from a list with 6 elements and start index of 2 and end index of 4 as last element', () => {
+        let list2: List<string> = list.getRange(2,4);
+        let value: string = list2.get(list2.length - 1);
+        expect(value).to.equal("five");
+    });
+    it('should throw an error when the start index is negative', () => {
+        expect(function() {let list2: List<string> = list.getRange(-2,4); }).to.throw();
+    });
+    it('should throw an error when the end index is 99 on a list with 6 elements', () => {
+        expect(function() {let list2: List<string> = list.getRange(2,99); }).to.throw();
+    });
+    it('should not throw an error when the start index is undefined (interpreted as 0)', () => {
+        expect(function() {let list2: List<string> = list.getRange(undefined,2); }).not.to.throw();
+    });
+});
+
+
+describe('indexOf method', () => {
+    let list: List<number> = setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+
+    it('should return the index position 1 on value 22', () => {
+        let index: number = list.indexOf(22);
+        expect(index).to.equal(1);
+    });
+    it('should return the index position -1 on not existing value 122', () => {
+        let index: number = list.indexOf(122);
+        expect(index).to.equal(-1);
+    });
+    it('should return the index position -1 on undefined as value', () => {
+        let index: number = list.indexOf(undefined);
+        expect(index).to.equal(-1);
+    });
+});
+
+
+describe('indicesOf method', () => {
+    let list: List<string> = setupList(Types.string, ["one", "two", "three", "two", "four", "five", "six"]);
+    it('should return an array with two elements on the value "two" from a list with 2 such occurrences', () => {
+        let indices: number[] = list.indicesOf("two")
+        expect(indices.length).to.equal(2);
+    });
+    it('should return an array with two index elements 1 and 3 on the value "two" from a list with 2 such occurrences', () => {
+        let indices: number[] = list.indicesOf("two")
+        expect(indices[0] === 1 && indices[1] === 3).to.equal(true);
+    });
+    it('should return an empty array on the not existing value "122"', () => {
+         let indices: number[] = list.indicesOf("122");
+        expect(indices.length).to.equal(0);
+    });
+    it('should return an empty array on undefined as value', () => {
+        let indices: number[] = list.indicesOf(undefined);
+        expect(indices.length).to.equal(0);
+    });
+});
+
+describe('indicesOfAsList method', () => {
+    let list: List<string> = setupList(Types.string, ["one", "two", "three", "two", "four", "five", "six"]);
+    it('should return a list with two elements on the value "two" from a list with 2 such occurrences', () => {
+        let indices: List<number> = list.indicesOfAsList("two")
+        expect(indices.length).to.equal(2);
+    });
+    it('should return a list with two index elements 1 and 3 on the value "two" from a list with 2 such occurrences', () => {
+        let indices: List<number> = list.indicesOfAsList("two")
+        expect(indices.get(0) === 1 && indices.get(1) === 3).to.equal(true);
+    });
+    it('should return an empty list on the not existing value "122"', () => {
+         let indices: List<number> = list.indicesOfAsList("122");
+        expect(indices.length).to.equal(0);
+    });
+    it('should return an empty list on undefined as value', () => {
+        let indices: List<number> = list.indicesOfAsList(undefined);
+        expect(indices.length).to.equal(0);
+    });
+});
+
+
+describe('lastIndexOf method', () => {
+    let list: List<number> = setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
+
+    it('should return the index position 7 on value 22', () => {
+        let index: number = list.lastIndexOf(22);
+        expect(index).to.equal(7);
+    });
+    it('should return the index position -1 on not existing value 122', () => {
+        let index: number = list.lastIndexOf(122);
+        expect(index).to.equal(-1);
+    });
+    it('should return the index position -1 on undefined as value', () => {
+        let index: number = list.lastIndexOf(undefined);
+        expect(index).to.equal(-1);
+    });
+
+
+});
+
+class TestClass
+{
+    private static counter: number = 0;
+    public value1: string;
+    public value2: number;
+    public value3: boolean[];
+    public value4: Date;
+
+    constructor()
+    {
+
+    }
+
+    public static createRandomObject() : TestClass
+    {
+        let o: TestClass = new TestClass();
+        o.value4 = new Date();
+        o.value1 = o.value4.toDateString() + "_" + TestClass.counter.toString();
+        o.value2 = o.value4.getMilliseconds() + TestClass.counter;
+        let rnd: number;
+        o.value3 = new Array(5);
+        for (let i: number = 0; i < 5; i++)
+        {
+            rnd = Math.random();
+            if (rnd > 0.5) {o.value3[i] = true;}
+            else {o.value3[i] = false;}
+        }
+        TestClass.counter++;
+        return o; 
+    }
+}
 
 
 function setupList(t: Types, initialValue?: any | any[]): any

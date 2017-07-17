@@ -39,6 +39,16 @@ var List = (function () {
      * @param value Value to add
      */
     List.prototype.add = function (value) {
+        if (value === undefined) {
+            throw new Error("An undefined value cannot be added to a list");
+        }
+        this.addInternal(value);
+    };
+    /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    List.prototype.addInternal = function (value) {
         this._iList[this._length] = value;
         this._length++;
     };
@@ -168,7 +178,7 @@ var List = (function () {
             if (list.contains(i)) {
                 continue;
             }
-            newList.add(this._iList[i]);
+            newList.addInternal(this._iList[i]);
         }
         this.clear();
         this._iList = newList.copyToArray();
@@ -289,7 +299,7 @@ var List = (function () {
         var indices = new List();
         for (var i = 0; i < this._length; i++) {
             if (this._iList[i] === value) {
-                indices.add(i);
+                indices.addInternal(i);
             }
         }
         if (asList !== undefined && asList === true) {
@@ -342,7 +352,7 @@ var List = (function () {
                 counter++;
             }
             else {
-                output.add(this._iList[i]);
+                output.addInternal(this._iList[i]);
             }
         }
         return output;
@@ -397,7 +407,7 @@ var List = (function () {
         var newList = new List();
         for (var i = 0; i < this._length; i++) {
             if (newList.contains(this._iList[i]) === false) {
-                newList.add(this._iList[i]);
+                newList.addInternal(this._iList[i]);
             }
         }
         this.clear();
@@ -417,6 +427,9 @@ var List = (function () {
      * @param callback Callback function to process the items of the List
      */
     List.prototype.forEach = function (callback) {
+        if (this._length === 0) {
+            return;
+        }
         var done = false;
         var item;
         this._iCounter = 0;
