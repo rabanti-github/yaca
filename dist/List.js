@@ -149,6 +149,7 @@ var List = (function () {
      */
     List.prototype.removeAt = function (index) {
         var i = new List(index);
+        this.removeAtIndices(i);
     };
     List.prototype.removeAtIndices = function (indices) {
         var list;

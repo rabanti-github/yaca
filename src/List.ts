@@ -49,6 +49,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         }
     }
 
+
     /**
      * Gets the number of elements of the List
      */
@@ -186,6 +187,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public removeAt(index: number) {
         let i: List<number> = new List<number>(index);
+        this.removeAtIndices(i);
     }
 
     /**

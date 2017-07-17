@@ -16,10 +16,16 @@ Release type: Cleanup / Non-critical
 
 ***v0.1.4***
 Date: 2017-07-17
-Release type: Cleanup / Non-critical
+Release type: Bugfix
 ---
 * Fixed a bug regarding comparison
 * Code clean-up
+
+***v0.1.5***
+Date: 2017-07-17
+Release type: Bugfix
+---
+* Fixed a bug in removeAt
 
 
 
