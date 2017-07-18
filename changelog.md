@@ -9,7 +9,7 @@ Release type: Initial release
 * Initial release
 
 ***v0.1.3***
-
+---
 Date: 2017-07-13
 
 Release type: Cleanup / Non-critical
@@ -46,4 +46,17 @@ Release type: Bugfix
 * Several bugfixes
 * Optimization of the List Class
 * Change of dependency from lodash to lodash.isequal
+
+
+***v0.1.7***
+---
+Date: 2017-07-18
+
+Release type: Optimization
+
+* Several additional checks
+* Optimization of the List
+* Implementation of testing (work in progress)
+
+
 
