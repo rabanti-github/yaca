@@ -37,12 +37,15 @@ var TestClass = (function () {
     TestClass.counter = 0;
     return TestClass;
 }());
+var sList = new List_1.default(["1", "2", "3"]);
+sList.set(1, undefined);
 var list2 = new List_1.default();
 list2.add(TestClass.createRandomObject());
 list2.add(TestClass.createRandomObject());
 var value = TestClass.createRandomObject();
 list2.add(value);
 list2.add(TestClass.createRandomObject());
+//list2.removeAt(2);
 list2.removeAll(value);
 var d = new Dictionary_1.Dictionary();
 var hit = false;

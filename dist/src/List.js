@@ -70,8 +70,9 @@ var List = (function () {
      * @param value New value
      */
     List.prototype.set = function (index, value) {
-        if (index < 0 || index > this._length - 1) {
-            throw new Error("The index " + index + " is out of range.");
+        this.indexCheck(index);
+        if (value === undefined) {
+            throw new Error("An undefined value cannot be set as value of a list");
         }
         this._iList[index] = value;
     };
@@ -95,9 +96,7 @@ var List = (function () {
      * @param value Value to insert
      */
     List.prototype.insertAtIndex = function (index, value) {
-        if (index < 0 || index > this._length) {
-            throw new Error("The index " + index + " is out of range.");
-        }
+        this.indexCheck(index, true); // allowed 0 to length (insert after last item)
         var firstPart, secondPart;
         if (index === 0) {
             firstPart = [];
@@ -174,6 +173,9 @@ var List = (function () {
             return;
         }
         var newList = new List();
+        for (var i = 0; i < iLen; i++) {
+            this.indexCheck(list.get(i));
+        }
         for (var i = 0; i < this._length; i++) {
             if (list.contains(i)) {
                 continue;
@@ -332,11 +334,10 @@ var List = (function () {
      * @param toArray If true, an Array will be returned, otherwise a List
      */
     List.prototype.copyToInternal = function (start, end, toArray) {
-        if (start < 0 || start > end) {
-            throw new Error("The passed start index " + start + " is out of range");
-        }
-        if (end < start || end > this._length - 1) {
-            throw new Error("The passed end index " + end + " is out of range");
+        this.indexCheck(start);
+        this.indexCheck(end);
+        if (start > end) {
+            throw new Error("The passed start index " + start + " cannot be greater than the end index " + end);
         }
         var output;
         if (toArray === true) {
@@ -380,9 +381,8 @@ var List = (function () {
      * @param index2 Index position 1
      */
     List.prototype.swapValues = function (index1, index2) {
-        if (index1 < 0 || index1 > this._length - 1 || index2 < 0 || index2 > this._length - 1) {
-            throw new Error("The passed indices (" + index1 + ", " + index2 + ") are out of range");
-        }
+        this.indexCheck(index1);
+        this.indexCheck(index2);
         var temp = new Object;
         this.swapValuesInternal(index1, index2, temp);
     };
@@ -413,6 +413,21 @@ var List = (function () {
         this.clear();
         this.addRange(newList);
     };
+    List.prototype.indexCheck = function (index, allowUpperBound) {
+        if (allowUpperBound !== undefined && allowUpperBound === true) {
+            if (index < 0 || index > this._length) {
+                throw new Error("The index " + index + " is out of range");
+            }
+        }
+        else {
+            if (index < 0 || index >= this._length) {
+                throw new Error("The index " + index + " is out of range");
+            }
+        }
+        if (index % 1 !== 0) {
+            throw new Error("The index " + index + " is invalid. Only integers are allowed");
+        }
+    };
     // *********************************************** Implemented Interfaces
     /**
      * Sorts the List according to the passed function
@@ -420,6 +435,9 @@ var List = (function () {
      */
     List.prototype.sort = function (sortFunction) {
         var qSort = new Sorter_1.Sorter();
+        if (sortFunction === undefined) {
+            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+        }
         qSort.quickSort(sortFunction, this._iList, 0, this._length);
     };
     /**

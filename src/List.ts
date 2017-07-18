@@ -109,8 +109,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value New value
      */
     public set(index: number, value: T) {
-        if (index < 0 || index > this._length - 1) {
-            throw new Error("The index " + index + " is out of range.");
+        this.indexCheck(index);
+        if (value === undefined)
+        {
+            throw new Error("An undefined value cannot be set as value of a list");
         }
         this._iList[index] = value;
     }
@@ -137,10 +139,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value Value to insert
      */
     public insertAtIndex(index: number, value: T) {
-        if (index < 0 || index > this._length) // allowed 0 to length (insert after last item)
-        {
-            throw new Error("The index " + index + " is out of range.");
-        }
+        this.indexCheck(index, true);// allowed 0 to length (insert after last item)
         let firstPart, secondPart: T[];
         if (index === 0) {
             firstPart = [];
@@ -224,7 +223,10 @@ export default class List<T> implements Iterator<T>, IList<T>
         let iLen = list.length;
         if (this._length === 0 || iLen === 0) { return; }
         let newList: List<T> = new List<T>();
-
+        for(let i: number = 0; i < iLen; i++)
+        {
+            this.indexCheck(list.get(i));     
+        }
         for (let i: number = 0; i < this._length; i++) {
             
             if (list.contains(i)) { continue; }
@@ -404,11 +406,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param toArray If true, an Array will be returned, otherwise a List
      */
     private copyToInternal(start: number, end: number, toArray: boolean): T[] | List<T> {
-        if (start < 0 || start > end) {
-            throw new Error("The passed start index " + start + " is out of range")
-        }
-        if (end < start || end > this._length - 1) {
-            throw new Error("The passed end index " + end + " is out of range")
+        this.indexCheck(start);
+        this.indexCheck(end);
+        if (start > end) {
+            throw new Error("The passed start index " + start + " cannot be greater than the end index " + end);
         }
         let output: any;
         if (toArray === true)
@@ -451,9 +452,8 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index2 Index position 1
      */
     public swapValues(index1: number, index2: number) {
-        if (index1 < 0 || index1 > this._length - 1 || index2 < 0 || index2 > this._length - 1) {
-            throw new Error("The passed indices (" + index1 + ", " + index2 + ") are out of range");
-        }
+        this.indexCheck(index1);
+        this.indexCheck(index2);
         var temp: T = new Object as T;
         this.swapValuesInternal(index1, index2, temp);
     }
@@ -485,6 +485,28 @@ export default class List<T> implements Iterator<T>, IList<T>
         this.addRange(newList);
     }
 
+    private indexCheck(index: number, allowUpperBound?: boolean): void
+    {
+        if (allowUpperBound !== undefined && allowUpperBound === true)
+        {
+            if (index < 0 || index > this._length)
+            {
+                throw new Error("The index " + index + " is out of range");
+            }
+        }
+        else
+        {
+            if (index < 0 || index >= this._length)
+            {
+                throw new Error("The index " + index + " is out of range");
+            }
+        }
+        if (index % 1 !== 0)
+        {
+            throw new Error("The index " + index + " is invalid. Only integers are allowed");
+        }
+    }
+
     // *********************************************** Implemented Interfaces
 
     /**
@@ -493,6 +515,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     sort(sortFunction: ISortInterFace<T>) {
         let qSort: Sorter<T> = new Sorter();
+        if (sortFunction === undefined)
+        {
+            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+        }
         qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
     }
 

@@ -44,7 +44,19 @@ Date: 2017-07-17
 Release type: Bugfix
 
 * Several bugfixes
-* Optimization of the List
+* Optimization of the List Class
 * Change of dependency from lodash to lodash.isequal
+
+
+***v0.1.7***
+---
+Date: 2017-07-18
+
+Release type: Optimization
+
+* Several additional checks
+* Optimization of the List
+* Implementation of testing (work in progress)
+
 
 

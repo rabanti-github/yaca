@@ -203,6 +203,7 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
      */
     distinct(): void;
+    private indexCheck(index, allowUpperBound?);
     /**
      * Sorts the List according to the passed function
      * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.

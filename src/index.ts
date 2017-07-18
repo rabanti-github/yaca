@@ -44,6 +44,8 @@ class TestClass
     }
 }
 
+let sList: List<string> = new List<string>(["1","2","3"]);
+sList.set(1, undefined);
 
 let list2: List<TestClass> = new List<TestClass>();
         list2.add(TestClass.createRandomObject());
@@ -51,6 +53,7 @@ let list2: List<TestClass> = new List<TestClass>();
         let value: TestClass = TestClass.createRandomObject();
         list2.add(value);
         list2.add(TestClass.createRandomObject());
+        //list2.removeAt(2);
         list2.removeAll(value);
 
 let d: Dictionary<number, string> = new Dictionary<number, string>();

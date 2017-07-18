@@ -1,13 +1,13 @@
 {
   "name": "yaca",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc && typedoc --out ./doc --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
-    "test": "mocha -r ts-node/register ./test/src/**/ListTest.ts"
+    "test": "mocha -r ts-node/register ./test/**/ListTest.ts"
   },
   "repository": {
     "type": "git",
