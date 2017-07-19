@@ -1,6 +1,6 @@
 {
   "name": "yaca",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
