@@ -44,7 +44,7 @@ Date: 2017-07-17
 Release type: Bugfix
 
 * Several bugfixes
-* Optimization of the List Class
+* Optimization of the List class
 * Change of dependency from lodash to lodash.isequal
 
 
@@ -55,8 +55,20 @@ Date: 2017-07-18
 Release type: Optimization
 
 * Several additional checks
-* Optimization of the List
+* Optimization of the List class
 * Implementation of testing (work in progress)
+
+***v0.1.8***
+---
+Date: 2017-07-19
+
+Release type: Optimization / Features
+
+* Optimization of the List class
+* Testing for the list class completed
+* Added a peek() function
+
+
 
 
 

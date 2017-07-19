@@ -1,8 +1,6 @@
 src/
 .vscode/
 doc/
-test/
 tslint.json
 .esdoc.json
 dist/test/
-dist/src/

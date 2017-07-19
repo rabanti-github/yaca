@@ -68,7 +68,8 @@
 				<p><strong>Y</strong>et <strong>A</strong>nother <strong>C</strong>ollection <strong>A</strong>pproach</p>
 				<h2 id="introduction">Introduction</h2>
 				<p>YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.</p>
-				<p>YACA contains at the moment only <strong>List&lt;T&gt;</strong> as collection type. Further types (e.g. Dictionary or Stack) are planned.</p>
+				<p>YACA contains at the moment only <strong>List&lt;T&gt;</strong> as collection type. Further types (e.g. Dictionary <em>[WIP]</em> or Stack) are planned.</p>
+				<p>See the <strong><a href="changelog.md">Changelog</a></strong> for recent updates.</p>
 				<h2 id="installation">Installation</h2>
 				<pre><code class="lang-bash">npm install -S yaca
 </code></pre>
@@ -189,7 +190,7 @@ numberList.clear();
 						</tr>
 						<tr>
 							<td style="text-align:left"><strong>dequeue()</strong></td>
-							<td style="text-align:left">T</td>
+							<td style="text-align:left">T / undefined</td>
 							<td style="text-align:left">Removes the top element of the list and returns its value (end index). Undefined will be returned if the list is empty</td>
 						</tr>
 						<tr>
@@ -258,8 +259,13 @@ numberList.clear();
 							<td style="text-align:left">Method to get the next value of an iterator. If the last item of the list is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach() method will also reset the position to 0.</td>
 						</tr>
 						<tr>
+							<td style="text-align:left"><strong>peek()</strong></td>
+							<td style="text-align:left">T / undefined</td>
+							<td style="text-align:left">Returns the value of the top element of the list without removing it (end position / last element). undefined will be returned if the list is empty</td>
+						</tr>
+						<tr>
 							<td style="text-align:left"><strong>pop()</strong></td>
-							<td style="text-align:left">T</td>
+							<td style="text-align:left">T / undefined</td>
 							<td style="text-align:left">Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the list is empty</td>
 						</tr>
 						<tr>
@@ -359,7 +365,16 @@ numberList.clear();
 						<a href="modules/_src_interfaces_isorter_.html">"src/interfaces/ISorter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_src_listtest_.html">"test/src/<wbr>List<wbr>Test"</a>
+						<a href="modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_testclass_.html">"test/<wbr>Test<wbr>Class"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_types_.html">"test/<wbr>Types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_utils_.html">"test/<wbr>Utils"</a>
 					</li>
 				</ul>
 			</nav>

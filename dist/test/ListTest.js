@@ -6,6 +6,7 @@ var Types_1 = require("./Types");
 var TestClass_1 = require("./TestClass");
 var chai_1 = require("chai");
 require("mocha");
+// This file is to test the List<T> class
 describe('constructors', function () {
     var list;
     it('should not throw an error if initialized without parameters', function () {
@@ -406,6 +407,48 @@ describe('indicesOfAsList method', function () {
         chai_1.expect(indices.length).to.equal(0);
     });
 });
+describe('insertAtIndex method', function () {
+    var list;
+    it('should return the value 42 at index position 3 after insertion at this index position', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.insertAtIndex(3, 42);
+        var index = list.get(3);
+        chai_1.expect(index).to.equal(42);
+    });
+    it('should return the value 22 at index position 4 after insert a value at index position 2', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.insertAtIndex(2, 42);
+        var index = list.get(4);
+        chai_1.expect(index).to.equal(22);
+    });
+    it('should return a length of 9 after insertion in a list of 8 entries', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.insertAtIndex(2, 42);
+        chai_1.expect(list.length).to.equal(9);
+    });
+    it('should return the value 11 at index position 8 after insert a value at this position in a list of 8 entries', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.insertAtIndex(8, 11);
+        var index = list.get(8);
+        chai_1.expect(index).to.equal(11);
+    });
+    it('should throw an error when inserting a value at index position 9 in a list of 8 entries', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        chai_1.expect(function () { list.insertAtIndex(9, 42); }).to.throw();
+    });
+    it('should throw an error when inserting a value at a negative index position', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        chai_1.expect(function () { list.insertAtIndex(-2, 42); }).to.throw();
+    });
+    it('should throw an error when inserting a value at a float number as index position', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        chai_1.expect(function () { list.insertAtIndex(2.99999999999, 42); }).to.throw();
+    });
+    it('should throw an error when inserting undefined as value', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        chai_1.expect(function () { list.insertAtIndex(3, undefined); }).to.throw();
+    });
+});
 describe('lastIndexOf method', function () {
     var list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
     it('should return the index position 7 on value 22', function () {
@@ -456,6 +499,29 @@ describe('next method', function () {
             value = value + item;
         });
         chai_1.expect(value).to.equal("122333444455555");
+    });
+});
+describe('peek method', function () {
+    var list;
+    it('should return 22 as value in a list where 22 is the last value', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        var value = list.peek();
+        chai_1.expect(value).to.equal(22);
+    });
+    it('should return 11 in a value with 1 element (11)', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [11]);
+        var value = list.peek();
+        chai_1.expect(value).to.equal(11);
+    });
+    it('should return a length of 8 executed on a list of 8 entries', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
+        list.peek();
+        chai_1.expect(list.length).to.equal(8);
+    });
+    it('should return undefined as value after execution on an empty list', function () {
+        list = Utils_1.Utils.setupList(Types_1.Types.number);
+        var value = list.peek();
+        chai_1.expect(value).to.equal(undefined);
     });
 });
 describe('pop method', function () {
