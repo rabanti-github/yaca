@@ -14,13 +14,33 @@ export class IteratorItem<T> implements IteratorResult<T>
     public value: T;
 
     /**
-     * Default constructor with parameters
+     * Default constructor
+     */
+    constructor();
+    /**
+     * Constructor with value
+     * @param value Value of the iterator item
+     */
+    constructor(value: T);
+    /**
+     * Default constructor with full parameters
      * @param value Value of the iterator item
      * @param finished If true, the last item of the iterator is reached
      */
-    constructor(value: T, finished: boolean)
+    constructor(value: T, finished: boolean);
+    constructor(value?: T, finished?: boolean)
     {
-        this.isLastEntry = finished;
-        this.value = value;
+        if (value !== undefined)
+        {
+            this.value = value;
+        }
+        if (finished !== undefined)
+        {
+            this.isLastEntry = finished;
+        }
+        else
+        {
+            this.isLastEntry = false;
+        }
     }
 }

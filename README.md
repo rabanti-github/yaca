@@ -1,17 +1,23 @@
 # YACA
+
 **Y**et **A**nother **C**ollection **A**pproach
 
 ## Introduction
+
 YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.
 
-YACA contains at the moment only **List&lt;T&gt;** as collection type. Further types (e.g. Dictionary or Stack) are planned.
+YACA contains at the moment only **List&lt;T&gt;** as collection type. Further types (e.g. Dictionary *[WIP]* or Stack) are planned.
+
+See the **[Change Log](changelog.md)** for recent updates.
 
 ## Installation
+
 ```bash
 npm install -S yaca
 ```
 
 ## Usage (List<T>)
+
 ```ts
 import {List} from 'yaca';
 
@@ -33,6 +39,7 @@ numberList.clear();
 ```
 
 ## Constructors
+
 The type **T** is the generic type defined in the constructor (e.g. number, boolean etc.)
 
 | Name & Arguments | Description |
@@ -61,7 +68,7 @@ The type **T** is the generic type defined in the constructor (e.g. number, bool
 | **copyToArray()** | T[] | Copies the whole list into an array of type T |
 | **copyToArray(number)** | T[] | Copies the list into an array of type T, beginning from the passed start index of the list |
 | **copyToArray(number, number)** | T[] | Copies the list into an array of type T, as range between the passed start and end index of the list |
-| **dequeue()** | T | Removes the top element of the list and returns its value (end index). Undefined will be returned if the list is empty |
+| **dequeue()** | T / undefined | Removes the top element of the list and returns its value (end index). Undefined will be returned if the list is empty |
 | **distinct()** | void | Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed |
 | **enqueue(T)** | void | Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the list will be shifted to a new value |
 | **forEach(*callback*)** | void | Implementation of a forEach loop. The callback function gets the values |
@@ -75,7 +82,8 @@ The type **T** is the generic type defined in the constructor (e.g. number, bool
 | **insertAtIndex(number, T)** | void | Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the list will be shifted to a new value |
 | **lastIndexOf(T)** | number | Gets the index of the last occurrence of the passed value |
 | **next(any?)** | IteratorResult | Method to get the next value of an iterator. If the last item of the list is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach() method will also reset the position to 0. |
-| **pop()** | T | Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the list is empty |
+| **peek()** | T / undefined | Returns the value of the top element of the list without removing it (end position / last element). undefined will be returned if the list is empty |
+| **pop()** | T / undefined | Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the list is empty |
 | **push(T)** | void | Inserts a new value at the top position of the list (end position / last element). This method is synonymous with add() |
 | **remove(T)** | boolean | Removes the passed value at the first occurrence in the list. Returns true if an element was removed |
 | **removeAll(T)** | boolean | Removes the passed value at all positions in the List. Returns true if an element was removed |

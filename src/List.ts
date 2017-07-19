@@ -1,4 +1,4 @@
-import IForEachInterface from './interfaces/IForEachInterface';
+import IForEachInterface from './interfaces/IForEachInterfaceList';
 import ISortInterFace from './interfaces/ISortInterface';
 import { IList } from './interfaces/IList';
 import { IteratorItem } from './IteratorItem';
@@ -11,9 +11,23 @@ var isEqual  = require('lodash.isequal');
 export default class List<T> implements Iterator<T>, IList<T>
 {
 
+// ############### P R I V A T E   V A R I A B L E S ###############
+
     private _iList: object;
     private _length: number;
     private _iCounter: number;
+
+// ############### P R O P E R T I E S ###############
+
+    /**
+     * Gets the number of elements of the List
+     */
+    public get length(): number {
+        this._length = Object.keys(this._iList).length
+        return this._length;
+    }
+
+// ############### C O N S T R U C T O R S ###############
 
     /** Default constructor */
     constructor();
@@ -49,14 +63,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         }
     }
 
-
-    /**
-     * Gets the number of elements of the List
-     */
-    public get length(): number {
-        this._length = Object.keys(this._iList).length
-        return this._length;
-    }
+// ############### P U B L I C   F U N C T I O N S ###############
 
     /**
      * Adds an element at the end of the List
@@ -104,25 +111,72 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
     /**
-     * Updates a value of the List at the specified index position
-     * @param index Index position (0 to n)
-     * @param value New value
+     * Removes all elements of the List
      */
-    public set(index: number, value: T) {
-        this.indexCheck(index);
-        if (value === undefined)
-        {
-            throw new Error("An undefined value cannot be set as value of a list");
+    public clear() {
+        if (this._length === 0) { return; }
+        else {
+            this._iList = [];
+            this._length = 0;
         }
-        this._iList[index] = value;
+    }
+
+        /**
+     * Check whether the List contains the specified value
+     * @param value True if the value exists, otherwise false
+     */
+    public contains(value: T): boolean {
+        if (this._length === 0) { return false; }
+        let index: number = this.indexOf(value);
+        if (index < 0) { return false; }
+        else { return true; }
     }
 
     /**
-     * Inserts a new value at the bottom position of the List (index position 0)
-     * @param value Value to insert
+     * Copies the whole List to a new Array of the type T
      */
-    public push(value: T) {
-        this.insertAtIndex(0, value);
+    public copyToArray(): T[];
+    /**
+     * Copies the List to a new Array of the type T, from the specified starting index until the last entry of the List
+     * @param startIndex Start index
+     */
+    public copyToArray(startIndex: number): T[];
+    /**
+     * Copies the List to a new Array of the type T, from the specified starting index to the specified end index of the List
+     * @param startIndex Start index
+     * @param endIndex End index
+     */
+    public copyToArray(startIndex: number, endIndex: number): T[];
+    public copyToArray(start?: number, end?: number): T[] {
+        if (this._length === 0) { return new Array() as T[]; }
+        if (start === undefined) { start = 0; }
+        if (end === undefined) { end = this._length - 1; }
+        return this.copyToInternal(start, end, true) as T[];
+    }
+
+    /**
+     * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
+     */
+    public dequeue(): T | undefined {
+        if (this._length === 0) { return undefined; }
+        let value: T = this._iList[this._length - 1];
+        this.removeAt(this._length - 1);
+        return value;
+    }
+
+    /**
+     * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
+     */
+    public distinct() {
+        if (this._length === 0) { return; }
+        let newList: List<T> = new List<T>();
+        for (let i = 0; i < this._length; i++) {
+            if (newList.contains(this._iList[i]) === false) {
+                newList.addInternal(this._iList[i]);
+            }
+        }
+        this.clear()
+        this.addRange(newList);
     }
 
     /**
@@ -133,7 +187,90 @@ export default class List<T> implements Iterator<T>, IList<T>
         this.add(value);
     }
 
+    // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
+     * Implementation of a forEach loop
+     * @param callback Callback function to process the items of the List
+     */
+    public forEach(callback: IForEachInterface<T>) {
+        if (this._length === 0) { return; }
+        let done: boolean = false;
+        let item: IteratorItem<T>;
+        this._iCounter = 0;
+        while (done === false) {
+            item = this.next() as IteratorItem<T>;
+            done = item.isLastEntry;
+            callback(item.value);
+        }
+    }
+
+    /**
+     * Gets the value of the List at the specified index position
+     * @param index Index position (0 to n)
+     */
+    public get(index: number): T {
+        let value: T = this._iList[index];
+        if (value !== undefined) {
+            return value;
+        }
+        else {
+            throw new Error("The index " + index + " was not found in the List");
+        }
+    }
+
+    /**
+     * Copies the whole List to a new List
+     */
+    public getRange(): List<T>;
+    /**
+     * Copies the List to a new List from the specified starting index until the last entry of the List
+     * @param startIndex Start index
+     */
+    public getRange(startIndex: number): List<T>;
+    /**
+     * Copies the List to a new List from the specified starting index to the specified end index of the List
+     * @param startIndex Start index (0 if undefined)
+     * @param endIndex End index (end index if undefined)
+     */
+    public getRange(startIndex: number, endIndex: number): List<T>;
+    public getRange(start?: number, end?: number): List<T> {
+        if (start === undefined) { start = 0; }
+        if (end === undefined) { end = this._length - 1; }
+        return this.copyToInternal(start, end, false) as List<T>;
+    }
+
+    /**
+     * Gets the index of the first occurrence of the passed value
+     * @param value Value to check
+     */
+    public indexOf(value: T): number {
+
+        for(let i: number = 0; i < this._length; i++)
+        {
+            if (isEqual(this._iList[i], value) === true)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Gets an Array of the indices of all occurrences of the passed value
+     * @param value Value to check
+     */
+    public indicesOf(value: T): number[] {
+        return this.indicesOfInternal(value, false);
+    }
+    /**
+     * Gets a List of the indices of all occurrences of the passed value
+     * @param value Value to check
+     */
+    public indicesOfAsList(value: T): List<number> {
+        return this.indicesOfInternal(value, true)
+    }
+
+     /**
      * Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the List will be shifted to a new value
      * @param index Index position where to insert the value
      * @param value Value to insert
@@ -161,6 +298,62 @@ export default class List<T> implements Iterator<T>, IList<T>
         this.addRange(secondPart);
     }
 
+    /**
+     * Gets the index of the last occurrence of the passed value
+     * @param value Value to check
+     */
+    public lastIndexOf(value: T): number {
+        let indices: List<number> = this.indicesOfAsList(value);
+        let len: number = indices.length;
+        if (len === 0) { return -1; }
+        return indices.get(len - 1);
+    }
+
+    // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
+     /**
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * @param value Can be ignored
+     */
+    public next(value?: any): IteratorResult<T> {
+        let val: any = this._iList[this._iCounter];
+        let lastItem: boolean;
+        if (this._iCounter < this.length - 1) {
+            this._iCounter++;
+            lastItem = false;
+        }
+        else {
+            this._iCounter = 0;
+            lastItem = true;
+        }
+        return new IteratorItem(val, lastItem);
+    }
+
+    /**
+     * Returns the last element of a list without removing it (end of list). Returns undefined if the list is empty
+     */
+    public peek(): T | undefined
+    {
+        if (this._length === 0) { return undefined; }
+        return this._iList[this._length - 1];
+    }
+
+    /**
+     * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
+     */
+    public pop(): T | undefined {
+        if (this._length === 0) { return undefined; }
+        let value: T = this._iList[0];
+        this.removeAt(0);
+        return value;
+    }
+
+    /**
+     * Inserts a new value at the bottom position of the List (index position 0)
+     * @param value Value to insert
+     */
+    public push(value: T) {
+        this.insertAtIndex(0, value);
+    }
 
     /**
      * Removes the passed value at the first occurrence in the List
@@ -235,169 +428,65 @@ export default class List<T> implements Iterator<T>, IList<T>
         this.clear();
         this.addRange(newList);
         this._length = this.length;
-    }
+    }    
 
     /**
-     * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
+     * Method to reverse the List
      */
-    public pop(): T | undefined {
-        if (this._length === 0) { return undefined; }
-        let value: T = this._iList[0];
-        this.removeAt(0);
-        return value;
-    }
-
-    /**
-     * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
-     */
-    public dequeue(): T | undefined {
-        if (this._length === 0) { return undefined; }
-        let value: T = this._iList[this._length - 1];
-        this.removeAt(this._length - 1);
-        return value;
-    }
-
-    /**
-     * Removes all elements of the List
-     */
-    public clear() {
+    public reverse() {
         if (this._length === 0) { return; }
-        else {
-            this._iList = [];
-            this._length = 0;
+        let halfLength = Math.floor(this._length / 2);
+        let i1 = 0;
+        let i2 = this._length - 1;
+        var temp: T = new Object as T;
+        for (let i = 0; i < halfLength; i++) {
+            this.swapValuesInternal(i1, i2, temp);
+            i1++;
+            i2--;
         }
     }
 
     /**
-     * Gets the value of the List at the specified index position
+     * Updates a value of the List at the specified index position
      * @param index Index position (0 to n)
+     * @param value New value
      */
-    public get(index: number): T {
-        let value: T = this._iList[index];
-        if (value !== undefined) {
-            return value;
-        }
-        else {
-            throw new Error("The index " + index + " was not found in the List");
-        }
-    }
-
-
-    /**
-     * Copies the whole List to a new List
-     */
-    public getRange(): List<T>;
-    /**
-     * Copies the List to a new List from the specified starting index until the last entry of the List
-     * @param startIndex Start index
-     */
-    public getRange(startIndex: number): List<T>;
-    /**
-     * Copies the List to a new List from the specified starting index to the specified end index of the List
-     * @param startIndex Start index (0 if undefined)
-     * @param endIndex End index (end index if undefined)
-     */
-    public getRange(startIndex: number, endIndex: number): List<T>;
-    public getRange(start?: number, end?: number): List<T> {
-        if (start === undefined) { start = 0; }
-        if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, false) as List<T>;
-    }
-
-    /**
-     * Copies the whole List to a new Array of the type T
-     */
-    public copyToArray(): T[];
-    /**
-     * Copies the List to a new Array of the type T, from the specified starting index until the last entry of the List
-     * @param startIndex Start index
-     */
-    public copyToArray(startIndex: number): T[];
-    /**
-     * Copies the List to a new Array of the type T, from the specified starting index to the specified end index of the List
-     * @param startIndex Start index
-     * @param endIndex End index
-     */
-    public copyToArray(startIndex: number, endIndex: number): T[];
-    public copyToArray(start?: number, end?: number): T[] {
-        if (this._length === 0) { return new Array() as T[]; }
-        if (start === undefined) { start = 0; }
-        if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, true) as T[];
-    }
-
-    /**
-     * Gets the index of the first occurrence of the passed value
-     * @param value Value to check
-     */
-    public indexOf(value: T): number {
-
-        for(let i: number = 0; i < this._length; i++)
+    public set(index: number, value: T) {
+        this.indexCheck(index);
+        if (value === undefined)
         {
-            if (isEqual(this._iList[i], value) === true)
-            {
-                return i;
-            }
+            throw new Error("An undefined value cannot be set as value of a list");
         }
-        return -1;
+        this._iList[index] = value;
+    }
+
+    // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
+    /**
+     * Sorts the List according to the passed function
+     * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
+     */
+    sort(sortFunction: ISortInterFace<T>) {
+        let qSort: Sorter<T> = new Sorter();
+        if (sortFunction === undefined)
+        {
+            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+        }
+        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
     }
 
     /**
-     * Gets the index of the last occurrence of the passed value
-     * @param value Value to check
+     * Swaps the values at the two defined index positions in the List
+     * @param index1 Index position 1
+     * @param index2 Index position 1
      */
-    public lastIndexOf(value: T): number {
-        let indices: List<number> = this.indicesOfAsList(value);
-        let len: number = indices.length;
-        if (len === 0) { return -1; }
-        return indices.get(len - 1);
+    public swapValues(index1: number, index2: number) {
+        this.indexCheck(index1);
+        this.indexCheck(index2);
+        var temp: T = new Object as T;
+        this.swapValuesInternal(index1, index2, temp);
     }
 
-    /**
-     * Gets an Array of the indices of all occurrences of the passed value
-     * @param value Value to check
-     */
-    public indicesOf(value: T): number[] {
-        return this.indicesOfInternal(value, false);
-    }
-    /**
-     * Gets a List of the indices of all occurrences of the passed value
-     * @param value Value to check
-     */
-    public indicesOfAsList(value: T): List<number> {
-        return this.indicesOfInternal(value, true)
-    }
-
-    /**
-     * Internal method to get the indices of a value in the List
-     * @param value Value to check
-     * @param asList If true, a List of indices will be returned, otherwise an Array
-     */
-    private indicesOfInternal(value: T, asList: boolean): any {
-        let indices: List<number> = new List<number>();
-        for (let i = 0; i < this._length; i++) {
-            if (isEqual(this._iList[i], value) === true) {
-                indices.addInternal(i);
-            }
-        }
-        if (asList !== undefined && asList === true) {
-            return indices;
-        }
-        else {
-            return indices.copyToArray();
-        }
-    }
-
-    /**
-     * Check whether the List contains the specified value
-     * @param value True if the value exists, otherwise false
-     */
-    public contains(value: T): boolean {
-        if (this._length === 0) { return false; }
-        let index: number = this.indexOf(value);
-        if (index < 0) { return false; }
-        else { return true; }
-    }
+// ############### P R I V A T E   F U N C T I O N S ###############
 
     /**
      * Internal method to copy a range of values in the List to a List or Array
@@ -431,60 +520,10 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
     /**
-     * Method to reverse the List
+     * Checks the validity of an index position (>= 0 < length, integer)
+     * @param index Index position to check
+     * @param allowUpperBound If true, an index position of n is valid, otherwise n-1
      */
-    public reverse() {
-        if (this._length === 0) { return; }
-        let halfLength = Math.floor(this._length / 2);
-        let i1 = 0;
-        let i2 = this._length - 1;
-        var temp: T = new Object as T;
-        for (let i = 0; i < halfLength; i++) {
-            this.swapValuesInternal(i1, i2, temp);
-            i1++;
-            i2--;
-        }
-    }
-
-    /**
-     * Swaps the values at the two defined index positions in the List
-     * @param index1 Index position 1
-     * @param index2 Index position 1
-     */
-    public swapValues(index1: number, index2: number) {
-        this.indexCheck(index1);
-        this.indexCheck(index2);
-        var temp: T = new Object as T;
-        this.swapValuesInternal(index1, index2, temp);
-    }
-
-    /**
-     * Internal method to swap the values at the two defined index positions in the List. The method performs no validation and uses a predefined variable as temporary variable
-     * @param index1 Index position 1
-     * @param index2 Index position 1
-     * @param tempParameter Temporary variable (Define it once outside of this method)
-     */
-    private swapValuesInternal(index1: number, index2: number, tempParameter: T) {
-        tempParameter = this._iList[index1];
-        this._iList[index1] = this._iList[index2];
-        this._iList[index2] = tempParameter;
-    }
-
-    /**
-     * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
-     */
-    public distinct() {
-        if (this._length === 0) { return; }
-        let newList: List<T> = new List<T>();
-        for (let i = 0; i < this._length; i++) {
-            if (newList.contains(this._iList[i]) === false) {
-                newList.addInternal(this._iList[i]);
-            }
-        }
-        this.clear()
-        this.addRange(newList);
-    }
-
     private indexCheck(index: number, allowUpperBound?: boolean): void
     {
         if (allowUpperBound !== undefined && allowUpperBound === true)
@@ -505,57 +544,39 @@ export default class List<T> implements Iterator<T>, IList<T>
         {
             throw new Error("The index " + index + " is invalid. Only integers are allowed");
         }
-    }
-
-    // *********************************************** Implemented Interfaces
+    }    
 
     /**
-     * Sorts the List according to the passed function
-     * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
+     * Internal method to get the indices of a value in the List
+     * @param value Value to check
+     * @param asList If true, a List of indices will be returned, otherwise an Array
      */
-    sort(sortFunction: ISortInterFace<T>) {
-        let qSort: Sorter<T> = new Sorter();
-        if (sortFunction === undefined)
-        {
-            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+    private indicesOfInternal(value: T, asList: boolean): any {
+        let indices: List<number> = new List<number>();
+        for (let i = 0; i < this._length; i++) {
+            if (isEqual(this._iList[i], value) === true) {
+                indices.addInternal(i);
+            }
         }
-        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
-    }
-
-    /**
-     * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the List
-     */
-    public forEach(callback: IForEachInterface<T>) {
-        if (this._length === 0) { return; }
-        let done: boolean = false;
-        let item: IteratorItem<T>;
-        this._iCounter = 0;
-        while (done === false) {
-            item = this.next() as IteratorItem<T>;
-            done = item.isLastEntry;
-            callback(item.value);
-        }
-    }
-
-    /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
-     * @param value Can be ignored
-     */
-    public next(value?: any): IteratorResult<T> {
-        let val: any = this._iList[this._iCounter];
-        let lastItem: boolean;
-        if (this._iCounter < this.length - 1) {
-            this._iCounter++;
-            lastItem = false;
+        if (asList !== undefined && asList === true) {
+            return indices;
         }
         else {
-            this._iCounter = 0;
-            lastItem = true;
+            return indices.copyToArray();
         }
-        return new IteratorItem(val, lastItem);
     }
 
+    /**
+     * Internal method to swap the values at the two defined index positions in the List. The method performs no validation and uses a predefined variable as temporary variable
+     * @param index1 Index position 1
+     * @param index2 Index position 1
+     * @param tempParameter Temporary variable (Define it once outside of this method)
+     */
+    private swapValuesInternal(index1: number, index2: number, tempParameter: T) {
+        tempParameter = this._iList[index1];
+        this._iList[index1] = this._iList[index2];
+        this._iList[index2] = tempParameter;
+    }
+
+
 }
-
-

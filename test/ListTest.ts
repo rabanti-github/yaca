@@ -6,7 +6,8 @@ import { TestClass } from './TestClass';
 import { expect } from 'chai';
 import 'mocha';
 
-
+// This file is to test the List<T> class
+describe("LIST<T>\n  #######\n",() => {
 
 describe('constructors', () => {
     let list: List<number>;
@@ -442,6 +443,50 @@ describe('indicesOfAsList method', () => {
     });
 });
 
+describe('insertAtIndex method', () => {
+    let list: List<number>;
+
+    it('should return the value 42 at index position 3 after insertion at this index position', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.insertAtIndex(3,42);
+        let index: number = list.get(3);
+        expect(index).to.equal(42);
+    });
+    it('should return the value 22 at index position 4 after insert a value at index position 2', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.insertAtIndex(2,42);
+        let index: number = list.get(4);
+        expect(index).to.equal(22);
+    });
+    it('should return a length of 9 after insertion in a list of 8 entries', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.insertAtIndex(2,42);
+        expect(list.length).to.equal(9);
+    });
+    it('should return the value 11 at index position 8 after insert a value at this position in a list of 8 entries', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.insertAtIndex(8,11);
+        let index: number = list.get(8);
+        expect(index).to.equal(11);
+    });
+    it('should throw an error when inserting a value at index position 9 in a list of 8 entries', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        expect(function() { list.insertAtIndex(9, 42); }).to.throw();
+    });
+    it('should throw an error when inserting a value at a negative index position', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        expect(function() { list.insertAtIndex(-2, 42); }).to.throw();
+    });
+    it('should throw an error when inserting a value at a float number as index position', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        expect(function() { list.insertAtIndex(2.99999999999, 42); }).to.throw();
+    });
+    it('should throw an error when inserting undefined as value', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        expect(function() { list.insertAtIndex(3, undefined); }).to.throw();
+    });
+});
+
 
 describe('lastIndexOf method', () => {
     let list: List<number> = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
@@ -504,6 +549,30 @@ describe('next method', () => {
     });
 });
 
+describe('peek method', () => {
+    let list: List<number>;
+
+    it('should return 22 as value in a list where 22 is the last value', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        let value: number = list.peek();
+        expect(value).to.equal(22);
+    });
+    it('should return 11 in a value with 1 element (11)', () => {
+        list = Utils.setupList(Types.number, [11]);
+        let value: number = list.peek();
+        expect(value).to.equal(11);
+    });
+    it('should return a length of 8 executed on a list of 8 entries', () => {
+        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
+        list.peek();
+        expect(list.length).to.equal(8);
+    });
+    it('should return undefined as value after execution on an empty list', () => {
+        list = Utils.setupList(Types.number);
+        let value: number = list.peek();
+        expect(value).to.equal(undefined);
+    });
+});
 
 describe('pop method', () => {
     let list: List<number>;
@@ -873,3 +942,5 @@ describe('swapValues method', () => {
     });
 });
 
+/************ */
+});

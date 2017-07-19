@@ -12,7 +12,16 @@ export declare class IteratorItem<T> implements IteratorResult<T> {
      */
     value: T;
     /**
-     * Default constructor with parameters
+     * Default constructor
+     */
+    constructor();
+    /**
+     * Constructor with value
+     * @param value Value of the iterator item
+     */
+    constructor(value: T);
+    /**
+     * Default constructor with full parameters
      * @param value Value of the iterator item
      * @param finished If true, the last item of the iterator is reached
      */

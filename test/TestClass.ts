@@ -1,3 +1,6 @@
+/**
+ * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
+ */
 export class TestClass
 {
     private static counter: number = 0;
@@ -6,11 +9,17 @@ export class TestClass
     public value3: boolean[];
     public value4: Date;
 
+    /**
+     * Default constructor
+     */
     constructor()
     {
 
     }
 
+    /**
+     * Creates a randomized instance of the class
+     */
     public static createRandomObject() : TestClass
     {
         let o: TestClass = new TestClass();

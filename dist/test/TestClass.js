@@ -1,8 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
+ */
 var TestClass = (function () {
+    /**
+     * Default constructor
+     */
     function TestClass() {
     }
+    /**
+     * Creates a randomized instance of the class
+     */
     TestClass.createRandomObject = function () {
         var o = new TestClass();
         o.value4 = new Date();
