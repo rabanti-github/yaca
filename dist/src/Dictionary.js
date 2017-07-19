@@ -27,6 +27,19 @@ var Dictionary = (function () {
             }
         }
     }
+    Object.defineProperty(Dictionary.prototype, "length", {
+        // ############### P R O P E R T I E S ###############
+        /**
+         * Gets the number of elements of the Dictionary
+         */
+        get: function () {
+            this._length = this._iKeyIndex.length;
+            return this._length;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    // ############### P U B L I C   F U N C T I O N S ###############
     Dictionary.prototype.refreshKeyIndex = function () {
         this._iKeyIndex = Object.keys(this._iDict);
     };
@@ -149,18 +162,6 @@ var Dictionary = (function () {
             return false;
         }
     };
-    Object.defineProperty(Dictionary.prototype, "length", {
-        /**
-         * Gets the number of elements of the List
-         */
-        get: function () {
-            //this._length = Object.keys(this._iDict).length
-            this._length = this._iKeyIndex.length;
-            return this._length;
-        },
-        enumerable: true,
-        configurable: true
-    });
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add

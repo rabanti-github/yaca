@@ -7,27 +7,14 @@ import List from './List';
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
 export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> {
-    private refreshKeyIndex();
-    getKeys(): K[];
-    getKeysAsList(): List<K>;
-    getValues(): V[];
-    getValuesAsList(): List<V>;
-    private getHashCode(key);
-    private getKeyValuePairsInternal();
-    getKeysByValuesAsList(values: V[]): List<K>;
-    getKeysByValuesAsList(values: List<V>): List<K>;
-    getKeysByValues(values: V[]): K[];
-    getKeysByValues(values: List<V>): K[];
-    getKeysByValueAsList(value: V): List<K>;
-    private getKeysByValuesAsListInternal(values, breakAfterFirst);
-    getKeysByValue(value: V): K[];
-    containsValues(values: V[]): boolean;
-    containsValues(values: List<V>): boolean;
-    containsValue(value: V): boolean;
     private _iDict;
     private _length;
     private _iCounter;
     private _iKeyIndex;
+    /**
+     * Gets the number of elements of the Dictionary
+     */
+    readonly length: number;
     /** Default constructor */
     constructor();
     /**
@@ -53,10 +40,23 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys List of keys with type K
      */
     constructor(keys: List<K>, values: List<V>);
-    /**
-     * Gets the number of elements of the List
-     */
-    readonly length: number;
+    private refreshKeyIndex();
+    getKeys(): K[];
+    getKeysAsList(): List<K>;
+    getValues(): V[];
+    getValuesAsList(): List<V>;
+    private getHashCode(key);
+    private getKeyValuePairsInternal();
+    getKeysByValuesAsList(values: V[]): List<K>;
+    getKeysByValuesAsList(values: List<V>): List<K>;
+    getKeysByValues(values: V[]): K[];
+    getKeysByValues(values: List<V>): K[];
+    getKeysByValueAsList(value: V): List<K>;
+    private getKeysByValuesAsListInternal(values, breakAfterFirst);
+    getKeysByValue(value: V): K[];
+    containsValues(values: V[]): boolean;
+    containsValues(values: List<V>): boolean;
+    containsValue(value: V): boolean;
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add

@@ -1,19 +1,23 @@
 # YACA
+
 **Y**et **A**nother **C**ollection **A**pproach
 
 ## Introduction
+
 YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.
 
 YACA contains at the moment only **List&lt;T&gt;** as collection type. Further types (e.g. Dictionary *[WIP]* or Stack) are planned.
 
-See the **[Changelog](changelog.md)** for recent updates.
+See the **[Change Log](changelog.md)** for recent updates.
 
 ## Installation
+
 ```bash
 npm install -S yaca
 ```
 
 ## Usage (List<T>)
+
 ```ts
 import {List} from 'yaca';
 
@@ -35,6 +39,7 @@ numberList.clear();
 ```
 
 ## Constructors
+
 The type **T** is the generic type defined in the constructor (e.g. number, boolean etc.)
 
 | Name & Arguments | Description |

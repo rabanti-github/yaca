@@ -1,6 +1,7 @@
-**CHANGELOG**
+# CHANGE LOG
 
 ***v0.1.2***
+
 ---
 Date: 2017-07-12
 
@@ -9,6 +10,7 @@ Release type: Initial release
 * Initial release
 
 ***v0.1.3***
+
 ---
 Date: 2017-07-13
 
@@ -19,6 +21,7 @@ Release type: Cleanup / Non-critical
 * Added further dev-dependencies (tslint, typedoc)
 
 ***v0.1.4***
+
 ---
 Date: 2017-07-17
 
@@ -29,6 +32,7 @@ Release type: Bugfix
 * Added dependency lodash.isequal
 
 ***v0.1.5***
+
 ---
 Date: 2017-07-17
 
@@ -38,6 +42,7 @@ Release type: Bugfix
 
 
 ***v0.1.6***
+
 ---
 Date: 2017-07-17
 
@@ -49,6 +54,7 @@ Release type: Bugfix
 
 
 ***v0.1.7***
+
 ---
 Date: 2017-07-18
 
@@ -59,6 +65,7 @@ Release type: Optimization
 * Implementation of testing (work in progress)
 
 ***v0.1.8***
+
 ---
 Date: 2017-07-19
 
@@ -67,8 +74,3 @@ Release type: Optimization / Features
 * Optimization of the List class
 * Testing for the list class completed
 * Added a peek() function
-
-
-
-
-

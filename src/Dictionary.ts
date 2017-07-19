@@ -10,8 +10,75 @@ import  List  from './List';
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
 export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
-//export default class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 {
+
+// ############### P R I V A T E   V A R I A B L E S ###############
+    private _iDict: object;
+    private _length: number;
+    private _iCounter: number;
+    private _iKeyIndex: string[];
+
+
+// ############### P R O P E R T I E S ###############
+
+    /**
+     * Gets the number of elements of the Dictionary
+     */
+    public get length(): number {
+        this._length = this._iKeyIndex.length;
+        return this._length;
+    }
+
+// ############### C O N S T R U C T O R S ###############
+
+/** Default constructor */
+    constructor();
+    /**
+     * Constructor with a Dictionary<K,V> as initial value
+     * @param values Dictionary of elements with K and V as Keys and Values 
+     */
+    constructor(values: Dictionary<K,V>);
+    /**
+     * Constructor with initial value
+     * @param value Value of type V
+     * @param key Key of Type K
+     */
+    constructor(key: K, value: V);
+    /**
+     * Constructor with two arrays of the same length as initial value
+     * @param values Array of values with type V
+     * @param keys Array of keys with type K
+     */
+    constructor(keys: K[], values: V[]);
+    /**
+     * Constructor with two Lists of the same length as initial value
+     * @param values List of values with type V
+     * @param keys List of keys with type K
+     */
+    constructor(keys: List<K>, values: List<V>);    
+    constructor(keys?: K | K[] | List<K> |  Dictionary<K, V>, values?: V | V[] | List<V>) {
+        this._iCounter = 0;
+        this._length = 0;
+        this._iDict = [];
+        this._iKeyIndex = [];
+        if (keys !== undefined && values !== undefined) {
+            if (Array.isArray(keys) && Array.isArray(values)) {
+                this.addRange(keys as K[], values);
+            }
+            else if (keys instanceof List && values instanceof List) {
+                this.addRange(keys as List<K>, values as List<V>);
+            }
+            else if (values instanceof Dictionary) {
+                this.addRange(keys as Dictionary<K,V>);
+            }
+            else {
+                this.add(keys as K, values as V);
+            }
+        }
+    }
+
+// ############### P U B L I C   F U N C T I O N S ###############
+
 
     private refreshKeyIndex()
     {
@@ -159,67 +226,13 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
        else { return false; }
     }
 
-    private _iDict: object;//K[]; //{ string, K }[];
-    private _length: number;
-    private _iCounter: number;
-    private _iKeyIndex: string[];
 
-    /** Default constructor */
-    constructor();
-    /**
-     * Constructor with a Dictionary<K,V> as initial value
-     * @param values Dictionary of elements with K and V as Keys and Values 
-     */
-    constructor(values: Dictionary<K,V>);
-    /**
-     * Constructor with initial value
-     * @param value Value of type V
-     * @param key Key of Type K
-     */
-    constructor(key: K, value: V);
-    /**
-     * Constructor with two arrays of the same length as initial value
-     * @param values Array of values with type V
-     * @param keys Array of keys with type K
-     */
-    constructor(keys: K[], values: V[]);
-    /**
-     * Constructor with two Lists of the same length as initial value
-     * @param values List of values with type V
-     * @param keys List of keys with type K
-     */
-    constructor(keys: List<K>, values: List<V>);    
-    constructor(keys?: K | K[] | List<K> |  Dictionary<K, V>, values?: V | V[] | List<V>) {
-        this._iCounter = 0;
-        this._length = 0;
-        this._iDict = [];
-        this._iKeyIndex = [];
-        if (keys !== undefined && values !== undefined) {
-            if (Array.isArray(keys) && Array.isArray(values)) {
-                this.addRange(keys as K[], values);
-            }
-            else if (keys instanceof List && values instanceof List) {
-                this.addRange(keys as List<K>, values as List<V>);
-            }
-            else if (values instanceof Dictionary) {
-                this.addRange(keys as Dictionary<K,V>);
-            }
-            else {
-                this.add(keys as K, values as V);
-            }
-        }
-    }
+
+    
 
 
 
-    /**
-     * Gets the number of elements of the List
-     */
-    public get length(): number {
-        //this._length = Object.keys(this._iDict).length
-        this._length = this._iKeyIndex.length;
-        return this._length;
-    }
+
 
     /**
      * Adds an element at the end of the List. This method is synonymous to set

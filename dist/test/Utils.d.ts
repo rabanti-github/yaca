@@ -1,4 +1,5 @@
 import { Types } from './Types';
+import { Dictionary } from '../src/Dictionary';
 /**
  * Utils class for testing
  */
@@ -28,4 +29,5 @@ export declare class Utils {
      * @param initialValue Initial value as single value or array (optional)
      */
     static setupList(t: Types, initialValue?: any | any[]): any;
+    static setupDictionary(keyType: Types, valueType: Types, keys?: any[], values?: any[]): Dictionary<any, any>;
 }

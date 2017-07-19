@@ -7,7 +7,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc && typedoc --out ./doc --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
-    "test": "mocha -r ts-node/register ./test/**/ListTest.ts"
+    "test": "mocha -r ts-node/register ./test/**/*Test.ts"
   },
   "repository": {
     "type": "git",
