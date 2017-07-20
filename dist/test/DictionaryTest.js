@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("../src/Dictionary");
 //import {IteratorItem} from '../src/IteratorItem';
-var Utils_1 = require("./Utils");
-var Types_1 = require("./Types");
+var Utils_1 = require("./utils/Utils");
+var Types_1 = require("./utils/Types");
 var chai_1 = require("chai");
 require("mocha");
 // This file is to test the Dictionary<K,V> class

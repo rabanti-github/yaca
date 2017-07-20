@@ -1,5 +1,10 @@
 # YACA
 
+[![Coverage Status](https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master)](https://coveralls.io/github/rabanti-github/yaca?branch=master)
+![npm](https://img.shields.io/npm/v/yaca.svg?maxAge=2592000)
+![license](https://img.shields.io/github/license/rabanti-github/yaca.svg)
+
+
 **Y**et **A**nother **C**ollection **A**pproach
 
 ## Introduction

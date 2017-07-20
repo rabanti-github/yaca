@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var List_1 = require("../src/List");
-var Utils_1 = require("./Utils");
-var Types_1 = require("./Types");
-var TestClass_1 = require("./TestClass");
+var Utils_1 = require("./utils/Utils");
+var Types_1 = require("./utils/Types");
+var TestClass_1 = require("./utils/TestClass");
 var chai_1 = require("chai");
 require("mocha");
 // This file is to test the List<T> class
@@ -24,7 +24,7 @@ describe("LIST<T>\n  #######\n", function () {
             var length = list.length;
             chai_1.expect(length).to.equal(5);
         });
-        it('should return a lengt of 4 if initialized with a list of 4 elements', function () {
+        it('should return a length of 4 if initialized with a list of 4 elements', function () {
             var list2 = Utils_1.Utils.setupList(Types_1.Types.number, [11, 22, 33, 44]);
             list = new List_1.default(list2);
             var length = list.length;
@@ -483,7 +483,7 @@ describe("LIST<T>\n  #######\n", function () {
             }
             chai_1.expect(value).to.equal("122333444455555122");
         });
-        it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', function () {
+        it('should indicate that the last element is reached after 5 calls in a list of 5 entries (for loop)', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.string, ["1", "22", "333", "4444", "55555"]);
             var state;
             for (var i = 0; i < 5; i++) {

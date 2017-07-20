@@ -7,7 +7,21 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "tsc && typedoc --out ./doc --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
-    "test": "mocha -r ts-node/register ./test/**/*Test.ts"
+    "test-mocha": "mocha -r ts-node/register ./test/**/*Test.ts",
+    "test": "nyc --reporter=html --reporter=text mocha -r ts-node/register --timeout=3000",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   },
   "repository": {
     "type": "git",
@@ -31,6 +45,8 @@
     "@types/mocha": "^2.2.41",
     "@types/node": "^8.0.8",
     "chai": "^4.1.0",
+    "coveralls": "^2.13.1",
+    "istanbul": "^0.4.5",
     "mocha": "^3.4.2",
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",

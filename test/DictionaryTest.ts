@@ -1,9 +1,9 @@
 import {Dictionary} from '../src/Dictionary';
 import List from '../src/List';
 //import {IteratorItem} from '../src/IteratorItem';
-import { Utils } from './Utils';
-import {Types} from './Types';
-import { TestClass } from './TestClass';
+import { Utils } from './utils/Utils';
+import {Types} from './utils/Types';
+import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
 

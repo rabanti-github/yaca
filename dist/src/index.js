@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var List_1 = require("./List");
+exports.List = List_1.default;
 var Dictionary_1 = require("./Dictionary");
 exports.Dictionary = Dictionary_1.Dictionary;
+var KeyValuePair_1 = require("./KeyValuePair");
+exports.KeyValuePair = KeyValuePair_1.KeyValuePair;
+//export default List;
 /*
         let list2: List<Date> = new List<Date>([new Date(2015,2,10,0,0,0), new Date(2017,1,1,0,0,0), new Date(1191,1,8,23,59,59)]);
         let date = new Date(2017,1,1,0,0,0);
@@ -64,5 +68,4 @@ function xyz(item) {
 }
 var d2 = d.getRangeByValues(["y"]);
 var output = d.get(4);
-exports.default = List_1.default;
 //# sourceMappingURL=index.js.map

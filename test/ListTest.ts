@@ -1,8 +1,8 @@
 import List from '../src/List';
 import {IteratorItem} from '../src/IteratorItem';
-import { Utils } from './Utils';
-import {Types} from './Types';
-import { TestClass } from './TestClass';
+import { Utils } from './utils/Utils';
+import {Types} from './utils/Types';
+import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -25,7 +25,7 @@ describe('constructors', () => {
         let length: number = list.length;
         expect(length).to.equal(5);
     });
-    it('should return a lengt of 4 if initialized with a list of 4 elements', () => {
+    it('should return a length of 4 if initialized with a list of 4 elements', () => {
         let list2 = Utils.setupList(Types.number, [11,22,33,44]);
         list = new List<number>(list2);
         let length: number = list.length;

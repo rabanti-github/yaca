@@ -1,6 +1,6 @@
 import { Types } from './Types';
-import List from '../src/List';
-import {Dictionary} from '../src/Dictionary';
+import List from '../../src/List';
+import {Dictionary} from '../../src/Dictionary';
 
 /**
  * Utils class for testing
@@ -40,7 +40,8 @@ export class Utils
      */
     public static compareBooleans(b1: boolean, b2: boolean): number
     {
-        if (b1 !== b2) { return -1; }
+        if (b1 == false && b2 == true) { return -1; }
+        else if ((b1 == false && b2 == false)||b1 == true && b2 == true) { return 0; }
         else { return 1; }
     }
 
@@ -93,7 +94,7 @@ export class Utils
 
   
 
-    public static setupDictionary(keyType: Types, valueType: Types, keys?: any[], values?: any[]) : Dictionary<any,any>
+    public static setupDictionary(keyType: Types, valueType: Types, keys?: any|any[], values?: any|any[]) : Dictionary<any,any>
     {
         if (keys === undefined || values === undefined)
         {

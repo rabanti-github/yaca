@@ -5,3 +5,4 @@ tslint.json
 .esdoc.json
 dist/test/
 .nyc_output/
+coverage/
