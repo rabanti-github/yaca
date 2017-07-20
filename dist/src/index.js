@@ -41,8 +41,10 @@ var TestClass = (function () {
     TestClass.counter = 0;
     return TestClass;
 }());
-var sList = new List_1.default(["1", "2", "3"]);
+/*
+let sList: List<string> = new List<string>(["1","2","3"]);
 sList.set(1, undefined);
+*/
 var list2 = new List_1.default();
 list2.add(TestClass.createRandomObject());
 list2.add(TestClass.createRandomObject());
@@ -57,7 +59,13 @@ d.forEach(function (test) { hit = true; });
 d.add(22, "x");
 d.add(11, "y");
 d.add(4, "z");
-d.add(12, "y");
+d.add(11, "new");
+var n = d.length;
+var dict2 = new Dictionary_1.Dictionary();
+var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);
+var d2b = new Date(2000, 1, 1, 1, 1, 1, 1);
+dict2.add(d1, 42);
+dict2.add(d2b, 43);
 //d.removeByValue("y");
 d.forEach(function (item) {
     xyz(item);

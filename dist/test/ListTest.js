@@ -52,7 +52,7 @@ describe("LIST<T>\n  #######\n", function () {
             list.add(1);
             chai_1.expect(list.length).to.equal(10);
         });
-        it('should return 8 after removing one element to a list of 9 elements', function () {
+        it('should return 8 after removing one element from a list of 9 elements', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
             list.removeAt(0);
             chai_1.expect(list.length).to.equal(8);

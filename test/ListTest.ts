@@ -55,7 +55,7 @@ describe('length property', () => {
         list.add(1);
         expect(list.length).to.equal(10);
     });
-    it('should return 8 after removing one element to a list of 9 elements', () => {
+    it('should return 8 after removing one element from a list of 9 elements', () => {
         list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
         list.removeAt(0);
         expect(list.length).to.equal(8);

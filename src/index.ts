@@ -44,10 +44,10 @@ class TestClass
         return o; 
     }
 }
-
+/*
 let sList: List<string> = new List<string>(["1","2","3"]);
 sList.set(1, undefined);
-
+*/
 let list2: List<TestClass> = new List<TestClass>();
         list2.add(TestClass.createRandomObject());
         list2.add(TestClass.createRandomObject());
@@ -65,8 +65,17 @@ d.forEach(test => { hit = true; });
 d.add(22,"x");
 d.add(11,"y");
 d.add(4,"z");
-d.add(12,"y");
+d.add(11,"new");
+let n: number = d.length;
 
+
+
+let dict2: Dictionary<Date, number> =  new Dictionary<Date, number>();
+
+        let d1: Date = new Date(2000, 1,1,1,1,1,0);
+        let d2b: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.add(d1, 42);
+        dict2.add(d2b, 43);
 
 //d.removeByValue("y");
 

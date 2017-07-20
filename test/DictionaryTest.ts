@@ -47,43 +47,114 @@ describe('constructors', () => {
         expect(length).to.equal(0);
     });
 });
-/*
 
-// Pending
+
 describe('length property', () => {
-    let dict: Dictionary<string,number>;
+    let dict: Dictionary<number,string>;
 
-    it('should return 0 on an initialized (empty) list', () => {
-        dict = Utils.setupList(Types.number);
-        expect(list.length).to.equal(0);
+    it('should return 0 on an initialized (empty) dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string);
+        expect(dict.length).to.equal(0);
     });
-    it('should return 9 on a list with 9 elements', () => {
-        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
-        expect(list.length).to.equal(9);
+    it('should return 9 on a dictionary with 9 elements', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string , [17,18,88,22,12,0,-12,11,22.00001], ["x","x","x","x","x","x","x","x","x"]);
+        expect(dict.length).to.equal(9);
     });
-    it('should return 10 after adding one element to a list of 9 elements', () => {
-        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
-        list.add(1);
-        expect(list.length).to.equal(10);
+    it('should return 10 after adding one element to a dictionary of 9 elements', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [17,18,88,22,12,0,-12,11,22.00001], ["x","x","x","x","x","x","x","x","x"]);
+        dict.add(1,"y");
+        expect(dict.length).to.equal(10);
     });
-    it('should return 8 after removing one element to a list of 9 elements', () => {
-        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
-        list.removeAt(0);
-        expect(list.length).to.equal(8);
+    it('should return 8 after removing one element from a dictionary of 9 elements', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [17,18,88,22,12,0,-12,11,22.00001], ["x","x","x","x","x","x","x","x","x"]);
+        dict.remove(22.00001);
+        expect(dict.length).to.equal(8);
+    });
+    it('should return 9 after removing one element from a dictionary of 9 elements wit an non-existing key', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [17,18,88,22,12,0,-12,11,22.00001], ["x","x","x","x","x","x","x","x","x"]);
+        dict.remove(885);
+        expect(dict.length).to.equal(9);
     });
     it('should return 0 after execution of the clear() method', () => {
-        list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
-        list.clear();
-        expect(list.length).to.equal(0);
+        dict = Utils.setupDictionary(Types.number, Types.string, [17,18,88,22,12,0,-12,11,22.00001], ["x","x","x","x","x","x","x","x","x"]);
+        dict.clear();
+        expect(dict.length).to.equal(0);
     });
-    it('should return 0 after removing the last element of a list', () => {
-        list = Utils.setupList(Types.number,17);
-        list.removeAt(0);
-        expect(list.length).to.equal(0);
+    it('should return 0 after removing the last element of a dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string,17, "x");
+        dict.remove(17);
+        expect(dict.length).to.equal(0);
+    });
+    
+    
+describe('add method', () => {
+    let dict: Dictionary<string,number>;
+    it('should add an element and increase the counter by one', () => {
+        dict = Utils.setupDictionary(Types.string, Types.number);
+        dict.add("test", 22);
+        expect(dict.length).to.equal(1);
+    });
+    it('should return 42 as value at element with the key "one"', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number);
+        dict.add("one", 42);
+        dict.add("two", 43);
+        dict.add("One", 42.1);
+        let entry: number = dict.get("one");
+        expect(entry).to.equal(42);
+    });
+    it('should replace an existing item (same key) and not increase the length of 3 of an existing dictionary', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number);
+        dict.add("one", 42);
+        dict.add("two", 43);
+        dict.add("One", 42.1);
+        dict.add("two",-2);
+        expect(dict.length).to.equal(3);
+    });
+    it('should add a Date value taht differs just 1 ms from another as key instead of replacing it (length + 1)', () => {
+        let dict2: Dictionary<Date, number> =  Utils.setupDictionary(Types.date, Types.number);
+        let d1: Date = new Date(2000, 1,1,1,1,1,0);
+        let d2: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.add(d1, 42);
+        dict2.add(d2, 43);
+        expect(dict2.length).to.equal(2);
     });
 
+    it('should throw an error when adding undefined as key to a dictionary', () => {
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.add(undefined, 22); }).to.throw();
+    });
+    it('should throw an error when adding undefined as value to a dictionary', () => {
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.add("undefined", undefined); }).to.throw();
+    });
+    it('should throw an error when adding undefined as key and value to a dictionary', () => {
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.add(undefined, undefined); }).to.throw();
+    });    
+     it('should not throw an error when adding the string "undefined" as key to a dictionary', () => {
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.add("undefined", 22); }).not.to.throw();
+    });
+
+    /*    
+    it('should not throw an error when adding a number to a list of numbers', () => {
+        expect(function() { let list: List<number> = Utils.setupList(Types.number); list.add(21); }).to.not.throw();
+    });
+    it('should not throw an error when adding a string to a list of string', () => {
+        expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add("test"); }).to.not.throw();
+    });
+    it('should not throw an error when adding an empty string to a list of string', () => {
+        expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add(""); }).to.not.throw();
+    });
+    it('should not throw an error when adding a boolean to a list of booleans', () => {
+        expect(function() { let list: List<boolean> = Utils.setupList(Types.boolean); list.add(true); }).to.not.throw();
+    });
+    it('should not throw an error when adding a date to a list of dates', () => {
+        expect(function() { let list: List<Date> = Utils.setupList(Types.date); list.add(new Date()); }).to.not.throw();
+    });
+    */
+});    
+
+
+
 });
-*/
+
 
 /************ */
 });

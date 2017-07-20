@@ -2,6 +2,7 @@
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import { KeyValuePair } from './KeyValuePair';
 import { IDictionary } from './interfaces/IDictionary';
+import { IToStringInterface } from './interfaces/IToStringInterface';
 import List from './List';
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
@@ -40,30 +41,13 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys List of keys with type K
      */
     constructor(keys: List<K>, values: List<V>);
-    private refreshKeyIndex();
-    getKeys(): K[];
-    getKeysAsList(): List<K>;
-    getValues(): V[];
-    getValuesAsList(): List<V>;
-    private getHashCode(key);
-    private getKeyValuePairsInternal();
-    getKeysByValuesAsList(values: V[]): List<K>;
-    getKeysByValuesAsList(values: List<V>): List<K>;
-    getKeysByValues(values: V[]): K[];
-    getKeysByValues(values: List<V>): K[];
-    getKeysByValueAsList(value: V): List<K>;
-    private getKeysByValuesAsListInternal(values, breakAfterFirst);
-    getKeysByValue(value: V): K[];
-    containsValues(values: V[]): boolean;
-    containsValues(values: List<V>): boolean;
-    containsValue(value: V): boolean;
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add
      * @param key Key to add
      */
-    add(key: K, value: V): void;
-    private addInternal(key, value);
+    add(key: K, value: V): any;
+    add(key: K, value: V, toStringFunction: IToStringInterface<V>): any;
     /**
      * Adds a range of keys and values
      * @param values Values as Dictionary<K,V>
@@ -81,6 +65,20 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys Keys as List<K>
      */
     addRange(keys: List<K>, values: List<V>): any;
+    getKeys(): K[];
+    getKeysAsList(): List<K>;
+    getValues(): V[];
+    getValuesAsList(): List<V>;
+    private getKeyValuePairsInternal();
+    getKeysByValuesAsList(values: V[]): List<K>;
+    getKeysByValuesAsList(values: List<V>): List<K>;
+    getKeysByValues(values: V[]): K[];
+    getKeysByValues(values: List<V>): K[];
+    getKeysByValueAsList(value: V): List<K>;
+    getKeysByValue(value: V): K[];
+    containsValues(values: V[]): boolean;
+    containsValues(values: List<V>): boolean;
+    containsValue(value: V): boolean;
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
      * @param key Key of the new value
@@ -187,4 +185,8 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param value Can be ignored
      */
     next(value?: any): IteratorResult<KeyValuePair<K, V>>;
+    private addInternal(key, value);
+    private getHashCode(key);
+    private getKeysByValuesAsListInternal(values, breakAfterFirst);
+    private refreshKeyIndex();
 }
