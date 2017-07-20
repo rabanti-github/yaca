@@ -528,7 +528,7 @@ describe('next method', () => {
         }
         expect(value).to.equal("122333444455555122");
     });
-    it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', () => {
+    it('should indicate that the last element is reached after 5 calls in a list of 5 entries (for loop)', () => {
         list = Utils.setupList(Types.string, ["1","22","333","4444","55555"]);
         let state: boolean;
         for(let i: number = 0; i < 5; i++)
