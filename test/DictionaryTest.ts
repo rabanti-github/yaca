@@ -110,10 +110,19 @@ describe('add method', () => {
         dict.add("two",-2);
         expect(dict.length).to.equal(3);
     });
-    it('should add a Date value taht differs just 1 ms from another as key instead of replacing it (length + 1)', () => {
+    it('should replace a Date value that differs just 1 ms from another as key instead of adding a new one (failing of toString)', () => {
         let dict2: Dictionary<Date, number> =  Utils.setupDictionary(Types.date, Types.number);
         let d1: Date = new Date(2000, 1,1,1,1,1,0);
         let d2: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.add(d1, 42);
+        dict2.add(d2, 43);
+        expect(dict2.length).to.equal(1);
+    });
+    it('should not replace a Date value that differs just 1 ms from another as key instead of replacing it after definition of a override function for toString', () => {
+        let dict2: Dictionary<Date, number> =  Utils.setupDictionary(Types.date, Types.number);
+        let d1: Date = new Date(2000, 1,1,1,1,1,0);
+        let d2: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.overrideHashFunction(Utils.properDateHashFunction);
         dict2.add(d1, 42);
         dict2.add(d2, 43);
         expect(dict2.length).to.equal(2);

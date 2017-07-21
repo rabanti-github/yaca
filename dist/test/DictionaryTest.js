@@ -103,10 +103,19 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
                 dict.add("two", -2);
                 chai_1.expect(dict.length).to.equal(3);
             });
-            it('should add a Date value taht differs just 1 ms from another as key instead of replacing it (length + 1)', function () {
+            it('should replace a Date value that differs just 1 ms from another as key instead of adding a new one (failing of toString)', function () {
                 var dict2 = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number);
                 var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);
                 var d2 = new Date(2000, 1, 1, 1, 1, 1, 1);
+                dict2.add(d1, 42);
+                dict2.add(d2, 43);
+                chai_1.expect(dict2.length).to.equal(1);
+            });
+            it('should not replace a Date value that differs just 1 ms from another as key instead of replacing it after definition of a override function for toString', function () {
+                var dict2 = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number);
+                var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);
+                var d2 = new Date(2000, 1, 1, 1, 1, 1, 1);
+                dict2.overrideHashFunction(Utils_1.Utils.properDateHashFunction);
                 dict2.add(d1, 42);
                 dict2.add(d2, 43);
                 chai_1.expect(dict2.length).to.equal(2);

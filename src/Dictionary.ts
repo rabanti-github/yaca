@@ -3,7 +3,6 @@ import {KeyValuePair} from './KeyValuePair';
 import ISortInterFace from './interfaces/ISortInterface';
 import { IDictionary } from './interfaces/IDictionary';
 import { IteratorItem } from './IteratorItem';
-import {IToStringInterface} from './interfaces/IToStringInterface';
 import { Sorter } from './Sorter';
 import  List  from './List';
 
@@ -19,6 +18,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     private _length: number;
     private _iCounter: number;
     private _iKeyIndex: string[];
+    private _iOverrideToStringFunction: any;
 
 
 // ############### P R O P E R T I E S ###############
@@ -87,8 +87,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param key Key to add
      */
     public add(key: K, value: V)
-    add(key: K, value: V, toStringFunction: IToStringInterface<V>);
-    public add(key: K, value: V, toStringFunction?: IToStringInterface<V>)
     {
         this.addInternal(key, value);
         this.refreshKeyIndex();
@@ -265,7 +263,15 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     
 
 
-
+    public overrideHashFunction(overrideFunction: any): void
+    {
+        let type: any = {};
+        if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false)
+        {
+            throw new Error("The passed object is not a function. It must be a function that accepts one variable of the key type (K) and returns a string");
+        }
+        this._iOverrideToStringFunction = overrideFunction;
+    }
 
 
 
@@ -646,8 +652,15 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         if (key === undefined)
         {
             throw new Error("No valid key was defined. The key must not be empty or undefined");
-        }        
-        return "_" + key.toString(); // _ prevents problems with empty strings / defined types
+        }
+        if (this._iOverrideToStringFunction === undefined)
+        {      
+            return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+        }
+        else
+        {
+            return this._iOverrideToStringFunction(key);
+        }
     }    
     
     private getKeysByValuesAsListInternal(values: V[] | List<V>, breakAfterFirst: boolean): List<K>{

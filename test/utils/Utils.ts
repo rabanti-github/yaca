@@ -40,9 +40,18 @@ export class Utils
      */
     public static compareBooleans(b1: boolean, b2: boolean): number
     {
-        if (b1 == false && b2 == true) { return -1; }
-        else if ((b1 == false && b2 == false)||b1 == true && b2 == true) { return 0; }
+        if (b1 === false && b2 === true) { return -1; }
+        else if ((b1 === false && b2 === false)||b1 === true && b2 === true) { return 0; }
         else { return 1; }
+    }
+
+    /**
+     * Function to test an overwritten hash function for dates (used in Dictionary)
+     * @param date Date to get the hash
+     */
+    public static properDateHashFunction(date: Date): string
+    {
+        return date.getTime().toString();
     }
 
     /**

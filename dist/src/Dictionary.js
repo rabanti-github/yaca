@@ -39,7 +39,13 @@ var Dictionary = (function () {
         enumerable: true,
         configurable: true
     });
-    Dictionary.prototype.add = function (key, value, toStringFunction) {
+    // ############### P U B L I C   F U N C T I O N S ###############
+    /**
+     * Adds an element at the end of the List. This method is synonymous to set
+     * @param value Value to add
+     * @param key Key to add
+     */
+    Dictionary.prototype.add = function (key, value) {
         this.addInternal(key, value);
         this.refreshKeyIndex();
     };
@@ -147,6 +153,13 @@ var Dictionary = (function () {
         else {
             return false;
         }
+    };
+    Dictionary.prototype.overrideHashFunction = function (overrideFunction) {
+        var type = {};
+        if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false) {
+            throw new Error("The passed object is not a function. It must be a function that accepts one variable of the key type (K) and returns a string");
+        }
+        this._iOverrideToStringFunction = overrideFunction;
     };
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
@@ -412,7 +425,12 @@ var Dictionary = (function () {
         if (key === undefined) {
             throw new Error("No valid key was defined. The key must not be empty or undefined");
         }
-        return "_" + key.toString(); // _ prevents problems with empty strings / defined types
+        if (this._iOverrideToStringFunction === undefined) {
+            return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+        }
+        else {
+            return this._iOverrideToStringFunction(key);
+        }
     };
     Dictionary.prototype.getKeysByValuesAsListInternal = function (values, breakAfterFirst) {
         var list = new List_1.default();

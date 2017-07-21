@@ -2,7 +2,6 @@
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import { KeyValuePair } from './KeyValuePair';
 import { IDictionary } from './interfaces/IDictionary';
-import { IToStringInterface } from './interfaces/IToStringInterface';
 import List from './List';
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
@@ -12,6 +11,7 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     private _length;
     private _iCounter;
     private _iKeyIndex;
+    private _iOverrideToStringFunction;
     /**
      * Gets the number of elements of the Dictionary
      */
@@ -46,8 +46,7 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param value Value to add
      * @param key Key to add
      */
-    add(key: K, value: V): any;
-    add(key: K, value: V, toStringFunction: IToStringInterface<V>): any;
+    add(key: K, value: V): void;
     /**
      * Adds a range of keys and values
      * @param values Values as Dictionary<K,V>
@@ -79,6 +78,7 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     containsValues(values: V[]): boolean;
     containsValues(values: List<V>): boolean;
     containsValue(value: V): boolean;
+    overrideHashFunction(overrideFunction: any): void;
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
      * @param key Key of the new value

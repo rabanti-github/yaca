@@ -55,11 +55,19 @@ describe("test/Utils\n  ##########\n", function () {
             chai_1.expect(result).to.equal(1);
         });
     });
+    describe('static:properDateHashFunction', function () {
+        it('should return the milliseconds since 1.1.1970 as string of a date', function () {
+            var date = new Date();
+            var ms = date.getTime().toString();
+            var match = Utils_1.Utils.properDateHashFunction(date);
+            chai_1.expect(ms).to.equal(match);
+        });
+    });
     describe('static:setupList', function () {
         it('should return an empty instance of a List<string> if executed with the type string', function () {
             var list = Utils_1.Utils.setupList(Types_1.Types.string);
             var match = false;
-            if (list instanceof List_1.default && list.length == 0) {
+            if (list instanceof List_1.default && list.length === 0) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
@@ -67,7 +75,7 @@ describe("test/Utils\n  ##########\n", function () {
         it('should return an instance of a List<boolean> with the length 1 if executed with the type boolean and an initial values', function () {
             var list = Utils_1.Utils.setupList(Types_1.Types.boolean, true);
             var match = false;
-            if (list instanceof List_1.default && list.length == 1) {
+            if (list instanceof List_1.default && list.length === 1) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
@@ -75,7 +83,7 @@ describe("test/Utils\n  ##########\n", function () {
         it('should return an instance of a List<number> with the length 4 if executed with the type number and an initial array of 4 values', function () {
             var list = Utils_1.Utils.setupList(Types_1.Types.number, [1, 2, 3, 4]);
             var match = false;
-            if (list instanceof List_1.default && list.length == 4) {
+            if (list instanceof List_1.default && list.length === 4) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
@@ -85,7 +93,7 @@ describe("test/Utils\n  ##########\n", function () {
         it('should return an empty instance of a Dictionary<number,string> if executed with the type number->string', function () {
             var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
             var match = false;
-            if (dict instanceof Dictionary_1.Dictionary && dict.length == 0) {
+            if (dict instanceof Dictionary_1.Dictionary && dict.length === 0) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
@@ -93,7 +101,7 @@ describe("test/Utils\n  ##########\n", function () {
         it('should return an instance of a Dictionary<date,number> with the length 1 if executed with the type Date->number and an initial key-value pair', function () {
             var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number, new Date(), 22);
             var match = false;
-            if (dict instanceof Dictionary_1.Dictionary && dict.length == 1) {
+            if (dict instanceof Dictionary_1.Dictionary && dict.length === 1) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
@@ -101,7 +109,7 @@ describe("test/Utils\n  ##########\n", function () {
         it('should return an instance of a Dictionary<number,string> with the length 1 if executed with the type number->string and a key-value pair array with a length of 2', function () {
             var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [22, 44], ["a", "b"]);
             var match = false;
-            if (dict instanceof Dictionary_1.Dictionary && dict.length == 2) {
+            if (dict instanceof Dictionary_1.Dictionary && dict.length === 2) {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);

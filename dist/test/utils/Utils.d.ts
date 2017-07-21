@@ -24,6 +24,11 @@ export declare class Utils {
      */
     static compareBooleans(b1: boolean, b2: boolean): number;
     /**
+     * Function to test an overwritten hash function for dates (used in Dictionary)
+     * @param date Date to get the hash
+     */
+    static properDateHashFunction(date: Date): string;
+    /**
      * Function to setup instances of the List class
      * @param t Type of the list
      * @param initialValue Initial value as single value or array (optional)
