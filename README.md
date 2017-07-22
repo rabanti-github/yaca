@@ -6,6 +6,12 @@
 
 YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.
 
+[![Coverage Status](https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=v0.1.x)](https://coveralls.io/github/rabanti-github/yaca?branch=master)
+![npm](https://img.shields.io/npm/v/yaca.svg?maxAge=2592000)
+![license](https://img.shields.io/github/license/rabanti-github/yaca.svg)
+
+
+
 YACA contains at the moment only **List&lt;T&gt;** as collection type. Further types (e.g. Dictionary *[WIP]* or Stack) are planned.
 
 See the **[Change Log](changelog.md)** for recent updates.
