@@ -5,6 +5,7 @@ import { IDictionary } from './interfaces/IDictionary';
 import { IteratorItem } from './IteratorItem';
 import { Sorter } from './Sorter';
 import  List  from './List';
+var isEqual  = require('lodash.isequal');
 
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
@@ -35,6 +36,12 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
 /** Default constructor */
     constructor();
+
+    /**
+     * Constructor with an function to override the default hashing function of the keys (toString)
+     * @param overrideFunction Hashing function. Should accept one parameter of the type K and return a string
+     */
+    constructor(overrideFunction: Function);
     /**
      * Constructor with a Dictionary<K,V> as initial value
      * @param values Dictionary of elements with K and V as Keys and Values 
@@ -58,23 +65,35 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param keys List of keys with type K
      */
     constructor(keys: List<K>, values: List<V>);    
-    constructor(keys?: K | K[] | List<K> |  Dictionary<K, V>, values?: V | V[] | List<V>) {
+    constructor(keys?: K | K[] | List<K> | Dictionary<K, V> | Function, values?: V | V[] | List<V>) {
         this._iCounter = 0;
         this._length = 0;
         this._iDict = [];
         this._iKeyIndex = [];
-        if (keys !== undefined && values !== undefined) {
-            if (Array.isArray(keys) && Array.isArray(values)) {
-                this.addRange(keys as K[], values);
-            }
-            else if (keys instanceof List && values instanceof List) {
-                this.addRange(keys as List<K>, values as List<V>);
-            }
-            else if (values instanceof Dictionary) {
-                this.addRange(keys as Dictionary<K,V>);
-            }
-            else {
+        if (keys !== undefined) 
+        {
+            if (values !== undefined)
+            {
+                if (Array.isArray(keys) && Array.isArray(values)) {
+                    this.addRange(keys as K[], values);
+                }
+                else if (keys instanceof List && values instanceof List) {
+                    this.addRange(keys as List<K>, values as List<V>);
+                }
+                else {
                 this.add(keys as K, values as V);
+                }
+            }
+            else
+            {
+                if (keys instanceof Function)
+                {
+                    this.overrideHashFunction(keys as Function);
+                }
+                else if (keys instanceof Dictionary)
+                {
+                    this.addRange(keys as Dictionary<K,V>);
+                }
             }
         }
     }
@@ -191,7 +210,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         if (Array.isArray(keys))
         { keyList = keys; }
         else
-        { keyList = keys.copyToArray(); }
+        { keyList = (keys as List<K>).copyToArray(); }
         let len: number = keys.length;
        // let allHashcodes: string[] = Object.keys(this._iDict);
         for(let i: number = 0; i < len; i++)
@@ -249,18 +268,59 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             list = this.getKeysByValuesAsListInternal(values, false);
             if (list.length > 0) { return true; }
             else { return false; }      
-        }
-
-  
+        }  
     }
 
+    /**
+     * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
+     */
+    public distinct() {
+        if (this._length === 0) { return; }
+        let newDict: Dictionary<K,V> = new Dictionary<K,V>();
+        for (let i = 0; i < this._length; i++) {
+            if (newDict.containsValues([this._iDict[this._iKeyIndex[i]][1]]) === false)
+            {
+                newDict.add(this._iDict[this._iKeyIndex[i]][0], this._iDict[this._iKeyIndex[i]][1]);
+            }
+        }
+        this.clear()
+        this.addRange(newDict);
+    }
 
+     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
+    /**
+     * Implementation of a forEach loop
+     * @param callback Callback function to process the items of the List
+     */
+    public forEach(callback: IForEachInterface<K,V>) {
+        if (this._length === 0) { return; }
+        let done: boolean = false;
+        let item: IteratorItem<KeyValuePair<K,V>>;
+        this._iCounter = 0;
+        while (done === false) {
+            item = this.next() as IteratorItem<KeyValuePair<K,V>>;
+            done = item.isLastEntry;
+            callback(item.value);
+        }
+    }
 
+    /**
+     * Gets the value of the Dictionary by the specified key
+     * @param key Key
+     */
+    public get(key: K): V {
+        let k: string = this.getHashCode(key);
+        if (typeof this._iDict[k] !== undefined) {
+            return this._iDict[k][1];
+        }
+        else {
+            throw new Error("The key " + key + " was not found in the Dictionary");
+        }
+    }
 
-
-
-
-
+    /**
+     * Gets all key of the Dictionary as Array of the type K
+     */
     public getKeys(): K[]
     {
         
@@ -270,16 +330,47 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
         for(let i: number = 0; i < this._length; i++)
         {
-            output[i] = temp[i]['key'];
+            output[i] = temp[i]['value'][0];
         }
         return output;
     }
 
+    /**
+     * Gets all keys of the Dictionary as List of teh type <K>
+     */
     public getKeysAsList(): List<K>
     {
         let keys: K[] = this.getKeys();
         return new List<K>(keys);
     }
+
+    /**
+     * Get the keys that matches to the passed value
+     * @param value Value to get all corresponding keys from
+     */
+    public getKeysByValue(value: V): K[]
+    { 
+        let list: List<K> = this.getKeysByValueAsList(value);
+        return this.getKeysByValuesAsListInternal([ value ], true).copyToArray();
+        //return list.copyToArray();
+    }
+
+    public getKeysByValueAsList(value: V): List<K>
+    {
+        //let v: V[] = [value];
+        return this.getKeysByValuesAsListInternal([ value ], true); 
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public getValues(): V[]
     {
@@ -303,19 +394,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     
 
     
-    private getKeyValuePairsInternal(): object[]
-    {
-        let output: object[] = new Array(this._length) as object[];
-        let item: object;
-        let i: number = 0;
-        //let keys: string[] = Object.keys(this._iDict);
-        this._iKeyIndex.forEach(key => { 
-            item = {'key': key, 'value': this._iDict[key]};
-            output[i] = item;
-            i++;
-        });
-        return output;
-    }
+
 
     public getKeysByValuesAsList(values: V[]): List<K>;
     public getKeysByValuesAsList(values: List<V>): List<K>;
@@ -332,18 +411,11 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         return list.copyToArray();     
     }
 
-    public getKeysByValueAsList(value: V): List<K>
-    {
-        let v: V[] = [value];
-        return this.getKeysByValuesAsListInternal(v, false); 
-    }
 
 
 
-    public getKeysByValue(value: V): K[]{ 
-        let list: List<K> = this.getKeysByValueAsList(value);
-        return list.copyToArray();
-    }
+
+
 
 
 
@@ -355,7 +427,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     
 
 
-    public overrideHashFunction(overrideFunction: any): void
+    public overrideHashFunction(overrideFunction: Function): void
     {
         let type: any = {};
         if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false)
@@ -424,20 +496,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         return status;
     }
 
-    private removeInternal(key: K): boolean
-    {
-        let hashcode: string = this.getHashCode(key);
-        if (typeof this._iDict[hashcode] === undefined)
-        {
-            return false;
-        }
-        else
-        {
-            delete this._iDict[hashcode];
-            this._length--;
-            return true;            
-        }
-    }
+
     
 
 /*
@@ -488,19 +547,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
 
-    /**
-     * Gets the value of the Dictionary by the specified key
-     * @param key Key
-     */
-    public get(key: K): V {
-        let k: string = this.getHashCode(key);
-        if (typeof this._iDict[k] !== undefined) {
-            return this._iDict[k][1];
-        }
-        else {
-            throw new Error("The key " + key + " was not found in the Dictionary");
-        }
-    }
+
 
 
     /**
@@ -574,20 +621,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
          return this.getRange(keys);       
     }
 
-    private copyToInternal(keys: List<string>): Dictionary<K,V>
-    {
-        let output: Dictionary<K,V> = new Dictionary<K,V>();
-        let len = keys.length;
-        for(let i: number = 0; i < len; i++)
-        {
-            if (typeof this._iDict[keys[i]] !== undefined)
-            {
-                output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
-            }
-        }
-        output.refreshKeyIndex();
-        return output;
-    }
+
 
 
 
@@ -609,22 +643,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         this._iDict[hc2][1] = temp;
         }
 
-    /**
-     * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
-     */
-    public distinct() {
-        if (this._length === 0) { return; }
-        let newDict: Dictionary<K,V> = new Dictionary<K,V>();
-        //let allHashcodes: string[] = Object.keys(this._iDict);
-        for (let i = 0; i < this._length; i++) {
-            if (newDict.containsKeys(this._iDict[this._iKeyIndex[i]][1]) === false)
-            {
-                newDict.addInternal(this._iDict[this._iKeyIndex[i]][0], this._iDict[this._iKeyIndex[i]][1]);
-            }
-        }
-        this.clear()
-        this.addRange(newDict);
-    }
+
 
     // // *********************************************** Implemented Interfaces
 
@@ -637,21 +656,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     //     qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
     // }
 
-    /**
-     * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the List
-     */
-    public forEach(callback: IForEachInterface<K,V>) {
-        if (this._length === 0) { return; }
-        let done: boolean = false;
-        let item: IteratorItem<KeyValuePair<K,V>>;
-        this._iCounter = 0;
-        while (done === false) {
-            item = this.next() as IteratorItem<KeyValuePair<K,V>>;
-            done = item.isLastEntry;
-            callback(item.value);
-        }
-    }
+
 
     /**
      * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
@@ -692,6 +697,21 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         }     
     }
 
+    private copyToInternal(keys: List<string>): Dictionary<K,V>
+    {
+        let output: Dictionary<K,V> = new Dictionary<K,V>();
+        let len = keys.length;
+        for(let i: number = 0; i < len; i++)
+        {
+            if (typeof this._iDict[keys[i]] !== undefined)
+            {
+                output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
+            }
+        }
+        output.refreshKeyIndex();
+        return output;
+    }
+
     private getHashCode(key: K): string
     {
         if (key === undefined)
@@ -700,7 +720,14 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         }
         if (this._iOverrideToStringFunction === undefined)
         {      
-            return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+            if (key instanceof Date) // Workaround for dates as common type (milliseconds are not considered in toString)
+            {
+                return (key as Date).getTime().toString();
+            }
+            else
+            {
+                return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+            }
         }
         else
         {
@@ -731,7 +758,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         {
             for(j = 0; j < this._length; j++)
             {
-                if (this._iDict[this._iKeyIndex[j]][1] === val[i])
+                if (isEqual(this._iDict[this._iKeyIndex[j]][1], val[i]) === true)
                 {
                     if (keyCheck.contains(this._iKeyIndex[j])){ continue; }
                     list.add(this._iDict[this._iKeyIndex[j]][0]);
@@ -743,11 +770,39 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         return list;
     }
 
+    private getKeyValuePairsInternal(): object[]
+    {
+        let output: object[] = new Array(this._length) as object[];
+        let item: object;
+        let i: number = 0;
+        //let keys: string[] = Object.keys(this._iDict);
+        this._iKeyIndex.forEach(key => { 
+            item = {'key': key, 'value': this._iDict[key]};
+            output[i] = item;
+            i++;
+        });
+        return output;
+    }    
 
     private refreshKeyIndex()
     {
         this._iKeyIndex = Object.keys(this._iDict);
     }
+
+    private removeInternal(key: K): boolean
+    {
+        let hashcode: string = this.getHashCode(key);
+        if (typeof this._iDict[hashcode] === undefined)
+        {
+            return false;
+        }
+        else
+        {
+            delete this._iDict[hashcode];
+            this._length--;
+            return true;            
+        }
+    }    
 
 }
 

@@ -6,6 +6,8 @@ var Dictionary_1 = require("./Dictionary");
 exports.Dictionary = Dictionary_1.Dictionary;
 var KeyValuePair_1 = require("./KeyValuePair");
 exports.KeyValuePair = KeyValuePair_1.KeyValuePair;
+var Utils_1 = require("../test/utils/Utils");
+var TestClass_1 = require("../test/utils/TestClass");
 //export default List;
 /*
         let list2: List<Date> = new List<Date>([new Date(2015,2,10,0,0,0), new Date(2017,1,1,0,0,0), new Date(1191,1,8,23,59,59)]);
@@ -16,41 +18,16 @@ exports.KeyValuePair = KeyValuePair_1.KeyValuePair;
 
         let list4: List<number> = new List<number>(22);
 */
-var TestClass = (function () {
-    function TestClass() {
-    }
-    TestClass.createRandomObject = function () {
-        var o = new TestClass();
-        o.value4 = new Date();
-        o.value1 = o.value4.toDateString() + "_" + TestClass.counter.toString();
-        o.value2 = o.value4.getMilliseconds() + TestClass.counter;
-        var rnd;
-        o.value3 = new Array(5);
-        for (var i = 0; i < 5; i++) {
-            rnd = Math.random();
-            if (rnd > 0.5) {
-                o.value3[i] = true;
-            }
-            else {
-                o.value3[i] = false;
-            }
-        }
-        TestClass.counter++;
-        return o;
-    };
-    TestClass.counter = 0;
-    return TestClass;
-}());
 /*
 let sList: List<string> = new List<string>(["1","2","3"]);
 sList.set(1, undefined);
 */
 var list2 = new List_1.default();
-list2.add(TestClass.createRandomObject());
-list2.add(TestClass.createRandomObject());
-var value = TestClass.createRandomObject();
+list2.add(TestClass_1.TestClass.createRandomObject());
+list2.add(TestClass_1.TestClass.createRandomObject());
+var value = TestClass_1.TestClass.createRandomObject();
 list2.add(value);
-list2.add(TestClass.createRandomObject());
+list2.add(TestClass_1.TestClass.createRandomObject());
 //list2.removeAt(2);
 list2.removeAll(value);
 var d = new Dictionary_1.Dictionary();
@@ -58,15 +35,29 @@ var hit = false;
 d.forEach(function (test) { hit = true; });
 d.add(22, "x");
 d.add(11, "y");
-d.add(4, "z");
-d.add(11, "new");
-d.containsKey(12);
+d.add(4, "x");
+d.add(111, "new");
+var keys = d.getKeys();
+d.distinct();
+var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+var dict3 = new Dictionary_1.Dictionary(Utils_1.Utils.properDateHashFunction);
+dict3.addRange([d1, d2, d3, d4, d5, d6, d7], [17, 22, 88, 55, 12, 0, -12]);
+var value3 = dict3.get(d1);
 var n = d.length;
-var dict2 = new Dictionary_1.Dictionary();
-var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);
-var d2b = new Date(2000, 1, 1, 1, 1, 1, 1);
-dict2.add(d1, 42);
-dict2.add(d2b, 43);
+/*
+let dict2: Dictionary<Date, number> =  new Dictionary<Date, number>();
+
+        let d1: Date = new Date(2000, 1,1,1,1,1,0);
+        let d2b: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.add(d1, 42);
+        dict2.add(d2b, 43);
+*/
 //d.removeByValue("y");
 d.forEach(function (item) {
     xyz(item);
@@ -75,6 +66,6 @@ function xyz(item) {
     console.log(item.key);
     console.log(item.value);
 }
-var d2 = d.getRangeByValues(["y"]);
+//let d2: Dictionary<number, string> = d.getRangeByValues(["y"]);
 var output = d.get(4);
 //# sourceMappingURL=index.js.map
