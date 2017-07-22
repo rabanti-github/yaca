@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var List_1 = require("../src/List");
-var Utils_1 = require("./Utils");
-var Types_1 = require("./Types");
-var TestClass_1 = require("./TestClass");
+var Utils_1 = require("./utils/Utils");
+var Types_1 = require("./utils/Types");
+var TestClass_1 = require("./utils/TestClass");
 var chai_1 = require("chai");
 require("mocha");
 // This file is to test the List<T> class
@@ -24,7 +24,7 @@ describe("LIST<T>\n  #######\n", function () {
             var length = list.length;
             chai_1.expect(length).to.equal(5);
         });
-        it('should return a lengt of 4 if initialized with a list of 4 elements', function () {
+        it('should return a length of 4 if initialized with a list of 4 elements', function () {
             var list2 = Utils_1.Utils.setupList(Types_1.Types.number, [11, 22, 33, 44]);
             list = new List_1.default(list2);
             var length = list.length;
@@ -52,7 +52,7 @@ describe("LIST<T>\n  #######\n", function () {
             list.add(1);
             chai_1.expect(list.length).to.equal(10);
         });
-        it('should return 8 after removing one element to a list of 9 elements', function () {
+        it('should return 8 after removing one element from a list of 9 elements', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22, 22.00001]);
             list.removeAt(0);
             chai_1.expect(list.length).to.equal(8);
@@ -102,12 +102,12 @@ describe("LIST<T>\n  #######\n", function () {
     describe('addRange method -> calls add()', function () {
         var items = ["one", "two", "three", "four", "five"];
         var list = Utils_1.Utils.setupList(Types_1.Types.string);
-        it('should add five elements from an array to an empty list and return file as length of the list', function () {
+        it('should add five elements from an array to an empty list and return five as length of the list', function () {
             list.addRange(items);
             var length = list.length;
             chai_1.expect(length).to.equal(5);
         });
-        it('should add five elements from a list to an empty list and return file as length of the list', function () {
+        it('should add five elements from a list to an empty list and return five as length of the list', function () {
             var newList = Utils_1.Utils.setupList(Types_1.Types.string);
             newList.addRange(list);
             var length = newList.length;
@@ -483,7 +483,7 @@ describe("LIST<T>\n  #######\n", function () {
             }
             chai_1.expect(value).to.equal("122333444455555122");
         });
-        it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', function () {
+        it('should indicate that the last element is reached after 5 calls in a list of 5 entries (for loop)', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.string, ["1", "22", "333", "4444", "55555"]);
             var state;
             for (var i = 0; i < 5; i++) {

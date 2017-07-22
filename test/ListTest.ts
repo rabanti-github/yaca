@@ -1,8 +1,8 @@
 import List from '../src/List';
 import {IteratorItem} from '../src/IteratorItem';
-import { Utils } from './Utils';
-import {Types} from './Types';
-import { TestClass } from './TestClass';
+import { Utils } from './utils/Utils';
+import {Types} from './utils/Types';
+import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -25,7 +25,7 @@ describe('constructors', () => {
         let length: number = list.length;
         expect(length).to.equal(5);
     });
-    it('should return a lengt of 4 if initialized with a list of 4 elements', () => {
+    it('should return a length of 4 if initialized with a list of 4 elements', () => {
         let list2 = Utils.setupList(Types.number, [11,22,33,44]);
         list = new List<number>(list2);
         let length: number = list.length;
@@ -55,7 +55,7 @@ describe('length property', () => {
         list.add(1);
         expect(list.length).to.equal(10);
     });
-    it('should return 8 after removing one element to a list of 9 elements', () => {
+    it('should return 8 after removing one element from a list of 9 elements', () => {
         list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22,22.00001]);
         list.removeAt(0);
         expect(list.length).to.equal(8);
@@ -108,12 +108,12 @@ describe('add method', () => {
 describe('addRange method -> calls add()', () => {
     let items: string[] = ["one", "two", "three", "four", "five"];
     let list: List<string> = Utils.setupList(Types.string);
-    it('should add five elements from an array to an empty list and return file as length of the list', () => {
+    it('should add five elements from an array to an empty list and return five as length of the list', () => {
         list.addRange(items);
         let length: number = list.length;
         expect(length).to.equal(5);
     });
-    it('should add five elements from a list to an empty list and return file as length of the list', () => {
+    it('should add five elements from a list to an empty list and return five as length of the list', () => {
         let newList: List<string> = Utils.setupList(Types.string);
         newList.addRange(list);
         let length: number = newList.length;
@@ -528,7 +528,7 @@ describe('next method', () => {
         }
         expect(value).to.equal("122333444455555122");
     });
-    it('should indicate that the last element is reached after 5 calls in a lit of 5 entries (for loop)', () => {
+    it('should indicate that the last element is reached after 5 calls in a list of 5 entries (for loop)', () => {
         list = Utils.setupList(Types.string, ["1","22","333","4444","55555"]);
         let state: boolean;
         for(let i: number = 0; i < 5; i++)

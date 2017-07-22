@@ -1,5 +1,4 @@
 import IForEachInterface from './IForEachInterfaceDictionary';
-import ISortInterface from './ISortInterface';
 
 /**
  * Interface for Dictionaries (Delegating further interfaces)
@@ -7,13 +6,8 @@ import ISortInterface from './ISortInterface';
 export interface IDictionary<K,V>
 {
     /**
-     * Interface to handle foeEach loops --> TODO
+     * Variant of the add function to add a value with a user-defined toString function 
      */
-   // forEach(callback:IForEachInterface<K, V>);
-
-    /**
-     * Interface to handle sorting --TODO
-     */
-   // sort(sortFunction:ISortInterface<K, V>);
+    //add(key: K, value: V);
 
 }

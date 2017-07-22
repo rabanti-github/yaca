@@ -7,7 +7,7 @@ export interface IForEachInterface<T>
     /**
      * Callback function
      */
-    (callback: T): void;
+     (callback: T): void;
 }
 
 export default IForEachInterface

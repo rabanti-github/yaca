@@ -11,6 +11,7 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     private _length;
     private _iCounter;
     private _iKeyIndex;
+    private _iOverrideToStringFunction;
     /**
      * Gets the number of elements of the Dictionary
      */
@@ -40,30 +41,12 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys List of keys with type K
      */
     constructor(keys: List<K>, values: List<V>);
-    private refreshKeyIndex();
-    getKeys(): K[];
-    getKeysAsList(): List<K>;
-    getValues(): V[];
-    getValuesAsList(): List<V>;
-    private getHashCode(key);
-    private getKeyValuePairsInternal();
-    getKeysByValuesAsList(values: V[]): List<K>;
-    getKeysByValuesAsList(values: List<V>): List<K>;
-    getKeysByValues(values: V[]): K[];
-    getKeysByValues(values: List<V>): K[];
-    getKeysByValueAsList(value: V): List<K>;
-    private getKeysByValuesAsListInternal(values, breakAfterFirst);
-    getKeysByValue(value: V): K[];
-    containsValues(values: V[]): boolean;
-    containsValues(values: List<V>): boolean;
-    containsValue(value: V): boolean;
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add
      * @param key Key to add
      */
     add(key: K, value: V): void;
-    private addInternal(key, value);
     /**
      * Adds a range of keys and values
      * @param values Values as Dictionary<K,V>
@@ -81,6 +64,60 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys Keys as List<K>
      */
     addRange(keys: List<K>, values: List<V>): any;
+    /**
+     * Removes all elements of the Dictionary
+     */
+    clear(): void;
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key Key to check
+     */
+    containsKey(key: K): boolean;
+    /**
+     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     */
+    containsKeys(keys: K[], all?: boolean): boolean;
+    /**
+ * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
+ * @param keys Key to check
+ */
+    containsKeys(keys: List<K>, all?: boolean): boolean;
+    /**
+     * Check whether the Dictionary contains the specified keys
+     * @param keys Key to check
+     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     */
+    containsKeys(keys: List<K>, all?: boolean): boolean;
+    /**
+     * Check whether the Dictionary contains the specified value
+     * @param value Values to check
+     */
+    containsValue(value: V): boolean;
+    /**
+    * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
+    * @param keys Key to check
+    * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+    */
+    containsValues(values: V[], all?: boolean): boolean;
+    /**
+    * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
+    * @param keys Key to check
+    * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+    */
+    containsValues(values: List<V>, all?: boolean): boolean;
+    getKeys(): K[];
+    getKeysAsList(): List<K>;
+    getValues(): V[];
+    getValuesAsList(): List<V>;
+    private getKeyValuePairsInternal();
+    getKeysByValuesAsList(values: V[]): List<K>;
+    getKeysByValuesAsList(values: List<V>): List<K>;
+    getKeysByValues(values: V[]): K[];
+    getKeysByValues(values: List<V>): K[];
+    getKeysByValueAsList(value: V): List<K>;
+    getKeysByValue(value: V): K[];
+    overrideHashFunction(overrideFunction: any): void;
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
      * @param key Key of the new value
@@ -119,10 +156,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     removeByValue(values: List<V>): boolean;
     /**
-     * Removes all elements of the Dictionary
-     */
-    clear(): void;
-    /**
      * Gets the value of the Dictionary by the specified key
      * @param key Key
      */
@@ -153,21 +186,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     getRangeByValues(values: List<V>): Dictionary<K, V>;
     private copyToInternal(keys);
     /**
-     * Check whether the Dictionary contains the specified key
-     * @param key True if the value exists, otherwise false
-     */
-    containsKey(key: K): boolean;
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys True if the value exists, otherwise false
-     */
-    containsKeys(keys: K[]): boolean;
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys sTrue if the value exists, otherwise false
-     */
-    containsKeys(keys: List<K>): boolean;
-    /**
      * Swaps the values of the two defined keys in the Dictionary
      * @param key1 Key 1
      * @param key2 Key 2
@@ -187,4 +205,8 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param value Can be ignored
      */
     next(value?: any): IteratorResult<KeyValuePair<K, V>>;
+    private addInternal(key, value);
+    private getHashCode(key);
+    private getKeysByValuesAsListInternal(values, all);
+    private refreshKeyIndex();
 }

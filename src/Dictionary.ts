@@ -12,11 +12,13 @@ import  List  from './List';
 export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 {
 
+
 // ############### P R I V A T E   V A R I A B L E S ###############
     private _iDict: object;
     private _length: number;
     private _iCounter: number;
     private _iKeyIndex: string[];
+    private _iOverrideToStringFunction: any;
 
 
 // ############### P R O P E R T I E S ###############
@@ -79,161 +81,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
 // ############### P U B L I C   F U N C T I O N S ###############
 
-
-    private refreshKeyIndex()
-    {
-        this._iKeyIndex = Object.keys(this._iDict);
-    }
-
-    public getKeys(): K[]
-    {
-        
-        if (this._length === 0) { return new Array() as K[]; }
-        let temp: object[] = this.getKeyValuePairsInternal();
-        let output = Array(temp.length) as K[];
-
-        for(let i: number = 0; i < this._length; i++)
-        {
-            output[i] = temp[i]['key'][0];
-        }
-        return output;
-    }
-
-    public getKeysAsList(): List<K>
-    {
-        let keys: K[] = this.getKeys();
-        return new List<K>(keys);
-    }
-
-    public getValues(): V[]
-    {
-        if (this._length === 0) { return new Array() as V[]; }
-        let temp: object[] = this.getKeyValuePairsInternal();
-        let output = Array(temp.length) as V[];
-
-        for(let i: number = 0; i < this._length; i++)
-        {
-            output[i] = temp[i]['value'][1];
-        }
-        return output;
-    }
-
-    public getValuesAsList(): List<V>
-    {
-        let values: V[] = this.getValues();
-        return new List<V>(values);
-        
-    }
-    
-    private getHashCode(key: K): string
-    {
-        if (key === undefined)
-        {
-            throw new Error("No valid key was defined. The key must not be empty or undefined");
-        }        
-        return "_" + key.toString(); // _ prevents problems with empty strings / defined types
-    }
-    
-    private getKeyValuePairsInternal(): object[]
-    {
-        let output: object[] = new Array(this._length) as object[];
-        let item: object;
-        let i: number = 0;
-        //let keys: string[] = Object.keys(this._iDict);
-        this._iKeyIndex.forEach(key => { 
-            item = {'key': key, 'value': this._iDict[key]};
-            output[i] = item;
-            i++;
-        });
-        return output;
-    }
-
-    public getKeysByValuesAsList(values: V[]): List<K>;
-    public getKeysByValuesAsList(values: List<V>): List<K>;
-    public getKeysByValuesAsList(values: V[] | List<V>): List<K>
-    {
-        return this.getKeysByValuesAsListInternal(values, false);
-    }
-
-    public getKeysByValues(values: V[]): K[];
-    public getKeysByValues(values: List<V>): K[];
-    public getKeysByValues(values: V[] | List<V>): K[]
-    {
-        let list: List<K> = this.getKeysByValuesAsListInternal(values, false);
-        return list.copyToArray();     
-    }
-
-    public getKeysByValueAsList(value: V): List<K>
-    {
-        let v: V[] = [value];
-        return this.getKeysByValuesAsListInternal(v, false); 
-    }
-
-    private getKeysByValuesAsListInternal(values: V[] | List<V>, breakAfterFirst: boolean): List<K>{
-       let list: List<K> = new List<K>();
-       if (this._length === 0) { return list; }
-
-        let val: V[];
-        if (Array.isArray(values))
-        {
-            val = values;
-        }
-        else
-        {
-            val = values.copyToArray();
-        }
-        let len: number = val.length;
-        if (len === 0) { return list; }
-       //let keys: string[] = Object.keys(this._iDict);
-       //let len2: number = keys.length;
-       let j: number;
-       let keyCheck: List<string> = new List<string>();
-        for(let i: number = 0; i < len; i++)
-        {
-            for(j = 0; j < this._length; j++)
-            {
-                if (this._iDict[this._iKeyIndex[j]][1] === val[i])
-                {
-                    if (keyCheck.contains(this._iKeyIndex[j])){ continue; }
-                    list.add(this._iDict[this._iKeyIndex[j]][0]);
-                    if (breakAfterFirst === true) { return list; }
-                    keyCheck.add(this._iKeyIndex[j]);
-                }
-            }
-        }
-        return list;
-    }
-
-    public getKeysByValue(value: V): K[]{ 
-        let list: List<K> = this.getKeysByValueAsList(value);
-        return list.copyToArray();
-    }
-
-    public containsValues(values: V[]): boolean;
-    public containsValues(values: List<V>): boolean;
-    public containsValues(values: V[] | List<V>): boolean
-    {
-        let list: List<K> = this.getKeysByValuesAsListInternal(values, true);
-       if (list.length > 0) { return true; }
-       else { return false; }        
-    }
-    
-    public containsValue(value: V): boolean
-    {
-       let v: V[] = [value];
-       let list: List<K> = this.getKeysByValuesAsListInternal(v, true);
-       if (list.length > 0) { return true; }
-       else { return false; }
-    }
-
-
-
-    
-
-
-
-
-
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add
@@ -243,23 +90,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     {
         this.addInternal(key, value);
         this.refreshKeyIndex();
-    }
-
-    private addInternal(key: K, value: V)
-    {
-        if (key === undefined)
-        {
-            throw new Error("No key was defined to add as Dictionary element");
-        }
-        if (value === undefined)
-        {
-            throw new Error("No value was defined to add as Dictionary element");
-        }        
-        let hashcode: string = this.getHashCode(key);
-        this._iDict[hashcode as string] = {0:key, 1:value};
-        this._length++;        
-    }
-
+    }  
 
     /**
      * Adds a range of keys and values
@@ -312,6 +143,230 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         }
         this.refreshKeyIndex();
     }
+
+    /**
+     * Removes all elements of the Dictionary
+     */
+    public clear() {
+        if (this._length === 0) { return; }
+        else {
+            this._iDict = [];
+            this._length = 0;
+            this._iKeyIndex = [];
+        }
+    }
+
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key Key to check
+     */
+    public containsKey(key: K): boolean {
+        if (this._length === 0) { return false; }
+
+        let keyList: K[] = [ key ];
+        return this.containsKeys(keyList);
+    }
+
+    /**
+     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     */
+    public containsKeys(keys: K[], all?: boolean): boolean
+        /**
+     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     */
+    public containsKeys(keys: List<K>, all?: boolean): boolean
+    /**
+     * Check whether the Dictionary contains the specified keys
+     * @param keys Key to check
+     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     */
+    public containsKeys(keys: List<K>, all?: boolean): boolean;
+    public containsKeys(keys: List<K> | K[], all?: boolean): boolean
+    {
+        if (this._length === 0) { return false; }
+        let keyList: K[];
+        let match: number = 0;
+        if (Array.isArray(keys))
+        { keyList = keys; }
+        else
+        { keyList = keys.copyToArray(); }
+        let len: number = keys.length;
+       // let allHashcodes: string[] = Object.keys(this._iDict);
+        for(let i: number = 0; i < len; i++)
+        {
+            if (this._iDict[this.getHashCode(keyList[i])] !== undefined )
+            { match++; }
+        }
+        if (all !== undefined && all === true)
+        {
+            if (match === len) { return true; }
+            else { return false; }
+        }
+        else
+        {
+            if (match > 0) { return true; }
+            else { return false; }            
+        }
+    }    
+
+    /**
+     * Check whether the Dictionary contains the specified value
+     * @param value Values to check
+     */
+    public containsValue(value: V): boolean
+    {
+       let v: V[] = [value];
+       let list: List<K> = this.getKeysByValuesAsListInternal(v, false);
+       if (list.length > 0) { return true; }
+       else { return false; }
+    }    
+
+     /**
+     * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     */
+    public containsValues(values: V[], all?: boolean): boolean;
+     /**
+     * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     */    
+    public containsValues(values: List<V>, all?: boolean): boolean;
+    public containsValues(values: V[] | List<V>, all?: boolean): boolean
+    {
+        let list: List<K>;
+        if (all !== undefined && all === true)
+        {
+            list = this.getKeysByValuesAsListInternal(values, true);
+            if (list.length === values.length) { return true; }
+            else { return false; }             
+        }
+        else
+        {
+            list = this.getKeysByValuesAsListInternal(values, false);
+            if (list.length > 0) { return true; }
+            else { return false; }      
+        }
+
+  
+    }
+
+
+
+
+
+
+
+
+    public getKeys(): K[]
+    {
+        
+        if (this._length === 0) { return new Array() as K[]; }
+        let temp: object[] = this.getKeyValuePairsInternal();
+        let output: K[] = Array(temp.length);
+
+        for(let i: number = 0; i < this._length; i++)
+        {
+            output[i] = temp[i]['key'];
+        }
+        return output;
+    }
+
+    public getKeysAsList(): List<K>
+    {
+        let keys: K[] = this.getKeys();
+        return new List<K>(keys);
+    }
+
+    public getValues(): V[]
+    {
+        if (this._length === 0) { return new Array() as V[]; }
+        let temp: object[] = this.getKeyValuePairsInternal();
+        let output: V[] = Array(temp.length);
+
+        for(let i: number = 0; i < this._length; i++)
+        {
+            output[i] = temp[i]['value'];
+        }
+        return output;
+    }
+
+    public getValuesAsList(): List<V>
+    {
+        let values: V[] = this.getValues();
+        return new List<V>(values);
+        
+    }
+    
+
+    
+    private getKeyValuePairsInternal(): object[]
+    {
+        let output: object[] = new Array(this._length) as object[];
+        let item: object;
+        let i: number = 0;
+        //let keys: string[] = Object.keys(this._iDict);
+        this._iKeyIndex.forEach(key => { 
+            item = {'key': key, 'value': this._iDict[key]};
+            output[i] = item;
+            i++;
+        });
+        return output;
+    }
+
+    public getKeysByValuesAsList(values: V[]): List<K>;
+    public getKeysByValuesAsList(values: List<V>): List<K>;
+    public getKeysByValuesAsList(values: V[] | List<V>): List<K>
+    {
+        return this.getKeysByValuesAsListInternal(values, false);
+    }
+
+    public getKeysByValues(values: V[]): K[];
+    public getKeysByValues(values: List<V>): K[];
+    public getKeysByValues(values: V[] | List<V>): K[]
+    {
+        let list: List<K> = this.getKeysByValuesAsListInternal(values, false);
+        return list.copyToArray();     
+    }
+
+    public getKeysByValueAsList(value: V): List<K>
+    {
+        let v: V[] = [value];
+        return this.getKeysByValuesAsListInternal(v, false); 
+    }
+
+
+
+    public getKeysByValue(value: V): K[]{ 
+        let list: List<K> = this.getKeysByValueAsList(value);
+        return list.copyToArray();
+    }
+
+
+
+    
+
+
+
+
+    
+
+
+    public overrideHashFunction(overrideFunction: any): void
+    {
+        let type: any = {};
+        if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false)
+        {
+            throw new Error("The passed object is not a function. It must be a function that accepts one variable of the key type (K) and returns a string");
+        }
+        this._iOverrideToStringFunction = overrideFunction;
+    }
+
+
+
 
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
@@ -432,17 +487,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         return this.remove(keys);
     }
 
-    /**
-     * Removes all elements of the Dictionary
-     */
-    public clear() {
-        if (this._length === 0) { return; }
-        else {
-            this._iDict = [];
-            this._length = 0;
-            this._iKeyIndex = [];
-        }
-    }
 
     /**
      * Gets the value of the Dictionary by the specified key
@@ -546,43 +590,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
 
-    /**
-     * Check whether the Dictionary contains the specified key
-     * @param key True if the value exists, otherwise false
-     */
-    public containsKey(key: K): boolean {
-        if (this._length === 0) { return false; }
 
-        let keyList: K[] = [ key ];
-        return this.containsKeys(keyList);
-    }
-
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys True if the value exists, otherwise false
-     */
-    public containsKeys(keys: K[]): boolean
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys sTrue if the value exists, otherwise false
-     */
-    public containsKeys(keys: List<K>): boolean;
-    public containsKeys(keys: List<K> | K[]): boolean
-    {
-        if (this._length === 0) { return false; }
-        let keyList: K[];
-        if (Array.isArray(keys))
-        { keyList = keys; }
-        else
-        { keyList = keys.copyToArray(); }
-       // let allHashcodes: string[] = Object.keys(this._iDict);
-        for(let i: number = 0; i < this._length; i++)
-        {
-            if (this._iDict[this.getHashCode(keyList[i])] !== undefined )
-            { return true;}
-        }
-        return false;
-    }    
 
 
     /**
@@ -661,6 +669,84 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             lastItem = true;
         }
         return new IteratorItem(val, lastItem);
+    }
+
+// ############### P R I V A T E   F U N C T I O N S ###############
+
+
+    private addInternal(key: K, value: V)
+    {
+        if (key === undefined)
+        {
+            throw new Error("No key was defined to add as Dictionary element");
+        }
+        if (value === undefined)
+        {
+            throw new Error("No value was defined to add as Dictionary element");
+        }        
+        let hashcode: string = this.getHashCode(key);
+        this._iDict[hashcode as string] = {0:key, 1:value};
+        if (this._iKeyIndex.indexOf(hashcode as string) < 0)
+        {
+            this._length++;   
+        }     
+    }
+
+    private getHashCode(key: K): string
+    {
+        if (key === undefined)
+        {
+            throw new Error("No valid key was defined. The key must not be empty or undefined");
+        }
+        if (this._iOverrideToStringFunction === undefined)
+        {      
+            return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+        }
+        else
+        {
+            return this._iOverrideToStringFunction(key);
+        }
+    }    
+    
+    private getKeysByValuesAsListInternal(values: V[] | List<V>, all: boolean): List<K>{
+       let list: List<K> = new List<K>();
+       if (this._length === 0) { return list; }
+
+        let val: V[];
+        if (Array.isArray(values))
+        {
+            val = values;
+        }
+        else
+        {
+            val = values.copyToArray();
+        }
+        let len: number = val.length;
+        if (len === 0) { return list; }
+       //let keys: string[] = Object.keys(this._iDict);
+       //let len2: number = keys.length;
+       let j: number;
+       let keyCheck: List<string> = new List<string>();
+        for(let i: number = 0; i < len; i++)
+        {
+            for(j = 0; j < this._length; j++)
+            {
+                if (this._iDict[this._iKeyIndex[j]][1] === val[i])
+                {
+                    if (keyCheck.contains(this._iKeyIndex[j])){ continue; }
+                    list.add(this._iDict[this._iKeyIndex[j]][0]);
+                    if (all === false) { return list; }
+                    keyCheck.add(this._iKeyIndex[j]);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    private refreshKeyIndex()
+    {
+        this._iKeyIndex = Object.keys(this._iDict);
     }
 
 }

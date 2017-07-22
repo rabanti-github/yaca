@@ -17,6 +17,10 @@ export class KeyValuePair<K, V>
 
     constructor(key: K, value: V)
     {
+        if (key === undefined || value === undefined)
+        {
+            throw new Error("The key and/or value is undefined");
+        }
         this._key = key;
         this._value = value;
     }

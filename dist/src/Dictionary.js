@@ -40,128 +40,6 @@ var Dictionary = (function () {
         configurable: true
     });
     // ############### P U B L I C   F U N C T I O N S ###############
-    Dictionary.prototype.refreshKeyIndex = function () {
-        this._iKeyIndex = Object.keys(this._iDict);
-    };
-    Dictionary.prototype.getKeys = function () {
-        if (this._length === 0) {
-            return new Array();
-        }
-        var temp = this.getKeyValuePairsInternal();
-        var output = Array(temp.length);
-        for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['key'][0];
-        }
-        return output;
-    };
-    Dictionary.prototype.getKeysAsList = function () {
-        var keys = this.getKeys();
-        return new List_1.default(keys);
-    };
-    Dictionary.prototype.getValues = function () {
-        if (this._length === 0) {
-            return new Array();
-        }
-        var temp = this.getKeyValuePairsInternal();
-        var output = Array(temp.length);
-        for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['value'][1];
-        }
-        return output;
-    };
-    Dictionary.prototype.getValuesAsList = function () {
-        var values = this.getValues();
-        return new List_1.default(values);
-    };
-    Dictionary.prototype.getHashCode = function (key) {
-        if (key === undefined) {
-            throw new Error("No valid key was defined. The key must not be empty or undefined");
-        }
-        return "_" + key.toString(); // _ prevents problems with empty strings / defined types
-    };
-    Dictionary.prototype.getKeyValuePairsInternal = function () {
-        var _this = this;
-        var output = new Array(this._length);
-        var item;
-        var i = 0;
-        //let keys: string[] = Object.keys(this._iDict);
-        this._iKeyIndex.forEach(function (key) {
-            item = { 'key': key, 'value': _this._iDict[key] };
-            output[i] = item;
-            i++;
-        });
-        return output;
-    };
-    Dictionary.prototype.getKeysByValuesAsList = function (values) {
-        return this.getKeysByValuesAsListInternal(values, false);
-    };
-    Dictionary.prototype.getKeysByValues = function (values) {
-        var list = this.getKeysByValuesAsListInternal(values, false);
-        return list.copyToArray();
-    };
-    Dictionary.prototype.getKeysByValueAsList = function (value) {
-        var v = [value];
-        return this.getKeysByValuesAsListInternal(v, false);
-    };
-    Dictionary.prototype.getKeysByValuesAsListInternal = function (values, breakAfterFirst) {
-        var list = new List_1.default();
-        if (this._length === 0) {
-            return list;
-        }
-        var val;
-        if (Array.isArray(values)) {
-            val = values;
-        }
-        else {
-            val = values.copyToArray();
-        }
-        var len = val.length;
-        if (len === 0) {
-            return list;
-        }
-        //let keys: string[] = Object.keys(this._iDict);
-        //let len2: number = keys.length;
-        var j;
-        var keyCheck = new List_1.default();
-        for (var i = 0; i < len; i++) {
-            for (j = 0; j < this._length; j++) {
-                if (this._iDict[this._iKeyIndex[j]][1] === val[i]) {
-                    if (keyCheck.contains(this._iKeyIndex[j])) {
-                        continue;
-                    }
-                    list.add(this._iDict[this._iKeyIndex[j]][0]);
-                    if (breakAfterFirst === true) {
-                        return list;
-                    }
-                    keyCheck.add(this._iKeyIndex[j]);
-                }
-            }
-        }
-        return list;
-    };
-    Dictionary.prototype.getKeysByValue = function (value) {
-        var list = this.getKeysByValueAsList(value);
-        return list.copyToArray();
-    };
-    Dictionary.prototype.containsValues = function (values) {
-        var list = this.getKeysByValuesAsListInternal(values, true);
-        if (list.length > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-    Dictionary.prototype.containsValue = function (value) {
-        var v = [value];
-        var list = this.getKeysByValuesAsListInternal(v, true);
-        if (list.length > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
     /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add
@@ -170,17 +48,6 @@ var Dictionary = (function () {
     Dictionary.prototype.add = function (key, value) {
         this.addInternal(key, value);
         this.refreshKeyIndex();
-    };
-    Dictionary.prototype.addInternal = function (key, value) {
-        if (key === undefined) {
-            throw new Error("No key was defined to add as Dictionary element");
-        }
-        if (value === undefined) {
-            throw new Error("No value was defined to add as Dictionary element");
-        }
-        var hashcode = this.getHashCode(key);
-        this._iDict[hashcode] = { 0: key, 1: value };
-        this._length++;
     };
     Dictionary.prototype.addRange = function (p1, p2) {
         var keys;
@@ -209,6 +76,166 @@ var Dictionary = (function () {
             this.addInternal(keys[i], values[i]);
         }
         this.refreshKeyIndex();
+    };
+    /**
+     * Removes all elements of the Dictionary
+     */
+    Dictionary.prototype.clear = function () {
+        if (this._length === 0) {
+            return;
+        }
+        else {
+            this._iDict = [];
+            this._length = 0;
+            this._iKeyIndex = [];
+        }
+    };
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key Key to check
+     */
+    Dictionary.prototype.containsKey = function (key) {
+        if (this._length === 0) {
+            return false;
+        }
+        var keyList = [key];
+        return this.containsKeys(keyList);
+    };
+    Dictionary.prototype.containsKeys = function (keys, all) {
+        if (this._length === 0) {
+            return false;
+        }
+        var keyList;
+        var match = 0;
+        if (Array.isArray(keys)) {
+            keyList = keys;
+        }
+        else {
+            keyList = keys.copyToArray();
+        }
+        var len = keys.length;
+        // let allHashcodes: string[] = Object.keys(this._iDict);
+        for (var i = 0; i < len; i++) {
+            if (this._iDict[this.getHashCode(keyList[i])] !== undefined) {
+                match++;
+            }
+        }
+        if (all !== undefined && all === true) {
+            if (match === len) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if (match > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    };
+    /**
+     * Check whether the Dictionary contains the specified value
+     * @param value Values to check
+     */
+    Dictionary.prototype.containsValue = function (value) {
+        var v = [value];
+        var list = this.getKeysByValuesAsListInternal(v, false);
+        if (list.length > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    Dictionary.prototype.containsValues = function (values, all) {
+        var list;
+        if (all !== undefined && all === true) {
+            list = this.getKeysByValuesAsListInternal(values, true);
+            if (list.length === values.length) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            list = this.getKeysByValuesAsListInternal(values, false);
+            if (list.length > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    };
+    Dictionary.prototype.getKeys = function () {
+        if (this._length === 0) {
+            return new Array();
+        }
+        var temp = this.getKeyValuePairsInternal();
+        var output = Array(temp.length);
+        for (var i = 0; i < this._length; i++) {
+            output[i] = temp[i]['key'];
+        }
+        return output;
+    };
+    Dictionary.prototype.getKeysAsList = function () {
+        var keys = this.getKeys();
+        return new List_1.default(keys);
+    };
+    Dictionary.prototype.getValues = function () {
+        if (this._length === 0) {
+            return new Array();
+        }
+        var temp = this.getKeyValuePairsInternal();
+        var output = Array(temp.length);
+        for (var i = 0; i < this._length; i++) {
+            output[i] = temp[i]['value'];
+        }
+        return output;
+    };
+    Dictionary.prototype.getValuesAsList = function () {
+        var values = this.getValues();
+        return new List_1.default(values);
+    };
+    Dictionary.prototype.getKeyValuePairsInternal = function () {
+        var _this = this;
+        var output = new Array(this._length);
+        var item;
+        var i = 0;
+        //let keys: string[] = Object.keys(this._iDict);
+        this._iKeyIndex.forEach(function (key) {
+            item = { 'key': key, 'value': _this._iDict[key] };
+            output[i] = item;
+            i++;
+        });
+        return output;
+    };
+    Dictionary.prototype.getKeysByValuesAsList = function (values) {
+        return this.getKeysByValuesAsListInternal(values, false);
+    };
+    Dictionary.prototype.getKeysByValues = function (values) {
+        var list = this.getKeysByValuesAsListInternal(values, false);
+        return list.copyToArray();
+    };
+    Dictionary.prototype.getKeysByValueAsList = function (value) {
+        var v = [value];
+        return this.getKeysByValuesAsListInternal(v, false);
+    };
+    Dictionary.prototype.getKeysByValue = function (value) {
+        var list = this.getKeysByValueAsList(value);
+        return list.copyToArray();
+    };
+    Dictionary.prototype.overrideHashFunction = function (overrideFunction) {
+        var type = {};
+        if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false) {
+            throw new Error("The passed object is not a function. It must be a function that accepts one variable of the key type (K) and returns a string");
+        }
+        this._iOverrideToStringFunction = overrideFunction;
     };
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
@@ -275,19 +302,6 @@ var Dictionary = (function () {
         return this.remove(keys);
     };
     /**
-     * Removes all elements of the Dictionary
-     */
-    Dictionary.prototype.clear = function () {
-        if (this._length === 0) {
-            return;
-        }
-        else {
-            this._iDict = [];
-            this._length = 0;
-            this._iKeyIndex = [];
-        }
-    };
-    /**
      * Gets the value of the Dictionary by the specified key
      * @param key Key
      */
@@ -350,36 +364,6 @@ var Dictionary = (function () {
         }
         output.refreshKeyIndex();
         return output;
-    };
-    /**
-     * Check whether the Dictionary contains the specified key
-     * @param key True if the value exists, otherwise false
-     */
-    Dictionary.prototype.containsKey = function (key) {
-        if (this._length === 0) {
-            return false;
-        }
-        var keyList = [key];
-        return this.containsKeys(keyList);
-    };
-    Dictionary.prototype.containsKeys = function (keys) {
-        if (this._length === 0) {
-            return false;
-        }
-        var keyList;
-        if (Array.isArray(keys)) {
-            keyList = keys;
-        }
-        else {
-            keyList = keys.copyToArray();
-        }
-        // let allHashcodes: string[] = Object.keys(this._iDict);
-        for (var i = 0; i < this._length; i++) {
-            if (this._iDict[this.getHashCode(keyList[i])] !== undefined) {
-                return true;
-            }
-        }
-        return false;
     };
     /**
      * Swaps the values of the two defined keys in the Dictionary
@@ -455,6 +439,70 @@ var Dictionary = (function () {
             lastItem = true;
         }
         return new IteratorItem_1.IteratorItem(val, lastItem);
+    };
+    // ############### P R I V A T E   F U N C T I O N S ###############
+    Dictionary.prototype.addInternal = function (key, value) {
+        if (key === undefined) {
+            throw new Error("No key was defined to add as Dictionary element");
+        }
+        if (value === undefined) {
+            throw new Error("No value was defined to add as Dictionary element");
+        }
+        var hashcode = this.getHashCode(key);
+        this._iDict[hashcode] = { 0: key, 1: value };
+        if (this._iKeyIndex.indexOf(hashcode) < 0) {
+            this._length++;
+        }
+    };
+    Dictionary.prototype.getHashCode = function (key) {
+        if (key === undefined) {
+            throw new Error("No valid key was defined. The key must not be empty or undefined");
+        }
+        if (this._iOverrideToStringFunction === undefined) {
+            return "_" + key.toString(); // _ prevents possible problems with empty strings / defined types
+        }
+        else {
+            return this._iOverrideToStringFunction(key);
+        }
+    };
+    Dictionary.prototype.getKeysByValuesAsListInternal = function (values, all) {
+        var list = new List_1.default();
+        if (this._length === 0) {
+            return list;
+        }
+        var val;
+        if (Array.isArray(values)) {
+            val = values;
+        }
+        else {
+            val = values.copyToArray();
+        }
+        var len = val.length;
+        if (len === 0) {
+            return list;
+        }
+        //let keys: string[] = Object.keys(this._iDict);
+        //let len2: number = keys.length;
+        var j;
+        var keyCheck = new List_1.default();
+        for (var i = 0; i < len; i++) {
+            for (j = 0; j < this._length; j++) {
+                if (this._iDict[this._iKeyIndex[j]][1] === val[i]) {
+                    if (keyCheck.contains(this._iKeyIndex[j])) {
+                        continue;
+                    }
+                    list.add(this._iDict[this._iKeyIndex[j]][0]);
+                    if (all === false) {
+                        return list;
+                    }
+                    keyCheck.add(this._iKeyIndex[j]);
+                }
+            }
+        }
+        return list;
+    };
+    Dictionary.prototype.refreshKeyIndex = function () {
+        this._iKeyIndex = Object.keys(this._iDict);
     };
     return Dictionary;
 }());
