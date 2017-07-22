@@ -89,7 +89,7 @@ describe('length property', () => {
     
 describe('add method', () => {
     let dict: Dictionary<string,number>;
-    it('should add an element and increase the counter by one', () => {
+    it('should add an element and increase the length of the dictionary by one', () => {
         dict = Utils.setupDictionary(Types.string, Types.number);
         dict.add("test", 22);
         expect(dict.length).to.equal(1);
@@ -141,26 +141,174 @@ describe('add method', () => {
         expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.add("undefined", 22); }).not.to.throw();
     });
 
-    /*    
-    it('should not throw an error when adding a number to a list of numbers', () => {
-        expect(function() { let list: List<number> = Utils.setupList(Types.number); list.add(21); }).to.not.throw();
-    });
-    it('should not throw an error when adding a string to a list of string', () => {
-        expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add("test"); }).to.not.throw();
-    });
-    it('should not throw an error when adding an empty string to a list of string', () => {
-        expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add(""); }).to.not.throw();
-    });
-    it('should not throw an error when adding a boolean to a list of booleans', () => {
-        expect(function() { let list: List<boolean> = Utils.setupList(Types.boolean); list.add(true); }).to.not.throw();
-    });
-    it('should not throw an error when adding a date to a list of dates', () => {
-        expect(function() { let list: List<Date> = Utils.setupList(Types.date); list.add(new Date()); }).to.not.throw();
-    });
-    */
 });    
+describe('addRange method -> calls add()', () => {
+    let keys: string[] = ["one", "two", "three", "four", "five"];
+    let values: number[] = [1,2,3,4,5];
+    let dict: Dictionary<string,number> = Utils.setupDictionary(Types.string, Types.number);
+    it('should add five elements from two arrays (keys & values) to an empty dictionary and return five as length of the list', () => {
+        dict.addRange(keys, values);
+        expect(dict.length).to.equal(5);
+    });
+    it('should add five elements from two Lists (keys & values) to an empty dictionary and return five as length of the list', () => {
+        dict = Utils.setupDictionary(Types.string, Types.number);
+        let kL: List<string> = new List<string>(keys);
+        let vL: List<number> = new List<number>(values);
+        dict.addRange(kL, vL);
+        expect(dict.length).to.equal(5);
+    });    
+    it('should add five elements from a dictionary to an empty dictionary and return five as length of the dictionary', () => {
+        let newDict: Dictionary<string, number> = Utils.setupDictionary(Types.string, Types.number);
+        newDict.addRange(dict);
+        expect(newDict.length).to.equal(5);
+    });
+    it('should return the value 4 at the key "four" after adding a range of 5 elements', () => {
+        let item: number = dict.get("four");
+        expect(item).to.equal(4);
+    });
+    it('should  throw an error if the arrays of keys and values are different', () => {
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.addRange(["1","2","3"], [22,33,44,55]); }).to.throw();
+    });
+    it('should  throw an error if the lists of keys and values are different', () => {
+        let kL: List<string> = new List<string>(["k1","k2","k3"]);
+        let vL: List<number> = new List<number>([22,55]);
+        expect(function() { dict =  Utils.setupDictionary(Types.string, Types.number); dict.addRange(kL, vL); }).to.throw();
+    });
 
+});
+describe('clear method', () => {
+    let dict: Dictionary<string,boolean>;
+    it('should return a length of zero after execution on a dictionary with 4 elements', () => {
+        dict = Utils.setupDictionary(Types.string, Types.boolean, ["1","2","3","4"], [true, false, true, true]);
+        dict.clear();
+        expect(dict.length).to.equal(0);
+    });
+    it('should return a length of zero after execution on a dictionary with zero elements', () => {
+        dict = Utils.setupDictionary(Types.string, Types.boolean);
+        dict.clear();
+        expect(dict.length).to.equal(0);
+    });
+});
+describe('containsKey method', () => {
+    let dict: Dictionary<number,boolean>;
+    it('should return false with the key 42 on an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean);
+        let match: boolean = dict.containsKey(42);
+        expect(match).to.equal(false);
+    });
+    it('should return false with the key 42 on a dictionary where the key does not exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42.000000001], [false, true, false, true]);
+        let match: boolean = dict.containsKey(42);
+        expect(match).to.equal(false);
+    });
+    it('should return true with the key 42 on a dictionary where the key does exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42], [false, true, false, true]);
+        let match: boolean = dict.containsKey(42);
+        expect(match).to.equal(true);
+    });
+});
 
+describe('containsKeys method', () => {
+    let dict: Dictionary<number,boolean>;
+    it('should return false with the keys 42 and 22 on an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean);
+        let match: boolean = dict.containsKeys([42,22]);
+        expect(match).to.equal(false);
+    });
+    it('should return false with the key 42 and 22 on a dictionary where the keys does not exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42.000000001], [false, true, false, true]);
+        let match: boolean = dict.containsKeys([42,22]);
+        expect(match).to.equal(false);
+    });
+    it('should return true with the keys 42 and 22 on a dictionary where the key 42 does exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42], [false, true, false, true]);
+        let match: boolean = dict.containsKeys([42,22]);
+        expect(match).to.equal(true);
+    });
+    it('should return true with the keys 42 and 22 on a dictionary where the key 42 does exist (passed as list)', () => {
+        let kL: List<number> = new List<number>([42,22]);
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42], [false, true, false, true]);
+        let match: boolean = dict.containsKeys(kL);
+        expect(match).to.equal(true);
+    });    
+    it('should return false with the keys 42 and 22 on a dictionary where only the key 42 does exist but the all parameter is set to true', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,43,45,42], [false, true, false, true]);
+        let match: boolean = dict.containsKeys([42,22], true);
+        expect(match).to.equal(false);
+    });
+    it('should return true with the keys 42 and 22 on a dictionary where the keys 42 and 22 exist and the all parameter is set to true', () => {
+        dict = Utils.setupDictionary(Types.number, Types.boolean, [41,22,45,42], [false, true, false, true]);
+        let match: boolean = dict.containsKeys([42,22], true);
+        expect(match).to.equal(true);
+    });
+});
+describe('containsValue method', () => {
+    let dict: Dictionary<number,string>;
+    it('should return false with the value "two" on an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string);
+        let match: boolean = dict.containsValue("two");
+        expect(match).to.equal(false);
+    });
+    it('should return false with the value "two" on a dictionary where the value does not exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42.000000001], ["one","six","three","four"]);
+        let match: boolean = dict.containsValue("two");
+        expect(match).to.equal(false);
+    });
+    it('should return true with the value "two" on a dictionary where the value does exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42.000000001], ["one","two","three","four"]);
+        let match: boolean = dict.containsValue("two");
+        expect(match).to.equal(true);
+    });
+    it('should return true with the value "two" on a dictionary where the value does exist multiple times', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42.000000001], ["one","two","two","two"]);
+        let match: boolean = dict.containsValue("two");
+        expect(match).to.equal(true);
+    });
+    it('should return true with the value "" (empty) on a dictionary where the value does exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42.000000001], ["one","two","","two"]);
+        let match: boolean = dict.containsValue("");
+        expect(match).to.equal(true);
+    });
+});
+describe('containsValues method', () => {
+    let dict: Dictionary<number,string>;
+    it('should return false with the value "two" and "three" on an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string);
+        let match: boolean = dict.containsValues(["two","three"]);
+        expect(match).to.equal(false);
+    });
+    it('should return false with the values "two" and "three" on a dictionary where the values does not exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42.000000001], ["one", "four", "5", "six"]);
+        let match: boolean = dict.containsValues(["two", "three"]);
+        expect(match).to.equal(false);
+    });
+    it('should return true with the values "two" and "three" on a dictionary where the value "two" does exist', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42], ["one", "two", "5", "six"]);
+        let match: boolean = dict.containsValues(["two", "three"]);
+        expect(match).to.equal(true);
+    });
+    it('should return true with the values "two" and "three" on a dictionary where the value "two" does exist (passed as list)', () => {
+        let kL: List<string> = new List<string>(["two", "three"]);
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42], ["one", "two", "5", "six"]);
+        let match: boolean = dict.containsValues(kL);
+        expect(match).to.equal(true);
+    });    
+    it('should return false with the values "two" and "three" on a dictionary where only the value "two" does exist but the all parameter is set to true', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42], ["one", "two", "5", "six"]);
+        let match: boolean = dict.containsValues(["two", "three"], true);
+        expect(match).to.equal(false);
+    });
+    it('should return true with the values "two" and "three" on a dictionary where both value does exist and the all parameter is set to true', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42], ["one", "two", "three", "four"]);
+        let match: boolean = dict.containsValues(["two", "three"], true);
+        expect(match).to.equal(true);
+    });
+    it('should return true with the values "two" and "three" on a dictionary where both value does exist multiple times and the all parameter is set to true', () => {
+        dict = Utils.setupDictionary(Types.number, Types.string, [41,43,45,42,55,1], ["one", "two", "three", "four","three","two"]);
+        let match: boolean = dict.containsValues(["two", "three"], true);
+        expect(match).to.equal(false);
+    });
+});
 
 });
 

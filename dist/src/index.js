@@ -60,6 +60,7 @@ d.add(22, "x");
 d.add(11, "y");
 d.add(4, "z");
 d.add(11, "new");
+d.containsKey(12);
 var n = d.length;
 var dict2 = new Dictionary_1.Dictionary();
 var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);

@@ -66,6 +66,9 @@ d.add(22,"x");
 d.add(11,"y");
 d.add(4,"z");
 d.add(11,"new");
+
+d.containsKey(12);
+
 let n: number = d.length;
 
 

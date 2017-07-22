@@ -77,6 +77,66 @@ var Dictionary = (function () {
         }
         this.refreshKeyIndex();
     };
+    /**
+     * Removes all elements of the Dictionary
+     */
+    Dictionary.prototype.clear = function () {
+        if (this._length === 0) {
+            return;
+        }
+        else {
+            this._iDict = [];
+            this._length = 0;
+            this._iKeyIndex = [];
+        }
+    };
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key Key to check
+     */
+    Dictionary.prototype.containsKey = function (key) {
+        if (this._length === 0) {
+            return false;
+        }
+        var keyList = [key];
+        return this.containsKeys(keyList);
+    };
+    Dictionary.prototype.containsKeys = function (keys, all) {
+        if (this._length === 0) {
+            return false;
+        }
+        var keyList;
+        var match = 0;
+        if (Array.isArray(keys)) {
+            keyList = keys;
+        }
+        else {
+            keyList = keys.copyToArray();
+        }
+        var len = keys.length;
+        // let allHashcodes: string[] = Object.keys(this._iDict);
+        for (var i = 0; i < len; i++) {
+            if (this._iDict[this.getHashCode(keyList[i])] !== undefined) {
+                match++;
+            }
+        }
+        if (all !== undefined && all === true) {
+            if (match === len) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            if (match > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    };
     Dictionary.prototype.getKeys = function () {
         if (this._length === 0) {
             return new Array();
@@ -84,7 +144,7 @@ var Dictionary = (function () {
         var temp = this.getKeyValuePairsInternal();
         var output = Array(temp.length);
         for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['key'][0];
+            output[i] = temp[i]['key'];
         }
         return output;
     };
@@ -99,7 +159,7 @@ var Dictionary = (function () {
         var temp = this.getKeyValuePairsInternal();
         var output = Array(temp.length);
         for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['value'][1];
+            output[i] = temp[i]['value'];
         }
         return output;
     };
@@ -226,19 +286,6 @@ var Dictionary = (function () {
         return this.remove(keys);
     };
     /**
-     * Removes all elements of the Dictionary
-     */
-    Dictionary.prototype.clear = function () {
-        if (this._length === 0) {
-            return;
-        }
-        else {
-            this._iDict = [];
-            this._length = 0;
-            this._iKeyIndex = [];
-        }
-    };
-    /**
      * Gets the value of the Dictionary by the specified key
      * @param key Key
      */
@@ -301,36 +348,6 @@ var Dictionary = (function () {
         }
         output.refreshKeyIndex();
         return output;
-    };
-    /**
-     * Check whether the Dictionary contains the specified key
-     * @param key True if the value exists, otherwise false
-     */
-    Dictionary.prototype.containsKey = function (key) {
-        if (this._length === 0) {
-            return false;
-        }
-        var keyList = [key];
-        return this.containsKeys(keyList);
-    };
-    Dictionary.prototype.containsKeys = function (keys) {
-        if (this._length === 0) {
-            return false;
-        }
-        var keyList;
-        if (Array.isArray(keys)) {
-            keyList = keys;
-        }
-        else {
-            keyList = keys.copyToArray();
-        }
-        // let allHashcodes: string[] = Object.keys(this._iDict);
-        for (var i = 0; i < this._length; i++) {
-            if (this._iDict[this.getHashCode(keyList[i])] !== undefined) {
-                return true;
-            }
-        }
-        return false;
     };
     /**
      * Swaps the values of the two defined keys in the Dictionary

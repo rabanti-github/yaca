@@ -74,3 +74,14 @@ Release type: Optimization / Features
 * Optimization of the List class
 * Testing for the list class completed
 * Added a peek() function
+
+***v0.1.9***
+
+---
+Date: 2017-07-22
+
+Release type: Optimization / Bugfix
+
+* Optimization of the Dictionary class (not officially released)
+* Several bugs in the Dictionary class fixed
+* Implementation of an hash code override function in the Dictionary class

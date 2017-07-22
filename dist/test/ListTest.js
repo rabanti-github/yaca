@@ -102,12 +102,12 @@ describe("LIST<T>\n  #######\n", function () {
     describe('addRange method -> calls add()', function () {
         var items = ["one", "two", "three", "four", "five"];
         var list = Utils_1.Utils.setupList(Types_1.Types.string);
-        it('should add five elements from an array to an empty list and return file as length of the list', function () {
+        it('should add five elements from an array to an empty list and return five as length of the list', function () {
             list.addRange(items);
             var length = list.length;
             chai_1.expect(length).to.equal(5);
         });
-        it('should add five elements from a list to an empty list and return file as length of the list', function () {
+        it('should add five elements from a list to an empty list and return five as length of the list', function () {
             var newList = Utils_1.Utils.setupList(Types_1.Types.string);
             newList.addRange(list);
             var length = newList.length;

@@ -108,12 +108,12 @@ describe('add method', () => {
 describe('addRange method -> calls add()', () => {
     let items: string[] = ["one", "two", "three", "four", "five"];
     let list: List<string> = Utils.setupList(Types.string);
-    it('should add five elements from an array to an empty list and return file as length of the list', () => {
+    it('should add five elements from an array to an empty list and return five as length of the list', () => {
         list.addRange(items);
         let length: number = list.length;
         expect(length).to.equal(5);
     });
-    it('should add five elements from a list to an empty list and return file as length of the list', () => {
+    it('should add five elements from a list to an empty list and return five as length of the list', () => {
         let newList: List<string> = Utils.setupList(Types.string);
         newList.addRange(list);
         let length: number = newList.length;

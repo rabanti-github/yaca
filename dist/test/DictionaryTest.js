@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("../src/Dictionary");
+var List_1 = require("../src/List");
 //import {IteratorItem} from '../src/IteratorItem';
 var Utils_1 = require("./utils/Utils");
 var Types_1 = require("./utils/Types");
@@ -82,7 +83,7 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
         });
         describe('add method', function () {
             var dict;
-            it('should add an element and increase the counter by one', function () {
+            it('should add an element and increase the length of the dictionary by one', function () {
                 dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
                 dict.add("test", 22);
                 chai_1.expect(dict.length).to.equal(1);
@@ -132,23 +133,171 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             it('should not throw an error when adding the string "undefined" as key to a dictionary', function () {
                 chai_1.expect(function () { dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number); dict.add("undefined", 22); }).not.to.throw();
             });
-            /*
-            it('should not throw an error when adding a number to a list of numbers', () => {
-                expect(function() { let list: List<number> = Utils.setupList(Types.number); list.add(21); }).to.not.throw();
+        });
+        describe('addRange method -> calls add()', function () {
+            var keys = ["one", "two", "three", "four", "five"];
+            var values = [1, 2, 3, 4, 5];
+            var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+            it('should add five elements from two arrays (keys & values) to an empty dictionary and return five as length of the list', function () {
+                dict.addRange(keys, values);
+                chai_1.expect(dict.length).to.equal(5);
             });
-            it('should not throw an error when adding a string to a list of string', () => {
-                expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add("test"); }).to.not.throw();
+            it('should add five elements from two Lists (keys & values) to an empty dictionary and return five as length of the list', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+                var kL = new List_1.default(keys);
+                var vL = new List_1.default(values);
+                dict.addRange(kL, vL);
+                chai_1.expect(dict.length).to.equal(5);
             });
-            it('should not throw an error when adding an empty string to a list of string', () => {
-                expect(function() { let list: List<string> = Utils.setupList(Types.string); list.add(""); }).to.not.throw();
+            it('should add five elements from a dictionary to an empty dictionary and return five as length of the dictionary', function () {
+                var newDict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+                newDict.addRange(dict);
+                chai_1.expect(newDict.length).to.equal(5);
             });
-            it('should not throw an error when adding a boolean to a list of booleans', () => {
-                expect(function() { let list: List<boolean> = Utils.setupList(Types.boolean); list.add(true); }).to.not.throw();
+            it('should return the value 4 at the key "four" after adding a range of 5 elements', function () {
+                var item = dict.get("four");
+                chai_1.expect(item).to.equal(4);
             });
-            it('should not throw an error when adding a date to a list of dates', () => {
-                expect(function() { let list: List<Date> = Utils.setupList(Types.date); list.add(new Date()); }).to.not.throw();
+            it('should  throw an error if the arrays of keys and values are different', function () {
+                chai_1.expect(function () { dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number); dict.addRange(["1", "2", "3"], [22, 33, 44, 55]); }).to.throw();
             });
-            */
+            it('should  throw an error if the lists of keys and values are different', function () {
+                var kL = new List_1.default(["k1", "k2", "k3"]);
+                var vL = new List_1.default([22, 55]);
+                chai_1.expect(function () { dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number); dict.addRange(kL, vL); }).to.throw();
+            });
+        });
+        describe('clear method', function () {
+            var dict;
+            it('should return a length of zero after execution on a dictionary with 4 elements', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.boolean, ["1", "2", "3", "4"], [true, false, true, true]);
+                dict.clear();
+                chai_1.expect(dict.length).to.equal(0);
+            });
+            it('should return a length of zero after execution on a dictionary with zero elements', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.boolean);
+                dict.clear();
+                chai_1.expect(dict.length).to.equal(0);
+            });
+        });
+        describe('containsKey method', function () {
+            var dict;
+            it('should return false with the key 42 on an empty dictionary', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean);
+                var match = dict.containsKey(42);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return false with the key 42 on a dictionary where the key does not exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42.000000001], [false, true, false, true]);
+                var match = dict.containsKey(42);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the key 42 on a dictionary where the key does exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], [false, true, false, true]);
+                var match = dict.containsKey(42);
+                chai_1.expect(match).to.equal(true);
+            });
+        });
+        describe('containsKeys method', function () {
+            var dict;
+            it('should return false with the keys 42 and 22 on an empty dictionary', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean);
+                var match = dict.containsKeys([42, 22]);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return false with the key 42 and 22 on a dictionary where the keys does not exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42.000000001], [false, true, false, true]);
+                var match = dict.containsKeys([42, 22]);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the keys 42 and 22 on a dictionary where the key 42 does exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], [false, true, false, true]);
+                var match = dict.containsKeys([42, 22]);
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return true with the keys 42 and 22 on a dictionary where the key 42 does exist (passed as list)', function () {
+                var kL = new List_1.default([42, 22]);
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], [false, true, false, true]);
+                var match = dict.containsKeys(kL);
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return false with the keys 42 and 22 on a dictionary where only the key 42 does exist but the all parameter is set to true', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], [false, true, false, true]);
+                var match = dict.containsKeys([42, 22], true);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the keys 42 and 22 on a dictionary where the keys 42 and 22 exist and the all parameter is set to true', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 22, 45, 42], [false, true, false, true]);
+                var match = dict.containsKeys([42, 22], true);
+                chai_1.expect(match).to.equal(true);
+            });
+        });
+        describe('containsValue method', function () {
+            var dict;
+            it('should return false with the value "two" on an empty dictionary', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
+                var match = dict.containsValue("two");
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return false with the value "two" on a dictionary where the value does not exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42.000000001], ["one", "six", "three", "four"]);
+                var match = dict.containsValue("two");
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the value "two" on a dictionary where the value does exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42.000000001], ["one", "two", "three", "four"]);
+                var match = dict.containsValue("two");
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return true with the value "two" on a dictionary where the value does exist multiple times', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42.000000001], ["one", "two", "two", "two"]);
+                var match = dict.containsValue("two");
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return true with the value "" (empty) on a dictionary where the value does exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42.000000001], ["one", "two", "", "two"]);
+                var match = dict.containsValue("");
+                chai_1.expect(match).to.equal(true);
+            });
+        });
+        describe('containsValues method', function () {
+            var dict;
+            it('should return false with the value "two" and "three" on an empty dictionary', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
+                var match = dict.containsValues(["two", "three"]);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return false with the values "two" and "three" on a dictionary where the values does not exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42.000000001], ["one", "four", "5", "six"]);
+                var match = dict.containsValues(["two", "three"]);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the values "two" and "three" on a dictionary where the value "two" does exist', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42], ["one", "two", "5", "six"]);
+                var match = dict.containsValues(["two", "three"]);
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return true with the values "two" and "three" on a dictionary where the value "two" does exist (passed as list)', function () {
+                var kL = new List_1.default(["two", "three"]);
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [41, 43, 45, 42], ["one", "two", "5", "six"]);
+                var match = dict.containsValues(kL);
+                chai_1.expect(match).to.equal(true);
+            });
+            it('should return false with the values "two" and "three" on a dictionary where only the value "two" does exist but the all parameter is set to true', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], ["one", "two", "5", "six"]);
+                var match = dict.containsValues(["two", "three"], true);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the values "two" and "three" on a dictionary where both value does exist and the all parameter is set to true', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42], ["one", "two", "three", "four"]);
+                var match = dict.containsValues(["two", "three"], true);
+                chai_1.expect(match).to.equal(false);
+            });
+            it('should return true with the values "two" and "three" on a dictionary where both value does exist multiple times and the all parameter is set to true', function () {
+                dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, [41, 43, 45, 42, 55, 1], ["one", "two", "three", "four", "three", "two"]);
+                var match = dict.containsValues(["two", "three"], true);
+                chai_1.expect(match).to.equal(false);
+            });
         });
     });
     /************ */

@@ -64,6 +64,26 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param keys Keys as List<K>
      */
     addRange(keys: List<K>, values: List<V>): any;
+    /**
+     * Removes all elements of the Dictionary
+     */
+    clear(): void;
+    /**
+     * Check whether the Dictionary contains the specified key
+     * @param key Key to check
+     */
+    containsKey(key: K): boolean;
+    /**
+     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
+     * @param keys Key to check
+     */
+    containsKeys(keys: K[], all?: boolean): boolean;
+    /**
+     * Check whether the Dictionary contains the specified keys
+     * @param keys Key to check
+     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     */
+    containsKeys(keys: List<K>, all?: boolean): boolean;
     getKeys(): K[];
     getKeysAsList(): List<K>;
     getValues(): V[];
@@ -117,10 +137,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     removeByValue(values: List<V>): boolean;
     /**
-     * Removes all elements of the Dictionary
-     */
-    clear(): void;
-    /**
      * Gets the value of the Dictionary by the specified key
      * @param key Key
      */
@@ -150,21 +166,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     getRangeByValues(values: List<V>): Dictionary<K, V>;
     private copyToInternal(keys);
-    /**
-     * Check whether the Dictionary contains the specified key
-     * @param key True if the value exists, otherwise false
-     */
-    containsKey(key: K): boolean;
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys True if the value exists, otherwise false
-     */
-    containsKeys(keys: K[]): boolean;
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys sTrue if the value exists, otherwise false
-     */
-    containsKeys(keys: List<K>): boolean;
     /**
      * Swaps the values of the two defined keys in the Dictionary
      * @param key1 Key 1
