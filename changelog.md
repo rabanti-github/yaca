@@ -85,3 +85,14 @@ Release type: Optimization / Bugfix
 * Optimization of the Dictionary class (not officially released)
 * Several bugs in the Dictionary class fixed
 * Implementation of an hash code override function in the Dictionary class
+
+***v0.1.10***
+
+---
+Date: 2017-07-23
+
+Release type: Optimization / Bugfix
+
+* Optimization of the Dictionary class (not officially released)
+* Several bugs in the Dictionary class fixed
+* 77% test coverage of the Dictionary class -> Ready to release soon
