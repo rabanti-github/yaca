@@ -257,9 +257,20 @@ var Dictionary = (function () {
         return this.getKeysByValuesAsListInternal([value], true).copyToArray();
         //return list.copyToArray();
     };
+    /**
+     * Get the keys that matches to the passed value. The keys are returned as List ot the type K
+     * @param value Value to get all corresponding keys from
+     */
     Dictionary.prototype.getKeysByValueAsList = function (value) {
         //let v: V[] = [value];
         return this.getKeysByValuesAsListInternal([value], true);
+    };
+    Dictionary.prototype.getKeysByValues = function (values) {
+        var list = this.getKeysByValuesAsListInternal(values, false);
+        return list.copyToArray();
+    };
+    Dictionary.prototype.getKeysByValuesAsList = function (values) {
+        return this.getKeysByValuesAsListInternal(values, false);
     };
     Dictionary.prototype.getValues = function () {
         if (this._length === 0) {
@@ -275,13 +286,6 @@ var Dictionary = (function () {
     Dictionary.prototype.getValuesAsList = function () {
         var values = this.getValues();
         return new List_1.default(values);
-    };
-    Dictionary.prototype.getKeysByValuesAsList = function (values) {
-        return this.getKeysByValuesAsListInternal(values, false);
-    };
-    Dictionary.prototype.getKeysByValues = function (values) {
-        var list = this.getKeysByValuesAsListInternal(values, false);
-        return list.copyToArray();
     };
     Dictionary.prototype.overrideHashFunction = function (overrideFunction) {
         var type = {};

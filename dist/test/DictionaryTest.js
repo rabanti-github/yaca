@@ -466,6 +466,88 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             chai_1.expect(sum).to.equal(38);
         });
     });
+    describe('getKeysByValue method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var dict; // = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+        it('should return the two keys 22 and 55 with the date 1017-1-1 as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValue(d4);
+            var match = false;
+            if ((result[0] === 22 || result[0] === 55) && (result[1] === 22 || result[1] === 55)) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty array with the date 1990-1-1 as value which does no exist in the dictionary as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValue(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty array with the date 1990-1-1 as value in an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+            var result = dict.getKeysByValue(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d2, d3, d4, d5, d6, d7]);
+            var result = dict.getKeysByValue(d1);
+            var match = false;
+            if (result[0] === 17) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+    });
+    describe('getKeysByValueAsList method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var dict; // = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+        it('should return the two keys 22 and 55 with the date 1017-1-1 as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValueAsList(d4);
+            var match = false;
+            if (result.contains(22) && result.contains(55) && result.length === 2) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty List with the date 1990-1-1 as value which does no exist in the dictionary as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValueAsList(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty List with the date 1990-1-1 as value in an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+            var result = dict.getKeysByValueAsList(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d2, d3, d4, d5, d6, d7]);
+            var result = dict.getKeysByValueAsList(d1);
+            var match = false;
+            if (result.contains(17) && result.length === 1) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+    });
     /************ */
 });
 //# sourceMappingURL=DictionaryTest.js.map

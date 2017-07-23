@@ -138,13 +138,33 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param value Value to get all corresponding keys from
      */
     getKeysByValue(value: V): K[];
+    /**
+     * Get the keys that matches to the passed value. The keys are returned as List ot the type K
+     * @param value Value to get all corresponding keys from
+     */
     getKeysByValueAsList(value: V): List<K>;
+    /**
+     * Get the keys that matches to the passed value
+     * @param values Values to get all corresponding keys from
+     */
+    getKeysByValues(values: V[]): K[];
+    /**
+     * Get the keys that matches to the passed value
+     * @param values Values to get all corresponding keys from
+     */
+    getKeysByValues(values: List<V>): K[];
+    /**
+     * Get the keys that matches to the passed values. The keys are returned as List ot the type K
+     * @param values Values to get all corresponding keys from
+     */
+    getKeysByValuesAsList(values: V[]): List<K>;
+    /**
+     * Get the keys that matches to the passed values. The keys are returned as List ot the type K
+     * @param values Values to get all corresponding keys from
+     */
+    getKeysByValuesAsList(values: List<V>): List<K>;
     getValues(): V[];
     getValuesAsList(): List<V>;
-    getKeysByValuesAsList(values: V[]): List<K>;
-    getKeysByValuesAsList(values: List<V>): List<K>;
-    getKeysByValues(values: V[]): K[];
-    getKeysByValues(values: List<V>): K[];
     overrideHashFunction(overrideFunction: Function): void;
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
