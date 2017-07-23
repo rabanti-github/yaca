@@ -355,10 +355,45 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         //return list.copyToArray();
     }
 
+    /**
+     * Get the keys that matches to the passed value. The keys are returned as List ot the type K
+     * @param value Value to get all corresponding keys from
+     */
     public getKeysByValueAsList(value: V): List<K>
     {
         //let v: V[] = [value];
         return this.getKeysByValuesAsListInternal([ value ], true); 
+    }
+
+    /**
+     * Get the keys that matches to the passed value
+     * @param values Values to get all corresponding keys from
+     */
+    public getKeysByValues(values: V[]): K[];
+    /**
+     * Get the keys that matches to the passed value
+     * @param values Values to get all corresponding keys from
+     */
+    public getKeysByValues(values: List<V>): K[];
+    public getKeysByValues(values: V[] | List<V>): K[]
+    {
+        let list: List<K> = this.getKeysByValuesAsListInternal(values, false);
+        return list.copyToArray();     
+    }
+
+    /**
+     * Get the keys that matches to the passed values. The keys are returned as List ot the type K
+     * @param values Values to get all corresponding keys from
+     */
+    public getKeysByValuesAsList(values: V[]): List<K>;
+    /**
+     * Get the keys that matches to the passed values. The keys are returned as List ot the type K
+     * @param values Values to get all corresponding keys from
+     */
+    public getKeysByValuesAsList(values: List<V>): List<K>;
+    public getKeysByValuesAsList(values: V[] | List<V>): List<K>
+    {
+        return this.getKeysByValuesAsListInternal(values, false);
     }
 
 
@@ -391,40 +426,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         return new List<V>(values);
         
     }
-    
-
-    
-
-
-    public getKeysByValuesAsList(values: V[]): List<K>;
-    public getKeysByValuesAsList(values: List<V>): List<K>;
-    public getKeysByValuesAsList(values: V[] | List<V>): List<K>
-    {
-        return this.getKeysByValuesAsListInternal(values, false);
-    }
-
-    public getKeysByValues(values: V[]): K[];
-    public getKeysByValues(values: List<V>): K[];
-    public getKeysByValues(values: V[] | List<V>): K[]
-    {
-        let list: List<K> = this.getKeysByValuesAsListInternal(values, false);
-        return list.copyToArray();     
-    }
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-    
 
 
     public overrideHashFunction(overrideFunction: Function): void
@@ -495,24 +496,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         this.refreshKeyIndex();
         return status;
     }
-
-
-    
-
-/*
-    public removeByValue(value: V): boolean
-    {
-        if (this.length < 1) { return false; }
-
-        let keys: List<K> = this.getKeysByValueAsList(value);
-        let len: number = keys.length;
-        let status: boolean = false;
-        let status2: boolean;
-        if (len === 0) { return false; }
-
-        return this.remove(keys);
-    }
-*/
 
     /**
      * Removes all entries with the passed value from the Dictionary.

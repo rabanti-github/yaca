@@ -483,5 +483,87 @@ describe('getKeysAsList method -> calls getKeys()', () => {
     });    
 });
 
+describe('getKeysByValue method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,0);
+    let d2: Date = new Date(2017,1,1,23,59,0,1);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2015,1,1,23,59,0,1);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+
+    let dict: Dictionary<number, Date>;// = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+
+    it('should return the two keys 22 and 55 with the date 1017-1-1 as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: number[] = dict.getKeysByValue(d4);
+        let match: boolean = false;
+        if ((result[0] === 22 || result[0] === 55) && (result[1] === 22 || result[1] === 55)) { match = true; }
+        expect(match).to.equal(true);
+    });
+    it('should return an empty array with the date 1990-1-1 as value which does no exist in the dictionary as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: number[] = dict.getKeysByValue(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty array with the date 1990-1-1 as value in an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.date);
+        let result: number[] = dict.getKeysByValue(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d2,d3,d4,d5,d6,d7]);
+        let result: number[] = dict.getKeysByValue(d1);
+        let match: boolean = false;
+        if (result[0] === 17) { match = true; }
+        expect(match).to.equal(true);
+    });
+    
+});
+
+describe('getKeysByValueAsList method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,0);
+    let d2: Date = new Date(2017,1,1,23,59,0,1);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2015,1,1,23,59,0,1);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+
+    let dict: Dictionary<number, Date>;// = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+
+    it('should return the two keys 22 and 55 with the date 1017-1-1 as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: List<number> = dict.getKeysByValueAsList(d4);
+        let match: boolean = false;
+        if (result.contains(22) && result.contains(55) && result.length === 2) { match = true; }
+        expect(match).to.equal(true);
+    });
+    it('should return an empty List with the date 1990-1-1 as value which does no exist in the dictionary as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: List<number> = dict.getKeysByValueAsList(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty List with the date 1990-1-1 as value in an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.date);
+        let result: List<number> = dict.getKeysByValueAsList(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d2,d3,d4,d5,d6,d7]);
+        let result: List<number> = dict.getKeysByValueAsList(d1);
+        let match: boolean = false;
+        if (result.contains(17) && result.length === 1) { match = true; }
+        expect(match).to.equal(true);
+    });
+    
+});
+
 /************ */
 });
