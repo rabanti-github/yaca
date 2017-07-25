@@ -108,3 +108,12 @@ Release type: Optimization / Bugfix
 * Several bugs in the Dictionary class fixed
 * >98% test coverage of the Dictionary class -> Ready to release
 * Last unstable release before v 1.0.x
+
+***v0.1.11***
+
+---
+Date: 2017-07-26
+
+Release type: Bugfix
+
+* Documentation issue fixed

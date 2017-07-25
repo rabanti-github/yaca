@@ -12,7 +12,7 @@ YACA is another approach to introduce Collections to TypeScript / JavaScript lik
 
 YACA contains at the moment **List&lt;T&gt;** and **Dictionary&lt;K,V&gt;** as collection types. Further types (e.g. Stack or SortedDictionary) are planned.
 
-See the **[Change Log](changelog.md)** for recent updates.
+See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/changelog.md)** for recent updates.
 
 ## Installation
 
@@ -42,7 +42,7 @@ numberList.addRange([23,24,25]);
 numberList.clear();
 ```
 
-See  [The List documentation page](https://yaca.github.io/modules/_src_list_.html) for further details:
+See  [The List documentation page](modules/_src_list_.html) for further details:
 
 * Constructors
 * Properties
@@ -71,7 +71,7 @@ let value:string = dictionary2.get(2);
 numberList.clear();
 ```
 
-See  [The Dictionary documentation page](https://yaca.github.io/modules/_src_dictionary_.html) for further details:
+See  [The Dictionary documentation page](modules/_src_dictionary_.html) for further details:
 
 * Constructors
 * Properties
