@@ -20,7 +20,7 @@ See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/change
 npm install -S yaca
 ```
 
-## Usage (List<T>)
+## Usage (List&lt;T&gt;)
 
 ```ts
 import {List} from 'yaca';
@@ -49,7 +49,7 @@ See  [The List documentation page](https://rabanti-github.github.io/yaca/classes
 * Methods
 
 
-## Usage (Dictionary<K,V>)
+## Usage (Dictionary&lt;K,V&gt;)
 
 ```ts
 import {Dictionary} from 'yaca';
