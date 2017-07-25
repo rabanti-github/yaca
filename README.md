@@ -68,7 +68,7 @@ var otherDictionary: Dictionary<Date, SomeType> = new Dictionary<Date, SomeType>
 
 dictionary.add(22, "twenty two");
 let value:string = dictionary2.get(2);
-numberList.clear();
+dictionary3.clear();
 ```
 
 See  [The Dictionary documentation page](https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html) for further details:
