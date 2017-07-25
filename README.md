@@ -42,7 +42,7 @@ numberList.addRange([23,24,25]);
 numberList.clear();
 ```
 
-See  [The List documentation page](classes/_src_list_.list.html) for further details:
+See  [The List documentation page](https://rabanti-github.github.io/yaca/classes/_src_list_.list.html) for further details:
 
 * Constructors
 * Properties
@@ -71,7 +71,7 @@ let value:string = dictionary2.get(2);
 numberList.clear();
 ```
 
-See  [The Dictionary documentation page](classes/_src_dictionary_.dictionary.html) for further details:
+See  [The Dictionary documentation page](https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html) for further details:
 
 * Constructors
 * Properties
