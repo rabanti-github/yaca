@@ -109,7 +109,7 @@ Release type: Optimization / Bugfix
 * >98% test coverage of the Dictionary class -> Ready to release
 * Last unstable release before v 1.0.x
 
-***v0.1.11***
+***v0.1.12***
 
 ---
 Date: 2017-07-26
