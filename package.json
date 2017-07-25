@@ -1,12 +1,12 @@
 {
   "name": "yaca",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "build": "tsc && typedoc --out ./doc --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
+    "build": "tsc && typedoc --out ./docs --readme README.md --target ES5 --name 'Yet Another Collection Approach'",
     "test-mocha": "mocha -r ts-node/register ./test/**/*Test.ts",
     "test": "nyc --reporter=html --reporter=text mocha -r ts-node/register --timeout=3000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
