@@ -118,6 +118,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#_icounter" class="tsd-kind-icon">_i<wbr>Counter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#_idict" class="tsd-kind-icon">_i<wbr>Dict</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#_ikeyindex" class="tsd-kind-icon">_i<wbr>Key<wbr>Index</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#_ioverridetostringfunction" class="tsd-kind-icon">_i<wbr>Override<wbr>ToString<wbr>Function</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#_length" class="tsd-kind-icon">_length</a></li>
 							</ul>
 						</section>
@@ -156,6 +157,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#getvalues" class="tsd-kind-icon">get<wbr>Values</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#getvaluesaslist" class="tsd-kind-icon">get<wbr>Values<wbr>AsList</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#next" class="tsd-kind-icon">next</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#overridehashfunction" class="tsd-kind-icon">override<wbr>Hash<wbr>Function</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_dictionary_.dictionary.html#refreshkeyindex" class="tsd-kind-icon">refresh<wbr>Key<wbr>Index</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#remove" class="tsd-kind-icon">remove</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_dictionary_.dictionary.html#removebyvalue" class="tsd-kind-icon">remove<wbr>ByValue</a></li>
@@ -174,6 +176,7 @@
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Dictionary<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Dictionary<span class="tsd-signature-symbol">(</span>overrideFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Dictionary<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Dictionary<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Dictionary<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span>, values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></li>
@@ -183,7 +186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L30">src/Dictionary.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L33">src/Dictionary.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -196,7 +199,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L35">src/Dictionary.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L38">src/Dictionary.ts:38</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructor with an function to override the default hashing function of the keys (toString)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>overrideFunction: <span class="tsd-signature-type">Function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Hashing function. Should accept one parameter of the type K and return a string</p>
+										</div>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L44">src/Dictionary.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -220,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L40">src/Dictionary.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L49">src/Dictionary.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -252,7 +279,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L46">src/Dictionary.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L55">src/Dictionary.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -284,7 +311,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L52">src/Dictionary.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L61">src/Dictionary.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -324,7 +351,7 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>Counter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L18">src/Dictionary.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L20">src/Dictionary.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -334,7 +361,7 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>Dict<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L16">src/Dictionary.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L18">src/Dictionary.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -344,7 +371,17 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>Key<wbr>Index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L19">src/Dictionary.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L21">src/Dictionary.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_ioverridetostringfunction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _i<wbr>Override<wbr>ToString<wbr>Function</h3>
+					<div class="tsd-signature tsd-kind-icon">_i<wbr>Override<wbr>ToString<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L22">src/Dictionary.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -354,7 +391,7 @@
 					<div class="tsd-signature tsd-kind-icon">_length<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L17">src/Dictionary.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L19">src/Dictionary.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -371,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L27">src/Dictionary.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L30">src/Dictionary.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,7 +433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L242">src/Dictionary.ts:242</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L108">src/Dictionary.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -433,16 +470,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L248">src/Dictionary.ts:248</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L632">src/Dictionary.ts:632</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to add a key value pair</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key to add</p>
+									</div>
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">V</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to add</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -461,7 +509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L268">src/Dictionary.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L118">src/Dictionary.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -483,7 +531,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L274">src/Dictionary.ts:274</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L124">src/Dictionary.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -511,7 +559,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L280">src/Dictionary.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L130">src/Dictionary.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -548,7 +596,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L438">src/Dictionary.ts:438</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L169">src/Dictionary.ts:169</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -570,7 +618,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L553">src/Dictionary.ts:553</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L182">src/Dictionary.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -583,7 +631,7 @@
 								<li>
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>True if the value exists, otherwise false</p>
+										<p>Key to check</p>
 									</div>
 								</li>
 							</ul>
@@ -595,19 +643,20 @@
 					<a name="containskeys" class="tsd-anchor"></a>
 					<h3>contains<wbr>Keys</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">contains<wbr>Keys<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-						<li class="tsd-signature tsd-kind-icon">contains<wbr>Keys<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Keys<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Keys<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Keys<span class="tsd-signature-symbol">(</span>keys<span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L564">src/Dictionary.ts:564</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L193">src/Dictionary.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Check whether the Dictionary contains the specified keys</p>
+									<p>Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -615,8 +664,11 @@
 								<li>
 									<h5>keys: <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>True if the value exists, otherwise false</p>
+										<p>Key to check</p>
 									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> all: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -624,7 +676,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L569">src/Dictionary.ts:569</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L198">src/Dictionary.ts:198</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>keys: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key to check</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> all: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L204">src/Dictionary.ts:204</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -637,7 +714,13 @@
 								<li>
 									<h5>keys: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>sTrue if the value exists, otherwise false</p>
+										<p>Key to check</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> all: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing</p>
 									</div>
 								</li>
 							</ul>
@@ -655,13 +738,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L221">src/Dictionary.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L236">src/Dictionary.ts:236</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check whether the Dictionary contains the specified value</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">V</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Values to check</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -672,20 +763,31 @@
 					<a name="containsvalues" class="tsd-anchor"></a>
 					<h3>contains<wbr>Values</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">contains<wbr>Values<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
-						<li class="tsd-signature tsd-kind-icon">contains<wbr>Values<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Values<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Values<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span>, all<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L212">src/Dictionary.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L249">src/Dictionary.ts:249</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> all: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -693,13 +795,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L213">src/Dictionary.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L255">src/Dictionary.ts:255</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> all: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -716,13 +829,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L533">src/Dictionary.ts:533</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L654">src/Dictionary.ts:654</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to copy dictionary according to a a list of hashcodes</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>keys: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>hashcodes of the items to copy</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_dictionary_.dictionary.html" class="tsd-signature-type">Dictionary</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -739,7 +860,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L607">src/Dictionary.ts:607</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L276">src/Dictionary.ts:276</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -761,7 +882,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L636">src/Dictionary.ts:636</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L294">src/Dictionary.ts:294</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -792,7 +913,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L451">src/Dictionary.ts:451</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L310">src/Dictionary.ts:310</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -823,13 +944,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L128">src/Dictionary.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L673">src/Dictionary.ts:673</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Method to calculate the hash code of the key (default: toString)</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key to process</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -846,9 +975,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L137">src/Dictionary.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L737">src/Dictionary.ts:737</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to get key value pairs as object with two properties &#39;key&#39; and &#39;value&#39;</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -863,9 +997,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L88">src/Dictionary.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L323">src/Dictionary.ts:323</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all key of the Dictionary as Array of the type K</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -880,9 +1019,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L102">src/Dictionary.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L340">src/Dictionary.ts:340</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all keys of the Dictionary as List of teh type <K></p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -897,13 +1041,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L207">src/Dictionary.ts:207</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L350">src/Dictionary.ts:350</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed value</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">V</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -920,13 +1072,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L166">src/Dictionary.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L360">src/Dictionary.ts:360</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed value. The keys are returned as List ot the type K</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>value: <span class="tsd-signature-type">V</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Value to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -944,13 +1104,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L158">src/Dictionary.ts:158</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L369">src/Dictionary.ts:369</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed value</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Values to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -958,13 +1126,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L159">src/Dictionary.ts:159</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L374">src/Dictionary.ts:374</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed value</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Values to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -982,13 +1158,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L151">src/Dictionary.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L385">src/Dictionary.ts:385</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed values. The keys are returned as List ot the type K</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Values to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -996,13 +1180,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L152">src/Dictionary.ts:152</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L390">src/Dictionary.ts:390</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get the keys that matches to the passed values. The keys are returned as List ot the type K</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Values to get all corresponding keys from</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1013,22 +1205,33 @@
 					<a name="getkeysbyvaluesaslistinternal" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Keys<wbr>ByValues<wbr>AsList<wbr>Internal</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Keys<wbr>ByValues<wbr>AsList<wbr>Internal<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span>, breakAfterFirst<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Keys<wbr>ByValues<wbr>AsList<wbr>Internal<span class="tsd-signature-symbol">(</span>values<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span>, all<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L172">src/Dictionary.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L701">src/Dictionary.ts:701</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to get keys by values as list</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>values: <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>values to look fot keys</p>
+									</div>
 								</li>
 								<li>
-									<h5>breakAfterFirst: <span class="tsd-signature-type">boolean</span></h5>
+									<h5>all: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if true, all entries will be queried. Otherwise, the method returns after the first hit</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1047,7 +1250,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L465">src/Dictionary.ts:465</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L399">src/Dictionary.ts:399</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1060,7 +1263,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L470">src/Dictionary.ts:470</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L404">src/Dictionary.ts:404</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1082,7 +1285,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L475">src/Dictionary.ts:475</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L409">src/Dictionary.ts:409</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1114,7 +1317,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L520">src/Dictionary.ts:520</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L451">src/Dictionary.ts:451</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1136,7 +1339,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L525">src/Dictionary.ts:525</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L456">src/Dictionary.ts:456</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1167,9 +1370,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L108">src/Dictionary.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L467">src/Dictionary.ts:467</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all vales as array</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
@@ -1184,9 +1392,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L121">src/Dictionary.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L483">src/Dictionary.ts:483</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets all Values as List</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_src_list_.list.html" class="tsd-signature-type">List</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
@@ -1201,7 +1414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L652">src/Dictionary.ts:652</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L495">src/Dictionary.ts:495</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1222,6 +1435,38 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="overridehashfunction" class="tsd-anchor"></a>
+					<h3>override<wbr>Hash<wbr>Function</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">override<wbr>Hash<wbr>Function<span class="tsd-signature-symbol">(</span>overrideFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L514">src/Dictionary.ts:514</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Overrides the default hashing method for keys. Usually toString is used to generate unique hashes. The toString method of a class can be overwritten or alternatively defined by this function.\n
+									The passed function takes one value of the type K and should return a string.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>overrideFunction: <span class="tsd-signature-type">Function</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Function which replaces the default method of generating hashes for the keys</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="refreshkeyindex" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> refresh<wbr>Key<wbr>Index</h3>
@@ -1232,9 +1477,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L83">src/Dictionary.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L753">src/Dictionary.ts:753</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to refresh the key index of the dictionary</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -1251,7 +1501,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L330">src/Dictionary.ts:330</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L528">src/Dictionary.ts:528</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1273,7 +1523,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L335">src/Dictionary.ts:335</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L533">src/Dictionary.ts:533</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1295,7 +1545,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L340">src/Dictionary.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L538">src/Dictionary.ts:538</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1328,7 +1578,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L407">src/Dictionary.ts:407</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L571">src/Dictionary.ts:571</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1347,7 +1597,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L412">src/Dictionary.ts:412</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L576">src/Dictionary.ts:576</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1369,7 +1619,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L417">src/Dictionary.ts:417</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L581">src/Dictionary.ts:581</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1400,13 +1650,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L372">src/Dictionary.ts:372</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L762">src/Dictionary.ts:762</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal method to remove an entry</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">K</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key to remove (with value)</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1423,7 +1681,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L321">src/Dictionary.ts:321</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L604">src/Dictionary.ts:604</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1460,7 +1718,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/87703f8/src/Dictionary.ts#L593">src/Dictionary.ts:593</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/d278215/src/Dictionary.ts#L613">src/Dictionary.ts:613</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1535,6 +1793,12 @@
 						<a href="../modules/_test_dictionarytest_.html">"test/<wbr>Dictionary<wbr>Test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_test_iteratoritemtest_.html">"test/<wbr>Iterator<wbr>Item<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_test_keyvaluepairtest_.html">"test/<wbr>Key<wbr>Value<wbr>Pair<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -1569,6 +1833,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_src_dictionary_.dictionary.html#_ikeyindex" class="tsd-kind-icon">_i<wbr>Key<wbr>Index</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_src_dictionary_.dictionary.html#_ioverridetostringfunction" class="tsd-kind-icon">_i<wbr>Override<wbr>ToString<wbr>Function</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_src_dictionary_.dictionary.html#_length" class="tsd-kind-icon">_length</a>
@@ -1654,6 +1921,9 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_src_dictionary_.dictionary.html#next" class="tsd-kind-icon">next</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_src_dictionary_.dictionary.html#overridehashfunction" class="tsd-kind-icon">override<wbr>Hash<wbr>Function</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_src_dictionary_.dictionary.html#refreshkeyindex" class="tsd-kind-icon">refresh<wbr>Key<wbr>Index</a>
 							</li>
@@ -1676,6 +1946,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_src_dictionary_.html#isequal" class="tsd-kind-icon">is<wbr>Equal</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

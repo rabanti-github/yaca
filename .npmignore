@@ -6,3 +6,4 @@ tslint.json
 dist/test/
 .nyc_output/
 coverage/
+README.pdf
