@@ -6,13 +6,13 @@ require("mocha");
 // Test of the KeyValuePair Class
 describe("KeyValuePair\n  ############\n", function () {
     describe('Constructor', function () {
-        it('should not throw an error when creating an object wih K:string and V:number with initial parameters', function () {
+        it('should not throw an error when creating an object with K:string and V:number with initial parameters', function () {
             chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair("xyz", 42); }).to.not.throw();
         });
-        it('should throw an error when creating an object wih K:string and V:number with undefined as value', function () {
+        it('should throw an error when creating an object with K:string and V:number with undefined as value', function () {
             chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair("xyz", undefined); }).to.throw();
         });
-        it('should throw an error when creating an object wih K:string and V:number with undefined as key', function () {
+        it('should throw an error when creating an object with K:string and V:number with undefined as key', function () {
             chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair(undefined, 42); }).to.throw();
         });
     });

@@ -45,6 +45,9 @@ d.add(111,"new");
 
 let keys: number[] = d.getKeys();
 
+let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
+let range: Dictionary<number, string> = dict.getRangeByValues(["a","b","c"]);
+
 d.distinct();
 
     let d1: Date = new Date(2017,1,1,23,59,0,0);
@@ -54,10 +57,14 @@ d.distinct();
     let d5: Date = new Date(2015,1,1,23,59,0,1);
     let d6: Date = new Date(2020,1,1,23,59,0,0);
     let d7: Date = new Date(1990,1,1,23,59,0,0);      
-    let dict3: Dictionary<Date, number> = new Dictionary<Date, number>(Utils.properDateHashFunction);
-    dict3.addRange([d1,d2,d3,d4,d5,d6,d7], [17,22,88,55,12,0,-12]);
-    let value3: number = dict3.get(d1);
+    let dict3: Dictionary<number, Date> = new Dictionary<number, Date>();
+    dict3.addRange([17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+    dict3.removeByValue([d1,d2,d3,d4,d5,d6,d7]);
+    //let value3: number = dict3.get(d1);
 
+    let d8: Date = new Date(1995,1,1,23,59,0,0);  
+   //let match: boolean = dict3.remove(d8);
+  // match = dict3.remove(d3);
 
 let n: number = d.length;
 

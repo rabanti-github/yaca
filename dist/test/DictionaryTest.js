@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("../src/Dictionary");
 var List_1 = require("../src/List");
-//import {IteratorItem} from '../src/IteratorItem';
 var Utils_1 = require("./utils/Utils");
 var Types_1 = require("./utils/Types");
 var TestClass_1 = require("./utils/TestClass");
@@ -338,7 +337,7 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             dict.distinct();
             chai_1.expect(dict.length).to.equal(8);
         });
-        it('should not throw an error if executed on an emptydictionary', function () {
+        it('should not throw an error if executed on an empty dictionary', function () {
             var dict2 = new Dictionary_1.Dictionary();
             chai_1.expect(function () { dict2.distinct(); }).not.to.throw();
         });
@@ -507,6 +506,49 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             chai_1.expect(match).to.equal(true);
         });
     });
+    describe('getKeysByValue method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var dict; // = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+        it('should return the two keys 22 and 55 with the date 1017-1-1 as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValue(d4);
+            var match = true;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] !== 22 && result[i] !== 55) {
+                    match = false;
+                }
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty array with the date 1990-1-1 as value which does no exist in the dictionary as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValue(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty array with the date 1990-1-1 as value in an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+            var result = dict.getKeysByValue(d7);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d2, d3, d4, d5, d6, d7]);
+            var result = dict.getKeysByValue(d1);
+            var match = false;
+            if (result[0] === 17 && result.length === 1) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+    });
     describe('getKeysByValueAsList method', function () {
         var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
         var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
@@ -546,6 +588,303 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
+        });
+    });
+    describe('getRange method', function () {
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [1, 2, 3, 4, 5, 6, 7, 8, 9], ["a", "b", "a", "b", "c", "a", "d", "e", "f"]);
+        it('should copy the whole dictionary (same length)', function () {
+            var range = dict.getRange();
+            chai_1.expect(dict.length).to.equal(range.length);
+        });
+        it('should return a dictionary with the values "b", "a" and "c" with the keys 2,3,5 passed as array', function () {
+            var range = dict.getRange([2, 3, 5]);
+            var match = false;
+            if (range.containsValues(["a", "b", "c"], true) === true) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty dictionary wen executed with the keys 22 and 33 which do not exist in the original dictionary', function () {
+            var range = dict.getRange([22, 33]);
+            chai_1.expect(range.length).to.equal(0);
+        });
+        it('should return a dictionary with the values "b", "a" and "c" with the keys 2,3,5 passed as List', function () {
+            var keys = new List_1.default([3, 5, 6]);
+            var range = dict.getRange(keys);
+            var match = false;
+            if (range.containsValues(["a", "b", "c"], true) === true) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+    });
+    describe('getRangeByValue method', function () {
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [1, 2, 3, 4, 5, 6, 7, 8, 9], ["a", "b", "a", "b", "c", "a", "d", "e", "f"]);
+        it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as array', function () {
+            var range = dict.getRangeByValues(["a", "b", "c"]);
+            var match = false;
+            if (range.containsKeys([1, 2, 3, 4, 5, 6], true) === true) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as List', function () {
+            var values = new List_1.default(["a", "b", "c"]);
+            var range = dict.getRangeByValues(values);
+            var match = false;
+            if (range.containsKeys([1, 2, 3, 4, 5, 6], true) === true) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty dictionary wen executed with the vales "x" and "y" which do not exist in the original dictionary', function () {
+            var range = dict.getRangeByValues(["x", "y"]);
+            chai_1.expect(range.length).to.equal(0);
+        });
+    });
+    describe('getValues method', function () {
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [1, 2, 3, 4, 5, 6, 7, 8, 9], ["a", "b", "a", "b", "c", "a", "d", "e", "f"]);
+        it('should return an array with 9 elements of the type string', function () {
+            var values = dict.getValues();
+            chai_1.expect(values.length).to.equal(9);
+        });
+        it('should return an empty array with on a empty dictionary', function () {
+            var dict2 = new Dictionary_1.Dictionary();
+            var values = dict2.getValues();
+            chai_1.expect(values.length).to.equal(0);
+        });
+    });
+    describe('getValuesAsList method', function () {
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [1, 2, 3, 4, 5, 6, 7, 8, 9], ["a", "b", "a", "b", "c", "a", "d", "e", "f"]);
+        it('should return a List with 9 elements of the type string', function () {
+            var values = dict.getValuesAsList();
+            chai_1.expect(values.length).to.equal(9);
+        });
+        it('should return an empty List with on a empty dictionary', function () {
+            var dict2 = new Dictionary_1.Dictionary();
+            var values = dict2.getValuesAsList();
+            chai_1.expect(values.length).to.equal(0);
+        });
+    });
+    describe('next method', function () {
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.number, [13, 11, 7, 5, 2], [1.11111, 22.2222, 333.333, 4444.44, 55555.5]);
+        it('should return the value 135925.41963 when multiplying key and value of each key-value pair and adding all up after 5 calls', function () {
+            var value = 0;
+            var item;
+            for (var i = 0; i < 5; i++) {
+                item = dict.next().value;
+                value = value + (item.key * item.value);
+            }
+            chai_1.expect(value).to.equal(135925.41963);
+        });
+        it('should return the value 271850.83926 after 10 calls (2 rounds)', function () {
+            var value = 0;
+            var item;
+            for (var i = 0; i < 10; i++) {
+                item = dict.next().value;
+                value = value + (item.key * item.value);
+            }
+            chai_1.expect(value).to.equal(271850.83926);
+        });
+        it('should indicate that the last element is reached after 5 calls in a dictionary of 5 entries (for loop)', function () {
+            var state;
+            for (var i = 0; i < 5; i++) {
+                state = dict.next().isLastEntry;
+            }
+            chai_1.expect(state).to.equal(true);
+        });
+        it('should indicate that the last element is reached after 7 calls in a dictionary of 5 entries if a forEach call was executed after the 2nd next call (reset)', function () {
+            var state;
+            for (var i = 0; i < 7; i++) {
+                if (i === 2) {
+                    dict.forEach(function (item) { });
+                }
+                state = dict.next().isLastEntry;
+            }
+            chai_1.expect(state).to.equal(true);
+        });
+    });
+    describe('overrideHashFunction method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2017, 1, 1, 23, 59, 0, 2);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var values = [17, 22, 88, 55, 12, 0, -12];
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number);
+        it('should return 7 entries after initial execution on a dictionary of 7 entries and 3 entries with dates as key which differs only 1 ms', function () {
+            dict.overrideHashFunction(Utils_1.Utils.properDateHashFunction);
+            dict.addRange([d1, d2, d3, d4, d5, d6, d7], values);
+            chai_1.expect(dict.length).to.equal(7);
+        });
+        it('should return 7 entries after execution within constructor on a dictionary of 7 entries and 3 entries with dates as key which differs only 1 ms', function () {
+            dict = new Dictionary_1.Dictionary(Utils_1.Utils.properDateHashFunction);
+            dict.addRange([d1, d2, d3, d4, d5, d6, d7], values);
+            chai_1.expect(dict.length).to.equal(7);
+        });
+        it('should throw an error if undefined was passed as function', function () {
+            dict = new Dictionary_1.Dictionary();
+            chai_1.expect(function () {
+                var dict2 = new Dictionary_1.Dictionary();
+                dict2.overrideHashFunction(undefined);
+                dict2.addRange(values, values);
+            }).to.throw();
+        });
+    });
+    describe('remove method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2017, 1, 1, 23, 59, 0, 2);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var values = [17, 22, 88, 55, 12, 0, -12];
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+        it('should return a length of 6 after execution with the (existing) key 22 on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.remove(22);
+            chai_1.expect(dict.length).to.equal(6);
+        });
+        it('should return a length of 6 after execution with the (existing) key 2017-1-1 on a dictionary of 7 entries', function () {
+            var dict2 = new Dictionary_1.Dictionary([d1, d2, d3, d4, d5, d6, d7], values);
+            dict2.remove(d2);
+            chai_1.expect(dict.length).to.equal(6);
+        });
+        it('should return a length of 4 after execution with the (existing) keys 22, 88 and 12 (passed as array) on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.remove([12, 22, 88]);
+            chai_1.expect(dict.length).to.equal(4);
+        });
+        it('should return a length of 4 after execution with the (existing) keys 22, 88 and 12 (passed as List) on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var list = new List_1.default([12, 22, 88]);
+            dict.remove(list);
+            chai_1.expect(dict.length).to.equal(4);
+        });
+        it('should return a length of 0 after removal of all keys on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.remove([17, 22, 88, 55, 12, 0, -12]);
+            chai_1.expect(dict.length).to.equal(0);
+        });
+        it('should return true after execution with the (existing) key 22', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var match = dict.remove(22);
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return false after execution with the (not existing) key 122', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var match = dict.remove(122);
+            chai_1.expect(match).to.equal(false);
+        });
+        it('should not throw an error when executed on an empty dictionary', function () {
+            dict = new Dictionary_1.Dictionary();
+            chai_1.expect(function () { dict.remove(42); }).not.to.throw();
+        });
+    });
+    describe('removeByValue method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2017, 1, 1, 23, 59, 0, 2);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var values = [17, 22, 88, 55, 12, 0, -12];
+        var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+        it('should return a length of 6 after execution with the (existing) value 2017-1-1 on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.removeByValue(d4);
+            chai_1.expect(dict.length).to.equal(6);
+        });
+        it('should return a length of 4 after execution with the (existing) values 2016-1-1, 2020-1-1 and 2017-1-1 (passed as array) on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.removeByValue([d3, d4, d6]);
+            chai_1.expect(dict.length).to.equal(4);
+        });
+        it('should return a length of 4 after execution with the (existing) values 2016-1-1, 2020-1-1 and 2017-1-1 (passed as List) on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var list = new List_1.default([d3, d4, d6]);
+            dict.removeByValue(list);
+            chai_1.expect(dict.length).to.equal(4);
+        });
+        it('should return a length of 0 after removal of all values on a dictionary of 7 entries', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            dict.removeByValue([d1, d2, d3, d4, d5, d6, d7]);
+            chai_1.expect(dict.length).to.equal(0);
+        });
+        it('should return true after execution with the (existing) value 2020-1-1', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var match = dict.removeByValue(d6);
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return false after execution with the (not existing) vlaue 2021-1-1', function () {
+            dict = new Dictionary_1.Dictionary(values, [d1, d2, d3, d4, d5, d6, d7]);
+            var d8 = new Date(2021, 1, 1, 23, 59, 0, 0);
+            var match = dict.removeByValue(d8);
+            chai_1.expect(match).to.equal(false);
+        });
+        it('should not throw an error when executed on an empty dictionary', function () {
+            dict = new Dictionary_1.Dictionary();
+            var d8 = new Date(2021, 1, 1, 23, 59, 0, 0);
+            chai_1.expect(function () { dict.removeByValue(d8); }).not.to.throw();
+        });
+    });
+    describe('set method', function () {
+        var dict;
+        it('should add an element and increase the length of an empty dictionary by one', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+            dict.set("test", 22);
+            chai_1.expect(dict.length).to.equal(1);
+        });
+        it('should return 42 as value at element with the key "one"', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+            dict.set("one", 42);
+            dict.set("two", 43);
+            dict.set("One", 42.1);
+            var entry = dict.get("one");
+            chai_1.expect(entry).to.equal(42);
+        });
+        it('should replace an existing item (same key) and not increase the length of 3 of an existing dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+            dict.set("one", 42);
+            dict.set("two", 43);
+            dict.set("One", 42.1);
+            dict.set("two", -2);
+            chai_1.expect(dict.length).to.equal(3);
+        });
+        it('should not replace a Date value that differs just 1 ms from another as key instead of replacing it after definition of a override function for toString', function () {
+            var dict2 = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number);
+            var d1 = new Date(2000, 1, 1, 1, 1, 1, 0);
+            var d2 = new Date(2000, 1, 1, 1, 1, 1, 1);
+            dict2.overrideHashFunction(Utils_1.Utils.properDateHashFunction);
+            dict2.set(d1, 42);
+            dict2.set(d2, 43);
+            chai_1.expect(dict2.length).to.equal(2);
+        });
+    });
+    describe('swapValues method', function () {
+        var dict;
+        it('should return 42 as value at element with the key "two" and 43 at "one after swapping', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number, ["one", "two", "three"], [42, 43, 42.1]);
+            dict.swapValues("one", "two");
+            var entry1 = dict.get("one");
+            var entry2 = dict.get("two");
+            chai_1.expect(entry1 === 43 && entry2 === 42).to.equal(true);
+        });
+        it('should throw an error when executed on an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number);
+            chai_1.expect(function () { dict.swapValues("one", "two"); }).to.throw();
+        });
+        it('should throw an error when executed on with one non-existing key dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number, ["one", "two", "three"], [42, 43, 42.1]);
+            chai_1.expect(function () { dict.swapValues("one", "four"); }).to.throw();
+        });
+        it('should throw an error when executed on with two non-existing keys dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number, ["one", "two", "three"], [42, 43, 42.1]);
+            chai_1.expect(function () { dict.swapValues("six", "four"); }).to.throw();
         });
     });
     /************ */

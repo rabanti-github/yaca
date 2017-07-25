@@ -8,13 +8,13 @@ import 'mocha';
 describe("KeyValuePair\n  ############\n",() => {
 describe('Constructor', () => {
 
-    it('should not throw an error when creating an object wih K:string and V:number with initial parameters', () => {
+    it('should not throw an error when creating an object with K:string and V:number with initial parameters', () => {
         expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",42); }).to.not.throw();
     });
-    it('should throw an error when creating an object wih K:string and V:number with undefined as value', () => {
+    it('should throw an error when creating an object with K:string and V:number with undefined as value', () => {
         expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",undefined); }).to.throw();
     });
-    it('should throw an error when creating an object wih K:string and V:number with undefined as key', () => {
+    it('should throw an error when creating an object with K:string and V:number with undefined as key', () => {
         expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>(undefined,42); }).to.throw();
     });    
 

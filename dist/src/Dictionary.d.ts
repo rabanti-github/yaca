@@ -163,15 +163,49 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param values Values to get all corresponding keys from
      */
     getKeysByValuesAsList(values: List<V>): List<K>;
-    getValues(): V[];
-    getValuesAsList(): List<V>;
-    overrideHashFunction(overrideFunction: Function): void;
     /**
-     * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
-     * @param key Key of the new value
-     * @param value New value
+     * Copies the whole Dictionary to a new Dictionary
      */
-    set(key: K, value: V): void;
+    getRange(): Dictionary<K, V>;
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified keys
+     * @param keys Keys to use for the new Dictionary
+     */
+    getRange(keys: K[]): Dictionary<K, V>;
+    /**
+ * Copies the Dictionary to a new Dictionary using the specified keys
+ * @param keys Keys to use for the new Dictionary
+ */
+    getRange(keys: List<K>): Dictionary<K, V>;
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
+     * @param values Values to use for the new Dictionary
+     */
+    getRangeByValues(values: V[]): Dictionary<K, V>;
+    /**
+     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
+     * @param values Values to use for the new Dictionary
+     */
+    getRangeByValues(values: List<V>): Dictionary<K, V>;
+    /**
+     * Gets all vales as array
+     */
+    getValues(): V[];
+    /**
+     * Gets all Values as List
+     */
+    getValuesAsList(): List<V>;
+    /**
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * @param value Can be ignored
+     */
+    next(value?: any): IteratorResult<KeyValuePair<K, V>>;
+    /**
+     * Overrides the default hashing method for keys. Usually toString is used to generate unique hashes. The toString method of a class can be overwritten or alternatively defined by this function.\n
+     * The passed function takes one value of the type K and should return a string.
+     * @param overrideFunction Function which replaces the default method of generating hashes for the keys
+     */
+    overrideHashFunction(overrideFunction: Function): void;
     /**
      * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
      * @param key Key (and attached value) to remove
@@ -203,29 +237,11 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     removeByValue(values: List<V>): boolean;
     /**
-     * Copies the whole Dictionary to a new Dictionary
+     * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
+     * @param key Key of the new value
+     * @param value New value
      */
-    getRange(): Dictionary<K, V>;
-    /**
-     * Copies the Dictionary to a new Dictionary using the specified keys
-     * @param keys Keys to use for the new Dictionary
-     */
-    getRange(keys: K[]): Dictionary<K, V>;
-    /**
- * Copies the Dictionary to a new Dictionary using the specified keys
- * @param keys Keys to use for the new Dictionary
- */
-    getRange(keys: List<K>): Dictionary<K, V>;
-    /**
-     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
-     * @param values Values to use for the new Dictionary
-     */
-    getRangeByValues(values: V[]): Dictionary<K, V>;
-    /**
-     * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
-     * @param values Values to use for the new Dictionary
-     */
-    getRangeByValues(values: List<V>): Dictionary<K, V>;
+    set(key: K, value: V): void;
     /**
      * Swaps the values of the two defined keys in the Dictionary
      * @param key1 Key 1
@@ -233,15 +249,38 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     swapValues(key1: K, key2: K): void;
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
-     * @param value Can be ignored
+     * Internal method to add a key value pair
+     * @param key Key to add
+     * @param value Value to add
      */
-    next(value?: any): IteratorResult<KeyValuePair<K, V>>;
     private addInternal(key, value);
+    /**
+     * Internal method to copy dictionary according to a a list of hashcodes
+     * @param keys hashcodes of the items to copy
+     */
     private copyToInternal(keys);
+    /**
+     * Method to calculate the hash code of the key (default: toString)
+     * @param key Key to process
+     */
     private getHashCode(key);
+    /**
+     * Internal method to get keys by values as list
+     * @param values values to look fot keys
+     * @param all if true, all entries will be queried. Otherwise, the method returns after the first hit
+     */
     private getKeysByValuesAsListInternal(values, all);
+    /**
+     * Internal method to get key value pairs as object with two properties 'key' and 'value'
+     */
     private getKeyValuePairsInternal();
+    /**
+     * Internal method to refresh the key index of the dictionary
+     */
     private refreshKeyIndex();
+    /**
+     * Internal method to remove an entry
+     * @param key Key to remove (with value)
+     */
     private removeInternal(key);
 }

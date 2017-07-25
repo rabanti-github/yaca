@@ -1,6 +1,7 @@
 import {Dictionary} from '../src/Dictionary';
+import {KeyValuePair} from '../src/KeyValuePair';
 import List from '../src/List';
-//import {IteratorItem} from '../src/IteratorItem';
+import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
 import { TestClass } from './utils/TestClass';
@@ -349,7 +350,7 @@ describe('distinct method', () => {
         dict.distinct();
         expect(dict.length).to.equal(8);
     });
-    it('should not throw an error if executed on an emptydictionary', () => {
+    it('should not throw an error if executed on an empty dictionary', () => {
         let dict2: Dictionary<number,Date> = new Dictionary<number,Date>();
         expect(function() { dict2.distinct(); }).not.to.throw();
     });
@@ -524,6 +525,49 @@ describe('getKeysByValue method', () => {
     
 });
 
+describe('getKeysByValue method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,0);
+    let d2: Date = new Date(2017,1,1,23,59,0,1);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2015,1,1,23,59,0,1);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+
+    let dict: Dictionary<number, Date>;// = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+
+    it('should return the two keys 22 and 55 with the date 1017-1-1 as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: number[] = dict.getKeysByValue(d4);
+        let match: boolean = true;
+        for(let i: number = 0; i < result.length; i++)
+        {
+            if (result[i] !== 22 && result[i] !== 55) { match = false; }
+        }
+        expect(match).to.equal(true);
+    });
+    it('should return an empty array with the date 1990-1-1 as value which does no exist in the dictionary as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: number[] = dict.getKeysByValue(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty array with the date 1990-1-1 as value in an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.date);
+        let result: number[] = dict.getKeysByValue(d7);
+        expect(result.length).to.equal(0);
+    });
+    it('should return one key 17 date 2017-1-1 as value that differs only 1 ms from key 22', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d2,d3,d4,d5,d6,d7]);
+        let result: number[] = dict.getKeysByValue(d1);
+        let match: boolean = false;
+        if (result[0] === 17 && result.length === 1) { match = true; }
+        expect(match).to.equal(true);
+    });
+});
+
 describe('getKeysByValueAsList method', () => {
     let d1: Date = new Date(2017,1,1,23,59,0,0);
     let d2: Date = new Date(2017,1,1,23,59,0,1);
@@ -563,6 +607,321 @@ describe('getKeysByValueAsList method', () => {
         expect(match).to.equal(true);
     });
     
+});
+
+describe('getRange method', () => {
+    let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
+    it('should copy the whole dictionary (same length)', () => {
+        let range: Dictionary<number, string> = dict.getRange();
+        expect(dict.length).to.equal(range.length);
+    });
+    it('should return a dictionary with the values "b", "a" and "c" with the keys 2,3,5 passed as array', () => {
+        let range: Dictionary<number, string> = dict.getRange([2,3,5]);
+        let match: boolean = false;
+        if (range.containsValues(["a","b","c"],true) === true) { match = true; }
+        expect(match).to.equal(true);
+    });
+    it('should return an empty dictionary wen executed with the keys 22 and 33 which do not exist in the original dictionary', () => {
+        let range: Dictionary<number, string> = dict.getRange([22,33]);
+        expect(range.length).to.equal(0);
+    });
+    it('should return a dictionary with the values "b", "a" and "c" with the keys 2,3,5 passed as List', () => {
+        let keys: List<number> = new List<number>([3,5,6]);
+        let range: Dictionary<number, string> = dict.getRange(keys);
+        let match: boolean = false;
+        if (range.containsValues(["a","b","c"],true) === true) { match = true; }
+        expect(match).to.equal(true);
+    }); 
+});
+
+describe('getRangeByValue method', () => {
+    let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
+    it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as array', () => {
+        let range: Dictionary<number, string> = dict.getRangeByValues(["a","b","c"]);
+        let match: boolean = false;
+        if (range.containsKeys([1,2,3,4,5,6],true) === true) { match = true; }
+        expect(match).to.equal(true);
+    });
+    it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as List', () => {
+        let values: List<string> = new List<string>(["a","b","c"]);
+        let range: Dictionary<number, string> = dict.getRangeByValues(values);
+        let match: boolean = false;
+        if (range.containsKeys([1,2,3,4,5,6],true) === true) { match = true; }
+        expect(match).to.equal(true);
+    });
+    
+    it('should return an empty dictionary wen executed with the vales "x" and "y" which do not exist in the original dictionary', () => {
+        let range: Dictionary<number, string> = dict.getRangeByValues(["x","y"]);
+        expect(range.length).to.equal(0);
+    });
+});
+
+describe('getValues method', () => {
+    let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
+    it('should return an array with 9 elements of the type string', () => {
+        let values: string[] = dict.getValues();
+        expect(values.length).to.equal(9);
+    });
+    it('should return an empty array with on a empty dictionary', () => {
+        let dict2: Dictionary<number,string> = new Dictionary<number,string>();
+        let values: string[] = dict2.getValues();
+        expect(values.length).to.equal(0);
+    });
+});
+
+describe('getValuesAsList method', () => {
+    let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
+    it('should return a List with 9 elements of the type string', () => {
+        let values: List<string> = dict.getValuesAsList();
+        expect(values.length).to.equal(9);
+    });
+    it('should return an empty List with on a empty dictionary', () => {
+        let dict2: Dictionary<number,string> = new Dictionary<number,string>();
+        let values: List<string> = dict2.getValuesAsList();
+        expect(values.length).to.equal(0);
+    });
+});
+
+describe('next method', () => {
+    let dict: Dictionary<number,number> = Utils.setupDictionary(Types.number, Types.number,[13,11,7,5,2], [1.11111,22.2222,333.333,4444.44,55555.5]);
+    it('should return the value 135925.41963 when multiplying key and value of each key-value pair and adding all up after 5 calls', () => {
+        let value: number = 0;
+        let item: KeyValuePair<number, number>;
+        for(let i: number = 0; i< 5; i++)
+        {
+            item = (dict.next() as IteratorItem<KeyValuePair<number,number>>).value;
+            value = value + (item.key * item.value);
+        }
+        expect(value).to.equal(135925.41963);
+    });
+    it('should return the value 271850.83926 after 10 calls (2 rounds)', () => {
+        let value: number = 0;
+        let item: KeyValuePair<number, number>;
+        for(let i: number = 0; i< 10; i++)
+        {
+            item = (dict.next() as IteratorItem<KeyValuePair<number,number>>).value;
+            value = value + (item.key * item.value);
+        }
+        expect(value).to.equal(271850.83926);
+    });
+
+        it('should indicate that the last element is reached after 5 calls in a dictionary of 5 entries (for loop)', () => {
+        let state: boolean;
+        for(let i: number = 0; i < 5; i++)
+        {
+            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).isLastEntry;
+        }
+        expect(state).to.equal(true);
+    });
+
+    it('should indicate that the last element is reached after 7 calls in a dictionary of 5 entries if a forEach call was executed after the 2nd next call (reset)', () => {
+        let state: boolean;
+        for(let i: number = 0; i < 7; i++)
+        {
+            if (i === 2)
+                {
+                    dict.forEach(item =>{});
+                }
+            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).isLastEntry;
+        }
+        expect(state).to.equal(true);
+    });
+});
+
+describe('overrideHashFunction method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,1);
+    let d2: Date = new Date(2017,1,1,23,59,0,0);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2017,1,1,23,59,0,2);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+    let values: number[] = [17,22,88,55,12,0,-12];
+    let dict: Dictionary<Date, number> = Utils.setupDictionary(Types.date, Types.number);
+
+    it('should return 7 entries after initial execution on a dictionary of 7 entries and 3 entries with dates as key which differs only 1 ms', () => {
+        dict.overrideHashFunction(Utils.properDateHashFunction);
+        dict.addRange([d1,d2,d3,d4,d5,d6,d7], values);
+        expect(dict.length).to.equal(7);
+    });
+    it('should return 7 entries after execution within constructor on a dictionary of 7 entries and 3 entries with dates as key which differs only 1 ms', () => {
+        dict = new Dictionary<Date, number>(Utils.properDateHashFunction);
+        dict.addRange([d1,d2,d3,d4,d5,d6,d7], values);
+        expect(dict.length).to.equal(7);
+    });
+    it('should throw an error if undefined was passed as function', () => {
+        dict = new Dictionary<Date, number>();
+        expect(function()
+        {
+             let dict2: Dictionary<number, number> = new Dictionary<number, number>();
+             dict2.overrideHashFunction(undefined);
+             dict2.addRange(values, values);
+        }).to.throw();
+    });
+
+});
+
+
+describe('remove method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,1);
+    let d2: Date = new Date(2017,1,1,23,59,0,0);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2017,1,1,23,59,0,2);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+    let values: number[] = [17,22,88,55,12,0,-12];
+    let dict: Dictionary<number, Date> = Utils.setupDictionary(Types.number, Types.date);
+
+    it('should return a length of 6 after execution with the (existing) key 22 on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.remove(22);
+        expect(dict.length).to.equal(6);
+    });
+    it('should return a length of 6 after execution with the (existing) key 2017-1-1 on a dictionary of 7 entries', () => {
+        let dict2: Dictionary<Date, number> = new Dictionary<Date, number>([d1,d2,d3,d4,d5,d6,d7], values);
+        dict2.remove(d2);
+        expect(dict.length).to.equal(6);
+    });
+    it('should return a length of 4 after execution with the (existing) keys 22, 88 and 12 (passed as array) on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.remove([12,22,88]);
+        expect(dict.length).to.equal(4);
+    });
+    it('should return a length of 4 after execution with the (existing) keys 22, 88 and 12 (passed as List) on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let list: List<number> = new List<number>([12,22,88]);
+        dict.remove(list);
+        expect(dict.length).to.equal(4);
+    });
+     it('should return a length of 0 after removal of all keys on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.remove([17,22,88,55,12,0,-12]);
+        expect(dict.length).to.equal(0);
+    });
+    it('should return true after execution with the (existing) key 22', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let match: boolean = dict.remove(22);
+        expect(match).to.equal(true);
+    });
+    it('should return false after execution with the (not existing) key 122', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let match: boolean = dict.remove(122);
+        expect(match).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty dictionary', () => {
+        dict = new Dictionary<number, Date>();
+    expect(function() { dict.remove(42); }).not.to.throw();
+    });
+    
+});
+
+
+describe('removeByValue method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,1);
+    let d2: Date = new Date(2017,1,1,23,59,0,0);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2017,1,1,23,59,0,2);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);       
+    let values: number[] = [17,22,88,55,12,0,-12];
+    let dict: Dictionary<number, Date> = Utils.setupDictionary(Types.number, Types.date);
+
+    it('should return a length of 6 after execution with the (existing) value 2017-1-1 on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.removeByValue(d4);
+        expect(dict.length).to.equal(6);
+    });
+    it('should return a length of 4 after execution with the (existing) values 2016-1-1, 2020-1-1 and 2017-1-1 (passed as array) on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.removeByValue([d3,d4,d6]);
+        expect(dict.length).to.equal(4);
+    });
+    it('should return a length of 4 after execution with the (existing) values 2016-1-1, 2020-1-1 and 2017-1-1 (passed as List) on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let list: List<Date> = new List<Date>([d3,d4,d6]);
+        dict.removeByValue(list);
+        expect(dict.length).to.equal(4);
+    });
+     it('should return a length of 0 after removal of all values on a dictionary of 7 entries', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        dict.removeByValue([d1,d2,d3,d4,d5,d6,d7]);
+        expect(dict.length).to.equal(0);
+    });
+    it('should return true after execution with the (existing) value 2020-1-1', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let match: boolean = dict.removeByValue(d6);
+        expect(match).to.equal(true);
+    });
+    it('should return false after execution with the (not existing) vlaue 2021-1-1', () => {
+        dict = new Dictionary<number, Date>(values,[d1,d2,d3,d4,d5,d6,d7]);
+        let d8: Date = new Date(2021,1,1,23,59,0,0);
+        let match: boolean = dict.removeByValue(d8);
+        expect(match).to.equal(false);
+    });
+    it('should not throw an error when executed on an empty dictionary', () => {
+        dict = new Dictionary<number, Date>();
+        let d8: Date = new Date(2021,1,1,23,59,0,0);
+    expect(function() { dict.removeByValue(d8); }).not.to.throw();
+    });
+    
+});
+describe('set method', () => {
+    let dict: Dictionary<string,number>;
+    it('should add an element and increase the length of an empty dictionary by one', () => {
+        dict = Utils.setupDictionary(Types.string, Types.number);
+        dict.set("test", 22);
+        expect(dict.length).to.equal(1);
+    });
+    it('should return 42 as value at element with the key "one"', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number);
+        dict.set("one", 42);
+        dict.set("two", 43);
+        dict.set("One", 42.1);
+        let entry: number = dict.get("one");
+        expect(entry).to.equal(42);
+    });
+    it('should replace an existing item (same key) and not increase the length of 3 of an existing dictionary', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number);
+        dict.set("one", 42);
+        dict.set("two", 43);
+        dict.set("One", 42.1);
+        dict.set("two",-2);
+        expect(dict.length).to.equal(3);
+    });
+    it('should not replace a Date value that differs just 1 ms from another as key instead of replacing it after definition of a override function for toString', () => {
+        let dict2: Dictionary<Date, number> =  Utils.setupDictionary(Types.date, Types.number);
+        let d1: Date = new Date(2000, 1,1,1,1,1,0);
+        let d2: Date = new Date(2000, 1,1,1,1,1,1);
+        dict2.overrideHashFunction(Utils.properDateHashFunction);
+        dict2.set(d1, 42);
+        dict2.set(d2, 43);
+        expect(dict2.length).to.equal(2);
+    });
+});
+
+describe('swapValues method', () => {
+    let dict: Dictionary<string,number>;
+    it('should return 42 as value at element with the key "two" and 43 at "one after swapping', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number, ["one","two","three"],[42,43,42.1]);
+        dict.swapValues("one", "two")
+        let entry1: number = dict.get("one");
+        let entry2: number = dict.get("two");
+        expect(entry1 === 43 && entry2 === 42).to.equal(true);
+    });
+    it('should throw an error when executed on an empty dictionary', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number);
+    expect(function() { dict.swapValues("one", "two"); }).to.throw();
+    });
+    it('should throw an error when executed on with one non-existing key dictionary', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number, ["one","two","three"],[42,43,42.1]);
+    expect(function() { dict.swapValues("one", "four"); }).to.throw();
+    });
+    it('should throw an error when executed on with two non-existing keys dictionary', () => {
+        dict =  Utils.setupDictionary(Types.string, Types.number, ["one","two","three"],[42,43,42.1]);
+    expect(function() { dict.swapValues("six", "four"); }).to.throw();
+    });
 });
 
 /************ */
