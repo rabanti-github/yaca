@@ -7,3 +7,4 @@ dist/test/
 .nyc_output/
 coverage/
 README.pdf
+.coveralls.yml

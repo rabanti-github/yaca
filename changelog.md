@@ -117,3 +117,14 @@ Date: 2017-07-26
 Release type: Bugfix
 
 * Documentation issue fixed
+
+***v0.1.13***
+
+---
+Date: 2017-07-26
+
+Release type: Bugfix
+
+* Fixed a bug in the published structure
+* Further documentation issues fixed
+* Revoked / removed coveralls config file (accidental published)
