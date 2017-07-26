@@ -127,4 +127,4 @@ Release type: Bugfix
 
 * Fixed a bug in the published structure
 * Further documentation issues fixed
-* Revoked / removed coveralls config file (accidental published)
+* Revoked / removed coveralls config file (accidentally published)
