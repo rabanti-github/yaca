@@ -1,10 +1,11 @@
 src/
 .vscode/
-doc/
+docs/
 tslint.json
 .esdoc.json
 dist/test/
+test/
 .nyc_output/
 coverage/
-README.pdf
 .coveralls.yml
+.noyekyll
