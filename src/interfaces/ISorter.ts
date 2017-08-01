@@ -6,7 +6,13 @@ import ISortInterface from './ISortInterface';
 export interface ISorter<T>
 {
     /**
-     * Interface for the quicksort algorithm
+     * Interface for the quicksort algorithm using a passed comparison function
      */
-    quickSort(comparerFunction:ISortInterface<T>, data: T[], lowIndex:number, highIndex: number);
+    sortByFunction(comparerFunction:ISortInterface<T>, data: T[], lowIndex:number, highIndex: number);
+
+    /**
+     * Interface for the quicksort algorithm using an implemented comparesTi function or the default sorting function for the basic types
+     */
+    sortByImplementation(data: T[], lowIndex:number, highIndex: number);
+
 }

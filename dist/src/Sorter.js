@@ -5,7 +5,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 var Sorter = (function () {
     function Sorter() {
+        this._iCompareToImplemented = false;
+        this._iIsBasicType = false;
+        var obj = new Object();
+        this._iCompareToImplemented = this.isComparable(obj);
     }
+    Object.defineProperty(Sorter.prototype, "hasCompareToImplemented", {
+        /**
+         * Indicated whether type T is sortable due to the implementation of a compareTo function ort if it is a basic type like number, boolean, string or Date
+         */
+        get: function () {
+            return this._iCompareToImplemented;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Sorter.prototype, "isBasicType", {
+        /**
+         * Indicates whether type T is a basic type such as number, boolean, string or Date
+         */
+        get: function () {
+            return this._iIsBasicType;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * Implementation of a quicksort algorithm. This method is called recursively
      * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
@@ -40,6 +64,29 @@ var Sorter = (function () {
         var temp = data[index1];
         data[index1] = data[index2];
         data[index2] = temp;
+    };
+    /**
+     * Checks whether the type T is comparable due to the implementation of a compareTo function
+     * @param obj
+     */
+    Sorter.prototype.isComparable = function (obj) {
+        try {
+            if (obj.compareTo !== undefined) {
+                if (typeof (obj.compareTo) === 'function') {
+                    var type = obj.compareTo(obj);
+                    if (typeof type === 'number') {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        catch (e) {
+            return false;
+        }
+    };
+    Sorter.prototype.getInstance = function (type) {
+        return new type();
     };
     return Sorter;
 }());

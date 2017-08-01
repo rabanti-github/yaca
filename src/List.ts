@@ -460,18 +460,40 @@ export default class List<T> implements Iterator<T>, IList<T>
         this._iList[index] = value;
     }
 
+    /**
+     * Sorts the List according to the default behavior (für basic / common types) or an implemented compareTo function
+     */
+    sort();
+
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Sorts the List according to the passed function
      * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
      */
-    sort(sortFunction: ISortInterFace<T>) {
-        let qSort: Sorter<T> = new Sorter();
-        if (sortFunction === undefined)
+    sort(sortFunction: ISortInterFace<T>);
+    sort(sortFunction?: ISortInterFace<T>) 
+    {
+        if (this._length === 0) { return; }
+        let qSort: Sorter<T> = new Sorter<T>(this._iList[0] as T); // Pass the 1st object as sample for type checking
+        if (sortFunction !== undefined)
         {
-            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+            qSort.sortByFunction(sortFunction, this._iList as T[], 0, this._length);
         }
-        qSort.quickSort(sortFunction, this._iList as T[], 0, this._length);
+        else
+        {
+            if (qSort.hasCompareToImplemented === true)
+            {
+                qSort.sortByImplementation(this._iList as T[], 0, this._length);
+            }
+            else if (qSort.isCommonType === true)
+            {
+                qSort.sortByDefault(this._iList as T[], 0, this._length);
+            }
+            else
+            {
+                throw new Error("No suitable comparison method (a<>b) was found to sort a list (a<b:-1; a==b;0 a>b: 1)");
+            }  
+        }
     }
 
     /**
