@@ -9,52 +9,6 @@ var chai_1 = require("chai");
 require("mocha");
 // Test of the testing utils (TESTCEPTION!)
 describe("test/Utils\n  ##########\n", function () {
-    describe('static:compareNumbers', function () {
-        it('should return -1 if the first variable is -12 and the second variable is 0', function () {
-            var result = Utils_1.Utils.compareNumbers(-12, 0);
-            chai_1.expect(result).to.equal(-1);
-        });
-        it('should return 0 if the first variable is 5.1111 and the second variable is 5.1111', function () {
-            var result = Utils_1.Utils.compareNumbers(5.1111, 5.1111);
-            chai_1.expect(result).to.equal(0);
-        });
-        it('should return 1 if the first variable is 22 and the second variable is 7.2', function () {
-            var result = Utils_1.Utils.compareNumbers(22, 7.2);
-            chai_1.expect(result).to.equal(1);
-        });
-    });
-    describe('static:compareDates', function () {
-        it('should return -1 if the first variable is 2012-11-29 and the second variable is 2012-11-30', function () {
-            var result = Utils_1.Utils.compareDates(new Date(2012, 11, 29), new Date(2012, 11, 30));
-            chai_1.expect(result).to.equal(-1);
-        });
-        it('should return 0 if both variables are 2017-07-07 22:10:22,555', function () {
-            var result = Utils_1.Utils.compareDates(new Date(2017, 7, 7, 22, 10, 22, 555), new Date(2017, 7, 7, 22, 10, 22, 555));
-            chai_1.expect(result).to.equal(0);
-        });
-        it('should return 1 if the first variable is 2112-11-29 and the second variable is 2012-11-30', function () {
-            var result = Utils_1.Utils.compareDates(new Date(2112, 11, 29), new Date(2012, 11, 30));
-            chai_1.expect(result).to.equal(1);
-        });
-    });
-    describe('static:compareBooleans', function () {
-        it('should return -1 if the first variable is false and the second variable is true', function () {
-            var result = Utils_1.Utils.compareBooleans(false, true);
-            chai_1.expect(result).to.equal(-1);
-        });
-        it('should return 0 if the first variable is false and the second variable is false', function () {
-            var result = Utils_1.Utils.compareBooleans(false, false);
-            chai_1.expect(result).to.equal(0);
-        });
-        it('should return 0 if the first variable is true and the second variable is true', function () {
-            var result = Utils_1.Utils.compareBooleans(true, true);
-            chai_1.expect(result).to.equal(0);
-        });
-        it('should return 1 if the first variable is true and the second variable is false', function () {
-            var result = Utils_1.Utils.compareBooleans(true, false);
-            chai_1.expect(result).to.equal(1);
-        });
-    });
     describe('static:properDateHashFunction', function () {
         it('should return the milliseconds since 1.1.1970 as string of a date', function () {
             var date = new Date();
@@ -113,6 +67,106 @@ describe("test/Utils\n  ##########\n", function () {
                 match = true;
             }
             chai_1.expect(match).to.equal(true);
+        });
+        it('should not throw an error if initialized as <boolean,boolean>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.boolean); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,Date>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,number>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.number); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,string>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.string); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,boolean>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.boolean); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,Date>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,number>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,string>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.string); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,boolean>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,Date>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,number>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.number); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <mu,ber,string>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,boolean>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.boolean); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,Date>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,number>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,string>', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.string); }).not.to.throw();
+        });
+        var str = ["a", "b", "c"];
+        var num = [-12, 22.225, 13];
+        var bool = [true, false, true];
+        var date = [new Date(2017, 1, 1, 1, 1, 0, 0), new Date(2016, 1, 1, 1, 1, 0, 0), new Date(2015, 1, 1, 1, 1, 0, 0)];
+        it('should not throw an error if initialized as <boolean,boolean> with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.boolean, bool, bool); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,Date>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.date, bool, date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,number>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.number, bool, num); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <boolean,string>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.string, bool, str); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,boolean> with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.boolean, date, bool); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,Date>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.date, date, date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,number>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number, date, num); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <Date,string>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.string, date, str); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,boolean> with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, num, bool); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,Date>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, num, date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,number>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.number, num, num); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <number,string>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, num, str); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,boolean> with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.boolean, str, bool); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,Date>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.date, str, date); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,number>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number, str, num); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <string,string>with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.string, str, str); }).not.to.throw();
         });
     });
     /************ */

@@ -388,17 +388,25 @@ var List = (function () {
         }
         this._iList[index] = value;
     };
-    // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
-    /**
-     * Sorts the List according to the passed function
-     * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
-     */
     List.prototype.sort = function (sortFunction) {
-        var qSort = new Sorter_1.Sorter();
-        if (sortFunction === undefined) {
-            throw new Error("A comparison method (a<>b) must be defined to sort a list (a<b:-1; a==b;0 a>b: 1)");
+        if (this._length === 0) {
+            return;
         }
-        qSort.quickSort(sortFunction, this._iList, 0, this._length);
+        var qSort = new Sorter_1.Sorter(this._iList[0]); // Pass the 1st object as sample for type checking
+        if (sortFunction !== undefined) {
+            qSort.sortByFunction(sortFunction, this._iList, 0, this._length);
+        }
+        else {
+            if (qSort.hasCompareToImplemented === true) {
+                qSort.sortByImplementation(this._iList, 0, this._length);
+            }
+            else if (qSort.isCommonType === true) {
+                qSort.sortByDefault(this._iList, 0, this._length);
+            }
+            else {
+                throw new Error("No suitable comparison method (a<>b) was found to sort a list (a<b:-1; a==b;0 a>b: 1)");
+            }
+        }
     };
     /**
      * Swaps the values at the two defined index positions in the List

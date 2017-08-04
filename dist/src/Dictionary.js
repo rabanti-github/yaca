@@ -72,10 +72,6 @@ var Dictionary = (function () {
             keys = p1.getKeys();
             values = p1.getValues();
         }
-        else {
-            keys = [];
-            values = [];
-        }
         if (keys.length !== values.length) {
             throw new Error("The length of the passed key and value arrays / lists is not identical");
         }
@@ -219,7 +215,7 @@ var Dictionary = (function () {
      */
     Dictionary.prototype.get = function (key) {
         var k = this.getHashCode(key);
-        if (typeof this._iDict[k] !== undefined) {
+        if (typeof this._iDict[k] !== "undefined") {
             return this._iDict[k][1];
         }
         else {

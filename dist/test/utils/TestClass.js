@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Comparer_1 = require("../../src/Comparer");
 /**
  * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
  */
@@ -9,6 +10,13 @@ var TestClass = (function () {
      */
     function TestClass() {
     }
+    /**
+     * Implementation of a compareTo function
+     * @param other Other object to compare
+     */
+    TestClass.prototype.compareTo = function (other) {
+        return Comparer_1.Comparer.compareNumbers(this.value2, other.value2);
+    };
     /**
      * Creates a randomized instance of the class
      */

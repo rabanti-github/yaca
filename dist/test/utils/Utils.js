@@ -8,50 +8,46 @@ var Dictionary_1 = require("../../src/Dictionary");
  */
 var Utils = (function () {
     function Utils() {
-        this.Types = Types_1.Types;
     }
     /**
      * Function to compare two numbers
      * @param n1 number 1 to compare
      * @param n2 number 2 to compare
      */
-    Utils.compareNumbers = function (n1, n2) {
-        if (n1 < n2) {
-            return -1;
-        }
-        else if (n1 === n2) {
-            return 0;
-        }
-        else {
-            return 1;
-        }
-    };
+    /*
+    public static compareNumbers(n1: number, n2: number): number
+    {
+        if (n1< n2) {return -1;}
+        else if ( n1 === n2) { return 0; }
+        else { return 1; }
+    }
+*/
     /**
      * Function to compare two Dates
      * @param d1 Date 1 to compare
      * @param d2 Date 2 to compare
      */
-    Utils.compareDates = function (d1, d2) {
-        var n1 = d1.getTime();
-        var n2 = d2.getTime();
+    /*
+    public static compareDates(d1: Date, d2: Date): number
+    {
+        let n1: number = d1.getTime();
+        let n2: number = d2.getTime();
         return Utils.compareNumbers(n1, n2);
-    };
+    }
+*/
     /**
      * Function to compare two booleans
      * @param b1 boolean 1 to compare
      * @param b2 boolean 2 to compare
      */
-    Utils.compareBooleans = function (b1, b2) {
-        if (b1 === false && b2 === true) {
-            return -1;
-        }
-        else if ((b1 === false && b2 === false) || b1 === true && b2 === true) {
-            return 0;
-        }
-        else {
-            return 1;
-        }
-    };
+    /*
+    public static compareBooleans(b1: boolean, b2: boolean): number
+    {
+        if (b1 === false && b2 === true) { return -1; }
+        else if ((b1 === false && b2 === false)||b1 === true && b2 === true) { return 0; }
+        else { return 1; }
+    }
+*/
     /**
      * Function to test an overwritten hash function for dates (used in Dictionary)
      * @param date Date to get the hash

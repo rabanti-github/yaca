@@ -192,10 +192,14 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     set(index: number, value: T): void;
     /**
+     * Sorts the List according to the default behavior (für basic / common types) or an implemented compareTo function
+     */
+    sort(): any;
+    /**
      * Sorts the List according to the passed function
      * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
      */
-    sort(sortFunction: ISortInterFace<T>): void;
+    sort(sortFunction: ISortInterFace<T>): any;
     /**
      * Swaps the values at the two defined index positions in the List
      * @param index1 Index position 1

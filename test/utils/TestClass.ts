@@ -1,8 +1,20 @@
+import { IComparer } from '../../src/interfaces/IComparer'
+import { Comparer } from '../../src/Comparer'
+
 /**
  * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
  */
-export class TestClass
+export class TestClass implements IComparer<TestClass>
 {
+    /**
+     * Implementation of a compareTo function
+     * @param other Other object to compare
+     */
+    compareTo( other: TestClass ): number
+    {
+       return Comparer.compareNumbers(this.value2, other.value2);
+    }
+
     private static counter: number = 0;
     public value1: string;
     public value2: number;

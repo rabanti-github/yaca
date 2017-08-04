@@ -30,6 +30,12 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             var length = dict.length;
             chai_1.expect(length).to.equal(5);
         });
+        it('should return a length of 5 if initialized with a dictionary of 5 keys and values', function () {
+            var initDict = new Dictionary_1.Dictionary([11, 22, 33, 44, 55], ["11", "22", "33", "44", "55"]);
+            dict = new Dictionary_1.Dictionary(initDict);
+            var length = dict.length;
+            chai_1.expect(length).to.equal(5);
+        });
         it('should throw an error if initialized with an keys array of different length than the vales array', function () {
             var keys = [11, 22, 55];
             var values = ["11", "22", "33", "44", "55"];

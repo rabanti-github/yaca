@@ -2,6 +2,7 @@
 import ISortInterFace from './interfaces/ISortInterface';
 import { ISorter } from './interfaces/ISorter';
 import { IComparer } from './interfaces/IComparer';
+import { Comparer }  from './Comparer';
 /**
  * Class for sorter algorithms
  */
@@ -166,25 +167,25 @@ export class Sorter<T> implements ISorter<T>
         }
         if (typeof obj === 'number')
         {
-            this._iDefaultFunction = Sorter.compareNumbers;
+            this._iDefaultFunction = Comparer.compareNumbers;
             this._iIsBasicType = true;
             this._iIsCommonType = true;
         }
         else if (typeof obj === 'boolean')
         {
-            this._iDefaultFunction = Sorter.compareBooleans;
+            this._iDefaultFunction = Comparer.compareBooleans;
             this._iIsBasicType = true;
             this._iIsCommonType = true;
         }
         else if (typeof obj === 'string')
         {
-            this._iDefaultFunction = Sorter.compareStrings;
+            this._iDefaultFunction = Comparer.compareStrings;
             this._iIsBasicType = true;
             this._iIsCommonType = true;
         }
         else if (obj instanceof Date)
         {
-            this._iDefaultFunction = Sorter.compareDates;
+            this._iDefaultFunction = Comparer.compareDates;
             this._iIsCommonType = true;
         }
     }
@@ -198,52 +199,6 @@ export class Sorter<T> implements ISorter<T>
     { 
        this._iCompareToImplemented = this.isComparable(sample);
        this.checkBasicCommonType(sample);
-    }
-
-    /**
-     * Function to compare two numbers
-     * @param value1 Number 1 to compare
-     * @param value2 Number 2 to compare
-     */
-    public static compareNumbers(value1: number, value2: number): number
-    {
-        if (value1< value2) {return -1;}
-        else if ( value1 === value2) { return 0; }
-        else { return 1; }      
-    }
-
-    /**
-     * Function to compare two booleans
-     * @param value1 Boolean 1 to compare
-     * @param value2 Boolean 2 to compare
-     */
-    public static compareBooleans(value1: boolean, value2: boolean): number
-    {
-        if (value1 === false && value2 === true) { return -1; }
-        else if ((value1 === false && value2 === false)||value1 === true && value2 === true) { return 0; }
-        else { return 1; }
-    }
-
-    /**
-     * Function to compare two strings
-     * @param value1 String 1 to compare
-     * @param value2 String 2 to compare
-     */
-    public static compareStrings(value1: string, value2: string): number
-    {
-        return value1.localeCompare(value2);
-    }
-
-    /**
-     * Function to compare two Dates
-     * @param date1 Date 1 to compare
-     * @param date2 Date 2 to compare
-     */
-    public static compareDates(date1: Date, date2: Date): number
-    {
-        let n1: number = date1.getTime();
-        let n2: number = date2.getTime();
-        return Sorter.compareNumbers(n1, n2);
     }
 
 }

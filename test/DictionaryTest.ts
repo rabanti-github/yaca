@@ -32,6 +32,13 @@ describe('constructors', () => {
         let length: number = dict.length;
         expect(length).to.equal(5);
     });
+    it('should return a length of 5 if initialized with a dictionary of 5 keys and values', () => {
+        let initDict: Dictionary<number,string> = new Dictionary<number, string>([11,22,33,44,55], ["11","22","33","44","55"]);
+        dict = new Dictionary<number,string>(initDict);
+        let length: number = dict.length;
+        expect(length).to.equal(5);
+    });
+
     it('should throw an error if initialized with an keys array of different length than the vales array', () => {
         let keys: number[] = [11,22,55];
         let values: string[] = ["11","22","33","44","55"];        

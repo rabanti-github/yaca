@@ -146,11 +146,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             keys = p1.getKeys();
             values = p1.getValues();
         }
-        else
-            {
-                keys = [];
-                values = [];
-            }
         if (keys.length !== values.length)
         {
             throw new Error("The length of the passed key and value arrays / lists is not identical")
@@ -309,7 +304,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      */
     public get(key: K): V {
         let k: string = this.getHashCode(key);
-        if (typeof this._iDict[k] !== undefined) {
+        if (typeof this._iDict[k] !== "undefined") {
             return this._iDict[k][1];
         }
         else {

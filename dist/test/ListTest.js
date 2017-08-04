@@ -4,6 +4,7 @@ var List_1 = require("../src/List");
 var Utils_1 = require("./utils/Utils");
 var Types_1 = require("./utils/Types");
 var TestClass_1 = require("./utils/TestClass");
+var Comparer_1 = require("../src/Comparer");
 var chai_1 = require("chai");
 require("mocha");
 // This file is to test the List<T> class
@@ -193,6 +194,9 @@ describe("LIST<T>\n  #######\n", function () {
         });
         it('should throw an error when the start index is negative', function () {
             chai_1.expect(function () { var array = list.copyToArray(-2, 4); }).to.throw();
+        });
+        it('should throw an error when the start index is bigger than the end index in a valid range', function () {
+            chai_1.expect(function () { var array = list.copyToArray(4, 1); }).to.throw();
         });
         it('should throw an error when the end index is 99 on a list with 6 elements', function () {
             chai_1.expect(function () { var array = list.copyToArray(1, 99); }).to.throw();
@@ -680,6 +684,11 @@ describe("LIST<T>\n  #######\n", function () {
     });
     describe('removeAtIndices method', function () {
         var list;
+        it('should return a length of 0 after execution on a empty list', function () {
+            list = Utils_1.Utils.setupList(Types_1.Types.number);
+            list.removeAtIndices([0, 1, 2]);
+            chai_1.expect(list.length).to.equal(0);
+        });
         it('should return a length of 5 after execution with 3 indices on a list of 8 entries', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [17, 22, 88, 22, 12, 0, -12, 22]);
             list.removeAtIndices([2, 3, 4]);
@@ -780,19 +789,49 @@ describe("LIST<T>\n  #######\n", function () {
         var list;
         it('should not throw an error when executed on an empty list', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number);
-            chai_1.expect(function () { list.sort(Utils_1.Utils.compareNumbers); }).not.to.throw();
+            chai_1.expect(function () { list.sort(Comparer_1.Comparer.compareNumbers); }).not.to.throw();
         });
         it('should not throw an error when executed on a list with 1 entry', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [42]);
-            chai_1.expect(function () { list.sort(Utils_1.Utils.compareNumbers); }).not.to.throw();
+            chai_1.expect(function () { list.sort(Comparer_1.Comparer.compareNumbers); }).not.to.throw();
         });
-        it('should throw an error when stated undefined as comparison method', function () {
-            list = Utils_1.Utils.setupList(Types_1.Types.number, [42, 228, 41, 1, -12]);
-            chai_1.expect(function () { list.sort(undefined); }).to.throw();
+        it('should return "-12,0,5,7,18,99," as concatenated value after execution on a unsorted list of numbers without a declaration of a comparer function', function () {
+            list = Utils_1.Utils.setupList(Types_1.Types.number, [99, -12, 18, 5, 0, 7]);
+            list.sort();
+            var value = "";
+            list.forEach(function (element) {
+                value = value + element.toString() + ",";
+            });
+            chai_1.expect(value).to.equal("-12,0,5,7,18,99,");
+        });
+        it('should return "A,B,C," as concatenated value after execution on a unsorted list of a complex object without a declaration of a comparer function but implemented in the class', function () {
+            var cList = new List_1.default();
+            var o1 = new TestClass_1.TestClass();
+            var o2 = new TestClass_1.TestClass();
+            var o3 = new TestClass_1.TestClass();
+            o1.value1 = "B";
+            o1.value2 = 22;
+            o2.value1 = "A";
+            o2.value2 = -22.5;
+            o3.value1 = "C";
+            o3.value2 = 22.0000001;
+            cList.add(o1);
+            cList.add(o2);
+            cList.add(o3);
+            cList.sort();
+            var value = "";
+            cList.forEach(function (element) {
+                value = value + element.value1 + ",";
+            });
+            chai_1.expect(value).to.equal("A,B,C,");
+        });
+        it('should throw an error when executed on a list of a complex object without an implementation a comparer function', function () {
+            var cList2 = new List_1.default([new Object(), new Object, new Object]);
+            chai_1.expect(function () { cList2.sort(); }).to.throw();
         });
         it('should return "-12,0,5,7,18,99," as concatenated value after execution on a unsorted list of numbers', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [99, -12, 18, 5, 0, 7]);
-            list.sort(Utils_1.Utils.compareNumbers);
+            list.sort(Comparer_1.Comparer.compareNumbers);
             var value = "";
             list.forEach(function (element) {
                 value = value + element.toString() + ",";
@@ -801,7 +840,7 @@ describe("LIST<T>\n  #######\n", function () {
         });
         it('should return "1,2," as concatenated value after execution on a list of two numbers (2,1)', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [2, 1]);
-            list.sort(Utils_1.Utils.compareNumbers);
+            list.sort(Comparer_1.Comparer.compareNumbers);
             var value = "";
             list.forEach(function (element) {
                 value = value + element.toString() + ",";
@@ -810,7 +849,7 @@ describe("LIST<T>\n  #######\n", function () {
         });
         it('should return "0,0,0,0," as concatenated value after execution on a list of 4 zeros as values', function () {
             list = Utils_1.Utils.setupList(Types_1.Types.number, [0, 0, 0, 0]);
-            list.sort(Utils_1.Utils.compareNumbers);
+            list.sort(Comparer_1.Comparer.compareNumbers);
             var value = "";
             list.forEach(function (element) {
                 value = value + element.toString() + ",";
@@ -819,7 +858,7 @@ describe("LIST<T>\n  #######\n", function () {
         });
         it('should return "false,false,true,true,true," as concatenated value after execution on a list of 5 booleans as values', function () {
             var list3 = Utils_1.Utils.setupList(Types_1.Types.boolean, [false, true, true, false, true]);
-            list3.sort(Utils_1.Utils.compareBooleans);
+            list3.sort(Comparer_1.Comparer.compareBooleans);
             var value = "";
             list3.forEach(function (element) {
                 value = value + element.toString() + ",";
@@ -832,7 +871,7 @@ describe("LIST<T>\n  #######\n", function () {
             list2.add(new Date(1991, 4, 16, 0, 0, 11, 25));
             list2.add(new Date(2050, 11, 2, 11, 11, 6, 4));
             list2.add(new Date(1990, 2, 2, 2, 2, 2, 2));
-            list2.sort(Utils_1.Utils.compareDates);
+            list2.sort(Comparer_1.Comparer.compareDates);
             var value = "";
             list2.forEach(function (element) {
                 value = value + element.getUTCFullYear().toString() + ",";

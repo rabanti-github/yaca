@@ -3,6 +3,7 @@ import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
 import { TestClass } from './utils/TestClass';
+import { Comparer } from '../src/Comparer';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -209,6 +210,9 @@ describe('copyToArray method', () => {
     it('should throw an error when the start index is negative', () => {
         expect(function() {let array: string[] = list.copyToArray(-2,4); }).to.throw();
     });
+    it('should throw an error when the start index is bigger than the end index in a valid range', () => {
+        expect(function() {let array: string[] = list.copyToArray(4,1); }).to.throw();
+    });    
     it('should throw an error when the end index is 99 on a list with 6 elements', () => {
         expect(function() {let array: string[] = list.copyToArray(1,99); }).to.throw();
     });
@@ -739,6 +743,11 @@ describe('removeAt method', () => {
 
 describe('removeAtIndices method', () => {
     let list: List<number>;
+     it('should return a length of 0 after execution on a empty list', () => {
+        list = Utils.setupList(Types.number);
+        list.removeAtIndices([0,1,2]);
+        expect(list.length).to.equal(0);
+    });
     it('should return a length of 5 after execution with 3 indices on a list of 8 entries', () => {
         list = Utils.setupList(Types.number, [17,22,88,22,12,0,-12,22]);
         list.removeAtIndices([2,3,4]);
@@ -846,19 +855,49 @@ describe('sort method', () => {
     let list: List<number>;
     it('should not throw an error when executed on an empty list', () => {
         list = Utils.setupList(Types.number);
-         expect(function() { list.sort(Utils.compareNumbers); }).not.to.throw();
+         expect(function() { list.sort(Comparer.compareNumbers); }).not.to.throw();
     });
         it('should not throw an error when executed on a list with 1 entry', () => {
         list = Utils.setupList(Types.number, [42]);
-         expect(function() { list.sort(Utils.compareNumbers); }).not.to.throw();
+         expect(function() { list.sort(Comparer.compareNumbers); }).not.to.throw();
     });
-        it('should throw an error when stated undefined as comparison method', () => {
-        list = Utils.setupList(Types.number, [42,228,41,1,-12]);
-         expect(function() { list.sort(undefined); }).to.throw();
+
+ 
+    it('should return "-12,0,5,7,18,99," as concatenated value after execution on a unsorted list of numbers without a declaration of a comparer function', () => {
+        list = Utils.setupList(Types.number, [99,-12,18,5,0,7])
+        list.sort();
+        let value: string = "";
+        list.forEach(element => {
+            value = value + element.toString() + ",";     
+        });
+        expect(value).to.equal("-12,0,5,7,18,99,");
     });
+
+    it('should return "A,B,C," as concatenated value after execution on a unsorted list of a complex object without a declaration of a comparer function but implemented in the class', () => {
+        let cList = new List<TestClass>();
+        let o1 = new TestClass();
+        let o2 = new TestClass();
+        let o3 = new TestClass();
+        o1.value1 = "B"; o1.value2 = 22;
+        o2.value1 = "A"; o2.value2 = -22.5;
+        o3.value1 = "C"; o3.value2 = 22.0000001;
+        cList.add(o1); cList.add(o2); cList.add(o3);
+        cList.sort();
+        let value: string = "";
+        cList.forEach(element => {
+            value = value + element.value1 + ",";     
+        });
+        expect(value).to.equal("A,B,C,");
+    });
+
+    it('should throw an error when executed on a list of a complex object without an implementation a comparer function', () => {
+        let cList2: List<Object> = new List<Object>([new Object(), new Object, new Object]);
+         expect(function() { cList2.sort(); }).to.throw();
+    });
+
     it('should return "-12,0,5,7,18,99," as concatenated value after execution on a unsorted list of numbers', () => {
         list = Utils.setupList(Types.number, [99,-12,18,5,0,7])
-        list.sort(Utils.compareNumbers);
+        list.sort(Comparer.compareNumbers);
         let value: string = "";
         list.forEach(element => {
             value = value + element.toString() + ",";     
@@ -867,7 +906,7 @@ describe('sort method', () => {
     });
     it('should return "1,2," as concatenated value after execution on a list of two numbers (2,1)', () => {
         list = Utils.setupList(Types.number, [2,1])
-        list.sort(Utils.compareNumbers);
+        list.sort(Comparer.compareNumbers);
         let value: string = "";
         list.forEach(element => {
             value = value + element.toString() + ",";     
@@ -876,7 +915,7 @@ describe('sort method', () => {
     });
     it('should return "0,0,0,0," as concatenated value after execution on a list of 4 zeros as values', () => {
         list = Utils.setupList(Types.number, [0,0,0,0])
-        list.sort(Utils.compareNumbers);
+        list.sort(Comparer.compareNumbers);
         let value: string = "";
         list.forEach(element => {
             value = value + element.toString() + ",";     
@@ -885,7 +924,7 @@ describe('sort method', () => {
     });
     it('should return "false,false,true,true,true," as concatenated value after execution on a list of 5 booleans as values', () => {
         let list3: List<boolean> = Utils.setupList(Types.boolean, [false,true,true,false,true])
-        list3.sort(Utils.compareBooleans);
+        list3.sort(Comparer.compareBooleans);
         let value: string = "";
         list3.forEach(element => {
             value = value + element.toString() + ",";     
@@ -899,7 +938,7 @@ describe('sort method', () => {
         list2.add(new Date(1991,4,16,0,0,11,25));
         list2.add(new Date(2050,11,2,11,11,6,4));
         list2.add(new Date(1990,2,2,2,2,2,2));
-        list2.sort(Utils.compareDates);
+        list2.sort(Comparer.compareDates);
         let value: string = "";
         list2.forEach(element => {
             value = value + element.getUTCFullYear().toString()+ ",";     
