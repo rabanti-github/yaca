@@ -192,7 +192,7 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     set(index: number, value: T): void;
     /**
-     * Sorts the List according to the default behavior (für basic / common types) or an implemented compareTo function
+     * Sorts the List according to the default behavior (for basic / common types) or an implemented compareTo function
      */
     sort(): any;
     /**

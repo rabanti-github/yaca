@@ -37,7 +37,35 @@ describe("Sorter\n  ######n", function () {
             var test = new Sorter_1.Sorter(TestClass_1.TestClass.createRandomObject());
             chai_1.expect(test.hasCompareToImplemented).to.equal(true);
         });
+        it('should return false on property hasCompareToImplemented on a class with a property compareTo which is not a function', function () {
+            var test = new Sorter_1.Sorter(new Dummy1());
+            chai_1.expect(test.hasCompareToImplemented).to.equal(false);
+        });
+        it('should return false on property hasCompareToImplemented on a class with a function compareTo which does not return a number', function () {
+            var test = new Sorter_1.Sorter(new Dummy2());
+            chai_1.expect(test.hasCompareToImplemented).to.equal(false);
+        });
     });
     /************ */
 });
+/**
+ * Dummy class for sorter testing
+ */
+var Dummy1 = (function () {
+    function Dummy1() {
+        this.compareTo = 0;
+    }
+    return Dummy1;
+}());
+/**
+ * Dummy class for sorter testing
+ */
+var Dummy2 = (function () {
+    function Dummy2() {
+    }
+    Dummy2.prototype.compareTo = function (value) {
+        return value;
+    };
+    return Dummy2;
+}());
 //# sourceMappingURL=SorterTest.js.map

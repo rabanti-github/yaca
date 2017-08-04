@@ -26,6 +26,22 @@ describe("test/Utils\n  ##########\n", function () {
             }
             chai_1.expect(match).to.equal(true);
         });
+        it('should return an empty instance of a List<Date> if executed with the type date', function () {
+            var list = Utils_1.Utils.setupList(Types_1.Types.date);
+            var match = false;
+            if (list instanceof List_1.default && list.length === 0) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty instance of a List<any> if executed with testClass as type', function () {
+            var list = Utils_1.Utils.setupList(Types_1.Types.testClass);
+            var match = false;
+            if (list instanceof List_1.default && list.length === 0) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
         it('should return an instance of a List<boolean> with the length 1 if executed with the type boolean and an initial values', function () {
             var list = Utils_1.Utils.setupList(Types_1.Types.boolean, true);
             var match = false;
@@ -42,10 +58,26 @@ describe("test/Utils\n  ##########\n", function () {
             }
             chai_1.expect(match).to.equal(true);
         });
+        it('should return an instance of a List<any> with the length 4 if executed with the type testClass and an initial array of 4 variant values', function () {
+            var list = Utils_1.Utils.setupList(Types_1.Types.testClass, [1, true, "test", new Date()]);
+            var match = false;
+            if (list instanceof List_1.default && list.length === 4) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
     });
     describe('static:setupDictionary', function () {
         it('should return an empty instance of a Dictionary<number,string> if executed with the type number->string', function () {
             var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
+            var match = false;
+            if (dict instanceof Dictionary_1.Dictionary && dict.length === 0) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty instance of a Dictionary<any,any> if executed with the type testClass->testClass', function () {
+            var dict = Utils_1.Utils.setupDictionary(Types_1.Types.testClass, Types_1.Types.testClass);
             var match = false;
             if (dict instanceof Dictionary_1.Dictionary && dict.length === 0) {
                 match = true;
@@ -123,50 +155,53 @@ describe("test/Utils\n  ##########\n", function () {
         it('should not throw an error if initialized as <boolean,boolean> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.boolean, bool, bool); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <boolean,Date>with initial keys and values', function () {
+        it('should not throw an error if initialized as <boolean,Date> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.date, bool, date); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <boolean,number>with initial keys and values', function () {
+        it('should not throw an error if initialized as <boolean,number> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.number, bool, num); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <boolean,string>with initial keys and values', function () {
+        it('should not throw an error if initialized as <boolean,string> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.boolean, Types_1.Types.string, bool, str); }).not.to.throw();
         });
         it('should not throw an error if initialized as <Date,boolean> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.boolean, date, bool); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <Date,Date>with initial keys and values', function () {
+        it('should not throw an error if initialized as <Date,Date> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.date, date, date); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <Date,number>with initial keys and values', function () {
+        it('should not throw an error if initialized as <Date,number> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.number, date, num); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <Date,string>with initial keys and values', function () {
+        it('should not throw an error if initialized as <Date,string> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.date, Types_1.Types.string, date, str); }).not.to.throw();
         });
         it('should not throw an error if initialized as <number,boolean> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.boolean, num, bool); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <number,Date>with initial keys and values', function () {
+        it('should not throw an error if initialized as <number,Date> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, num, date); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <number,number>with initial keys and values', function () {
+        it('should not throw an error if initialized as <number,number> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.number, num, num); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <number,string>with initial keys and values', function () {
+        it('should not throw an error if initialized as <number,string> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, num, str); }).not.to.throw();
         });
         it('should not throw an error if initialized as <string,boolean> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.boolean, str, bool); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <string,Date>with initial keys and values', function () {
+        it('should not throw an error if initialized as <string,Date> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.date, str, date); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <string,number>with initial keys and values', function () {
+        it('should not throw an error if initialized as <string,number> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.number, str, num); }).not.to.throw();
         });
-        it('should not throw an error if initialized as <string,string>with initial keys and values', function () {
+        it('should not throw an error if initialized as <string,string> with initial keys and values', function () {
             chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.string, Types_1.Types.string, str, str); }).not.to.throw();
+        });
+        it('should not throw an error if initialized as <any,any> with initial keys and values', function () {
+            chai_1.expect(function () { var dict = Utils_1.Utils.setupDictionary(Types_1.Types.testClass, Types_1.Types.testClass, str, num); }).not.to.throw();
         });
     });
     /************ */

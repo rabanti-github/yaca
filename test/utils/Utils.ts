@@ -80,6 +80,7 @@ export class Utils
             {
                 return new List<string>();
             }
+            else { return new List<any>() }
             }
         else
         {
@@ -98,6 +99,10 @@ export class Utils
             else if (t === Types.string)
             {
                 return new List<string>(initialValue);
+            }
+            else
+            {
+                return new List<any>(initialValue);
             }
         }
     }
@@ -127,6 +132,7 @@ export class Utils
         else if (keyType === Types.string && valueType === Types.date) { return new Dictionary<string, Date>(); }
         else if (keyType === Types.string && valueType === Types.number) { return new Dictionary<string, number>(); }
         else if (keyType === Types.string && valueType === Types.string) { return new Dictionary<string, string>(); }
+        else {return new Dictionary<any, any>();}
         }
         else
         {
@@ -148,7 +154,8 @@ export class Utils
         else if (keyType === Types.string && valueType === Types.boolean) { return new Dictionary<string, boolean>(keys, values); }
         else if (keyType === Types.string && valueType === Types.date) { return new Dictionary<string, Date>(keys, values); }
         else if (keyType === Types.string && valueType === Types.number) { return new Dictionary<string, number>(keys, values); }
-        else if (keyType === Types.string && valueType === Types.string) { return new Dictionary<string, string>(keys, values); }            
+        else if (keyType === Types.string && valueType === Types.string) { return new Dictionary<string, string>(keys, values); }
+        else {return new Dictionary<any, any>(keys, values); }            
         }
 
 

@@ -29,7 +29,7 @@ var Dictionary = (function () {
                 if (keys instanceof Function) {
                     this.overrideHashFunction(keys);
                 }
-                else if (keys instanceof Dictionary) {
+                else {
                     this.addRange(keys);
                 }
             }
@@ -68,7 +68,7 @@ var Dictionary = (function () {
             keys = p1.copyToArray();
             values = p2.copyToArray();
         }
-        else if (p1 instanceof Dictionary) {
+        else {
             keys = p1.getKeys();
             values = p1.getValues();
         }
@@ -447,9 +447,10 @@ var Dictionary = (function () {
         var output = new Dictionary();
         var len = keys.length;
         for (var i = 0; i < len; i++) {
-            if (typeof this._iDict[keys[i]] !== undefined) {
-                output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
-            }
+            //if (typeof this._iDict[keys[i]] !== undefined)
+            //{
+            output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
+            // }
         }
         output.refreshKeyIndex();
         return output;

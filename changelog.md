@@ -143,3 +143,15 @@ Release type: Major release
 * The sort function in the List class accepts now no arguments (for the basic types), a compareTo function as argument. It checks also for the implementation of the compareTo interface
 * Several bug fixes
 * Removed several unnecessary files in the released module
+
+***v1.0.2***
+
+---
+Date: 2017-08-04
+
+Release type: Cleanup / Non-critical
+
+* Coverage now on 100% for real
+* Code clean-up
+* Fixed typos
+

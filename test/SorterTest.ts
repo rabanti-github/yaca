@@ -41,8 +41,35 @@ describe('getter', () => {
         let test: Sorter<TestClass> = new Sorter(TestClass.createRandomObject());
         expect(test.hasCompareToImplemented).to.equal(true);
     });
+    it('should return false on property hasCompareToImplemented on a class with a property compareTo which is not a function', () => {
+          let test: Sorter<Dummy1> = new Sorter(new Dummy1());
+        expect(test.hasCompareToImplemented).to.equal(false);
+    });
+    it('should return false on property hasCompareToImplemented on a class with a function compareTo which does not return a number', () => {
+          let test: Sorter<Dummy2> = new Sorter(new Dummy2());
+        expect(test.hasCompareToImplemented).to.equal(false);
+    });
 });
 
 
 /************ */
 });
+
+/**
+ * Dummy class for sorter testing
+ */
+class Dummy1
+{
+    public compareTo: number = 0;
+}
+
+/**
+ * Dummy class for sorter testing
+ */
+class Dummy2
+{
+    public compareTo(value: string): string
+    {
+        return value;
+    }
+}

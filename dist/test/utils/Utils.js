@@ -74,6 +74,9 @@ var Utils = (function () {
             else if (t === Types_1.Types.string) {
                 return new List_1.default();
             }
+            else {
+                return new List_1.default();
+            }
         }
         else {
             if (t === Types_1.Types.boolean) {
@@ -86,6 +89,9 @@ var Utils = (function () {
                 return new List_1.default(initialValue);
             }
             else if (t === Types_1.Types.string) {
+                return new List_1.default(initialValue);
+            }
+            else {
                 return new List_1.default(initialValue);
             }
         }
@@ -140,6 +146,9 @@ var Utils = (function () {
             else if (keyType === Types_1.Types.string && valueType === Types_1.Types.string) {
                 return new Dictionary_1.Dictionary();
             }
+            else {
+                return new Dictionary_1.Dictionary();
+            }
         }
         else {
             if (keyType === Types_1.Types.boolean && valueType === Types_1.Types.boolean) {
@@ -188,6 +197,9 @@ var Utils = (function () {
                 return new Dictionary_1.Dictionary(keys, values);
             }
             else if (keyType === Types_1.Types.string && valueType === Types_1.Types.string) {
+                return new Dictionary_1.Dictionary(keys, values);
+            }
+            else {
                 return new Dictionary_1.Dictionary(keys, values);
             }
         }

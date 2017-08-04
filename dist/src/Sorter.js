@@ -139,9 +139,17 @@ var Sorter = (function () {
                     if (typeof type === 'number') {
                         return true;
                     }
+                    else {
+                        return false;
+                    }
+                }
+                else {
+                    return false;
                 }
             }
-            return false;
+            else {
+                return false;
+            }
         }
         catch (e) {
             return false;

@@ -80,7 +80,8 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
                 else if (keys instanceof List && values instanceof List) {
                     this.addRange(keys as List<K>, values as List<V>);
                 }
-                else {
+                else
+                {
                 this.add(keys as K, values as V);
                 }
             }
@@ -90,7 +91,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
                 {
                     this.overrideHashFunction(keys as Function);
                 }
-                else if (keys instanceof Dictionary)
+                else // if (keys instanceof Dictionary)
                 {
                     this.addRange(keys as Dictionary<K,V>);
                 }
@@ -141,10 +142,10 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
             keys = p1.copyToArray();
             values = p2.copyToArray();
         }
-        else if (p1 instanceof Dictionary)
+        else //if (p1 instanceof Dictionary)
         {
-            keys = p1.getKeys();
-            values = p1.getValues();
+            keys = (p1 as Dictionary<K,V>).getKeys();
+            values = (p1 as Dictionary<K,V>).getValues();
         }
         if (keys.length !== values.length)
         {
@@ -652,10 +653,10 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         let len = keys.length;
         for(let i: number = 0; i < len; i++)
         {
-            if (typeof this._iDict[keys[i]] !== undefined)
-            {
+            //if (typeof this._iDict[keys[i]] !== undefined)
+            //{
                 output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
-            }
+           // }
         }
         output.refreshKeyIndex();
         return output;
