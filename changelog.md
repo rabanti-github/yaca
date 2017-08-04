@@ -128,3 +128,18 @@ Release type: Bugfix
 * Fixed a bug in the published structure
 * Further documentation issues fixed
 * Revoked / removed coveralls config file (accidentally published)
+
+***v1.0.0***
+
+---
+Date: 2017-08-04
+
+Release type: Major release
+
+* Coverage upt to 100%
+* New module Comparer with static compareTo functions
+* New interface IComparer: compareTo function implementation can be used for sorting
+* Sorting of lists is now working without declaration of a compareTo function for number, string, boolean and Date
+* The sort function in the List class accepts now no arguments (for the basic types), a compareTo function as argument. It checks also for the implementation of the compareTo interface
+* Several bug fixes
+* Removed several unnecessary files in the released module
