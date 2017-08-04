@@ -163,7 +163,9 @@ export class Sorter<T> implements ISorter<T>
     {
         if (obj === undefined)
         {
-            throw new Error("undefined as value is not allowed while sorting");
+           // throw new Error("undefined as value is not allowed while sorting");
+            this._iIsBasicType = false;
+            this._iIsCommonType = false;           
         }
         if (typeof obj === 'number')
         {

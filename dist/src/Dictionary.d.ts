@@ -101,13 +101,13 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     containsValue(value: V): boolean;
     /**
     * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-    * @param keys Key to check
+    * @param keys Keys to check
     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
     */
     containsValues(values: V[], all?: boolean): boolean;
     /**
     * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-    * @param keys Key to check
+    * @param keys Keys to check
     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
     */
     containsValues(values: List<V>, all?: boolean): boolean;

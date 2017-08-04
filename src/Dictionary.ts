@@ -238,13 +238,13 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
      /**
      * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-     * @param keys Key to check
+     * @param keys Keys to check
      * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
      */
     public containsValues(values: V[], all?: boolean): boolean;
      /**
      * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-     * @param keys Key to check
+     * @param keys Keys to check
      * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
      */    
     public containsValues(values: List<V>, all?: boolean): boolean;
@@ -369,7 +369,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     public getKeysByValues(values: List<V>): K[];
     public getKeysByValues(values: V[] | List<V>): K[]
     {
-        let list: List<K> = this.getKeysByValuesAsListInternal(values, false);
+        let list: List<K> = this.getKeysByValuesAsListInternal(values, true);
         return list.copyToArray();     
     }
 
@@ -385,7 +385,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     public getKeysByValuesAsList(values: List<V>): List<K>;
     public getKeysByValuesAsList(values: V[] | List<V>): List<K>
     {
-        return this.getKeysByValuesAsListInternal(values, false);
+        return this.getKeysByValuesAsListInternal(values, true);
     }
 
     /**

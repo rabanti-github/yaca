@@ -12,6 +12,16 @@ YACA is another approach to introduce Collections to TypeScript / JavaScript lik
 
 YACA contains at the moment **List&lt;T&gt;** and **Dictionary&lt;K,V&gt;** as collection types. Further types (e.g. Stack or SortedDictionary) are planned.
 
+## Important features
+
+* Multiple add and remove functions like add, addRange, insertAtIndex, push or set
+* Multiple check functions like contains, containsKey, containsValues or containsKeyAsList
+* Multiple copy functions like copyToArray or getRange
+* forEach method provided (returns KeyValuePair for Dictionaries)
+* Native sorting of the types number, string, boolean and Date (in List class)
+* Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)
+* Provided static compareTo functions for the types umber, string, boolean and Date (module Comparer)
+
 See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/changelog.md)** for recent updates.
 
 ## Installation
@@ -39,6 +49,7 @@ var otherList: List<SomeType> = new List<SomeType>();
 
 numberList.add(22);
 numberList.addRange([23,24,25]);
+numberList.sort();
 numberList.clear();
 ```
 

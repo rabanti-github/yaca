@@ -555,6 +555,112 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             chai_1.expect(match).to.equal(true);
         });
     });
+    describe('getKeysByValues method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var d8 = new Date(1990, 1, 2, 23, 59, 0, 0);
+        var dict; // = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+        it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValues([d4, d3]);
+            var match = true;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] !== 22 && result[i] !== 55 && result[i] !== 12) {
+                    match = false;
+                }
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values (passed as List)', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            var values = new List_1.default([d4, d3]);
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValues(values);
+            var match = true;
+            for (var i = 0; i < result.length; i++) {
+                if (result[i] !== 22 && result[i] !== 55 && result[i] !== 12) {
+                    match = false;
+                }
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty array with the dates 1990-1-1 and 1990-1-2 as values which does no exist in the dictionary as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValues([d7, d8]);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty array with the dates 1990-1-1 and 1990-1-2 as values in an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+            var result = dict.getKeysByValues([d7, d8]);
+            chai_1.expect(result.length).to.equal(0);
+        });
+    });
+    describe('getKeysByValuesAsList method', function () {
+        var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
+        var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
+        var d3 = new Date(2016, 1, 1, 23, 59, 0, 0);
+        var d4 = new Date(1017, 1, 1, 23, 59, 0, 0);
+        var d5 = new Date(2015, 1, 1, 23, 59, 0, 1);
+        var d6 = new Date(2020, 1, 1, 23, 59, 0, 0);
+        var d7 = new Date(1990, 1, 1, 23, 59, 0, 0);
+        var d8 = new Date(1990, 1, 2, 23, 59, 0, 0);
+        var dict; // = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+        it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValuesAsList([d4, d3]);
+            var match = false;
+            if (result.contains(22) && result.contains(55) && result.contains(12)) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values (passed as List)', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            var values = new List_1.default([d4, d3]);
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d4, d3, d5, d6]);
+            var result = dict.getKeysByValuesAsList(values);
+            var match = false;
+            if (result.contains(22) && result.contains(55) && result.contains(12)) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+        it('should return an empty list with the dates 1990-1-1 and 1990-1-2 as values which does no exist in the dictionary as value', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValuesAsList([d7, d8]);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty list with the dates 1990-1-1 and 1990-1-2 as values in an empty dictionary', function () {
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date);
+            var result = dict.getKeysByValuesAsList([d7, d8]);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an empty list if an empty array of vales is passed', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValuesAsList([]);
+            chai_1.expect(result.length).to.equal(0);
+        });
+        it('should return an list with the key 17, although the value 2017-1-1 was passed twice', function () {
+            var keys = [17, 22, 88, 55, 12, 0, -12];
+            dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.date, keys, [d1, d4, d2, d3, d4, d5, d6]);
+            var result = dict.getKeysByValuesAsList([d1, d1]);
+            var match = false;
+            if (result.length === 1 && result.contains(17)) {
+                match = true;
+            }
+            chai_1.expect(match).to.equal(true);
+        });
+    });
     describe('getKeysByValueAsList method', function () {
         var d1 = new Date(2017, 1, 1, 23, 59, 0, 0);
         var d2 = new Date(2017, 1, 1, 23, 59, 0, 1);
@@ -623,8 +729,14 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             }
             chai_1.expect(match).to.equal(true);
         });
+        it('should return an empty dictionary when executed on an empty original dictionary', function () {
+            var keys = new List_1.default([3, 5, 6]);
+            var dict2 = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
+            var range = dict2.getRange(keys);
+            chai_1.expect(range.length).to.equal(0);
+        });
     });
-    describe('getRangeByValue method', function () {
+    describe('getRangeByValues method', function () {
         var dict = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string, [1, 2, 3, 4, 5, 6, 7, 8, 9], ["a", "b", "a", "b", "c", "a", "d", "e", "f"]);
         it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as array', function () {
             var range = dict.getRangeByValues(["a", "b", "c"]);
@@ -645,6 +757,12 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
         });
         it('should return an empty dictionary wen executed with the vales "x" and "y" which do not exist in the original dictionary', function () {
             var range = dict.getRangeByValues(["x", "y"]);
+            chai_1.expect(range.length).to.equal(0);
+        });
+        it('should return an empty dictionary when executed on an empty original dictionary', function () {
+            var values = new List_1.default(["a", "b", "c"]);
+            var dict2 = Utils_1.Utils.setupDictionary(Types_1.Types.number, Types_1.Types.string);
+            var range = dict2.getRangeByValues(values);
             chai_1.expect(range.length).to.equal(0);
         });
     });

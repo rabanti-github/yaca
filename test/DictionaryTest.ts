@@ -575,6 +575,121 @@ describe('getKeysByValue method', () => {
     });
 });
 
+
+
+describe('getKeysByValues method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,0);
+    let d2: Date = new Date(2017,1,1,23,59,0,1);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2015,1,1,23,59,0,1);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);
+    let d8: Date = new Date(1990,1,2,23,59,0,0);          
+
+    let dict: Dictionary<number, Date>;// = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+
+    it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: number[] = dict.getKeysByValues([d4, d3]);
+        let match: boolean = true;
+        for(let i: number = 0; i < result.length; i++)
+        {
+            if (result[i] !== 22 && result[i] !== 55 && result[i] !== 12) { match = false; }
+        }
+        expect(match).to.equal(true);
+    });
+    it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values (passed as List)', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        let values: List<Date> = new List<Date>([d4, d3])
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: number[] = dict.getKeysByValues(values);
+        let match: boolean = true;
+        for(let i: number = 0; i < result.length; i++)
+        {
+            if (result[i] !== 22 && result[i] !== 55 && result[i] !== 12) { match = false; }
+        }
+        expect(match).to.equal(true);
+    });
+
+    it('should return an empty array with the dates 1990-1-1 and 1990-1-2 as values which does no exist in the dictionary as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: number[] = dict.getKeysByValues([d7,d8]);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty array with the dates 1990-1-1 and 1990-1-2 as values in an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.date);
+        let result: number[] = dict.getKeysByValues([d7,d8]);
+        expect(result.length).to.equal(0);
+    });
+});
+
+describe('getKeysByValuesAsList method', () => {
+    let d1: Date = new Date(2017,1,1,23,59,0,0);
+    let d2: Date = new Date(2017,1,1,23,59,0,1);
+    let d3: Date = new Date(2016,1,1,23,59,0,0);
+    let d4: Date = new Date(1017,1,1,23,59,0,0);
+    let d5: Date = new Date(2015,1,1,23,59,0,1);
+    let d6: Date = new Date(2020,1,1,23,59,0,0);
+    let d7: Date = new Date(1990,1,1,23,59,0,0);
+    let d8: Date = new Date(1990,1,2,23,59,0,0);          
+
+    let dict: Dictionary<number, Date>;// = Utils.setupDictionary(Types.number, Types.date, [17,22,88,55,12,0,-12],[d1,d2,d3,d4,d5,d6,d7]);
+
+    it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: List<number> = dict.getKeysByValuesAsList([d4, d3]);
+        let match: boolean = false;
+        if (result.contains(22) && result.contains(55) && result.contains(12))
+        {
+            match = true;
+        }
+        expect(match).to.equal(true);
+    });
+    it('should return the two keys 12, 22 and 55 with the dates 1017-1-1 ans 2015-1-1 as values (passed as List)', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        let values: List<Date> = new List<Date>([d4, d3])
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d4,d3,d5,d6]);
+        let result: List<number> = dict.getKeysByValuesAsList(values);
+        let match: boolean = false;
+        if (result.contains(22) && result.contains(55) && result.contains(12))
+        {
+            match = true;
+        }
+        expect(match).to.equal(true);
+    });
+
+    it('should return an empty list with the dates 1990-1-1 and 1990-1-2 as values which does no exist in the dictionary as value', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: List<number> = dict.getKeysByValuesAsList([d7,d8]);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty list with the dates 1990-1-1 and 1990-1-2 as values in an empty dictionary', () => {
+        dict = Utils.setupDictionary(Types.number, Types.date);
+        let result: List<number> = dict.getKeysByValuesAsList([d7,d8]);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an empty list if an empty array of vales is passed', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: List<number> = dict.getKeysByValuesAsList([]);
+        expect(result.length).to.equal(0);
+    });
+    it('should return an list with the key 17, although the value 2017-1-1 was passed twice', () => {
+        let keys: number[] = [17,22,88,55,12,0,-12];
+        dict = Utils.setupDictionary(Types.number, Types.date, keys, [d1,d4,d2,d3,d4,d5,d6]);
+        let result: List<number> = dict.getKeysByValuesAsList([d1,d1]);
+        let match: boolean = false;
+        if (result.length === 1 && result.contains(17)) { match = true; }
+        expect(match).to.equal(true);
+    });
+});
+
+
 describe('getKeysByValueAsList method', () => {
     let d1: Date = new Date(2017,1,1,23,59,0,0);
     let d2: Date = new Date(2017,1,1,23,59,0,1);
@@ -638,10 +753,16 @@ describe('getRange method', () => {
         let match: boolean = false;
         if (range.containsValues(["a","b","c"],true) === true) { match = true; }
         expect(match).to.equal(true);
-    }); 
+    });
+    it('should return an empty dictionary when executed on an empty original dictionary', () => {
+        let keys: List<number> = new List<number>([3,5,6]);
+        let dict2: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string);
+        let range: Dictionary<number, string> = dict2.getRange(keys);
+        expect(range.length).to.equal(0);
+    });  
 });
 
-describe('getRangeByValue method', () => {
+describe('getRangeByValues method', () => {
     let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string,[1,2,3,4,5,6,7,8,9], ["a","b","a","b","c","a","d","e","f"]);
     it('should return a dictionary with the keys 1,2,3,4,5 and 6 with the values "a", "b" and "c" passed as array', () => {
         let range: Dictionary<number, string> = dict.getRangeByValues(["a","b","c"]);
@@ -661,6 +782,12 @@ describe('getRangeByValue method', () => {
         let range: Dictionary<number, string> = dict.getRangeByValues(["x","y"]);
         expect(range.length).to.equal(0);
     });
+    it('should return an empty dictionary when executed on an empty original dictionary', () => {
+        let values: List<string> = new List<string>(["a","b","c"]);
+        let dict2: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string);
+        let range: Dictionary<number, string> = dict2.getRangeByValues(values);
+        expect(range.length).to.equal(0);
+    });  
 });
 
 describe('getValues method', () => {

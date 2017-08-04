@@ -72,6 +72,16 @@
 					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=2592000" alt="npm">
 				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
 				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong> and <strong>Dictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack or SortedDictionary) are planned.</p>
+				<h2 id="important-features">Important features</h2>
+				<ul>
+					<li>Multiple add and remove functions like add, addRange, insertAtIndex, push or set</li>
+					<li>Multiple check functions like contains, containsKey, containsValues or containsKeyAsList</li>
+					<li>Multiple copy functions like copyToArray or getRange</li>
+					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
+					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
+					<li>Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)</li>
+					<li>Provided static compareTo functions for the types umber, string, boolean and Date (module Comparer)</li>
+				</ul>
 				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
 				<h2 id="installation">Installation</h2>
 				<pre><code class="lang-bash">npm install -S yaca
@@ -93,6 +103,7 @@
 
 numberList.add(<span class="hljs-number">22</span>);
 numberList.addRange([<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>]);
+numberList.sort();
 numberList.clear();
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
@@ -190,6 +201,12 @@ dictionary3.clear();
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_sortertest_.html">"test/<wbr>Sorter<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_testclasstest_.html">"test/<wbr>Test<wbr>Class<wbr>Test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_test_testtest_.html">"test/<wbr>Test<wbr>Test"</a>

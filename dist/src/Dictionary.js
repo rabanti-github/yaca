@@ -259,11 +259,11 @@ var Dictionary = (function () {
         return this.getKeysByValuesAsListInternal([value], true);
     };
     Dictionary.prototype.getKeysByValues = function (values) {
-        var list = this.getKeysByValuesAsListInternal(values, false);
+        var list = this.getKeysByValuesAsListInternal(values, true);
         return list.copyToArray();
     };
     Dictionary.prototype.getKeysByValuesAsList = function (values) {
-        return this.getKeysByValuesAsListInternal(values, false);
+        return this.getKeysByValuesAsListInternal(values, true);
     };
     Dictionary.prototype.getRange = function (keys) {
         if (this._length === 0) {
