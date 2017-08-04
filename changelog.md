@@ -129,7 +129,7 @@ Release type: Bugfix
 * Further documentation issues fixed
 * Revoked / removed coveralls config file (accidentally published)
 
-***v1.0.0***
+***v1.0.1***
 
 ---
 Date: 2017-08-04
