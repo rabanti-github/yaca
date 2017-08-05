@@ -9,11 +9,11 @@ export interface IList<T>
     /**
      * Interface to handle foeEach loops
      */
-    forEach(callback:IForEachInterface<T>);
+    forEach(callback:IForEachInterface<T>): void;
 
     /**
      * Interface to handle sorting
      */
-    sort(sortFunction:ISortInterface<T>);
+    sort(sortFunction:ISortInterface<T>): void;
 
 }

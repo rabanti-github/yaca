@@ -248,7 +248,6 @@ var Dictionary = (function () {
      * @param value Value to get all corresponding keys from
      */
     Dictionary.prototype.getKeysByValue = function (value) {
-        var list = this.getKeysByValueAsList(value);
         return this.getKeysByValuesAsListInternal([value], true).copyToArray();
     };
     /**
@@ -326,7 +325,7 @@ var Dictionary = (function () {
     };
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Can be ignored
      */
     Dictionary.prototype.next = function (value) {
@@ -340,6 +339,9 @@ var Dictionary = (function () {
             this._iCounter = 0;
             lastItem = true;
         }
+        if (value !== undefined && value === true) {
+            lastItem = true;
+        } // Break-condition
         return new IteratorItem_1.IteratorItem(val, lastItem);
     };
     /**

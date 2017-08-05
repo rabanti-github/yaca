@@ -1,5 +1,4 @@
 import {Sorter} from '../src/Sorter';
-import { Utils } from './utils/Utils';
 import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
@@ -8,18 +7,18 @@ import 'mocha';
 
 describe("Sorter\n  ######n",() => {
 describe('Constructor', () => {
-
+    let dummy: boolean;
     it('should not throw an error when initialized with a number as sample', () => {
-        expect(function() { let test: Sorter<number> = new Sorter(22); }).to.not.throw();
+        expect(function() { let test: Sorter<number> = new Sorter(22); dummy = test.isCommonType; }).to.not.throw();
     });
         it('should not throw an error when initialized with a undefined as sample', () => {
-        expect(function() { let test: Sorter<number> = new Sorter(undefined); }).to.not.throw();
+        expect(function() { let test: Sorter<number> = new Sorter(undefined);  dummy = test.isCommonType; }).to.not.throw();
     });
         it('should not throw an error when initialized with a empty string as sample', () => {
-        expect(function() { let test: Sorter<string> = new Sorter(""); }).to.not.throw();
+        expect(function() { let test: Sorter<string> = new Sorter("");  dummy = test.isCommonType; }).to.not.throw();
     });
         it('should not throw an error when initialized with false as sample', () => {
-        expect(function() { let test: Sorter<boolean> = new Sorter(false); }).to.not.throw();
+        expect(function() { let test: Sorter<boolean> = new Sorter(false);  dummy = test.isCommonType; }).to.not.throw();
     });      
 
 });

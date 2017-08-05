@@ -1,16 +1,13 @@
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import {KeyValuePair} from './KeyValuePair';
-import ISortInterFace from './interfaces/ISortInterface';
-import { IDictionary } from './interfaces/IDictionary';
 import { IteratorItem } from './IteratorItem';
-import { Sorter } from './Sorter';
 import  List  from './List';
 var isEqual  = require('lodash.isequal');
 
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
-export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
+export class Dictionary<K,V> implements  Iterator<V>
 {
 
 
@@ -33,20 +30,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
 // ############### C O N S T R U C T O R S ###############
-
-/** Default constructor */
-    constructor();
-
-    /**
-     * Constructor with an function to override the default hashing function of the keys (toString)
-     * @param overrideFunction Hashing function. Should accept one parameter of the type K and return a string
-     */
-    constructor(overrideFunction: Function);
-    /**
-     * Constructor with a Dictionary<K,V> as initial value
-     * @param values Dictionary of elements with K and V as Keys and Values 
-     */
-    constructor(values: Dictionary<K,V>);
     /**
      * Constructor with initial value
      * @param value Value of type V
@@ -64,7 +47,19 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param values List of values with type V
      * @param keys List of keys with type K
      */
-    constructor(keys: List<K>, values: List<V>);    
+    constructor(keys: List<K>, values: List<V>); 
+      /**
+     * Constructor with an function to override the default hashing function of the keys (toString)
+     * @param overrideFunction Hashing function. Should accept one parameter of the type K and return a string
+     */
+    constructor(overrideFunction: Function);
+    /**
+     * Constructor with a Dictionary<K,V> as initial value
+     * @param values Dictionary of elements with K and V as Keys and Values 
+     */
+    constructor(values: Dictionary<K,V>);  
+    /** Default constructor */
+    constructor();
     constructor(keys?: K | K[] | List<K> | Dictionary<K, V> | Function, values?: V | V[] | List<V>) {
         this._iCounter = 0;
         this._length = 0;
@@ -114,22 +109,22 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
     /**
      * Adds a range of keys and values
-     * @param values Values as Dictionary<K,V>
-     */
-    public addRange(values: Dictionary<K, V>);
-    /**
-     * Adds a range of keys and values
      * @param values Values as array of the type V
      * @param keys Keys as array of Type K
      */
-    public addRange(keys: K[], values: V[]);
+    public addRange(keys: K[], values: V[]): void;
     /**
      * Adds a range of keys and values as Lists of the same length
      * @param values Values as List<V>
      * @param keys Keys as List<K>
      */
-    public addRange(keys: List<K>, values: List<V>);    
-    public addRange(p1: Dictionary<K,V> | K[] | List<K>, p2?: V[] | List<V>) {
+    public addRange(keys: List<K>, values: List<V>): void;
+    /**
+     * Adds a range of keys and values
+     * @param values Values as Dictionary<K,V>
+     */
+    public addRange(values: Dictionary<K, V>): void;        
+    public addRange(p1: Dictionary<K,V> | K[] | List<K>, p2?: V[] | List<V>): void {
         let keys: K[];
         let values: V[];
         if (Array.isArray(p1) && Array.isArray(p2))
@@ -162,7 +157,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     /**
      * Removes all elements of the Dictionary
      */
-    public clear() {
+    public clear(): void {
         if (this._length === 0) { return; }
         else {
             this._iDict = [];
@@ -269,7 +264,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     /**
      * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
      */
-    public distinct() {
+    public distinct(): void {
         if (this._length === 0) { return; }
         let newDict: Dictionary<K,V> = new Dictionary<K,V>();
         for (let i = 0; i < this._length; i++) {
@@ -287,7 +282,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * Implementation of a forEach loop
      * @param callback Callback function to process the items of the List
      */
-    public forEach(callback: IForEachInterface<K,V>) {
+    public forEach(callback: IForEachInterface<K,V>): void {
         if (this._length === 0) { return; }
         let done: boolean = false;
         let item: IteratorItem<KeyValuePair<K,V>>;
@@ -345,7 +340,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      */
     public getKeysByValue(value: V): K[]
     { 
-        let list: List<K> = this.getKeysByValueAsList(value);
         return this.getKeysByValuesAsListInternal([ value ], true).copyToArray();
     }
 
@@ -390,10 +384,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
     /**
-     * Copies the whole Dictionary to a new Dictionary
-     */
-    public getRange(): Dictionary<K,V>;
-    /**
      * Copies the Dictionary to a new Dictionary using the specified keys
      * @param keys Keys to use for the new Dictionary
      */
@@ -403,6 +393,10 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param keys Keys to use for the new Dictionary
      */
     public getRange(keys: List<K>): Dictionary<K,V>;
+    /**
+     * Copies the whole Dictionary to a new Dictionary
+     */
+    public getRange(): Dictionary<K,V>;    
     public getRange(keys?: K[] | List<K>): Dictionary<K,V> {
         if (this._length === 0) { return new Dictionary<K,V>(); }
         let hashcodes: List<string> = new List<string>();
@@ -485,20 +479,23 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
 
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Can be ignored
      */
     public next(value?: any): IteratorResult<KeyValuePair<K,V>> {
         let val: KeyValuePair<K,V> = new KeyValuePair(this._iDict[this._iKeyIndex[this._iCounter]][0], this._iDict[this._iKeyIndex[this._iCounter]][1]);
         let lastItem: boolean;
-        if (this._iCounter < this.length - 1) {
+        if (this._iCounter < this.length - 1)
+        {
             this._iCounter++;
             lastItem = false;
         }
-        else {
+        else
+        {
             this._iCounter = 0;
             lastItem = true;
         }
+        if (value !== undefined && value === true) { lastItem = true; } // Break-condition
         return new IteratorItem(val, lastItem);
     }
 
@@ -517,12 +514,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
         this._iOverrideToStringFunction = overrideFunction;
     }
 
-    /**
-     * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
-     * @param key Key (and attached value) to remove
-     */
-    public remove(key: K): boolean;
-       /**
+     /**
      * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
      * @param keys Keys (and attached values) to remove
      */
@@ -532,6 +524,11 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param keys Keys (and attached values) to remove
      */
     public remove(keys: List<K>): boolean;
+    /**
+     * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
+     * @param key Key (and attached value) to remove
+     */
+    public remove(key: K): boolean;    
     public remove(keys: K | K[] | List<K>): boolean
     {
         if (this._length === 0) { return false; }
@@ -561,11 +558,6 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     }
 
     /**
-     * Removes all entries with the passed value from the Dictionary.
-     * @param values Value to remove
-     */
-    public removeByValue(value: V): boolean;
-    /**
      * Removes all entries with the passed values from the Dictionary.
      * @param values Array of values to remove
      */
@@ -575,6 +567,11 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param values List of values to remove
      */
     public removeByValue(values: List<V>): boolean;
+    /**
+     * Removes all entries with the passed value from the Dictionary.
+     * @param values Value to remove
+     */
+    public removeByValue(value: V): boolean;    
     public removeByValue(values: V | V[] | List<V>): boolean {
         if (this._length === 0) { return false; }
         let keys: List<K>;
@@ -597,7 +594,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param key Key of the new value
      * @param value New value
      */
-    public set(key: K, value: V) {
+    public set(key: K, value: V): void {
         this.add(key, value);
     }
 
@@ -606,7 +603,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
      * @param key1 Key 1
      * @param key2 Key 2
      */
-    public swapValues(key1: K, key2: K) {
+    public swapValues(key1: K, key2: K): void {
         if (this.containsKey(key1) === false || this.containsKey(key2) === false) {
             throw new Error("One of the passed keys (" + key1.toString() + ", " + key2.toString() + ") does not exist");
         }
@@ -625,7 +622,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
  * @param key Key to add
  * @param value Value to add
  */
-    private addInternal(key: K, value: V)
+    private addInternal(key: K, value: V): void
     {
         if (key === undefined)
         {
@@ -746,7 +743,7 @@ export class Dictionary<K,V> implements  Iterator<V>, IDictionary<K,V>
     /**
      * Internal method to refresh the key index of the dictionary
      */
-    private refreshKeyIndex()
+    private refreshKeyIndex(): void
     {
         this._iKeyIndex = Object.keys(this._iDict);
     }

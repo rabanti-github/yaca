@@ -208,16 +208,16 @@ describe('copyToArray method', () => {
         expect(value).to.equal("five");
     });
     it('should throw an error when the start index is negative', () => {
-        expect(function() {let array: string[] = list.copyToArray(-2,4); }).to.throw();
+        expect(function() {let array: string[] = list.copyToArray(-2,4); array.toString(); }).to.throw();
     });
     it('should throw an error when the start index is bigger than the end index in a valid range', () => {
-        expect(function() {let array: string[] = list.copyToArray(4,1); }).to.throw();
+        expect(function() {let array: string[] = list.copyToArray(4,1); array.toString(); }).to.throw();
     });    
     it('should throw an error when the end index is 99 on a list with 6 elements', () => {
-        expect(function() {let array: string[] = list.copyToArray(1,99); }).to.throw();
+        expect(function() {let array: string[] = list.copyToArray(1,99); array.toString(); }).to.throw();
     });
     it('should not throw an error when the end index is undefined (interpreted as last index position)', () => {
-        expect(function() {let array: string[] = list.copyToArray(1,undefined); }).not.to.throw();
+        expect(function() {let array: string[] = list.copyToArray(1,undefined); array.toString(); }).not.to.throw();
     });
 });
 
@@ -313,16 +313,21 @@ describe('forEach method', () => {
     });
     it('should return the number of 5 iterations after the execution', () => {
         let i: number = 0;
+        let dummy: string;
         list.forEach(item => {
+            dummy = item;
             i++;
+            
         });
         expect(i).to.equal(5);
     });
     it('should not trigger the callback function on a empty list during the execution', () => {
         list = new List<string>();
         let hit: boolean = false;
+        let dummy: any;
         list.forEach(item => {
             hit = true;
+            dummy = item;
         });
         expect(hit).to.equal(false);   
     });
@@ -336,16 +341,16 @@ describe('get method', () => {
         expect(value).to.equal(55);
     });
     it('should throw an error when executed with index position 99 on a list with 7 entries', () => {
-        expect(function() { let value: number = list.get(99); }).to.throw();
+        expect(function() { let value: number = list.get(99); value.toString(); }).to.throw();
     });
     it('should throw an error when executed with index position -2 on a list with 7 entries', () => {
-        expect(function() { let value: number = list.get(-2); }).to.throw();
+        expect(function() { let value: number = list.get(-2); value.toString(); }).to.throw();
     });
     it('should throw an error when executed with index position 3.55 on a list with 7 entries', () => {
-        expect(function() { let value: number = list.get(3.55); }).to.throw();
+        expect(function() { let value: number = list.get(3.55); value.toString(); }).to.throw();
     });
     it('should throw an error when executed with undefined as index position on a list with 7 entries', () => {
-        expect(function() { let value: number = list.get(undefined); }).to.throw();
+        expect(function() { let value: number = list.get(undefined); value.toString(); }).to.throw();
     });
 });
 
@@ -378,13 +383,13 @@ describe('getRange method', () => {
         expect(value).to.equal("five");
     });
     it('should throw an error when the start index is negative', () => {
-        expect(function() {let list2: List<string> = list.getRange(-2,4); }).to.throw();
+        expect(function() {let list2: List<string> = list.getRange(-2,4); list2.clear(); }).to.throw();
     });
     it('should throw an error when the end index is 99 on a list with 6 elements', () => {
-        expect(function() {let list2: List<string> = list.getRange(2,99); }).to.throw();
+        expect(function() {let list2: List<string> = list.getRange(2,99); list2.clear(); }).to.throw();
     });
     it('should not throw an error when the start index is undefined (interpreted as 0)', () => {
-        expect(function() {let list2: List<string> = list.getRange(undefined,2); }).not.to.throw();
+        expect(function() {let list2: List<string> = list.getRange(undefined,2); list2.clear(); }).not.to.throw();
     });
 });
 
@@ -551,6 +556,28 @@ describe('next method', () => {
         });
         expect(value).to.equal("122333444455555");
     });
+
+    it('should return the term "122333" after concatenation in a for loop (n = 5) if the value "true" is passed after the 3rd iteration (break condition)', () => {
+        list = Utils.setupList(Types.string, ["1","22","333","4444","55555"]);
+        let value: string = "";
+        let item: IteratorItem<string>
+        for(let i: number = 0; i < 5; i++)
+        {
+            if (i === 2)
+            {
+                item = list.next(true) as IteratorItem<string>;
+            }
+            else
+            {
+                item = list.next() as IteratorItem<string>;
+            }
+            value = value + item.value;
+            if (item.isLastEntry === true) {break;}
+        }
+        expect(value).to.equal("122333");
+    });
+
+
 });
 
 describe('peek method', () => {

@@ -5,21 +5,6 @@ import { Dictionary } from '../../src/Dictionary';
  */
 export declare class Utils {
     /**
-     * Function to compare two numbers
-     * @param n1 number 1 to compare
-     * @param n2 number 2 to compare
-     */
-    /**
-     * Function to compare two Dates
-     * @param d1 Date 1 to compare
-     * @param d2 Date 2 to compare
-     */
-    /**
-     * Function to compare two booleans
-     * @param b1 boolean 1 to compare
-     * @param b2 boolean 2 to compare
-     */
-    /**
      * Function to test an overwritten hash function for dates (used in Dictionary)
      * @param date Date to get the hash
      */

@@ -21,6 +21,11 @@ export declare class Sorter<T> implements ISorter<T> {
      */
     readonly isCommonType: boolean;
     /**
+     * Constructor of the sorter object
+     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
+     */
+    constructor(sample: T);
+    /**
      * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
      * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
      * @param data Data as array of the type T
@@ -59,9 +64,4 @@ export declare class Sorter<T> implements ISorter<T> {
      * @param obj object to check the type
      */
     private checkBasicCommonType(obj);
-    /**
-     * Constructor of the sorter object
-     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
-     */
-    constructor(sample: T);
 }

@@ -8,3 +8,5 @@ export interface IComparer<T>
      */
     compareTo(other: T): number;
 }
+
+export default IComparer;

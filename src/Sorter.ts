@@ -9,11 +9,13 @@ import { Comparer }  from './Comparer';
 export class Sorter<T> implements ISorter<T>
 {
 
+// ############### P R I V A T E   V A R I A B L E S ###############
     private _iCompareToImplemented: boolean = false;
     private _iIsBasicType: boolean = false;
     private _iIsCommonType: boolean = false;
     private _iDefaultFunction: Function;
 
+// ############### P R O P E R T I E S ###############    
     /**
      * Indicated whether type T is sortable due to the implementation of a compareTo function ort if it is a basic type like number, boolean, string or Date
      */
@@ -38,7 +40,18 @@ export class Sorter<T> implements ISorter<T>
         return this._iIsCommonType;
     }    
 
+// ############### C O N S T R U C T O R S ###############
+    /**
+     * Constructor of the sorter object
+     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
+     */
+    constructor(sample: T)
+    { 
+       this._iCompareToImplemented = this.isComparable(sample);
+       this.checkBasicCommonType(sample);
+    }    
 
+// ############### P U B L I C   F U N C T I O N S ###############
     /**
      * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
      * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
@@ -46,7 +59,7 @@ export class Sorter<T> implements ISorter<T>
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByFunction(comparerFunction: ISortInterFace<T>, data: T[], lowIndex: number, highIndex: number) {
+    public sortByFunction(comparerFunction: ISortInterFace<T>, data: T[], lowIndex: number, highIndex: number): void {
     
         if (highIndex - lowIndex <= 1) { return; }
         let pivot: T = data[highIndex -1];
@@ -71,7 +84,7 @@ export class Sorter<T> implements ISorter<T>
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByImplementation(data: T[], lowIndex: number, highIndex: number) {
+    public sortByImplementation(data: T[], lowIndex: number, highIndex: number): void {
         if (highIndex - lowIndex <= 1) { return; }
         let pivot: T = data[highIndex -1];
         let splitIndex = lowIndex;
@@ -95,7 +108,7 @@ export class Sorter<T> implements ISorter<T>
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByDefault(data: T[], lowIndex: number, highIndex: number) {
+    public sortByDefault(data: T[], lowIndex: number, highIndex: number): void {
     
         if (highIndex - lowIndex <= 1) { return; }
         let pivot: T = data[highIndex -1];
@@ -114,14 +127,14 @@ export class Sorter<T> implements ISorter<T>
         return;
     }    
 
-
+// ############### P R I V A T E   F U N C T I O N S ###############
     /**
      * Internal swap method for quicksort
      * @param data Data as array of the type T
      * @param index1 Index position 1 of the data to swap
      * @param index2 Index position 2 of the data to swap
      */
-    private swap(data: T[], index1: number, index2: number)
+    private swap(data: T[], index1: number, index2: number): void
     {
         let temp: T = data[index1];
         data[index1] = data[index2];
@@ -161,7 +174,7 @@ export class Sorter<T> implements ISorter<T>
      * Checks the type of the passed object and sets the appropriate compareTo function if applicable
      * @param obj object to check the type
      */
-    private checkBasicCommonType(obj: any)
+    private checkBasicCommonType(obj: any): void
     {
         if (obj === undefined)
         {
@@ -195,14 +208,6 @@ export class Sorter<T> implements ISorter<T>
     }
 
 
-    /**
-     * Constructor of the sorter object
-     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
-     */
-    constructor(sample: T)
-    { 
-       this._iCompareToImplemented = this.isComparable(sample);
-       this.checkBasicCommonType(sample);
-    }
+
 
 }

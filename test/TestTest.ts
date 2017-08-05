@@ -1,9 +1,7 @@
 import {Dictionary} from '../src/Dictionary';
 import List from '../src/List';
-//import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
-import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -86,42 +84,42 @@ describe('static:setupDictionary', () => {
         if (dict instanceof Dictionary && dict.length === 2){ match = true; }
         expect(match).to.equal(true);
     });
-
+    
      it('should not throw an error if initialized as <boolean,boolean>', () => {      
-        expect(function(){ let dict: Dictionary<boolean,boolean> = Utils.setupDictionary(Types.boolean, Types.boolean); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<boolean,boolean> = Utils.setupDictionary(Types.boolean, Types.boolean); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <boolean,Date>', () => {      
-        expect(function(){ let dict: Dictionary<boolean,Date> = Utils.setupDictionary(Types.boolean, Types.date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<boolean,Date> = Utils.setupDictionary(Types.boolean, Types.date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <boolean,number>', () => {      
-        expect(function(){ let dict: Dictionary<boolean,number> = Utils.setupDictionary(Types.boolean, Types.number); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<boolean,number> = Utils.setupDictionary(Types.boolean, Types.number); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <boolean,string>', () => {      
-        expect(function(){ let dict: Dictionary<boolean,string> = Utils.setupDictionary(Types.boolean, Types.string); }).not.to.throw(); });   
+        expect(function(){ let dict: Dictionary<boolean,string> = Utils.setupDictionary(Types.boolean, Types.string); dict.clear(); }).not.to.throw(); });   
         
      it('should not throw an error if initialized as <Date,boolean>', () => {      
-        expect(function(){ let dict: Dictionary<Date,boolean> = Utils.setupDictionary(Types.date, Types.boolean); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<Date,boolean> = Utils.setupDictionary(Types.date, Types.boolean); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <Date,Date>', () => {      
-        expect(function(){ let dict: Dictionary<Date,Date> = Utils.setupDictionary(Types.date, Types.date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<Date,Date> = Utils.setupDictionary(Types.date, Types.date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <Date,number>', () => {      
-        expect(function(){ let dict: Dictionary<Date,number> = Utils.setupDictionary(Types.date, Types.number); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<Date,number> = Utils.setupDictionary(Types.date, Types.number); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <Date,string>', () => {      
-        expect(function(){ let dict: Dictionary<Date,string> = Utils.setupDictionary(Types.date, Types.string); }).not.to.throw(); });           
+        expect(function(){ let dict: Dictionary<Date,string> = Utils.setupDictionary(Types.date, Types.string); dict.clear(); }).not.to.throw(); });           
 
      it('should not throw an error if initialized as <number,boolean>', () => {      
-        expect(function(){ let dict: Dictionary<number,boolean> = Utils.setupDictionary(Types.number, Types.boolean); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<number,boolean> = Utils.setupDictionary(Types.number, Types.boolean); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <number,Date>', () => {      
-        expect(function(){ let dict: Dictionary<number,Date> = Utils.setupDictionary(Types.number, Types.date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<number,Date> = Utils.setupDictionary(Types.number, Types.date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <number,number>', () => {      
-        expect(function(){ let dict: Dictionary<number,number> = Utils.setupDictionary(Types.number, Types.number); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<number,number> = Utils.setupDictionary(Types.number, Types.number); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <mu,ber,string>', () => {      
-        expect(function(){ let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string); }).not.to.throw(); });           
+        expect(function(){ let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string); dict.clear(); }).not.to.throw(); });           
 
     it('should not throw an error if initialized as <string,boolean>', () => {      
-        expect(function(){ let dict: Dictionary<string,boolean> = Utils.setupDictionary(Types.string, Types.boolean); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<string,boolean> = Utils.setupDictionary(Types.string, Types.boolean); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <string,Date>', () => {      
-        expect(function(){ let dict: Dictionary<string,Date> = Utils.setupDictionary(Types.string, Types.date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<string,Date> = Utils.setupDictionary(Types.string, Types.date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <string,number>', () => {      
-        expect(function(){ let dict: Dictionary<string,number> = Utils.setupDictionary(Types.string, Types.number); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<string,number> = Utils.setupDictionary(Types.string, Types.number); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <string,string>', () => {      
-        expect(function(){ let dict: Dictionary<string,string> = Utils.setupDictionary(Types.string, Types.string); }).not.to.throw(); });           
+        expect(function(){ let dict: Dictionary<string,string> = Utils.setupDictionary(Types.string, Types.string); dict.clear(); }).not.to.throw(); });           
 
         let str: string[] = ["a","b","c"];
         let num: number[] = [-12, 22.225, 13];
@@ -129,45 +127,42 @@ describe('static:setupDictionary', () => {
         let date: Date[] = [new Date(2017,1,1,1,1,0,0), new Date(2016,1,1,1,1,0,0), new Date(2015,1,1,1,1,0,0)]
 
      it('should not throw an error if initialized as <boolean,boolean> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<boolean,boolean> = Utils.setupDictionary(Types.boolean, Types.boolean, bool, bool); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<boolean,boolean> = Utils.setupDictionary(Types.boolean, Types.boolean, bool, bool); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <boolean,Date> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<boolean,Date> = Utils.setupDictionary(Types.boolean, Types.date, bool, date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<boolean,Date> = Utils.setupDictionary(Types.boolean, Types.date, bool, date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <boolean,number> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<boolean,number> = Utils.setupDictionary(Types.boolean, Types.number, bool, num); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<boolean,number> = Utils.setupDictionary(Types.boolean, Types.number, bool, num); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <boolean,string> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<boolean,string> = Utils.setupDictionary(Types.boolean, Types.string, bool, str); }).not.to.throw(); });   
+        expect(function(){ let dict: Dictionary<boolean,string> = Utils.setupDictionary(Types.boolean, Types.string, bool, str); dict.clear(); }).not.to.throw(); });   
 
      it('should not throw an error if initialized as <Date,boolean> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<Date,boolean> = Utils.setupDictionary(Types.date, Types.boolean, date, bool); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<Date,boolean> = Utils.setupDictionary(Types.date, Types.boolean, date, bool); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <Date,Date> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<Date,Date> = Utils.setupDictionary(Types.date, Types.date, date, date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<Date,Date> = Utils.setupDictionary(Types.date, Types.date, date, date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <Date,number> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<Date,number> = Utils.setupDictionary(Types.date, Types.number, date, num); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<Date,number> = Utils.setupDictionary(Types.date, Types.number, date, num); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <Date,string> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<Date,string> = Utils.setupDictionary(Types.date, Types.string, date, str); }).not.to.throw(); });   
+        expect(function(){ let dict: Dictionary<Date,string> = Utils.setupDictionary(Types.date, Types.string, date, str); dict.clear(); }).not.to.throw(); });   
 
      it('should not throw an error if initialized as <number,boolean> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<number,boolean> = Utils.setupDictionary(Types.number, Types.boolean, num, bool); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<number,boolean> = Utils.setupDictionary(Types.number, Types.boolean, num, bool); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <number,Date> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<number,Date> = Utils.setupDictionary(Types.number, Types.date, num, date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<number,Date> = Utils.setupDictionary(Types.number, Types.date, num, date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <number,number> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<number,number> = Utils.setupDictionary(Types.number, Types.number, num, num); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<number,number> = Utils.setupDictionary(Types.number, Types.number, num, num); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <number,string> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string, num, str); }).not.to.throw(); });   
+        expect(function(){ let dict: Dictionary<number,string> = Utils.setupDictionary(Types.number, Types.string, num, str); dict.clear(); }).not.to.throw(); });   
 
      it('should not throw an error if initialized as <string,boolean> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<string,boolean> = Utils.setupDictionary(Types.string, Types.boolean, str, bool); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<string,boolean> = Utils.setupDictionary(Types.string, Types.boolean, str, bool); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <string,Date> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<string,Date> = Utils.setupDictionary(Types.string, Types.date, str, date); }).not.to.throw(); });
+        expect(function(){ let dict: Dictionary<string,Date> = Utils.setupDictionary(Types.string, Types.date, str, date); dict.clear(); }).not.to.throw(); });
      it('should not throw an error if initialized as <string,number> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<string,number> = Utils.setupDictionary(Types.string, Types.number, str, num); }).not.to.throw(); });       
+        expect(function(){ let dict: Dictionary<string,number> = Utils.setupDictionary(Types.string, Types.number, str, num); dict.clear(); }).not.to.throw(); });       
      it('should not throw an error if initialized as <string,string> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<string,string> = Utils.setupDictionary(Types.string, Types.string, str, str); }).not.to.throw(); });   
+        expect(function(){ let dict: Dictionary<string,string> = Utils.setupDictionary(Types.string, Types.string, str, str); dict.clear(); }).not.to.throw(); });   
      it('should not throw an error if initialized as <any,any> with initial keys and values', () => {      
-        expect(function(){ let dict: Dictionary<any,any> = Utils.setupDictionary(Types.testClass, Types.testClass, str, num); }).not.to.throw(); });   
-
-        
-
+        expect(function(){ let dict: Dictionary<any,any> = Utils.setupDictionary(Types.testClass, Types.testClass, str, num); dict.clear(); }).not.to.throw(); });   
 
 });
 

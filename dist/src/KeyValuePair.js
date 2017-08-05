@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Class representing an Key-Value pair
+ */
 var KeyValuePair = (function () {
+    /**
+     * Default constructor with parameters
+     * @param key Key
+     * @param value Value
+     */
     function KeyValuePair(key, value) {
         if (key === undefined || value === undefined) {
             throw new Error("The key and/or value is undefined");
@@ -9,6 +17,9 @@ var KeyValuePair = (function () {
         this._value = value;
     }
     Object.defineProperty(KeyValuePair.prototype, "key", {
+        /**
+         * Gets the key
+         */
         get: function () {
             return this._key;
         },
@@ -16,6 +27,9 @@ var KeyValuePair = (function () {
         configurable: true
     });
     Object.defineProperty(KeyValuePair.prototype, "value", {
+        /**
+         * Gets the value
+         */
         get: function () {
             return this._value;
         },

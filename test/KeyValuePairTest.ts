@@ -1,5 +1,4 @@
 import {KeyValuePair} from '../src/KeyValuePair';
-import { Utils } from './utils/Utils';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -9,13 +8,13 @@ describe("KeyValuePair\n  ############\n",() => {
 describe('Constructor', () => {
 
     it('should not throw an error when creating an object with K:string and V:number with initial parameters', () => {
-        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",42); }).to.not.throw();
+        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",42); test.value.toString(); }).to.not.throw();
     });
     it('should throw an error when creating an object with K:string and V:number with undefined as value', () => {
-        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",undefined); }).to.throw();
+        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>("xyz",undefined); test.value.toString(); }).to.throw();
     });
     it('should throw an error when creating an object with K:string and V:number with undefined as key', () => {
-        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>(undefined,42); }).to.throw();
+        expect(function() { let test: KeyValuePair<string, number> = new KeyValuePair<string, number>(undefined,42); test.value.toString(); }).to.throw();
     });    
 
 });

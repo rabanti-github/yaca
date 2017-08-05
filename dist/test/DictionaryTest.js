@@ -359,26 +359,32 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
         });
         it('should return the iteration counter 4 after execution of the forEach with a break (return) after 4 cycles', function () {
             var counter = 0;
+            var dummy;
             dict.forEach(function (item) {
                 if (counter >= 4) {
                     return;
                 }
+                dummy = item;
                 counter++;
             });
             chai_1.expect(counter).to.equal(4);
         });
         it('should return the number of 5 iterations after the execution', function () {
             var i = 0;
+            var dummy;
             dict.forEach(function (item) {
                 i++;
+                dummy = item;
             });
             chai_1.expect(i).to.equal(5);
         });
         it('should not trigger the callback function on a empty dictionary during the execution', function () {
             dict = new Dictionary_1.Dictionary();
             var hit = false;
+            var dummy;
             dict.forEach(function (item) {
                 hit = true;
+                dummy = item;
             });
             chai_1.expect(hit).to.equal(false);
         });
@@ -397,10 +403,10 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             chai_1.expect(value.getTime()).to.equal(d4.getTime());
         });
         it('should throw an error when executed with the key 222 on a dictionary where this key does not exist', function () {
-            chai_1.expect(function () { var value = dict.get(222); }).to.throw();
+            chai_1.expect(function () { var value = dict.get(222); value.toString(); }).to.throw();
         });
         it('should throw an error when executed with undefined as key on a dictionary', function () {
-            chai_1.expect(function () { var value = dict.get(undefined); }).to.throw();
+            chai_1.expect(function () { var value = dict.get(undefined); value.toString(); }).to.throw();
         });
         it('should return the number 22 with a date object of  Date(2017,1,1,23,59,0,1) as key (using a proper date hashing function)', function () {
             var dict2 = new Dictionary_1.Dictionary(Utils_1.Utils.properDateHashFunction);
@@ -819,13 +825,31 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
         });
         it('should indicate that the last element is reached after 7 calls in a dictionary of 5 entries if a forEach call was executed after the 2nd next call (reset)', function () {
             var state;
+            var dummy;
             for (var i = 0; i < 7; i++) {
                 if (i === 2) {
-                    dict.forEach(function (item) { });
+                    dict.forEach(function (item) { dummy = item; });
                 }
                 state = dict.next().isLastEntry;
             }
             chai_1.expect(state).to.equal(true);
+        });
+        it('should indicate that the last element is reached after 3 calls in a dictionary of 5 entries (for loop) and after passing "true" ath the 3rd iteration (break condition)', function () {
+            var counter = 0;
+            var item;
+            for (var i = 0; i < 5; i++) {
+                if (i === 2) {
+                    item = dict.next(true);
+                }
+                else {
+                    item = dict.next();
+                }
+                counter++;
+                if (item.isLastEntry === true) {
+                    break;
+                }
+            }
+            chai_1.expect(counter).to.equal(3);
         });
     });
     describe('overrideHashFunction method', function () {

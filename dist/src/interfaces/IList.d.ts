@@ -7,9 +7,9 @@ export interface IList<T> {
     /**
      * Interface to handle foeEach loops
      */
-    forEach(callback: IForEachInterface<T>): any;
+    forEach(callback: IForEachInterface<T>): void;
     /**
      * Interface to handle sorting
      */
-    sort(sortFunction: ISortInterface<T>): any;
+    sort(sortFunction: ISortInterface<T>): void;
 }

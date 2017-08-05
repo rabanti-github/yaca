@@ -46,14 +46,6 @@ var List = (function () {
         }
         this.addInternal(value);
     };
-    /**
-     * Internal method to add a value to the list (without checks)
-     * @param value Value to add
-     */
-    List.prototype.addInternal = function (value) {
-        this._iList[this._length] = value;
-        this._length++;
-    };
     List.prototype.addRange = function (values) {
         if (Array.isArray(values)) {
             for (var i = 0; i < values.length; i++) {
@@ -227,8 +219,6 @@ var List = (function () {
             secondPart = this.copyToInternal(index, this._length - 1, true);
         }
         this.clear();
-        var len = firstPart.length;
-        var len2 = secondPart.length;
         this.addRange(firstPart);
         this.add(value);
         this.addRange(secondPart);
@@ -247,7 +237,7 @@ var List = (function () {
     };
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
-    * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+    * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
     * @param value Can be ignored
     */
     List.prototype.next = function (value) {
@@ -261,6 +251,9 @@ var List = (function () {
             this._iCounter = 0;
             lastItem = true;
         }
+        if (value !== undefined && value === true) {
+            lastItem = true;
+        } // Break-condition
         return new IteratorItem_1.IteratorItem(val, lastItem);
     };
     /**
@@ -420,6 +413,14 @@ var List = (function () {
         this.swapValuesInternal(index1, index2, temp);
     };
     // ############### P R I V A T E   F U N C T I O N S ###############
+    /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    List.prototype.addInternal = function (value) {
+        this._iList[this._length] = value;
+        this._length++;
+    };
     /**
      * Internal method to copy a range of values in the List to a List or Array
      * @param start Start index

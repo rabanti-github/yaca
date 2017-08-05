@@ -6,9 +6,9 @@ export interface ISorter<T> {
     /**
      * Interface for the quicksort algorithm using a passed comparison function
      */
-    sortByFunction(comparerFunction: ISortInterface<T>, data: T[], lowIndex: number, highIndex: number): any;
+    sortByFunction(comparerFunction: ISortInterface<T>, data: T[], lowIndex: number, highIndex: number): void;
     /**
      * Interface for the quicksort algorithm using an implemented comparesTi function or the default sorting function for the basic types
      */
-    sortByImplementation(data: T[], lowIndex: number, highIndex: number): any;
+    sortByImplementation(data: T[], lowIndex: number, highIndex: number): void;
 }

@@ -7,17 +7,18 @@ require("mocha");
 // Test of the KeyValuePair Class
 describe("Sorter\n  ######n", function () {
     describe('Constructor', function () {
+        var dummy;
         it('should not throw an error when initialized with a number as sample', function () {
-            chai_1.expect(function () { var test = new Sorter_1.Sorter(22); }).to.not.throw();
+            chai_1.expect(function () { var test = new Sorter_1.Sorter(22); dummy = test.isCommonType; }).to.not.throw();
         });
         it('should not throw an error when initialized with a undefined as sample', function () {
-            chai_1.expect(function () { var test = new Sorter_1.Sorter(undefined); }).to.not.throw();
+            chai_1.expect(function () { var test = new Sorter_1.Sorter(undefined); dummy = test.isCommonType; }).to.not.throw();
         });
         it('should not throw an error when initialized with a empty string as sample', function () {
-            chai_1.expect(function () { var test = new Sorter_1.Sorter(""); }).to.not.throw();
+            chai_1.expect(function () { var test = new Sorter_1.Sorter(""); dummy = test.isCommonType; }).to.not.throw();
         });
         it('should not throw an error when initialized with false as sample', function () {
-            chai_1.expect(function () { var test = new Sorter_1.Sorter(false); }).to.not.throw();
+            chai_1.expect(function () { var test = new Sorter_1.Sorter(false); dummy = test.isCommonType; }).to.not.throw();
         });
     });
     describe('getter', function () {

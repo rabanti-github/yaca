@@ -1,5 +1,4 @@
 import {IteratorItem} from '../src/IteratorItem';
-import { Utils } from './utils/Utils';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -7,18 +6,18 @@ import 'mocha';
 
 describe("IteratorItem\n  ############\n",() => {
 describe('Constructor', () => {
-
-    it('should not throw an error when creating an object wih T:string with an initial parameter', () => {
-        expect(function() { let test: IteratorItem<string> = new IteratorItem<string>("xyz"); }).to.not.throw();
+    let test: IteratorItem<string>;
+    it('should not throw an error when creating an object with T:string with an initial parameter', () => {
+        expect(function() {  test = new IteratorItem<string>("xyz"); }).to.not.throw();
     });
-    it('should not throw an error when creating an object wih T:string with an initial parameter of a value and a boolean (finished)', () => {
-        expect(function() { let test: IteratorItem<string> = new IteratorItem<string>("xyz",true); }).to.not.throw();
+    it('should not throw an error when creating an object with T:string with an initial parameter of a value and a boolean (finished)', () => {
+        expect(function() { test = new IteratorItem<string>("xyz",true); }).to.not.throw();
     });    
-    it('should not throw an error when creating an object wih T:string with an initial parameter', () => {
-        expect(function() { let test: IteratorItem<string> = new IteratorItem<string>(undefined); }).not.to.throw();
+    it('should not throw an error when creating an object with T:string with an undefined initial parameter', () => {
+        expect(function() { test = new IteratorItem<string>(undefined); }).not.to.throw();
     });
-    it('should throw an error when creating an object wih T:string with an initial parameter of a value and undefined (finished)', () => {
-        expect(function() { let test: IteratorItem<string> = new IteratorItem<string>("xyz",undefined); }).to.not.throw();
+    it('should throw an error when creating an object with T:string with an initial parameter of a value and undefined (finished)', () => {
+        expect(function() { test = new IteratorItem<string>("xyz",undefined); }).to.not.throw();
     });     
 
 });

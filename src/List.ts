@@ -28,14 +28,6 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
 // ############### C O N S T R U C T O R S ###############
-
-    /** Default constructor */
-    constructor();
-    /**
-     * Constructor with initial value
-     * @param value Value of type T
-     */
-    constructor(value: T);
     /**
      * Constructor with an array as initial value
      * @param values Array of elements with type T
@@ -46,6 +38,13 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param values List of elements with type T
      */
     constructor(values: List<T>);
+    /**
+     * Constructor with initial value
+     * @param value Value of type T
+     */
+    constructor(value: T);    
+    /** Default constructor */
+    constructor();
     constructor(values?: T | T[] | List<T>) {
         this._iCounter = 0;
         this._length = 0;
@@ -69,7 +68,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Adds an element at the end of the List
      * @param value Value to add
      */
-    public add(value: T) {
+    public add(value: T): void {
         if (value === undefined)
         {
             throw new Error("An undefined value cannot be added to a list");
@@ -78,26 +77,16 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
     /**
-     * Internal method to add a value to the list (without checks)
-     * @param value Value to add
-     */
-    private addInternal(value: T)
-    {
-        this._iList[this._length] = value;
-        this._length++;
-    }
-
-    /**
      * Adds a range of values
      * @param values Values as List<T>
      */
-    public addRange(values: List<T>);
+    public addRange(values: List<T>): void;
     /**
      * Adds a range of values
      * @param values Values as array of the type T
      */
-    public addRange(values: T[]);
-    public addRange(values: T[] | List<T>) {
+    public addRange(values: T[]): void;
+    public addRange(values: T[] | List<T>): void {
         if (Array.isArray(values)) {
             for (let i: number = 0; i < values.length; i++) {
                 this.add(values[i]);
@@ -113,7 +102,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     /**
      * Removes all elements of the List
      */
-    public clear() {
+    public clear(): void {
         if (this._length === 0) { return; }
         else {
             this._iList = [];
@@ -133,10 +122,6 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
     /**
-     * Copies the whole List to a new Array of the type T
-     */
-    public copyToArray(): T[];
-    /**
      * Copies the List to a new Array of the type T, from the specified starting index until the last entry of the List
      * @param startIndex Start index
      */
@@ -146,6 +131,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param startIndex Start index
      * @param endIndex End index
      */
+    /**
+     * Copies the whole List to a new Array of the type T
+     */
+    public copyToArray(): T[];    
     public copyToArray(startIndex: number, endIndex: number): T[];
     public copyToArray(start?: number, end?: number): T[] {
         if (this._length === 0) { return new Array() as T[]; }
@@ -167,7 +156,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     /**
      * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
      */
-    public distinct() {
+    public distinct(): void {
         if (this._length === 0) { return; }
         let newList: List<T> = new List<T>();
         for (let i = 0; i < this._length; i++) {
@@ -183,7 +172,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Inserts a new value at the top position of the List (end position / last element). This method is synonymous with add()
      * @param value Value to insert
      */
-    public enqueue(value: T) {
+    public enqueue(value: T): void {
         this.add(value);
     }
 
@@ -192,7 +181,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Implementation of a forEach loop
      * @param callback Callback function to process the items of the List
      */
-    public forEach(callback: IForEachInterface<T>) {
+    public forEach(callback: IForEachInterface<T>): void {
         if (this._length === 0) { return; }
         let done: boolean = false;
         let item: IteratorItem<T>;
@@ -219,20 +208,20 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
     /**
-     * Copies the whole List to a new List
+     * Copies the List to a new List from the specified starting index to the specified end index of the List
+     * @param startIndex Start index (0 if undefined)
+     * @param endIndex End index (end index if undefined)
      */
-    public getRange(): List<T>;
+    public getRange(startIndex: number, endIndex: number): List<T>;
     /**
      * Copies the List to a new List from the specified starting index until the last entry of the List
      * @param startIndex Start index
      */
     public getRange(startIndex: number): List<T>;
     /**
-     * Copies the List to a new List from the specified starting index to the specified end index of the List
-     * @param startIndex Start index (0 if undefined)
-     * @param endIndex End index (end index if undefined)
+     * Copies the whole List to a new List
      */
-    public getRange(startIndex: number, endIndex: number): List<T>;
+    public getRange(): List<T>;     
     public getRange(start?: number, end?: number): List<T> {
         if (start === undefined) { start = 0; }
         if (end === undefined) { end = this._length - 1; }
@@ -260,14 +249,14 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value Value to check
      */
     public indicesOf(value: T): number[] {
-        return this.indicesOfInternal(value, false);
+        return this.indicesOfInternal(value, false) as number[];
     }
     /**
      * Gets a List of the indices of all occurrences of the passed value
      * @param value Value to check
      */
     public indicesOfAsList(value: T): List<number> {
-        return this.indicesOfInternal(value, true)
+        return this.indicesOfInternal(value, true) as List<number>;
     }
 
      /**
@@ -275,7 +264,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index Index position where to insert the value
      * @param value Value to insert
      */
-    public insertAtIndex(index: number, value: T) {
+    public insertAtIndex(index: number, value: T): void {
         this.indexCheck(index, true);// allowed 0 to length (insert after last item)
         let firstPart, secondPart: T[];
         if (index === 0) {
@@ -291,8 +280,6 @@ export default class List<T> implements Iterator<T>, IList<T>
             secondPart = this.copyToInternal(index, this._length - 1, true) as T[];
         }
         this.clear();
-        let len: number = (firstPart as T[]).length;
-        let len2: number = (secondPart as T[]).length;
         this.addRange(firstPart);
         this.add(value);
         this.addRange(secondPart);
@@ -311,7 +298,7 @@ export default class List<T> implements Iterator<T>, IList<T>
 
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
      /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Can be ignored
      */
     public next(value?: any): IteratorResult<T> {
@@ -321,10 +308,12 @@ export default class List<T> implements Iterator<T>, IList<T>
             this._iCounter++;
             lastItem = false;
         }
-        else {
+        else
+        {
             this._iCounter = 0;
             lastItem = true;
         }
+        if (value !== undefined && value === true) { lastItem = true; } // Break-condition
         return new IteratorItem(val, lastItem);
     }
 
@@ -351,7 +340,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Inserts a new value at the bottom position of the List (index position 0)
      * @param value Value to insert
      */
-    public push(value: T) {
+    public push(value: T): void {
         this.insertAtIndex(0, value);
     }
 
@@ -390,7 +379,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Removes the value at the defined index. All values above will be shifted one index position down (index - 1)
      * @param index Index where to remove a value
      */
-    public removeAt(index: number) {
+    public removeAt(index: number): void {
         let i: List<number> = new List<number>(index);
         this.removeAtIndices(i);
     }
@@ -399,13 +388,13 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)
      * @param indices Array of indices to remove
      */
-    public removeAtIndices(indices: number[]);
+    public removeAtIndices(indices: number[]): void;
     /**
      * Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)
      * @param indices List of indices to remove
      */
-    public removeAtIndices(indices: List<number>);
-    public removeAtIndices(indices: List<number> | number[]) {
+    public removeAtIndices(indices: List<number>): void;
+    public removeAtIndices(indices: List<number> | number[]): void {
         let list: List<number>;
         if (Array.isArray(indices)) {
             list = new List<number>(indices);
@@ -433,7 +422,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     /**
      * Method to reverse the List
      */
-    public reverse() {
+    public reverse(): void {
         if (this._length === 0) { return; }
         let halfLength = Math.floor(this._length / 2);
         let i1 = 0;
@@ -451,7 +440,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index Index position (0 to n)
      * @param value New value
      */
-    public set(index: number, value: T) {
+    public set(index: number, value: T): void {
         this.indexCheck(index);
         if (value === undefined)
         {
@@ -460,18 +449,17 @@ export default class List<T> implements Iterator<T>, IList<T>
         this._iList[index] = value;
     }
 
-    /**
-     * Sorts the List according to the default behavior (for basic / common types) or an implemented compareTo function
-     */
-    sort();
-
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Sorts the List according to the passed function
      * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
      */
-    sort(sortFunction: ISortInterFace<T>);
-    sort(sortFunction?: ISortInterFace<T>) 
+    sort(sortFunction: ISortInterFace<T>): void;
+    /**
+     * Sorts the List according to the default behavior (for basic / common types) or an implemented compareTo function
+     */
+    sort(): void;    
+    sort(sortFunction?: ISortInterFace<T>): void 
     {
         if (this._length === 0) { return; }
         let qSort: Sorter<T> = new Sorter<T>(this._iList[0] as T); // Pass the 1st object as sample for type checking
@@ -501,7 +489,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index1 Index position 1
      * @param index2 Index position 1
      */
-    public swapValues(index1: number, index2: number) {
+    public swapValues(index1: number, index2: number): void {
         this.indexCheck(index1);
         this.indexCheck(index2);
         var temp: T = new Object as T;
@@ -509,6 +497,16 @@ export default class List<T> implements Iterator<T>, IList<T>
     }
 
 // ############### P R I V A T E   F U N C T I O N S ###############
+
+    /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    private addInternal(value: T) : void
+    {
+        this._iList[this._length] = value;
+        this._length++;
+    }
 
     /**
      * Internal method to copy a range of values in the List to a List or Array
@@ -573,7 +571,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param value Value to check
      * @param asList If true, a List of indices will be returned, otherwise an Array
      */
-    private indicesOfInternal(value: T, asList: boolean): any {
+    private indicesOfInternal(value: T, asList: boolean): number[] | List<number> {
         let indices: List<number> = new List<number>();
         for (let i = 0; i < this._length; i++) {
             if (isEqual(this._iList[i], value) === true) {
@@ -594,7 +592,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index2 Index position 1
      * @param tempParameter Temporary variable (Define it once outside of this method)
      */
-    private swapValuesInternal(index1: number, index2: number, tempParameter: T) {
+    private swapValuesInternal(index1: number, index2: number, tempParameter: T): void {
         tempParameter = this._iList[index1];
         this._iList[index1] = this._iList[index2];
         this._iList[index2] = tempParameter;

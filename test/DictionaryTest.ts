@@ -375,24 +375,30 @@ describe('forEach method', () => {
     });
     it('should return the iteration counter 4 after execution of the forEach with a break (return) after 4 cycles', () => {
         let counter:number = 0;
+        let dummy: any;
         dict.forEach(item => {
             if (counter >= 4) { return; }
+            dummy = item;
             counter++;
         });
         expect(counter).to.equal(4);
     });
     it('should return the number of 5 iterations after the execution', () => {
         let i: number = 0;
+        let dummy: any;
         dict.forEach(item => {
             i++;
+            dummy = item;
         });
         expect(i).to.equal(5);
     });
     it('should not trigger the callback function on a empty dictionary during the execution', () => {
         dict = new Dictionary<number,number>();
         let hit: boolean = false;
+        let dummy: any;
         dict.forEach(item => {
             hit = true;
+            dummy = item;
         });
         expect(hit).to.equal(false);   
     });
@@ -414,10 +420,10 @@ describe('get method', () => {
         expect(value.getTime()).to.equal(d4.getTime());
     });
     it('should throw an error when executed with the key 222 on a dictionary where this key does not exist', () => {
-        expect(function() { let value: Date = dict.get(222); }).to.throw();
+        expect(function() { let value: Date = dict.get(222); value.toString(); }).to.throw();
     });
     it('should throw an error when executed with undefined as key on a dictionary', () => {
-        expect(function() { let value: Date = dict.get(undefined); }).to.throw();
+        expect(function() { let value: Date = dict.get(undefined); value.toString(); }).to.throw();
     });
     it('should return the number 22 with a date object of  Date(2017,1,1,23,59,0,1) as key (using a proper date hashing function)', () => {
         let dict2: Dictionary<Date, number> = new Dictionary<Date,number>(Utils.properDateHashFunction);
@@ -850,16 +856,37 @@ describe('next method', () => {
 
     it('should indicate that the last element is reached after 7 calls in a dictionary of 5 entries if a forEach call was executed after the 2nd next call (reset)', () => {
         let state: boolean;
+        let dummy: any;
         for(let i: number = 0; i < 7; i++)
         {
             if (i === 2)
                 {
-                    dict.forEach(item =>{});
+                    dict.forEach(item =>{ dummy = item; });
                 }
             state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).isLastEntry;
         }
         expect(state).to.equal(true);
     });
+
+    it('should indicate that the last element is reached after 3 calls in a dictionary of 5 entries (for loop) and after passing "true" ath the 3rd iteration (break condition)', () => {
+        let counter: number = 0;
+        let item: IteratorItem<KeyValuePair<number,number>>;
+        for(let i: number = 0; i < 5; i++)
+        {
+            if (i === 2)
+            {
+                item = dict.next(true) as IteratorItem<KeyValuePair<number,number>>;
+            }
+            else
+            {
+                item = dict.next() as IteratorItem<KeyValuePair<number,number>>;
+            }
+            counter++;
+            if (item.isLastEntry === true) { break; }
+        }
+        expect(counter).to.equal(3);
+    });
+
 });
 
 describe('overrideHashFunction method', () => {

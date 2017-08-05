@@ -155,3 +155,14 @@ Release type: Cleanup / Non-critical
 * Code clean-up
 * Fixed typos
 
+***v1.0.3***
+
+---
+Date: 2017-08-05
+
+Release type: Cleanup / Non-critical
+
+* Code clean-up
+* Added the possibility to indicate that the last item is reached in the next() method by passing 'true' as value
+* Fixed typos
+* Removed further unnecessary files files in the released module

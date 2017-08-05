@@ -5,11 +5,13 @@ var Comparer_1 = require("./Comparer");
  * Class for sorter algorithms
  */
 var Sorter = (function () {
+    // ############### C O N S T R U C T O R S ###############
     /**
      * Constructor of the sorter object
      * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
      */
     function Sorter(sample) {
+        // ############### P R I V A T E   V A R I A B L E S ###############
         this._iCompareToImplemented = false;
         this._iIsBasicType = false;
         this._iIsCommonType = false;
@@ -17,6 +19,7 @@ var Sorter = (function () {
         this.checkBasicCommonType(sample);
     }
     Object.defineProperty(Sorter.prototype, "hasCompareToImplemented", {
+        // ############### P R O P E R T I E S ###############    
         /**
          * Indicated whether type T is sortable due to the implementation of a compareTo function ort if it is a basic type like number, boolean, string or Date
          */
@@ -46,6 +49,7 @@ var Sorter = (function () {
         enumerable: true,
         configurable: true
     });
+    // ############### P U B L I C   F U N C T I O N S ###############
     /**
      * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
      * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
@@ -116,6 +120,7 @@ var Sorter = (function () {
         this.sortByDefault(data, splitIndex + 1, highIndex);
         return;
     };
+    // ############### P R I V A T E   F U N C T I O N S ###############
     /**
      * Internal swap method for quicksort
      * @param data Data as array of the type T

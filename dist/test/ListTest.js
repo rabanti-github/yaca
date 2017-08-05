@@ -193,16 +193,16 @@ describe("LIST<T>\n  #######\n", function () {
             chai_1.expect(value).to.equal("five");
         });
         it('should throw an error when the start index is negative', function () {
-            chai_1.expect(function () { var array = list.copyToArray(-2, 4); }).to.throw();
+            chai_1.expect(function () { var array = list.copyToArray(-2, 4); array.toString(); }).to.throw();
         });
         it('should throw an error when the start index is bigger than the end index in a valid range', function () {
-            chai_1.expect(function () { var array = list.copyToArray(4, 1); }).to.throw();
+            chai_1.expect(function () { var array = list.copyToArray(4, 1); array.toString(); }).to.throw();
         });
         it('should throw an error when the end index is 99 on a list with 6 elements', function () {
-            chai_1.expect(function () { var array = list.copyToArray(1, 99); }).to.throw();
+            chai_1.expect(function () { var array = list.copyToArray(1, 99); array.toString(); }).to.throw();
         });
         it('should not throw an error when the end index is undefined (interpreted as last index position)', function () {
-            chai_1.expect(function () { var array = list.copyToArray(1, undefined); }).not.to.throw();
+            chai_1.expect(function () { var array = list.copyToArray(1, undefined); array.toString(); }).not.to.throw();
         });
     });
     describe('dequeue method', function () {
@@ -289,7 +289,9 @@ describe("LIST<T>\n  #######\n", function () {
         });
         it('should return the number of 5 iterations after the execution', function () {
             var i = 0;
+            var dummy;
             list.forEach(function (item) {
+                dummy = item;
                 i++;
             });
             chai_1.expect(i).to.equal(5);
@@ -297,8 +299,10 @@ describe("LIST<T>\n  #######\n", function () {
         it('should not trigger the callback function on a empty list during the execution', function () {
             list = new List_1.default();
             var hit = false;
+            var dummy;
             list.forEach(function (item) {
                 hit = true;
+                dummy = item;
             });
             chai_1.expect(hit).to.equal(false);
         });
@@ -310,16 +314,16 @@ describe("LIST<T>\n  #######\n", function () {
             chai_1.expect(value).to.equal(55);
         });
         it('should throw an error when executed with index position 99 on a list with 7 entries', function () {
-            chai_1.expect(function () { var value = list.get(99); }).to.throw();
+            chai_1.expect(function () { var value = list.get(99); value.toString(); }).to.throw();
         });
         it('should throw an error when executed with index position -2 on a list with 7 entries', function () {
-            chai_1.expect(function () { var value = list.get(-2); }).to.throw();
+            chai_1.expect(function () { var value = list.get(-2); value.toString(); }).to.throw();
         });
         it('should throw an error when executed with index position 3.55 on a list with 7 entries', function () {
-            chai_1.expect(function () { var value = list.get(3.55); }).to.throw();
+            chai_1.expect(function () { var value = list.get(3.55); value.toString(); }).to.throw();
         });
         it('should throw an error when executed with undefined as index position on a list with 7 entries', function () {
-            chai_1.expect(function () { var value = list.get(undefined); }).to.throw();
+            chai_1.expect(function () { var value = list.get(undefined); value.toString(); }).to.throw();
         });
     });
     describe('getRange method', function () {
@@ -350,13 +354,13 @@ describe("LIST<T>\n  #######\n", function () {
             chai_1.expect(value).to.equal("five");
         });
         it('should throw an error when the start index is negative', function () {
-            chai_1.expect(function () { var list2 = list.getRange(-2, 4); }).to.throw();
+            chai_1.expect(function () { var list2 = list.getRange(-2, 4); list2.clear(); }).to.throw();
         });
         it('should throw an error when the end index is 99 on a list with 6 elements', function () {
-            chai_1.expect(function () { var list2 = list.getRange(2, 99); }).to.throw();
+            chai_1.expect(function () { var list2 = list.getRange(2, 99); list2.clear(); }).to.throw();
         });
         it('should not throw an error when the start index is undefined (interpreted as 0)', function () {
-            chai_1.expect(function () { var list2 = list.getRange(undefined, 2); }).not.to.throw();
+            chai_1.expect(function () { var list2 = list.getRange(undefined, 2); list2.clear(); }).not.to.throw();
         });
     });
     describe('indexOf method', function () {
@@ -504,6 +508,24 @@ describe("LIST<T>\n  #######\n", function () {
                 value = value + item;
             });
             chai_1.expect(value).to.equal("122333444455555");
+        });
+        it('should return the term "122333" after concatenation in a for loop (n = 5) if the value "true" is passed after the 3rd iteration (break condition)', function () {
+            list = Utils_1.Utils.setupList(Types_1.Types.string, ["1", "22", "333", "4444", "55555"]);
+            var value = "";
+            var item;
+            for (var i = 0; i < 5; i++) {
+                if (i === 2) {
+                    item = list.next(true);
+                }
+                else {
+                    item = list.next();
+                }
+                value = value + item.value;
+                if (item.isLastEntry === true) {
+                    break;
+                }
+            }
+            chai_1.expect(value).to.equal("122333");
         });
     });
     describe('peek method', function () {

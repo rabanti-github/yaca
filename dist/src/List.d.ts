@@ -13,13 +13,6 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * Gets the number of elements of the List
      */
     readonly length: number;
-    /** Default constructor */
-    constructor();
-    /**
-     * Constructor with initial value
-     * @param value Value of type T
-     */
-    constructor(value: T);
     /**
      * Constructor with an array as initial value
      * @param values Array of elements with type T
@@ -31,25 +24,27 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     constructor(values: List<T>);
     /**
+     * Constructor with initial value
+     * @param value Value of type T
+     */
+    constructor(value: T);
+    /** Default constructor */
+    constructor();
+    /**
      * Adds an element at the end of the List
      * @param value Value to add
      */
     add(value: T): void;
     /**
-     * Internal method to add a value to the list (without checks)
-     * @param value Value to add
-     */
-    private addInternal(value);
-    /**
      * Adds a range of values
      * @param values Values as List<T>
      */
-    addRange(values: List<T>): any;
+    addRange(values: List<T>): void;
     /**
      * Adds a range of values
      * @param values Values as array of the type T
      */
-    addRange(values: T[]): any;
+    addRange(values: T[]): void;
     /**
      * Removes all elements of the List
      */
@@ -60,10 +55,6 @@ export default class List<T> implements Iterator<T>, IList<T> {
  */
     contains(value: T): boolean;
     /**
-     * Copies the whole List to a new Array of the type T
-     */
-    copyToArray(): T[];
-    /**
      * Copies the List to a new Array of the type T, from the specified starting index until the last entry of the List
      * @param startIndex Start index
      */
@@ -73,6 +64,10 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * @param startIndex Start index
      * @param endIndex End index
      */
+    /**
+     * Copies the whole List to a new Array of the type T
+     */
+    copyToArray(): T[];
     copyToArray(startIndex: number, endIndex: number): T[];
     /**
      * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
@@ -98,20 +93,20 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     get(index: number): T;
     /**
-     * Copies the whole List to a new List
+     * Copies the List to a new List from the specified starting index to the specified end index of the List
+     * @param startIndex Start index (0 if undefined)
+     * @param endIndex End index (end index if undefined)
      */
-    getRange(): List<T>;
+    getRange(startIndex: number, endIndex: number): List<T>;
     /**
      * Copies the List to a new List from the specified starting index until the last entry of the List
      * @param startIndex Start index
      */
     getRange(startIndex: number): List<T>;
     /**
-     * Copies the List to a new List from the specified starting index to the specified end index of the List
-     * @param startIndex Start index (0 if undefined)
-     * @param endIndex End index (end index if undefined)
+     * Copies the whole List to a new List
      */
-    getRange(startIndex: number, endIndex: number): List<T>;
+    getRange(): List<T>;
     /**
      * Gets the index of the first occurrence of the passed value
      * @param value Value to check
@@ -139,7 +134,7 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     lastIndexOf(value: T): number;
     /**
-    * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+    * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
     * @param value Can be ignored
     */
     next(value?: any): IteratorResult<T>;
@@ -175,12 +170,12 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)
      * @param indices Array of indices to remove
      */
-    removeAtIndices(indices: number[]): any;
+    removeAtIndices(indices: number[]): void;
     /**
      * Removes all values at the defined indices. All values above a removes item will be shifted one index position down (index - 1)
      * @param indices List of indices to remove
      */
-    removeAtIndices(indices: List<number>): any;
+    removeAtIndices(indices: List<number>): void;
     /**
      * Method to reverse the List
      */
@@ -192,20 +187,25 @@ export default class List<T> implements Iterator<T>, IList<T> {
      */
     set(index: number, value: T): void;
     /**
-     * Sorts the List according to the default behavior (for basic / common types) or an implemented compareTo function
-     */
-    sort(): any;
-    /**
      * Sorts the List according to the passed function
      * @param sortFunction Function which compares two values of the type T. If value 1 is smaller than value 2, -1 has to be returned. If value 1 is bigger than value 2, 1 has to be returned. If both values are equal, 0 has to be returned.
      */
-    sort(sortFunction: ISortInterFace<T>): any;
+    sort(sortFunction: ISortInterFace<T>): void;
+    /**
+     * Sorts the List according to the default behavior (for basic / common types) or an implemented compareTo function
+     */
+    sort(): void;
     /**
      * Swaps the values at the two defined index positions in the List
      * @param index1 Index position 1
      * @param index2 Index position 1
      */
     swapValues(index1: number, index2: number): void;
+    /**
+     * Internal method to add a value to the list (without checks)
+     * @param value Value to add
+     */
+    private addInternal(value);
     /**
      * Internal method to copy a range of values in the List to a List or Array
      * @param start Start index

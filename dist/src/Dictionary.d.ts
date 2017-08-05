@@ -1,12 +1,11 @@
 /// <reference types="node" />
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import { KeyValuePair } from './KeyValuePair';
-import { IDictionary } from './interfaces/IDictionary';
 import List from './List';
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
-export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> {
+export declare class Dictionary<K, V> implements Iterator<V> {
     private _iDict;
     private _length;
     private _iCounter;
@@ -16,18 +15,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * Gets the number of elements of the Dictionary
      */
     readonly length: number;
-    /** Default constructor */
-    constructor();
-    /**
-     * Constructor with an function to override the default hashing function of the keys (toString)
-     * @param overrideFunction Hashing function. Should accept one parameter of the type K and return a string
-     */
-    constructor(overrideFunction: Function);
-    /**
-     * Constructor with a Dictionary<K,V> as initial value
-     * @param values Dictionary of elements with K and V as Keys and Values
-     */
-    constructor(values: Dictionary<K, V>);
     /**
      * Constructor with initial value
      * @param value Value of type V
@@ -47,6 +34,18 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     constructor(keys: List<K>, values: List<V>);
     /**
+   * Constructor with an function to override the default hashing function of the keys (toString)
+   * @param overrideFunction Hashing function. Should accept one parameter of the type K and return a string
+   */
+    constructor(overrideFunction: Function);
+    /**
+     * Constructor with a Dictionary<K,V> as initial value
+     * @param values Dictionary of elements with K and V as Keys and Values
+     */
+    constructor(values: Dictionary<K, V>);
+    /** Default constructor */
+    constructor();
+    /**
      * Adds an element at the end of the List. This method is synonymous to set
      * @param value Value to add
      * @param key Key to add
@@ -54,21 +53,21 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
     add(key: K, value: V): void;
     /**
      * Adds a range of keys and values
-     * @param values Values as Dictionary<K,V>
-     */
-    addRange(values: Dictionary<K, V>): any;
-    /**
-     * Adds a range of keys and values
      * @param values Values as array of the type V
      * @param keys Keys as array of Type K
      */
-    addRange(keys: K[], values: V[]): any;
+    addRange(keys: K[], values: V[]): void;
     /**
      * Adds a range of keys and values as Lists of the same length
      * @param values Values as List<V>
      * @param keys Keys as List<K>
      */
-    addRange(keys: List<K>, values: List<V>): any;
+    addRange(keys: List<K>, values: List<V>): void;
+    /**
+     * Adds a range of keys and values
+     * @param values Values as Dictionary<K,V>
+     */
+    addRange(values: Dictionary<K, V>): void;
     /**
      * Removes all elements of the Dictionary
      */
@@ -164,10 +163,6 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     getKeysByValuesAsList(values: List<V>): List<K>;
     /**
-     * Copies the whole Dictionary to a new Dictionary
-     */
-    getRange(): Dictionary<K, V>;
-    /**
      * Copies the Dictionary to a new Dictionary using the specified keys
      * @param keys Keys to use for the new Dictionary
      */
@@ -177,6 +172,10 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
  * @param keys Keys to use for the new Dictionary
  */
     getRange(keys: List<K>): Dictionary<K, V>;
+    /**
+     * Copies the whole Dictionary to a new Dictionary
+     */
+    getRange(): Dictionary<K, V>;
     /**
      * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
      * @param values Values to use for the new Dictionary
@@ -196,7 +195,7 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     getValuesAsList(): List<V>;
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0.
+     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Can be ignored
      */
     next(value?: any): IteratorResult<KeyValuePair<K, V>>;
@@ -207,14 +206,9 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     overrideHashFunction(overrideFunction: Function): void;
     /**
-     * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
-     * @param key Key (and attached value) to remove
-     */
-    remove(key: K): boolean;
-    /**
-  * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
-  * @param keys Keys (and attached values) to remove
-  */
+    * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
+    * @param keys Keys (and attached values) to remove
+    */
     remove(keys: K[]): boolean;
     /**
      * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
@@ -222,10 +216,10 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      */
     remove(keys: List<K>): boolean;
     /**
-     * Removes all entries with the passed value from the Dictionary.
-     * @param values Value to remove
+     * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
+     * @param key Key (and attached value) to remove
      */
-    removeByValue(value: V): boolean;
+    remove(key: K): boolean;
     /**
      * Removes all entries with the passed values from the Dictionary.
      * @param values Array of values to remove
@@ -236,6 +230,11 @@ export declare class Dictionary<K, V> implements Iterator<V>, IDictionary<K, V> 
      * @param values List of values to remove
      */
     removeByValue(values: List<V>): boolean;
+    /**
+     * Removes all entries with the passed value from the Dictionary.
+     * @param values Value to remove
+     */
+    removeByValue(value: V): boolean;
     /**
      * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
      * @param key Key of the new value
