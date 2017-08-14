@@ -6,7 +6,7 @@ export class SortedDictionary<K,V> extends BaseDictionary<K,V> implements ICompa
 {
     compareTo( other: K ): number
     {
-        
+        return 0; // Dummy
     }
 
     public getByIndex(index: number): V
