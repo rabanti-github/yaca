@@ -115,6 +115,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#_idefaultfunction" class="tsd-kind-icon">_i<wbr>Default<wbr>Function</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#_iisbasictype" class="tsd-kind-icon">_i<wbr>IsBasic<wbr>Type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#_iiscommontype" class="tsd-kind-icon">_i<wbr>IsCommon<wbr>Type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#_iistuplesort" class="tsd-kind-icon">_i<wbr>IsTuple<wbr>Sort</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -129,11 +130,17 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#checkbasiccommontype" class="tsd-kind-icon">check<wbr>Basic<wbr>Common<wbr>Type</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#internalsort" class="tsd-kind-icon">internal<wbr>Sort</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#internaltuplesort" class="tsd-kind-icon">internal<wbr>Tuple<wbr>Sort</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#iscomparable" class="tsd-kind-icon">is<wbr>Comparable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sortbydefault" class="tsd-kind-icon">sort<wbr>ByDefault</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sortbyfunction" class="tsd-kind-icon">sort<wbr>ByFunction</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sortbyimplementation" class="tsd-kind-icon">sort<wbr>ByImplementation</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sorttuplebydefault" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByDefault</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sorttuplebyfunction" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByFunction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_src_sorter_.sorter.html#sorttuplebyimplementation" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByImplementation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#swap" class="tsd-kind-icon">swap</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_src_sorter_.sorter.html#swaptuple" class="tsd-kind-icon">swap<wbr>Tuple</a></li>
 							</ul>
 						</section>
 					</div>
@@ -145,13 +152,41 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Sorter<span class="tsd-signature-symbol">(</span>sample<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, tupleSort<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_sorter_.sorter.html" class="tsd-signature-type">Sorter</a></li>
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Sorter<span class="tsd-signature-symbol">(</span>sample<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_sorter_.sorter.html" class="tsd-signature-type">Sorter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L41">src/Sorter.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L53">src/Sorter.ts:53</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Constructor of the sorter object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>sample: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented</p>
+										</div>
+									</div>
+								</li>
+								<li>
+									<h5>tupleSort: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_src_sorter_.sorter.html" class="tsd-signature-type">Sorter</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L57">src/Sorter.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -183,7 +218,7 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>Compare<wbr>ToImplemented<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L13">src/Sorter.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L24">src/Sorter.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>Default<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L16">src/Sorter.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L28">src/Sorter.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +238,7 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>IsBasic<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L14">src/Sorter.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L25">src/Sorter.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +248,17 @@
 					<div class="tsd-signature tsd-kind-icon">_i<wbr>IsCommon<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L15">src/Sorter.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L26">src/Sorter.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_iistuplesort" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _i<wbr>IsTuple<wbr>Sort</h3>
+					<div class="tsd-signature tsd-kind-icon">_i<wbr>IsTuple<wbr>Sort<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L27">src/Sorter.ts:27</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -230,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L22">src/Sorter.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L34">src/Sorter.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -252,7 +297,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L30">src/Sorter.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L42">src/Sorter.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -274,7 +319,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L38">src/Sorter.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L50">src/Sorter.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -299,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L177">src/Sorter.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L286">src/Sorter.ts:286</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -321,6 +366,116 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="internalsort" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> internal<wbr>Sort</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">internal<wbr>Sort<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, type<span class="tsd-signature-symbol">: </span><a href="../enums/_src_sorter_.sortertype.html" class="tsd-signature-type">SorterType</a>, comparisonFunction<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L155">src/Sorter.ts:155</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal function to perform a quicksort by default, by a passed comparison function or by an implementation of the compareTo function</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type T</p>
+									</div>
+								</li>
+								<li>
+									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower index within the List to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Higher index within the List to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>type: <a href="../enums/_src_sorter_.sortertype.html" class="tsd-signature-type">SorterType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Type of the sorting implementation (byDefault, byFunction, byImplementation)</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> comparisonFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Comparison function (optional) in case of sorting by function</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="internaltuplesort" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> internal<wbr>Tuple<wbr>Sort</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">internal<wbr>Tuple<wbr>Sort<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, type<span class="tsd-signature-symbol">: </span><a href="../enums/_src_sorter_.sortertype.html" class="tsd-signature-type">SorterType</a>, comparisonFunction<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L195">src/Sorter.ts:195</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal function to perform a quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value</p>
+									</div>
+								</li>
+								<li>
+									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower index within the temporary array to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Higher index within the temporary array to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>type: <a href="../enums/_src_sorter_.sortertype.html" class="tsd-signature-type">SorterType</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Type of the sorting implementation (byDefault, byFunction, byImplementation)</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> comparisonFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Comparison function (optional) in case of sorting by function</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="iscomparable" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> is<wbr>Comparable</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
@@ -330,7 +485,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L148">src/Sorter.ts:148</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L257">src/Sorter.ts:257</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -360,7 +515,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L111">src/Sorter.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L106">src/Sorter.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,13 +552,13 @@
 					<a name="sortbyfunction" class="tsd-anchor"></a>
 					<h3>sort<wbr>ByFunction</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">sort<wbr>ByFunction<span class="tsd-signature-symbol">(</span>comparerFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">sort<wbr>ByFunction<span class="tsd-signature-symbol">(</span>comparisonFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L62">src/Sorter.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L83">src/Sorter.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -414,7 +569,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>comparerFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>comparisonFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Comparison function to compare the List entry of the passed lower and higher index position</p>
 									</div>
@@ -453,7 +608,7 @@
 							<aside class="tsd-sources">
 								<p>Implementation of <a href="../interfaces/_src_interfaces_isorter_.isorter.html">ISorter</a>.<a href="../interfaces/_src_interfaces_isorter_.isorter.html#sortbyimplementation">sortByImplementation</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L87">src/Sorter.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L94">src/Sorter.ts:94</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -486,6 +641,141 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sorttuplebydefault" class="tsd-anchor"></a>
+					<h3>sort<wbr>Tuple<wbr>ByDefault</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sort<wbr>Tuple<wbr>ByDefault<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L140">src/Sorter.ts:140</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Implementation of a quicksort algorithm for Key-Value pairs, using the previous determined default compareTo function. This method is called recursively</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value</p>
+									</div>
+								</li>
+								<li>
+									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower index within the List to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Higher index within the List to check</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sorttuplebyfunction" class="tsd-anchor"></a>
+					<h3>sort<wbr>Tuple<wbr>ByFunction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sort<wbr>Tuple<wbr>ByFunction<span class="tsd-signature-symbol">(</span>comparisonFunction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, data<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L118">src/Sorter.ts:118</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Implementation of a quicksort algorithm for Key-Value pairs, using a static compareTo function. This method is called recursively</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>comparisonFunction: <span class="tsd-signature-type">ISortInterFace</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Comparison function to compare the temporary array entry of the passed lower and higher index position</p>
+									</div>
+								</li>
+								<li>
+									<h5>data: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value</p>
+									</div>
+								</li>
+								<li>
+									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower index within the List to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Higher index within the List to check</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="sorttuplebyimplementation" class="tsd-anchor"></a>
+					<h3>sort<wbr>Tuple<wbr>ByImplementation</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">sort<wbr>Tuple<wbr>ByImplementation<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, lowIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, highIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L129">src/Sorter.ts:129</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Implementation of a quicksort algorithm for Key-Value pairs, using the class implementation of a compareTo function. This method is called recursively</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value</p>
+									</div>
+								</li>
+								<li>
+									<h5>lowIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Lower index within the List to check</p>
+									</div>
+								</li>
+								<li>
+									<h5>highIndex: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Higher index within the List to check</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
 					<a name="swap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> swap</h3>
@@ -496,7 +786,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/8c0c8cc/src/Sorter.ts#L137">src/Sorter.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L233">src/Sorter.ts:233</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -529,6 +819,49 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="swaptuple" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> swap<wbr>Tuple</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">swap<wbr>Tuple<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span>, index1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, index2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/rabanti-github/yaca/blob/13527bc/src/Sorter.ts#L246">src/Sorter.ts:246</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Internal swap method for quicksort of tuples</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <a href="_src_keyvaluepair_.keyvaluepair.html" class="tsd-signature-type">KeyValuePair</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Data as array of the type KeyValuePair<T,any></p>
+									</div>
+								</li>
+								<li>
+									<h5>index1: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index position 1 of the data to swap</p>
+									</div>
+								</li>
+								<li>
+									<h5>index2: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Index position 2 of the data to swap</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -537,82 +870,16 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_comparer_.html">"src/<wbr>Comparer"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_dictionary_.html">"src/<wbr>Dictionary"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_iteratoritem_.html">"src/<wbr>Iterator<wbr>Item"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_keyvaluepair_.html">"src/<wbr>Key<wbr>Value<wbr>Pair"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_list_.html">"src/<wbr>List"</a>
-					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_src_sorter_.html">"src/<wbr>Sorter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_icomparer_.html">"src/interfaces/IComparer"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_iforeachinterfacedictionary_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_iforeachinterfacelist_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>List"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_ilist_.html">"src/interfaces/IList"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_isortinterface_.html">"src/interfaces/ISort<wbr>Interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_src_interfaces_isorter_.html">"src/interfaces/ISorter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_comparertest_.html">"test/<wbr>Comparer<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_dictionarytest_.html">"test/<wbr>Dictionary<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_iteratoritemtest_.html">"test/<wbr>Iterator<wbr>Item<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_keyvaluepairtest_.html">"test/<wbr>Key<wbr>Value<wbr>Pair<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_sortertest_.html">"test/<wbr>Sorter<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_testclasstest_.html">"test/<wbr>Test<wbr>Class<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_testtest_.html">"test/<wbr>Test<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_utils_testclass_.html">"test/utils/<wbr>Test<wbr>Class"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_utils_types_.html">"test/utils/<wbr>Types"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_test_utils_utils_.html">"test/utils/<wbr>Utils"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../enums/_src_sorter_.sortertype.html" class="tsd-kind-icon">Sorter<wbr>Type</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -633,6 +900,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_src_sorter_.sorter.html#_iiscommontype" class="tsd-kind-icon">_i<wbr>IsCommon<wbr>Type</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_src_sorter_.sorter.html#_iistuplesort" class="tsd-kind-icon">_i<wbr>IsTuple<wbr>Sort</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_src_sorter_.sorter.html#hascomparetoimplemented" class="tsd-kind-icon">has<wbr>Compare<wbr>ToImplemented</a>
 							</li>
@@ -646,6 +916,12 @@
 								<a href="_src_sorter_.sorter.html#checkbasiccommontype" class="tsd-kind-icon">check<wbr>Basic<wbr>Common<wbr>Type</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_src_sorter_.sorter.html#internalsort" class="tsd-kind-icon">internal<wbr>Sort</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_src_sorter_.sorter.html#internaltuplesort" class="tsd-kind-icon">internal<wbr>Tuple<wbr>Sort</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_src_sorter_.sorter.html#iscomparable" class="tsd-kind-icon">is<wbr>Comparable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -657,8 +933,20 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_src_sorter_.sorter.html#sortbyimplementation" class="tsd-kind-icon">sort<wbr>ByImplementation</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_src_sorter_.sorter.html#sorttuplebydefault" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByDefault</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_src_sorter_.sorter.html#sorttuplebyfunction" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByFunction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_src_sorter_.sorter.html#sorttuplebyimplementation" class="tsd-kind-icon">sort<wbr>Tuple<wbr>ByImplementation</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
 								<a href="_src_sorter_.sorter.html#swap" class="tsd-kind-icon">swap</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_src_sorter_.sorter.html#swaptuple" class="tsd-kind-icon">swap<wbr>Tuple</a>
 							</li>
 						</ul>
 					</li>

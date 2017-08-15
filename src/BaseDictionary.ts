@@ -1,7 +1,7 @@
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import {KeyValuePair} from './KeyValuePair';
 import { IteratorItem } from './IteratorItem';
-import  List  from './List';
+import  List from './List';
 import  { IDictionary }  from './interfaces/IDictionary';
 var isEqual  = require('lodash.isequal');
 

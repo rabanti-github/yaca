@@ -3,6 +3,17 @@ import ISortInterFace from './interfaces/ISortInterface';
 import { ISorter } from './interfaces/ISorter';
 import { IComparer } from './interfaces/IComparer';
 import { Comparer }  from './Comparer';
+import {KeyValuePair} from './KeyValuePair';
+
+
+// ############### E N U M S ###############
+enum SorterType
+{
+    sortByDefault,
+    sortByImplementation,
+    sortByFunction
+}
+
 /**
  * Class for sorter algorithms
  */
@@ -13,6 +24,7 @@ export class Sorter<T> implements ISorter<T>
     private _iCompareToImplemented: boolean = false;
     private _iIsBasicType: boolean = false;
     private _iIsCommonType: boolean = false;
+    private _iIsTupleSort: boolean = false;
     private _iDefaultFunction: Function;
 
 // ############### P R O P E R T I E S ###############    
@@ -41,12 +53,21 @@ export class Sorter<T> implements ISorter<T>
     }    
 
 // ############### C O N S T R U C T O R S ###############
+
+   constructor(sample: KeyValuePair<T,any>, tupleSort: boolean);
     /**
      * Constructor of the sorter object
      * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
      */
-    constructor(sample: T)
+    constructor(sample: T);
+    constructor(sample: T | KeyValuePair<T,any>, tupleSort?: boolean) 
     { 
+        if (sample instanceof KeyValuePair && tupleSort !== undefined)
+        {
+            this._iIsTupleSort = tupleSort;
+            this._iCompareToImplemented = this.isComparable(sample.key);
+            this.checkBasicCommonType(sample.key);
+        }
        this._iCompareToImplemented = this.isComparable(sample);
        this.checkBasicCommonType(sample);
     }    
@@ -54,28 +75,14 @@ export class Sorter<T> implements ISorter<T>
 // ############### P U B L I C   F U N C T I O N S ###############
     /**
      * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
-     * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
+     * @param comparisonFunction Comparison function to compare the List entry of the passed lower and higher index position
      * @param data Data as array of the type T
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByFunction(comparerFunction: ISortInterFace<T>, data: T[], lowIndex: number, highIndex: number): void {
-    
-        if (highIndex - lowIndex <= 1) { return; }
-        let pivot: T = data[highIndex -1];
-        let splitIndex = lowIndex;
-        for(let i: number = lowIndex; i < highIndex - 1; i++)
-        {
-            if (comparerFunction(data[i], pivot) <= 0)
-            {
-                this.swap(data, i, splitIndex);
-                splitIndex++;
-            }
-        }
-        this.swap(data, highIndex - 1, splitIndex);
-        this.sortByFunction(comparerFunction, data, lowIndex, splitIndex);
-        this.sortByFunction(comparerFunction, data, splitIndex + 1, highIndex);
-        return;
+    public sortByFunction(comparisonFunction: ISortInterFace<T>, data: T[], lowIndex: number, highIndex: number): void
+    {
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByFunction, comparisonFunction);
     }
 
     /**
@@ -84,22 +91,10 @@ export class Sorter<T> implements ISorter<T>
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByImplementation(data: T[], lowIndex: number, highIndex: number): void {
-        if (highIndex - lowIndex <= 1) { return; }
-        let pivot: T = data[highIndex -1];
-        let splitIndex = lowIndex;
-        for(let i: number = lowIndex; i < highIndex - 1; i++)
-        {
-            if ((data[i] as any).compareTo(pivot) <= 0)
-            {
-                this.swap(data, i, splitIndex);
-                splitIndex++;
-            }
-        }
-        this.swap(data, highIndex - 1, splitIndex);
-        this.sortByImplementation(data, lowIndex, splitIndex);
-        this.sortByImplementation(data, splitIndex + 1, highIndex);
-        return;        
+    public sortByImplementation(data: T[], lowIndex: number, highIndex: number): void
+    {
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByImplementation);
+     
     }
 
     /**
@@ -108,26 +103,127 @@ export class Sorter<T> implements ISorter<T>
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    public sortByDefault(data: T[], lowIndex: number, highIndex: number): void {
-    
+    public sortByDefault(data: T[], lowIndex: number, highIndex: number): void
+    {
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByDefault);   
+    }
+
+    /**
+     * Implementation of a quicksort algorithm for Key-Value pairs, using a static compareTo function. This method is called recursively
+     * @param comparisonFunction Comparison function to compare the temporary array entry of the passed lower and higher index position
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     */
+    public sortTupleByFunction(comparisonFunction: ISortInterFace<T>, data: KeyValuePair<T,any>[], lowIndex: number, highIndex: number): void
+    {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByFunction, comparisonFunction);
+    }
+
+    /**
+     * Implementation of a quicksort algorithm for Key-Value pairs, using the class implementation of a compareTo function. This method is called recursively
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     */
+    public sortTupleByImplementation(data: KeyValuePair<T,any>[], lowIndex: number, highIndex: number): void
+    {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByImplementation);
+    }
+
+   /**
+     * Implementation of a quicksort algorithm for Key-Value pairs, using the previous determined default compareTo function. This method is called recursively
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     */
+    public sortTupleByDefault(data: KeyValuePair<T,any>[], lowIndex: number, highIndex: number): void
+    {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByDefault);  
+    }
+
+// ############### P R I V A T E   F U N C T I O N S ###############
+
+    /**
+     * Internal function to perform a quicksort by default, by a passed comparison function or by an implementation of the compareTo function
+     * @param data Data as array of the type T
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
+     * @param comparisonFunction Comparison function (optional) in case of sorting by function 
+     */
+    private internalSort(data: T[], lowIndex: number, highIndex: number, type: SorterType, comparisonFunction?: ISortInterFace<T>): void
+    {   
         if (highIndex - lowIndex <= 1) { return; }
         let pivot: T = data[highIndex -1];
         let splitIndex = lowIndex;
+        let compareResult: number;
         for(let i: number = lowIndex; i < highIndex - 1; i++)
         {
-            if (this._iDefaultFunction(data[i], pivot) <= 0)
+            if (type === SorterType.sortByFunction && comparisonFunction !== undefined)
+            {
+                compareResult = comparisonFunction(data[i], pivot) ;              
+            }
+            else if (type === SorterType.sortByImplementation)
+            {
+                compareResult = (data[i] as any).compareTo(pivot)
+            }
+            else
+            {
+                compareResult = this._iDefaultFunction(data[i], pivot);              
+            }
+            if (compareResult <= 0)
             {
                 this.swap(data, i, splitIndex);
-                splitIndex++;
+                splitIndex++;                
             }
         }
         this.swap(data, highIndex - 1, splitIndex);
-        this.sortByDefault(data, lowIndex, splitIndex);
-        this.sortByDefault(data, splitIndex + 1, highIndex);
+        this.internalSort(data, lowIndex, splitIndex, type, comparisonFunction);
+        this.internalSort(data, splitIndex + 1, highIndex, type, comparisonFunction);
+        return;
+    }
+
+    /**
+     * Internal function to perform a quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the temporary array to check
+     * @param highIndex Higher index within the temporary array to check
+     * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
+     * @param comparisonFunction Comparison function (optional) in case of sorting by function 
+     */
+    private internalTupleSort(data: KeyValuePair<T,any>[], lowIndex: number, highIndex: number, type: SorterType, comparisonFunction?: ISortInterFace<T>): void
+    {   
+        if (highIndex - lowIndex <= 1) { return; }
+        let pivot: T = data[highIndex -1].key;
+        let splitIndex = lowIndex;
+        let compareResult: number;
+        for(let i: number = lowIndex; i < highIndex - 1; i++)
+        {
+            if (type === SorterType.sortByFunction && comparisonFunction !== undefined)
+            {
+                compareResult = comparisonFunction(data[i].key, pivot) ;              
+            }
+            else if (type === SorterType.sortByImplementation)
+            {
+                compareResult = (data[i].key as any).compareTo(pivot)
+            }
+            else
+            {
+                compareResult = this._iDefaultFunction(data[i].key, pivot);              
+            }
+            if (compareResult <= 0)
+            {
+                this.swapTuple(data, i, splitIndex);
+                splitIndex++;                
+            }
+        }
+        this.swapTuple(data, highIndex - 1, splitIndex);
+        this.internalTupleSort(data, lowIndex, splitIndex, type, comparisonFunction);
+        this.internalTupleSort(data, splitIndex + 1, highIndex, type, comparisonFunction);
         return;
     }    
 
-// ############### P R I V A T E   F U N C T I O N S ###############
     /**
      * Internal swap method for quicksort
      * @param data Data as array of the type T
@@ -140,6 +236,19 @@ export class Sorter<T> implements ISorter<T>
         data[index1] = data[index2];
         data[index2] = temp;
     }
+
+    /**
+     * Internal swap method for quicksort of tuples
+     * @param data Data as array of the type KeyValuePair<T,any>
+     * @param index1 Index position 1 of the data to swap
+     * @param index2 Index position 2 of the data to swap
+     */
+    private swapTuple(data: KeyValuePair<T,any>[], index1: number, index2: number): void
+    {
+        let temp: KeyValuePair<T,any> = data[index1];
+        data[index1] = data[index2];
+        data[index2] = temp;
+    }    
 
     /**
      * Checks whether the type is comparable due to the implementation of a compareTo function

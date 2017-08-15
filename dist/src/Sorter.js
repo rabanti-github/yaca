@@ -1,20 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Comparer_1 = require("./Comparer");
+var KeyValuePair_1 = require("./KeyValuePair");
+// ############### E N U M S ###############
+var SorterType;
+(function (SorterType) {
+    SorterType[SorterType["sortByDefault"] = 0] = "sortByDefault";
+    SorterType[SorterType["sortByImplementation"] = 1] = "sortByImplementation";
+    SorterType[SorterType["sortByFunction"] = 2] = "sortByFunction";
+})(SorterType || (SorterType = {}));
 /**
  * Class for sorter algorithms
  */
 var Sorter = (function () {
-    // ############### C O N S T R U C T O R S ###############
-    /**
-     * Constructor of the sorter object
-     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented
-     */
-    function Sorter(sample) {
+    function Sorter(sample, tupleSort) {
         // ############### P R I V A T E   V A R I A B L E S ###############
         this._iCompareToImplemented = false;
         this._iIsBasicType = false;
         this._iIsCommonType = false;
+        this._iIsTupleSort = false;
+        if (sample instanceof KeyValuePair_1.KeyValuePair && tupleSort !== undefined) {
+            this._iIsTupleSort = tupleSort;
+            this._iCompareToImplemented = this.isComparable(sample.key);
+            this.checkBasicCommonType(sample.key);
+        }
         this._iCompareToImplemented = this.isComparable(sample);
         this.checkBasicCommonType(sample);
     }
@@ -52,27 +61,13 @@ var Sorter = (function () {
     // ############### P U B L I C   F U N C T I O N S ###############
     /**
      * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
-     * @param comparerFunction Comparison function to compare the List entry of the passed lower and higher index position
+     * @param comparisonFunction Comparison function to compare the List entry of the passed lower and higher index position
      * @param data Data as array of the type T
      * @param lowIndex Lower index within the List to check
      * @param highIndex Higher index within the List to check
      */
-    Sorter.prototype.sortByFunction = function (comparerFunction, data, lowIndex, highIndex) {
-        if (highIndex - lowIndex <= 1) {
-            return;
-        }
-        var pivot = data[highIndex - 1];
-        var splitIndex = lowIndex;
-        for (var i = lowIndex; i < highIndex - 1; i++) {
-            if (comparerFunction(data[i], pivot) <= 0) {
-                this.swap(data, i, splitIndex);
-                splitIndex++;
-            }
-        }
-        this.swap(data, highIndex - 1, splitIndex);
-        this.sortByFunction(comparerFunction, data, lowIndex, splitIndex);
-        this.sortByFunction(comparerFunction, data, splitIndex + 1, highIndex);
-        return;
+    Sorter.prototype.sortByFunction = function (comparisonFunction, data, lowIndex, highIndex) {
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByFunction, comparisonFunction);
     };
     /**
      * Implementation of a quicksort algorithm using the class implementation of a compareTo function. This method is called recursively
@@ -81,21 +76,7 @@ var Sorter = (function () {
      * @param highIndex Higher index within the List to check
      */
     Sorter.prototype.sortByImplementation = function (data, lowIndex, highIndex) {
-        if (highIndex - lowIndex <= 1) {
-            return;
-        }
-        var pivot = data[highIndex - 1];
-        var splitIndex = lowIndex;
-        for (var i = lowIndex; i < highIndex - 1; i++) {
-            if (data[i].compareTo(pivot) <= 0) {
-                this.swap(data, i, splitIndex);
-                splitIndex++;
-            }
-        }
-        this.swap(data, highIndex - 1, splitIndex);
-        this.sortByImplementation(data, lowIndex, splitIndex);
-        this.sortByImplementation(data, splitIndex + 1, highIndex);
-        return;
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByImplementation);
     };
     /**
      * Implementation of a quicksort algorithm using the previous determined default compareTo function. This method is called recursively
@@ -104,23 +85,107 @@ var Sorter = (function () {
      * @param highIndex Higher index within the List to check
      */
     Sorter.prototype.sortByDefault = function (data, lowIndex, highIndex) {
+        this.internalSort(data, lowIndex, highIndex, SorterType.sortByDefault);
+    };
+    /**
+     * Implementation of a quicksort algorithm for Key-Value pairs, using a static compareTo function. This method is called recursively
+     * @param comparisonFunction Comparison function to compare the temporary array entry of the passed lower and higher index position
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     */
+    Sorter.prototype.sortTupleByFunction = function (comparisonFunction, data, lowIndex, highIndex) {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByFunction, comparisonFunction);
+    };
+    /**
+     * Implementation of a quicksort algorithm for Key-Value pairs, using the class implementation of a compareTo function. This method is called recursively
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     */
+    Sorter.prototype.sortTupleByImplementation = function (data, lowIndex, highIndex) {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByImplementation);
+    };
+    /**
+      * Implementation of a quicksort algorithm for Key-Value pairs, using the previous determined default compareTo function. This method is called recursively
+      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+      * @param lowIndex Lower index within the List to check
+      * @param highIndex Higher index within the List to check
+      */
+    Sorter.prototype.sortTupleByDefault = function (data, lowIndex, highIndex) {
+        this.internalTupleSort(data, lowIndex, highIndex, SorterType.sortByDefault);
+    };
+    // ############### P R I V A T E   F U N C T I O N S ###############
+    /**
+     * Internal function to perform a quicksort by default, by a passed comparison function or by an implementation of the compareTo function
+     * @param data Data as array of the type T
+     * @param lowIndex Lower index within the List to check
+     * @param highIndex Higher index within the List to check
+     * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
+     * @param comparisonFunction Comparison function (optional) in case of sorting by function
+     */
+    Sorter.prototype.internalSort = function (data, lowIndex, highIndex, type, comparisonFunction) {
         if (highIndex - lowIndex <= 1) {
             return;
         }
         var pivot = data[highIndex - 1];
         var splitIndex = lowIndex;
+        var compareResult;
         for (var i = lowIndex; i < highIndex - 1; i++) {
-            if (this._iDefaultFunction(data[i], pivot) <= 0) {
+            if (type === SorterType.sortByFunction && comparisonFunction !== undefined) {
+                compareResult = comparisonFunction(data[i], pivot);
+            }
+            else if (type === SorterType.sortByImplementation) {
+                compareResult = data[i].compareTo(pivot);
+            }
+            else {
+                compareResult = this._iDefaultFunction(data[i], pivot);
+            }
+            if (compareResult <= 0) {
                 this.swap(data, i, splitIndex);
                 splitIndex++;
             }
         }
         this.swap(data, highIndex - 1, splitIndex);
-        this.sortByDefault(data, lowIndex, splitIndex);
-        this.sortByDefault(data, splitIndex + 1, highIndex);
+        this.internalSort(data, lowIndex, splitIndex, type, comparisonFunction);
+        this.internalSort(data, splitIndex + 1, highIndex, type, comparisonFunction);
         return;
     };
-    // ############### P R I V A T E   F U N C T I O N S ###############
+    /**
+     * Internal function to perform a quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the temporary array to check
+     * @param highIndex Higher index within the temporary array to check
+     * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
+     * @param comparisonFunction Comparison function (optional) in case of sorting by function
+     */
+    Sorter.prototype.internalTupleSort = function (data, lowIndex, highIndex, type, comparisonFunction) {
+        if (highIndex - lowIndex <= 1) {
+            return;
+        }
+        var pivot = data[highIndex - 1].key;
+        var splitIndex = lowIndex;
+        var compareResult;
+        for (var i = lowIndex; i < highIndex - 1; i++) {
+            if (type === SorterType.sortByFunction && comparisonFunction !== undefined) {
+                compareResult = comparisonFunction(data[i].key, pivot);
+            }
+            else if (type === SorterType.sortByImplementation) {
+                compareResult = data[i].key.compareTo(pivot);
+            }
+            else {
+                compareResult = this._iDefaultFunction(data[i].key, pivot);
+            }
+            if (compareResult <= 0) {
+                this.swapTuple(data, i, splitIndex);
+                splitIndex++;
+            }
+        }
+        this.swapTuple(data, highIndex - 1, splitIndex);
+        this.internalTupleSort(data, lowIndex, splitIndex, type, comparisonFunction);
+        this.internalTupleSort(data, splitIndex + 1, highIndex, type, comparisonFunction);
+        return;
+    };
     /**
      * Internal swap method for quicksort
      * @param data Data as array of the type T
@@ -128,6 +193,17 @@ var Sorter = (function () {
      * @param index2 Index position 2 of the data to swap
      */
     Sorter.prototype.swap = function (data, index1, index2) {
+        var temp = data[index1];
+        data[index1] = data[index2];
+        data[index2] = temp;
+    };
+    /**
+     * Internal swap method for quicksort of tuples
+     * @param data Data as array of the type KeyValuePair<T,any>
+     * @param index1 Index position 1 of the data to swap
+     * @param index2 Index position 2 of the data to swap
+     */
+    Sorter.prototype.swapTuple = function (data, index1, index2) {
         var temp = data[index1];
         data[index1] = data[index2];
         data[index2] = temp;

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("../src/Dictionary");
 var List_1 = require("../src/List");
+var Comparer_1 = require("../src/Comparer");
 var Utils_1 = require("./utils/Utils");
 var Types_1 = require("./utils/Types");
 var TestClass_1 = require("./utils/TestClass");
@@ -782,6 +783,13 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             var dict2 = new Dictionary_1.Dictionary();
             var values = dict2.getValues();
             chai_1.expect(values.length).to.equal(0);
+        });
+        it('should return the value "f" at the last index position of the array, after sorting', function () {
+            var values = dict.getValues();
+            var temp = new List_1.default(values);
+            temp.sort(Comparer_1.Comparer.compareStrings);
+            var result = temp[temp.length - 1];
+            chai_1.expect(result).to.equal("f");
         });
     });
     describe('getValuesAsList method', function () {

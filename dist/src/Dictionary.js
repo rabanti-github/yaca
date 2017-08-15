@@ -312,7 +312,7 @@ var Dictionary = (function () {
         var temp = this.getKeyValuePairsInternal();
         var output = Array(temp.length);
         for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['value'];
+            output[i] = temp[i]['value'][1];
         }
         return output;
     };
