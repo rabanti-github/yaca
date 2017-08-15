@@ -15,11 +15,11 @@ export declare module Comparer {
      */
     function compareBooleans(value1: boolean, value2: boolean): number;
     /**
-     * Function to compare two strings
-     * @param value1 String 1 to compare
-     * @param value2 String 2 to compare
+     * Function to compare two strings. Other objects will be converted to strings using the toString function
+     * @param value1 String / object 1 to compare
+     * @param value2 String / object 2 to compare
      */
-    function compareStrings(value1: string, value2: string): number;
+    function compareStrings(value1: any, value2: any): number;
     /**
      * Function to compare two Dates
      * @param date1 Date 1 to compare

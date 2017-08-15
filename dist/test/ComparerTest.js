@@ -68,6 +68,10 @@ describe("SORTER\n  ######\n", function () {
             var result = Comparer_1.Comparer.compareStrings("9", "8");
             chai_1.expect(result).to.equal(1);
         });
+        it('should return 1 if the first variable is 9 and the second variable is 8 (passed integers)', function () {
+            var result = Comparer_1.Comparer.compareStrings(9, 8);
+            chai_1.expect(result).to.equal(1);
+        });
     });
 });
 //# sourceMappingURL=ComparerTest.js.map

@@ -71,7 +71,7 @@
 				<p><a href="https://coveralls.io/github/rabanti-github/yaca?branch=master"><img src="https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master" alt="Coverage Status"></a>
 					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=2592000" alt="npm">
 				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
-				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong> and <strong>Dictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack or SortedDictionary) are planned.</p>
+				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong> and <strong>Dictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack or SortedDictionary [WIP]) are planned.</p>
 				<h2 id="important-features">Important features</h2>
 				<ul>
 					<li>Multiple add and remove functions like add, addRange, insertAtIndex, push or set</li>
@@ -102,8 +102,15 @@
 <span class="hljs-keyword">var</span> otherList: List&lt;SomeType&gt; = <span class="hljs-keyword">new</span> List&lt;SomeType&gt;();
 
 numberList.add(<span class="hljs-number">22</span>);
+
 numberList.addRange([<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>]);
+
 numberList.sort();
+
+numberList.forEach(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(element);
+        });
+
 numberList.clear();
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
@@ -128,7 +135,13 @@ numberList.clear();
 <span class="hljs-keyword">var</span> otherDictionary: Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt;();
 
 dictionary.add(<span class="hljs-number">22</span>, <span class="hljs-string">"twenty two"</span>);
+
 <span class="hljs-keyword">let</span> value:<span class="hljs-built_in">string</span> = dictionary2.get(<span class="hljs-number">2</span>);
+
+dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"key:"</span> + item.key + <span class="hljs-string">" -&gt; value:"</span> + item.value);
+        });
+
 dictionary3.clear();
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>

@@ -71,6 +71,10 @@ describe('static:compareStrings', () => {
         let result: number = Comparer.compareStrings("9","8");
         expect(result).to.equal(1);
     });
+    it('should return 1 if the first variable is 9 and the second variable is 8 (passed integers)', () => {
+        let result: number = Comparer.compareStrings(9,8);
+        expect(result).to.equal(1);
+    });
 
 });
 

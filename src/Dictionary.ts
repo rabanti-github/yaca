@@ -462,7 +462,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 
         for(let i: number = 0; i < this._length; i++)
         {
-            output[i] = temp[i]['value'];
+            output[i] = temp[i]['value'][1];
         }
         return output;
     }

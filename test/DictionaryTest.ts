@@ -1,6 +1,7 @@
 import {Dictionary} from '../src/Dictionary';
 import {KeyValuePair} from '../src/KeyValuePair';
 import List from '../src/List';
+import {Comparer} from '../src/Comparer';
 import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
@@ -806,6 +807,13 @@ describe('getValues method', () => {
         let dict2: Dictionary<number,string> = new Dictionary<number,string>();
         let values: string[] = dict2.getValues();
         expect(values.length).to.equal(0);
+    });
+    it('should return the value "f" at the last index position of the array, after sorting', () => {
+        let values: string[] = dict.getValues();
+        let temp: List<string> = new List<string>(values);
+        temp.sort(Comparer.compareStrings);
+        let result: string = temp.get(temp.length - 1);
+        expect(result).to.equal("f");
     });
 });
 

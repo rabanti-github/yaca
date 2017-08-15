@@ -10,7 +10,7 @@ YACA is another approach to introduce Collections to TypeScript / JavaScript lik
 ![npm](https://img.shields.io/npm/v/yaca.svg?maxAge=2592000)
 ![license](https://img.shields.io/github/license/rabanti-github/yaca.svg)
 
-YACA contains at the moment **List&lt;T&gt;** and **Dictionary&lt;K,V&gt;** as collection types. Further types (e.g. Stack or SortedDictionary) are planned.
+YACA contains at the moment **List&lt;T&gt;** and **Dictionary&lt;K,V&gt;** as collection types. Further types (e.g. Stack or SortedDictionary [WIP]) are planned.
 
 ## Important features
 
@@ -48,8 +48,15 @@ let booelanList: List<boolean> = new List<boolean>([true, false, true, true]);
 var otherList: List<SomeType> = new List<SomeType>();
 
 numberList.add(22);
+
 numberList.addRange([23,24,25]);
+
 numberList.sort();
+
+numberList.forEach(element => {
+            console.log(element);
+        });
+
 numberList.clear();
 ```
 
@@ -78,7 +85,13 @@ let dictionary3: Dictionary<number, Date> = new Dictionary<number, Date>(MyUtils
 var otherDictionary: Dictionary<Date, SomeType> = new Dictionary<Date, SomeType>();
 
 dictionary.add(22, "twenty two");
+
 let value:string = dictionary2.get(2);
+
+dictionary2.forEach(item => {
+            console.log("key:" + item.key + " -> value:" + item.value);
+        });
+
 dictionary3.clear();
 ```
 
