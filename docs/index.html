@@ -69,9 +69,9 @@
 				<h2 id="introduction">Introduction</h2>
 				<p>YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.</p>
 				<p><a href="https://coveralls.io/github/rabanti-github/yaca?branch=master"><img src="https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master" alt="Coverage Status"></a>
-					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=2592000" alt="npm">
+					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=86400" alt="npm">
 				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
-				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong> and <strong>Dictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack or SortedDictionary) are planned.</p>
+				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong>, <strong>Dictionary&lt;K,V&gt;</strong> and <strong>SortedDictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack) are planned.</p>
 				<h2 id="important-features">Important features</h2>
 				<ul>
 					<li>Multiple add and remove functions like add, addRange, insertAtIndex, push or set</li>
@@ -80,6 +80,7 @@
 					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
 					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
 					<li>Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)</li>
+					<li>Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function</li>
 					<li>Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)</li>
 				</ul>
 				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
@@ -102,8 +103,15 @@
 <span class="hljs-keyword">var</span> otherList: List&lt;SomeType&gt; = <span class="hljs-keyword">new</span> List&lt;SomeType&gt;();
 
 numberList.add(<span class="hljs-number">22</span>);
+
 numberList.addRange([<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>]);
+
 numberList.sort();
+
+numberList.forEach(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(element);
+        });
+
 numberList.clear();
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
@@ -128,10 +136,44 @@ numberList.clear();
 <span class="hljs-keyword">var</span> otherDictionary: Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt;();
 
 dictionary.add(<span class="hljs-number">22</span>, <span class="hljs-string">"twenty two"</span>);
+
 <span class="hljs-keyword">let</span> value:<span class="hljs-built_in">string</span> = dictionary2.get(<span class="hljs-number">2</span>);
+
+dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"key:"</span> + item.key + <span class="hljs-string">" -&gt; value:"</span> + item.value);
+        });
+
 dictionary3.clear();
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>
+				<ul>
+					<li>Constructors</li>
+					<li>Properties</li>
+					<li>Methods</li>
+				</ul>
+				<h2 id="usage-sorteddictionary-lt-k-v-gt-">Usage (SortedDictionary&lt;K,V&gt;)</h2>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+<span class="hljs-keyword">import</span> {Comparer} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+
+<span class="hljs-comment">// Default constructor</span>
+<span class="hljs-keyword">let</span> dictionary: SortedDictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> SortedDictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;();
+
+<span class="hljs-comment">// Constructor with initial value</span>
+<span class="hljs-keyword">let</span> dictionary2: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-string">"one"</span>,<span class="hljs-string">"two"</span>,<span class="hljs-string">"three"</span>]]);
+
+<span class="hljs-comment">// -&gt; All operation of the standard Dictionary&lt;K,V&gt; class possible</span>
+
+<span class="hljs-keyword">let</span> value: <span class="hljs-built_in">string</span> = dictionary2.getByIndex(<span class="hljs-number">1</span>); <span class="hljs-comment">// Returns "two" (key=2; index=1; value="two")</span>
+
+dictionary2.removeByIndex(<span class="hljs-number">2</span>); <span class="hljs-comment">// Removes the third element (key=3; index=2; value="three")</span>
+
+dictionary2.sortByKey(); <span class="hljs-comment">// Sort the dictionary by its keys (using default behavior of number)</span>
+
+dictionary2.sortByKey(Comparer.compareNumbers); <span class="hljs-comment">// Sort the dictionary by its keys (using a comparison function)</span>
+
+dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by its values (using default behavior of string)</span>
+</code></pre>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
 					<li>Properties</li>
@@ -147,9 +189,6 @@ dictionary3.clear();
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_index_.html">"index"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_basedictionary_.html">"src/<wbr>Base<wbr>Dictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_comparer_.html">"src/<wbr>Comparer"</a>
@@ -174,9 +213,6 @@ dictionary3.clear();
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_interfaces_icomparer_.html">"src/interfaces/IComparer"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_idictionary_.html">"src/interfaces/IDictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_src_interfaces_iforeachinterfacedictionary_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>

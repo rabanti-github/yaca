@@ -32,7 +32,7 @@ export module Comparer
      * @param value1 String / object 1 to compare
      * @param value2 String / object 2 to compare
      */
-    export function compareStrings(value1: any, value2: string): number
+    export function compareStrings(value1: any, value2: any): number
     {
         if (typeof value1 === 'string' && typeof value2 === 'string')
         {

@@ -71,6 +71,13 @@ describe('static:compareStrings', () => {
         let result: number = Comparer.compareStrings("9","8");
         expect(result).to.equal(1);
     });
+    it('should not throw an error if performed with a Date object and a boolean -> uses toString', () => {
+        expect(function()
+        {
+            let result: number = Comparer.compareStrings(new Date(),true);
+            result = undefined;
+        }).not.to.throw();
+    });
 
 });
 

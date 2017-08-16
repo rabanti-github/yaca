@@ -788,7 +788,7 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             var values = dict.getValues();
             var temp = new List_1.default(values);
             temp.sort(Comparer_1.Comparer.compareStrings);
-            var result = temp[temp.length - 1];
+            var result = temp.get(temp.length - 1);
             chai_1.expect(result).to.equal("f");
         });
     });

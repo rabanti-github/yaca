@@ -4,16 +4,34 @@ import ISortInterFace from './interfaces/ISortInterface';
 import  List  from './List';
 import {Sorter} from './Sorter';
 
+/**
+ * Class representing a sorted Dictionary (Key and Value pairs) for generic Types with various Dictionary operations. The class is based ob the standard Dictionary<K,V>
+ */
 export class SortedDictionary<K,V> extends Dictionary<K,V>
 {
 
+
+// ############### P U B L I C   F U N C T I O N S ###############
+
+    /**
+     * Gets the value by index. An error will be thrown if the index was not found
+     * @param index Index of the entry
+     */
     public getByIndex(index: number): V
     {
         let output: V[] = this.getByIndices([index]);
         return output[0]; // Wrong indices are checked in getByIndices
     }
 
+    /**
+     * Gets the values by an array of indices. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getByIndices(indices: number[]): V[];
+     /**
+     * Gets the values by a List of indices. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getByIndices(indices: List<number>): V[];
     public getByIndices(indices: number[] | List<number>): V[]
     {
@@ -38,7 +56,15 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
         return output;
     }
 
+    /**
+     * Gets the values by an array of indices and returns them as List. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getByIndicesAsList(indices: number[]): List<V>;
+     /**
+     * Gets the values by a List of indices and returns them as List. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */   
     public getByIndicesAsList(indices: List<number>): List<V>;
     public getByIndicesAsList(indices: number[] | List<number>): List<V>
     {
@@ -52,15 +78,25 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
         }
     }    
 
-
-
+    /**
+     * Gets the key by index. An error will be thrown if the index was not found
+     * @param index Index of the entry
+     */
     public getKeyByIndex(index: number): K
     {
         let output: K[] = this.getKeysByIndices([index]);
         return output[0]; // Wrong indices are checked in getByIndices
     }
 
+     /**
+     * Gets the keys by an array of indices. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getKeysByIndices(indices: number[]): K[];
+      /**
+     * Gets the keys by a List of indices. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */   
     public getKeysByIndices(indices: List<number>): K[];
     public getKeysByIndices(indices: number[] | List<number>): K[]
     {
@@ -85,7 +121,15 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
         return output;
     }
 
+    /**
+     * Gets the keys by an array of indices and returns them as List. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getKeysByIndicesAsList(indices: number[]): List<K>;
+    /**
+     * Gets the keys by a List of indices and returns them as List. An error will be thrown if at least one index was not found
+     * @param indices Indices of the entries
+     */
     public getKeysByIndicesAsList(indices: List<number>): List<K>;
     public getKeysByIndicesAsList(indices: number[] | List<number>): List<K>
     {
@@ -99,16 +143,28 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
         }
     }    
 
-
-
+    /**
+     * Updates a value at the passed index. The key will not be changed. An error will be thrown if the index was not found 
+     * @param index Index to update
+     * @param value Value to replace the existing value at the index position
+     */
     public setByIndex(index: number, value: V): void
     {
        let key:K = this.getKeyByIndex(index);
        super.set(key, value);
     }
 
-
+    /**
+     * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the arrays of the indices and values don't have the same length or if at least one index was not found  
+     * @param indices Indices as array
+     * @param values Values as array
+     */
     public setByIndices(indices: number[], values: V[]): void;
+    /**
+     * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the Lists of the indices and values don't have the same length or if at least one index was not found  
+     * @param indices Indices as List
+     * @param values Values as List
+     */
     public setByIndices(indices: List<number>, values: List<V>): void;
     public setByIndices(indices: number[] | List<number>, values: V[] | List<V>): void
     {
@@ -138,28 +194,75 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     }
   
 
-    public removeByIndex(indices: List<number>): boolean;
-    public removeByIndex(indices: number[]): boolean;
-    public removeByIndex(index: number): boolean;
-    public removeByIndex(index: number | number[] | List<number>): boolean
+    /**
+     * Removes the entry at the defined index position. An error will be thrown if the index was not found 
+     * @param index Index position to be removed
+     */
+    public removeByIndex(index: number): void
+    {
+        this.removeByIndices([index]);
+    }
+
+
+    /**
+     * Removes all entries at the defined indices as List. An error will be thrown if at least one index was not found
+     * @param indices Indices to be removed
+     */
+    public removeByIndices(indices: List<number>): void;
+   /**
+     * Removes all entries at the defined indices as Array. An error will be thrown if at least one index was not found
+     * @param indices Indices to be removed
+     */
+    public removeByIndices(indices: number[]): void;
+    public removeByIndices(index: number[] | List<number>): void
     {
         let keys: K[];
         if (Array.isArray(index))
         {
             keys = this.getKeysByIndices(index as number[]);
         }
-        else if (index instanceof List)
+        else
         {
             keys = this.getKeysByIndices(index as List<number>);
         }
-        else
-        {
-            keys = this.getKeysByIndices([index]);
-        }
-        return super.remove(keys);
+        super.remove(keys);
     }
 
+    /**
+     * Sorts the Dictionary by its keys using the default sorting method. If a compareTo function is implemented in the key class, this method will be used instead
+     */
+    public sortByKey(): void;
+    /**
+     * Sorts the Dictionary by its keys using the defined comparison function.
+     * @param sortFunction Comparison function for the keys (should return -1, 0 or 1)
+     */
+    public sortByKey(sortFunction: ISortInterFace<K>): void;
+    public sortByKey(sortFunction?: ISortInterFace<K>): void
+    {
+        this.sortInternal(true, sortFunction);
+    }
 
+    /**
+     * Sorts the Dictionary by its values using the default sorting method. If a compareTo function is implemented in the value class, this method will be used instead
+     */
+    public sortByValue(): void;
+    /**
+     * Sorts the Dictionary by its values using the defined comparison function.
+     * @param sortFunction Comparison function for the values (should return -1, 0 or 1)
+     */
+    public sortByValue(sortFunction: ISortInterFace<V>): void;
+    public sortByValue(sortFunction?: ISortInterFace<V>): void
+    {
+        this.sortInternal(false, sortFunction);
+    }    
+    
+// ############### P R I V A T E   F U N C T I O N S ###############
+
+    /**
+     * Validates the passed index
+     * @param index Index to check
+     * @param length length of the dictionary
+     */
     private checkIndex(index: number, length: number): void
     {
         if (index < 0 || index >= length)
@@ -168,21 +271,11 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
         }
     }
 
-    public sortByKey(): void;
-    public sortByKey(sortFunction: ISortInterFace<K>): void;
-    public sortByKey(sortFunction?: ISortInterFace<K>): void
-    {
-        this.sortInternal(true, sortFunction);
-    }
-
-    public sortByValue(): void;
-    public sortByValue(sortFunction: ISortInterFace<V>): void;
-    public sortByValue(sortFunction?: ISortInterFace<V>): void
-    {
-        this.sortInternal(false, sortFunction);
-    }    
-    
-
+    /**Internal method to sort the dictionary by its keys or values
+     * 
+     * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
+     * @param sortFunction Optional comparison function
+     */
     private sortInternal(byKey: boolean, sortFunction?: ISortInterFace<K> |  ISortInterFace<V>): void 
     {
         if (this.length === 0) { return; }
@@ -197,6 +290,7 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
             {
                 data[i] = new KeyValuePair<V,K>(item.value, item.key);
             }
+            i++;
         });
         let kLen: number = data.length;
         let qSort: Sorter<any>;

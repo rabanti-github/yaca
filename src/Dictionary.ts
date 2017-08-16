@@ -480,7 +480,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
-     * @param value Can be ignored
+     * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
      */
     public next(value?: any): IteratorResult<KeyValuePair<K,V>> {
         let val: KeyValuePair<K,V> = new KeyValuePair(this._iDict[this._iKeyIndex[this._iCounter]][0], this._iDict[this._iKeyIndex[this._iCounter]][1]);
@@ -548,7 +548,7 @@ export class Dictionary<K,V> implements  Iterator<V>
         let len: number = keylist.length;
         let status: boolean = true;
         let status2: boolean;
-        for(let i = 0; i < len; i++)
+        for(let i = len - 1; i >= 0; i--)
         {
             status2 = this.removeInternal(keylist[i]);
             if (status2 === false) { status = false; }

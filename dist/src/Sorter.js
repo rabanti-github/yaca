@@ -24,8 +24,11 @@ var Sorter = (function () {
             this._iCompareToImplemented = this.isComparable(sample.key);
             this.checkBasicCommonType(sample.key);
         }
-        this._iCompareToImplemented = this.isComparable(sample);
-        this.checkBasicCommonType(sample);
+        else {
+            this._iIsTupleSort = false;
+            this._iCompareToImplemented = this.isComparable(sample);
+            this.checkBasicCommonType(sample);
+        }
     }
     Object.defineProperty(Sorter.prototype, "hasCompareToImplemented", {
         // ############### P R O P E R T I E S ###############    
@@ -54,6 +57,16 @@ var Sorter = (function () {
          */
         get: function () {
             return this._iIsCommonType;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Sorter.prototype, "isTupleSort", {
+        /**
+         * Indicates whether single values or tuples are sorted. Tuples can only be sorted as KeyValuePairs
+         */
+        get: function () {
+            return this._iIsTupleSort;
         },
         enumerable: true,
         configurable: true

@@ -22,6 +22,15 @@ export declare class Sorter<T> implements ISorter<T> {
      * Indicates whether type T is a commonly used type such as number, boolean, string or Date
      */
     readonly isCommonType: boolean;
+    /**
+     * Indicates whether single values or tuples are sorted. Tuples can only be sorted as KeyValuePairs
+     */
+    readonly isTupleSort: boolean;
+    /**
+     * Constructor of the sorter object as TupleSort. A known issue is that the Sorter object must be instanced with the type Sorter<any> instead of Sorter<KeyValuePair<string,any>>
+     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented. The test will be performed on the key of the KeyValuePair
+     * @param tupleSort If true, the sort functions will be treated as tuple sort, otherwise as single-value sort
+     */
     constructor(sample: KeyValuePair<T, any>, tupleSort: boolean);
     /**
      * Constructor of the sorter object

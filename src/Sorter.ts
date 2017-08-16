@@ -52,8 +52,21 @@ export class Sorter<T> implements ISorter<T>
         return this._iIsCommonType;
     }    
 
+    /**
+     * Indicates whether single values or tuples are sorted. Tuples can only be sorted as KeyValuePairs
+     */
+    public get isTupleSort(): boolean
+    {
+        return this._iIsTupleSort;
+    }     
+
 // ############### C O N S T R U C T O R S ###############
 
+    /**
+     * Constructor of the sorter object as TupleSort. A known issue is that the Sorter object must be instanced with the type Sorter<any> instead of Sorter<KeyValuePair<string,any>>
+     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented. The test will be performed on the key of the KeyValuePair
+     * @param tupleSort If true, the sort functions will be treated as tuple sort, otherwise as single-value sort
+     */
    constructor(sample: KeyValuePair<T,any>, tupleSort: boolean);
     /**
      * Constructor of the sorter object
@@ -65,11 +78,15 @@ export class Sorter<T> implements ISorter<T>
         if (sample instanceof KeyValuePair && tupleSort !== undefined)
         {
             this._iIsTupleSort = tupleSort;
-            this._iCompareToImplemented = this.isComparable(sample.key);
-            this.checkBasicCommonType(sample.key);
+            this._iCompareToImplemented = this.isComparable(sample.key as T);
+            this.checkBasicCommonType(sample.key as T);
         }
-       this._iCompareToImplemented = this.isComparable(sample);
-       this.checkBasicCommonType(sample);
+        else
+        {
+            this._iIsTupleSort = false;
+            this._iCompareToImplemented = this.isComparable(sample);
+            this.checkBasicCommonType(sample);
+        }
     }    
 
 // ############### P U B L I C   F U N C T I O N S ###############

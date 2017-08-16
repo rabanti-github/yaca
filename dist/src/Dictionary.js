@@ -326,7 +326,7 @@ var Dictionary = (function () {
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
-     * @param value Can be ignored
+     * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
      */
     Dictionary.prototype.next = function (value) {
         var val = new KeyValuePair_1.KeyValuePair(this._iDict[this._iKeyIndex[this._iCounter]][0], this._iDict[this._iKeyIndex[this._iCounter]][1]);
@@ -373,7 +373,7 @@ var Dictionary = (function () {
         var len = keylist.length;
         var status = true;
         var status2;
-        for (var i = 0; i < len; i++) {
+        for (var i = len - 1; i >= 0; i--) {
             status2 = this.removeInternal(keylist[i]);
             if (status2 === false) {
                 status = false;

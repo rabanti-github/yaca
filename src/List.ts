@@ -299,7 +299,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
      /**
      * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
-     * @param value Can be ignored
+     * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
      */
     public next(value?: any): IteratorResult<T> {
         let val: any = this._iList[this._iCounter];

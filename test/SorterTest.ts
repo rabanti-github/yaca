@@ -1,4 +1,5 @@
 import {Sorter} from '../src/Sorter';
+import {KeyValuePair} from '../src/KeyValuePair';
 import { TestClass } from './utils/TestClass';
 import { expect } from 'chai';
 import 'mocha';
@@ -19,7 +20,15 @@ describe('Constructor', () => {
     });
         it('should not throw an error when initialized with false as sample', () => {
         expect(function() { let test: Sorter<boolean> = new Sorter(false);  dummy = test.isCommonType; }).to.not.throw();
-    });      
+    });
+    it('should not throw an error when initialized with a KeyValuePair without the identification as TupleSort', () => {
+        let item: KeyValuePair<string, Date> = new KeyValuePair("22", new Date());
+        expect(function() { let test: Sorter<KeyValuePair<string, Date>> = new Sorter(item);  dummy = test.isCommonType; }).to.not.throw();
+    });
+    it('should not throw an error when initialized with a KeyValuePair with the identification as TupleSort', () => {
+        let item: KeyValuePair<string, Date> = new KeyValuePair<string, Date>("22", new Date());
+        expect(function() { let test: Sorter<any> = new Sorter(item, true);  dummy = test.isCommonType; }).to.not.throw();
+    });       
 
 });
 
@@ -48,6 +57,16 @@ describe('getter', () => {
           let test: Sorter<Dummy2> = new Sorter(new Dummy2());
         expect(test.hasCompareToImplemented).to.equal(false);
     });
+    it('should return true on property isTupleSort if initialized as TupleSort', () => {
+        let item: KeyValuePair<string, Date> = new KeyValuePair<string, Date>("22", new Date());
+        let test: Sorter<any> = new Sorter(item, true);
+        expect(test.isTupleSort).to.equal(true);
+    });
+    it('should return false on property isTupleSort if initialized with a KeyValuePair but not set to TupleSort', () => {
+        let item: KeyValuePair<string, Date> = new KeyValuePair<string, Date>("22", new Date());
+        let test: Sorter<any> = new Sorter(item);
+        expect(test.isTupleSort).to.equal(false);
+    });   
 });
 
 

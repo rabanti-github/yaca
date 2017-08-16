@@ -68,6 +68,12 @@ describe("SORTER\n  ######\n", function () {
             var result = Comparer_1.Comparer.compareStrings("9", "8");
             chai_1.expect(result).to.equal(1);
         });
+        it('should not throw an error if performed with a Date object and a boolean -> uses toString', function () {
+            chai_1.expect(function () {
+                var result = Comparer_1.Comparer.compareStrings(new Date(), true);
+                result = undefined;
+            }).not.to.throw();
+        });
     });
 });
 //# sourceMappingURL=ComparerTest.js.map

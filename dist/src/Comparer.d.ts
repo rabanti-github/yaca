@@ -19,7 +19,7 @@ export declare module Comparer {
      * @param value1 String / object 1 to compare
      * @param value2 String / object 2 to compare
      */
-    function compareStrings(value1: any, value2: string): number;
+    function compareStrings(value1: any, value2: any): number;
     /**
      * Function to compare two Dates
      * @param date1 Date 1 to compare
