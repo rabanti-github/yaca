@@ -1,5 +1,17 @@
 # CHANGE LOG
 
+***v1.1.1***
+
+---
+Date: 2017-08-16
+
+Release type: Minor release
+
+* Added class SortedDictionary<K,V>
+* Added more tests
+* Updated dependencies
+* Updated changelog (v1.1.0 to 1.1.1)
+
 ***v1.0.4***
 
 ---
