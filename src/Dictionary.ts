@@ -10,14 +10,13 @@ var isEqual  = require('lodash.isequal');
 export class Dictionary<K,V> implements  Iterator<V>
 {
 
-
 // ############### P R I V A T E   V A R I A B L E S ###############
     private _iDict: object;
     private _length: number;
     private _iCounter: number;
     private _iKeyIndex: string[];
     private _iOverrideToStringFunction: any;
-
+    private _iForEachControlCondition: number;
 
 // ############### P R O P E R T I E S ###############
 
@@ -97,7 +96,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 // ############### P U B L I C   F U N C T I O N S ###############
 
     /**
-     * Adds an element at the end of the List. This method is synonymous to set
+     * Adds an element to the Dictionary. This method is synonymous to set
      * @param value Value to add
      * @param key Key to add
      */
@@ -111,12 +110,14 @@ export class Dictionary<K,V> implements  Iterator<V>
      * Adds a range of keys and values
      * @param values Values as array of the type V
      * @param keys Keys as array of Type K
+     * @throws Throws an error if the passed arrays do not have the same length
      */
     public addRange(keys: K[], values: V[]): void;
     /**
      * Adds a range of keys and values as Lists of the same length
      * @param values Values as List<V>
      * @param keys Keys as List<K>
+     * @throws Throws an error if the passed Lists do not have the same length
      */
     public addRange(keys: List<K>, values: List<V>): void;
     /**
@@ -154,6 +155,15 @@ export class Dictionary<K,V> implements  Iterator<V>
         this.refreshKeyIndex();
     }
 
+   /**
+     * Called in a forEach loop before a return keyword, the loop will be terminated immediately (break)
+     */
+    public break(): void
+    {
+        this._iForEachControlCondition = 1;
+    }
+   
+
     /**
      * Removes all elements of the Dictionary
      */
@@ -169,6 +179,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Check whether the Dictionary contains the specified key
      * @param key Key to check
+     * @returns True if the key was found in the Dictionary
      */
     public containsKey(key: K): boolean {
         if (this._length === 0) { return false; }
@@ -178,21 +189,19 @@ export class Dictionary<K,V> implements  Iterator<V>
     }
 
     /**
-     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
-     * @param keys Key to check
+     * Check whether the Dictionary contains the specified keys
+     * @param keys Keys to check as array
+     * @param all Optional parameter to indicate whether all specified keys must be found
+     * @returns True if at least one of the specified keys was found in the Dictionary if the 'all' parameter was not defined / false. True if all of the specified keys were found in the Dictionary and the 'all' parameter was set to true
      */
     public containsKeys(keys: K[], all?: boolean): boolean
         /**
-     * Check whether the Dictionary contains the specified keys. True will be returned if at least one entry is existing
-     * @param keys Key to check
+     * Check whether the Dictionary contains the specified keys
+     * @param keys Keys to check as List
+     * @param all Optional parameter to indicate whether all specified keys must be found
+     * @returns True if at least one of the specified keys was found in the Dictionary if the 'all' parameter was not defined / false. True if all of the specified keys were found in the Dictionary and the 'all' parameter was set to true
      */
     public containsKeys(keys: List<K>, all?: boolean): boolean
-    /**
-     * Check whether the Dictionary contains the specified keys
-     * @param keys Key to check
-     * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
-     */
-    public containsKeys(keys: List<K>, all?: boolean): boolean;
     public containsKeys(keys: List<K> | K[], all?: boolean): boolean
     {
         if (this._length === 0) { return false; }
@@ -223,6 +232,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Check whether the Dictionary contains the specified value
      * @param value Values to check
+     * @returns True if the value was found at least once in the Dictionary
      */
     public containsValue(value: V): boolean
     {
@@ -234,14 +244,16 @@ export class Dictionary<K,V> implements  Iterator<V>
 
      /**
      * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-     * @param keys Keys to check
+     * @param values Values to check as array
      * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     * @returns True if at least one of the specified values was found in the Dictionary if the 'all' parameter was not defined / false. True if all of the specified values were found in the Dictionary and the 'all' parameter was set to true
      */
     public containsValues(values: V[], all?: boolean): boolean;
      /**
      * Check whether the Dictionary contains the specified values. True will be returned if at least one entry is existing
-     * @param keys Keys to check
+     * @param values Values to check as List
      * @param all If true, the function will return true only if all entries are existing, otherwise true will be returned if at least one entry is existing
+     * @returns True if at least one of the specified values was found in the Dictionary if the 'all' parameter was not defined / false. True if all of the specified values were found in the Dictionary and the 'all' parameter was set to true
      */    
     public containsValues(values: List<V>, all?: boolean): boolean;
     public containsValues(values: V[] | List<V>, all?: boolean): boolean
@@ -260,6 +272,14 @@ export class Dictionary<K,V> implements  Iterator<V>
             else { return false; }      
         }  
     }
+
+    /**
+     * Optional / syntactic function: Called in a forEach before a return keyword, the current iteration will be skipped (continue). It is sufficient only to call return for the same behavior
+     */
+    public continue(): void
+    {
+        this._iForEachControlCondition = 2;
+    } 
 
     /**
      * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
@@ -282,21 +302,31 @@ export class Dictionary<K,V> implements  Iterator<V>
      * Implementation of a forEach loop
      * @param callback Callback function to process the items of the List
      */
-    public forEach(callback: IForEachInterface<K,V>): void {
+    public forEach(callback: IForEachInterface<K,V>): void
+    {
         if (this._length === 0) { return; }
         let done: boolean = false;
         let item: IteratorItem<KeyValuePair<K,V>>;
         this._iCounter = 0;
-        while (done === false) {
+        this._iForEachControlCondition = 0;
+        while (done === false)
+        {
+            if (this.getForEachControlCondition() === 1) // break
+            {
+                return;
+            }
             item = this.next() as IteratorItem<KeyValuePair<K,V>>;
             done = item.isLastEntry;
             callback(item.value);
         }
     }
 
+
     /**
      * Gets the value of the Dictionary by the specified key
      * @param key Key
+     * @throws Throws an error if the key does not exist
+     * @returns The value to the specified key
      */
     public get(key: K): V {
         let k: string = this.getHashCode(key);
@@ -310,6 +340,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 
     /**
      * Gets all key of the Dictionary as Array of the type K
+     * @returns An array of all keys
      */
     public getKeys(): K[]
     {
@@ -326,7 +357,8 @@ export class Dictionary<K,V> implements  Iterator<V>
     }
 
     /**
-     * Gets all keys of the Dictionary as List of teh type <K>
+     * Gets all keys of the Dictionary as List of the type <K>
+     * @returns A List of all keys
      */
     public getKeysAsList(): List<K>
     {
@@ -337,6 +369,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Get the keys that matches to the passed value
      * @param value Value to get all corresponding keys from
+     * @returns An array of keys according to the specified value
      */
     public getKeysByValue(value: V): K[]
     { 
@@ -346,6 +379,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Get the keys that matches to the passed value. The keys are returned as List ot the type K
      * @param value Value to get all corresponding keys from
+     * @returns A List of keys according to the specified value
      */
     public getKeysByValueAsList(value: V): List<K>
     {
@@ -355,11 +389,13 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Get the keys that matches to the passed value
      * @param values Values to get all corresponding keys from
+     * @returns An array of keys according to the specified values
      */
     public getKeysByValues(values: V[]): K[];
     /**
      * Get the keys that matches to the passed value
      * @param values Values to get all corresponding keys from
+     * @returns A List of keys according to the specified values
      */
     public getKeysByValues(values: List<V>): K[];
     public getKeysByValues(values: V[] | List<V>): K[]
@@ -371,11 +407,13 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Get the keys that matches to the passed values. The keys are returned as List ot the type K
      * @param values Values to get all corresponding keys from
+     * @returns A List of keys according to the specified values
      */
     public getKeysByValuesAsList(values: V[]): List<K>;
     /**
      * Get the keys that matches to the passed values. The keys are returned as List ot the type K
      * @param values Values to get all corresponding keys from
+     * @returns A List of keys according to the specified values
      */
     public getKeysByValuesAsList(values: List<V>): List<K>;
     public getKeysByValuesAsList(values: V[] | List<V>): List<K>
@@ -386,15 +424,18 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Copies the Dictionary to a new Dictionary using the specified keys
      * @param keys Keys to use for the new Dictionary
+     * @returns A new Dictionary containing the tuples according to the specified keys
      */
     public getRange(keys: K[]): Dictionary<K,V>;
         /**
      * Copies the Dictionary to a new Dictionary using the specified keys
      * @param keys Keys to use for the new Dictionary
+     * @returns A new Dictionary containing the tuples according to the specified keys
      */
     public getRange(keys: List<K>): Dictionary<K,V>;
     /**
      * Copies the whole Dictionary to a new Dictionary
+     * @returns A new Dictionary with all tuples of the original Dictionary
      */
     public getRange(): Dictionary<K,V>;    
     public getRange(keys?: K[] | List<K>): Dictionary<K,V> {
@@ -437,11 +478,13 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
      * @param values Values to use for the new Dictionary
+     * @returns A new Dictionary containing the tuples according to the specified values
      */
     public getRangeByValues(values: V[]): Dictionary<K,V>;
     /**
      * Copies the Dictionary to a new Dictionary using the specified values. All occurrences will be transferred to the new Dictionary
      * @param values Values to use for the new Dictionary
+     * @returns A new Dictionary containing the tuples according to the specified values
      */
     public getRangeByValues(values: List<V>): Dictionary<K,V>;
     public getRangeByValues(values: V[] | List<V>): Dictionary<K,V>
@@ -453,6 +496,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 
     /**
      * Gets all vales as array
+     * @returns An array of all Values
      */
     public getValues(): V[]
     {
@@ -469,6 +513,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 
     /**
      * Gets all Values as List
+     * @returns A List of all Values
      */
     public getValuesAsList(): List<V>
     {
@@ -481,6 +526,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
+     * @returns An IteratorResult object containing a KeyValuePair 
      */
     public next(value?: any): IteratorResult<KeyValuePair<K,V>> {
         let val: KeyValuePair<K,V> = new KeyValuePair(this._iDict[this._iKeyIndex[this._iCounter]][0], this._iDict[this._iKeyIndex[this._iCounter]][1]);
@@ -503,6 +549,7 @@ export class Dictionary<K,V> implements  Iterator<V>
      * Overrides the default hashing method for keys. Usually toString is used to generate unique hashes. The toString method of a class can be overwritten or alternatively defined by this function.\n
      * The passed function takes one value of the type K and should return a string.
      * @param overrideFunction Function which replaces the default method of generating hashes for the keys
+     * @throws Throws an error if the passed object is not a function
      */
     public overrideHashFunction(overrideFunction: Function): void
     {
@@ -517,16 +564,19 @@ export class Dictionary<K,V> implements  Iterator<V>
      /**
      * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
      * @param keys Keys (and attached values) to remove
+     * @returns True if at least one key was found and removed
      */
     public remove(keys: K[]): boolean;        
     /**
      * Removes the passed keys in the Dictionary. The method returns true if at least one key was found and removed, otherwise false
      * @param keys Keys (and attached values) to remove
+     * @returns True if at least one key was found and removed
      */
     public remove(keys: List<K>): boolean;
     /**
      * Removes the passed key in the Dictionary. The method returns true if the key was found and removed, otherwise false
      * @param key Key (and attached value) to remove
+     * @returns True if the key was found and removed
      */
     public remove(key: K): boolean;    
     public remove(keys: K | K[] | List<K>): boolean
@@ -560,16 +610,19 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Removes all entries with the passed values from the Dictionary.
      * @param values Array of values to remove
+     * @returns True if at least one value was found and removed
      */
     public removeByValue(values: V[]): boolean;
     /**
      * Removes all entries with the passed values from the Dictionary.
      * @param values List of values to remove
+     * @returns True if at least one value was found and removed
      */
     public removeByValue(values: List<V>): boolean;
     /**
      * Removes all entries with the passed value from the Dictionary.
      * @param values Value to remove
+     * @returns True if at least one value was found and removed
      */
     public removeByValue(value: V): boolean;    
     public removeByValue(values: V | V[] | List<V>): boolean {
@@ -602,6 +655,7 @@ export class Dictionary<K,V> implements  Iterator<V>
      * Swaps the values of the two defined keys in the Dictionary
      * @param key1 Key 1
      * @param key2 Key 2
+     * @throws Throws an error if one of the keys does not exist
      */
     public swapValues(key1: K, key2: K): void {
         if (this.containsKey(key1) === false || this.containsKey(key2) === false) {
@@ -621,6 +675,7 @@ export class Dictionary<K,V> implements  Iterator<V>
  * Internal method to add a key value pair
  * @param key Key to add
  * @param value Value to add
+ * @throws Throws an error if no key or value was defined
  */
     private addInternal(key: K, value: V): void
     {
@@ -643,6 +698,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Internal method to copy dictionary according to a a list of hashcodes  
      * @param keys hashcodes of the items to copy
+     * @returns A new Dictionary with the copied tuples
      */
     private copyToInternal(keys: List<string>): Dictionary<K,V>
     {
@@ -659,9 +715,20 @@ export class Dictionary<K,V> implements  Iterator<V>
         return output;
     }
 
+
+    /**
+     * Internal function to get the state of a forEach flow control action (break or continue)
+     * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
+     */
+    private getForEachControlCondition(): number
+    {
+        return this._iForEachControlCondition;
+    }
+
     /**
      * Method to calculate the hash code of the key (default: toString)
      * @param key Key to process
+     * @returns The hash code internally used as key. Default is the toString function of the passed key
      */
     private getHashCode(key: K): string
     {
@@ -687,9 +754,10 @@ export class Dictionary<K,V> implements  Iterator<V>
     }    
     
     /**
-     * Internal method to get keys by values as list
+     * Internal function to get keys by values as list
      * @param values values to look fot keys
      * @param all if true, all entries will be queried. Otherwise, the method returns after the first hit
+     * @returns A list of all determined keys
      */
     private getKeysByValuesAsListInternal(values: V[] | List<V>, all: boolean): List<K>{
        let list: List<K> = new List<K>();
@@ -726,6 +794,7 @@ export class Dictionary<K,V> implements  Iterator<V>
 
     /**
      * Internal method to get key value pairs as object with two properties 'key' and 'value'
+     * @returns Object array with key value pairs
      */
     private getKeyValuePairsInternal(): object[]
     {
@@ -751,6 +820,7 @@ export class Dictionary<K,V> implements  Iterator<V>
     /**
      * Internal method to remove an entry
      * @param key Key to remove (with value)
+     * @returns True if the item could be removed
      */
     private removeInternal(key: K): boolean
     {

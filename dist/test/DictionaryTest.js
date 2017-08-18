@@ -358,15 +358,41 @@ describe("DICTIONARY<K,V>\n  ###############\n", function () {
             });
             chai_1.expect(value).to.equal(135925.41963);
         });
-        it('should return the iteration counter 4 after execution of the forEach with a break (return) after 4 cycles', function () {
-            var counter = 0;
+        it('should return the iteration counter 3 after execution of the forEach with a break (dict.break(); return) after 3 cycles', function () {
+            var counter = -1;
             var dummy;
             dict.forEach(function (item) {
-                if (counter >= 4) {
+                counter++;
+                if (counter === 3) {
+                    dict.break();
                     return;
                 }
                 dummy = item;
+            });
+            chai_1.expect(counter).to.equal(3);
+        });
+        it('should return the iteration counter 4 after execution of the forEach with a continue (dict.continue(); return) after 3 cycles', function () {
+            var counter = -1;
+            var dummy;
+            dict.forEach(function (item) {
                 counter++;
+                if (counter === 3) {
+                    dict.continue();
+                    return;
+                }
+                dummy = item;
+            });
+            chai_1.expect(counter).to.equal(4);
+        });
+        it('should return the iteration counter 4 after execution of the forEach with a return call after 3 cycles', function () {
+            var counter = -1;
+            var dummy;
+            dict.forEach(function (item) {
+                counter++;
+                if (counter === 3) {
+                    return;
+                }
+                dummy = item;
             });
             chai_1.expect(counter).to.equal(4);
         });

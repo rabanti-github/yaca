@@ -374,16 +374,39 @@ describe('forEach method', () => {
         });
         expect(value).to.equal(135925.41963);
     });
-    it('should return the iteration counter 4 after execution of the forEach with a break (return) after 4 cycles', () => {
-        let counter:number = 0;
+    it('should return the iteration counter 3 after execution of the forEach with a break (dict.break(); return) after 3 cycles', () => {
+        let counter:number = -1;
         let dummy: any;
         dict.forEach(item => {
-            if (counter >= 4) { return; }
-            dummy = item;
             counter++;
+            if (counter === 3) { dict.break(); return; }
+            dummy = item;
+        });
+        expect(counter).to.equal(3);
+    });
+
+    it('should return the iteration counter 4 after execution of the forEach with a continue (dict.continue(); return) after 3 cycles', () => {
+        let counter:number = -1;
+        let dummy: any;
+        dict.forEach(item => {
+            counter++;
+            if (counter === 3) { dict.continue(); return; }
+            dummy = item;
         });
         expect(counter).to.equal(4);
     });
+
+    it('should return the iteration counter 4 after execution of the forEach with a return call after 3 cycles', () => {
+        let counter:number = -1;
+        let dummy: any;
+        dict.forEach(item => {
+            counter++;
+            if (counter === 3) { return; }
+            dummy = item;
+        });
+        expect(counter).to.equal(4);
+    });
+
     it('should return the number of 5 iterations after the execution', () => {
         let i: number = 0;
         let dummy: any;

@@ -26,6 +26,7 @@ var SortedDictionary = (function (_super) {
     /**
      * Gets the value by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The value at the specified index position
      */
     SortedDictionary.prototype.getByIndex = function (index) {
         var output = this.getByIndices([index]);
@@ -60,6 +61,7 @@ var SortedDictionary = (function (_super) {
     /**
      * Gets the key by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The key at the specified index position
      */
     SortedDictionary.prototype.getKeyByIndex = function (index) {
         var output = this.getKeysByIndices([index]);
@@ -148,6 +150,7 @@ var SortedDictionary = (function (_super) {
      * Validates the passed index
      * @param index Index to check
      * @param length length of the dictionary
+     * @throws Throws an error if the index position is out of bound
      */
     SortedDictionary.prototype.checkIndex = function (index, length) {
         if (index < 0 || index >= length) {
@@ -158,6 +161,7 @@ var SortedDictionary = (function (_super) {
      *
      * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
      * @param sortFunction Optional comparison function
+     * @throws Throws an error if no suitable sorting function could be found for the type of the keys or values
      */
     SortedDictionary.prototype.sortInternal = function (byKey, sortFunction) {
         if (this.length === 0) {

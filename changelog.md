@@ -1,5 +1,18 @@
 # CHANGE LOG
 
+***v1.2.0***
+
+---
+Date: 2017-08-18
+
+Release type: Minor release / Bugfix
+
+* Fixed handling of forEach behavior (break condition)
+* Added continue (optional) and break functions for better forEach control
+* Added more tests
+* Added more documentation
+* Fixed typos
+
 ***v1.1.1***
 
 ---

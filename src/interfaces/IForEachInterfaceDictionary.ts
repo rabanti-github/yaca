@@ -1,4 +1,3 @@
-
 /**
  * Interface to handle a forEach loop
  */

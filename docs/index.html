@@ -78,6 +78,7 @@
 					<li>Multiple check functions like contains, containsKey, containsValues or containsKeyAsList</li>
 					<li>Multiple copy functions like copyToArray or getRange</li>
 					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
+					<li>Build-in break and (optional) continue calls within forEach loops as control elements</li>
 					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
 					<li>Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)</li>
 					<li>Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function</li>
@@ -87,7 +88,40 @@
 				<h2 id="installation">Installation</h2>
 				<pre><code class="lang-bash">npm install -S yaca
 </code></pre>
-				<h2 id="usage-list-lt-t-gt-">Usage (List&lt;T&gt;)</h2>
+				<h2 id="list-lt-t-gt-">List&lt;T&gt;</h2>
+				<p>A list stores values similar to an array. In comparison to an array, several functions like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<ul>
+					<li>add</li>
+					<li>addRange</li>
+					<li>break (used in forEach)</li>
+					<li>clear</li>
+					<li>contains</li>
+					<li>continue (used in forEach)</li>
+					<li>dequeue</li>
+					<li>distinct</li>
+					<li>enqueue</li>
+					<li>forEach</li>
+					<li>get</li>
+					<li>getRange</li>
+					<li>indexOf</li>
+					<li>indicesOf</li>
+					<li>indicesOfAsList</li>
+					<li>insertAtIndices</li>
+					<li>lastIndexOf</li>
+					<li>next</li>
+					<li>peek</li>
+					<li>pop</li>
+					<li>remove</li>
+					<li>removeAll</li>
+					<li>removeAt</li>
+					<li>removeAtIndices</li>
+					<li>reverse</li>
+					<li>set</li>
+					<li>sort</li>
+					<li>swapValues</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
 				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
@@ -110,6 +144,17 @@ numberList.sort();
 
 numberList.forEach(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> {
             <span class="hljs-built_in">console</span>.log(element);
+            <span class="hljs-keyword">if</span> (element === <span class="hljs-number">2</span>)
+            {
+                numberList.continue(); <span class="hljs-comment">// Optional / syntactic call to skip this iteration</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory! -&gt; sufficient as continue call</span>
+            }
+            <span class="hljs-keyword">if</span> (element === <span class="hljs-number">4</span>)
+            {
+                numberList.break(); <span class="hljs-comment">// Breaks the forEach loop immediately</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory!</span>
+            }
+
         });
 
 numberList.clear();
@@ -120,7 +165,40 @@ numberList.clear();
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="usage-dictionary-lt-k-v-gt-">Usage (Dictionary&lt;K,V&gt;)</h2>
+				<h2 id="dictionary-lt-k-v-gt-">Dictionary&lt;K,V&gt;</h2>
+				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString function must be implemented in those classes or the function overrideHashFunction must be used in the Dictionary.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<ul>
+					<li>add</li>
+					<li>addRange</li>
+					<li>break (used in forEach)</li>
+					<li>clear</li>
+					<li>containsKey</li>
+					<li>containsKeys</li>
+					<li>containsValue</li>
+					<li>containsValues</li>
+					<li>continue (used in forEach)</li>
+					<li>distinct</li>
+					<li>forEach</li>
+					<li>get</li>
+					<li>getKeys</li>
+					<li>getKeysAsList</li>
+					<li>getKeysByValue</li>
+					<li>getKeysByValueAsList</li>
+					<li>getKeysByValues</li>
+					<li>getKeysByValuesAsList</li>
+					<li>getRange</li>
+					<li>getRageByValue</li>
+					<li>getValues</li>
+					<li>getValuesAsList</li>
+					<li>next</li>
+					<li>overrideHashFunction</li>
+					<li>remove</li>
+					<li>removeByValue</li>
+					<li>set</li>
+					<li>swapValues</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
 				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {Dictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
@@ -141,6 +219,18 @@ dictionary.add(<span class="hljs-number">22</span>, <span class="hljs-string">"t
 
 dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
             <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"key:"</span> + item.key + <span class="hljs-string">" -&gt; value:"</span> + item.value);
+
+            <span class="hljs-keyword">if</span> (item.value === <span class="hljs-string">"two"</span>)
+            {
+                dictionary2.continue(); <span class="hljs-comment">// Optional / syntactic call to skip this iteration</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory! -&gt; sufficient as continue call</span>
+            }
+            <span class="hljs-keyword">if</span> (item.key === <span class="hljs-number">3</span>)
+            {
+                dictionary2.break(); <span class="hljs-comment">// Breaks the forEach loop immediately</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory!</span>
+            }
+
         });
 
 dictionary3.clear();
@@ -151,7 +241,25 @@ dictionary3.clear();
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="usage-sorteddictionary-lt-k-v-gt-">Usage (SortedDictionary&lt;K,V&gt;)</h2>
+				<h2 id="sorteddictionary-lt-k-v-gt-">SortedDictionary&lt;K,V&gt;</h2>
+				<p>A sorted dictionary has the same behavior properties and functions like a standard dictionary. Additionally, there are many functions regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<p><b>All functions of Dictionary &lt;K,V&gt;</b></p>
+				<ul>
+					<li>getByIndex</li>
+					<li>getByIndices</li>
+					<li>getByIndicesAsList</li>
+					<li>getKeyByIndex</li>
+					<li>getKeysByIndices</li>
+					<li>getKeysByIndicesAsList</li>
+					<li>removeByIndex</li>
+					<li>removeByIndices</li>
+					<li>setByIndex</li>
+					<li>setByIndices</li>
+					<li>sortByKey</li>
+					<li>sortByValue</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
 				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 <span class="hljs-keyword">import</span> {Comparer} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 

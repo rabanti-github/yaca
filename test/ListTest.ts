@@ -301,15 +301,35 @@ describe('forEach method', () => {
         });
         expect(value).to.equal("122333444455555");
     });
-    it('should return the term "1223334444" after concatenation of the forEach values with a break (return) after 4 cycles', () => {
+    it('should return the term "122333" after concatenation of the forEach values with a break (list.break(); return;) after 3 cycles', () => {
         let value: string = "";
-        let counter:number = 0;
+        let counter:number = -1;
         list.forEach(item => {
-            if (counter >= 4) { return; }
-            value = value + item;
             counter++;
+            if (counter === 3) { list.break(); return; }
+            value = value + item;
         });
-        expect(value).to.equal("1223334444");
+        expect(value).to.equal("122333");
+    });
+    it('should return the term "12233355555" after concatenation of the forEach values with a continue (list.continue(); return;) at the 4th cycle', () => {
+        let value: string = "";
+        let counter:number = -1;
+        list.forEach(item => {
+            counter++;
+            if (counter === 3) { list.continue(); return; }
+            value = value + item;
+        });
+        expect(value).to.equal("12233355555");
+    });
+    it('should return the term "12233355555" after concatenation of the forEach values with a return call at the 4th cycle', () => {
+        let value: string = "";
+        let counter:number = -1;
+        list.forEach(item => {
+            counter++;
+            if (counter === 3) { return; }
+            value = value + item;
+        });
+        expect(value).to.equal("12233355555");
     });
     it('should return the number of 5 iterations after the execution', () => {
         let i: number = 0;

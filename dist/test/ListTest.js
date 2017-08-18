@@ -275,17 +275,43 @@ describe("LIST<T>\n  #######\n", function () {
             });
             chai_1.expect(value).to.equal("122333444455555");
         });
-        it('should return the term "1223334444" after concatenation of the forEach values with a break (return) after 4 cycles', function () {
+        it('should return the term "122333" after concatenation of the forEach values with a break (list.break(); return;) after 3 cycles', function () {
             var value = "";
-            var counter = 0;
+            var counter = -1;
             list.forEach(function (item) {
-                if (counter >= 4) {
+                counter++;
+                if (counter === 3) {
+                    list.break();
                     return;
                 }
                 value = value + item;
-                counter++;
             });
-            chai_1.expect(value).to.equal("1223334444");
+            chai_1.expect(value).to.equal("122333");
+        });
+        it('should return the term "12233355555" after concatenation of the forEach values with a continue (list.continue(); return;) at the 4th cycle', function () {
+            var value = "";
+            var counter = -1;
+            list.forEach(function (item) {
+                counter++;
+                if (counter === 3) {
+                    list.continue();
+                    return;
+                }
+                value = value + item;
+            });
+            chai_1.expect(value).to.equal("12233355555");
+        });
+        it('should return the term "12233355555" after concatenation of the forEach values with a return call at the 4th cycle', function () {
+            var value = "";
+            var counter = -1;
+            list.forEach(function (item) {
+                counter++;
+                if (counter === 3) {
+                    return;
+                }
+                value = value + item;
+            });
+            chai_1.expect(value).to.equal("12233355555");
         });
         it('should return the number of 5 iterations after the execution', function () {
             var i = 0;

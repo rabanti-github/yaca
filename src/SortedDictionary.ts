@@ -16,6 +16,7 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     /**
      * Gets the value by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The value at the specified index position
      */
     public getByIndex(index: number): V
     {
@@ -26,11 +27,13 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     /**
      * Gets the values by an array of indices. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns An Array of values at the specified index positions
      */
     public getByIndices(indices: number[]): V[];
      /**
      * Gets the values by a List of indices. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns An Array of values at the specified index positions
      */
     public getByIndices(indices: List<number>): V[];
     public getByIndices(indices: number[] | List<number>): V[]
@@ -59,11 +62,13 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     /**
      * Gets the values by an array of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of values at the specified index positions
      */
     public getByIndicesAsList(indices: number[]): List<V>;
      /**
      * Gets the values by a List of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of values at the specified index positions
      */   
     public getByIndicesAsList(indices: List<number>): List<V>;
     public getByIndicesAsList(indices: number[] | List<number>): List<V>
@@ -81,6 +86,7 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     /**
      * Gets the key by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The key at the specified index position
      */
     public getKeyByIndex(index: number): K
     {
@@ -91,11 +97,13 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
      /**
      * Gets the keys by an array of indices. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns An array of keys at the specified index positions
      */
     public getKeysByIndices(indices: number[]): K[];
       /**
      * Gets the keys by a List of indices. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns An array of keys at the specified index positions
      */   
     public getKeysByIndices(indices: List<number>): K[];
     public getKeysByIndices(indices: number[] | List<number>): K[]
@@ -124,11 +132,13 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
     /**
      * Gets the keys by an array of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of keys at the specified index positions
      */
     public getKeysByIndicesAsList(indices: number[]): List<K>;
     /**
      * Gets the keys by a List of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of keys at the specified index positions
      */
     public getKeysByIndicesAsList(indices: List<number>): List<K>;
     public getKeysByIndicesAsList(indices: number[] | List<number>): List<K>
@@ -158,12 +168,14 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
      * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the arrays of the indices and values don't have the same length or if at least one index was not found  
      * @param indices Indices as array
      * @param values Values as array
+     * @throws Throws an error if the number of indices and values is not identical
      */
     public setByIndices(indices: number[], values: V[]): void;
     /**
      * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the Lists of the indices and values don't have the same length or if at least one index was not found  
      * @param indices Indices as List
      * @param values Values as List
+     * @throws Throws an error if the number of indices and values is not identical
      */
     public setByIndices(indices: List<number>, values: List<V>): void;
     public setByIndices(indices: number[] | List<number>, values: V[] | List<V>): void
@@ -262,6 +274,7 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
      * Validates the passed index
      * @param index Index to check
      * @param length length of the dictionary
+     * @throws Throws an error if the index position is out of bound
      */
     private checkIndex(index: number, length: number): void
     {
@@ -275,6 +288,7 @@ export class SortedDictionary<K,V> extends Dictionary<K,V>
      * 
      * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
      * @param sortFunction Optional comparison function
+     * @throws Throws an error if no suitable sorting function could be found for the type of the keys or values
      */
     private sortInternal(byKey: boolean, sortFunction?: ISortInterFace<K> |  ISortInterFace<V>): void 
     {

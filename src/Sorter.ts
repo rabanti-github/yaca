@@ -7,10 +7,17 @@ import {KeyValuePair} from './KeyValuePair';
 
 
 // ############### E N U M S ###############
+
+/**
+ * Enum for the sorter type
+ */
 enum SorterType
 {
+    /** It will be sorted by the default behavior of the objects  */
     sortByDefault,
+    /** It will be sorted according to an implemented compareTo function */
     sortByImplementation,
+    /** It will be sorted according to a provided sorting function */
     sortByFunction
 }
 
@@ -269,7 +276,7 @@ export class Sorter<T> implements ISorter<T>
 
     /**
      * Checks whether the type is comparable due to the implementation of a compareTo function
-     * @param obj 
+     * @param obj Object toc check
      */
     private isComparable(obj: any):obj is IComparer<T>
     { 
@@ -298,7 +305,7 @@ export class Sorter<T> implements ISorter<T>
     
     /**
      * Checks the type of the passed object and sets the appropriate compareTo function if applicable
-     * @param obj object to check the type
+     * @param obj object to check
      */
     private checkBasicCommonType(obj: any): void
     {

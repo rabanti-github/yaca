@@ -3,10 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Comparer_1 = require("./Comparer");
 var KeyValuePair_1 = require("./KeyValuePair");
 // ############### E N U M S ###############
+/**
+ * Enum for the sorter type
+ */
 var SorterType;
 (function (SorterType) {
+    /** It will be sorted by the default behavior of the objects  */
     SorterType[SorterType["sortByDefault"] = 0] = "sortByDefault";
+    /** It will be sorted according to an implemented compareTo function */
     SorterType[SorterType["sortByImplementation"] = 1] = "sortByImplementation";
+    /** It will be sorted according to a provided sorting function */
     SorterType[SorterType["sortByFunction"] = 2] = "sortByFunction";
 })(SorterType || (SorterType = {}));
 /**
@@ -223,7 +229,7 @@ var Sorter = (function () {
     };
     /**
      * Checks whether the type is comparable due to the implementation of a compareTo function
-     * @param obj
+     * @param obj Object toc check
      */
     Sorter.prototype.isComparable = function (obj) {
         try {
@@ -251,7 +257,7 @@ var Sorter = (function () {
     };
     /**
      * Checks the type of the passed object and sets the appropriate compareTo function if applicable
-     * @param obj object to check the type
+     * @param obj object to check
      */
     Sorter.prototype.checkBasicCommonType = function (obj) {
         if (obj === undefined) {

@@ -115,12 +115,12 @@ export declare class Sorter<T> implements ISorter<T> {
     private swapTuple(data, index1, index2);
     /**
      * Checks whether the type is comparable due to the implementation of a compareTo function
-     * @param obj
+     * @param obj Object toc check
      */
     private isComparable(obj);
     /**
      * Checks the type of the passed object and sets the appropriate compareTo function if applicable
-     * @param obj object to check the type
+     * @param obj object to check
      */
     private checkBasicCommonType(obj);
 }

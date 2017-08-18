@@ -8,51 +8,61 @@ export declare class SortedDictionary<K, V> extends Dictionary<K, V> {
     /**
      * Gets the value by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The value at the specified index position
      */
     getByIndex(index: number): V;
     /**
      * Gets the values by an array of indices. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns An Array of values at the specified index positions
      */
     getByIndices(indices: number[]): V[];
     /**
     * Gets the values by a List of indices. An error will be thrown if at least one index was not found
     * @param indices Indices of the entries
+    * @returns An Array of values at the specified index positions
     */
     getByIndices(indices: List<number>): V[];
     /**
      * Gets the values by an array of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of values at the specified index positions
      */
     getByIndicesAsList(indices: number[]): List<V>;
     /**
     * Gets the values by a List of indices and returns them as List. An error will be thrown if at least one index was not found
     * @param indices Indices of the entries
+    * @returns A List of values at the specified index positions
     */
     getByIndicesAsList(indices: List<number>): List<V>;
     /**
      * Gets the key by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The key at the specified index position
      */
     getKeyByIndex(index: number): K;
     /**
     * Gets the keys by an array of indices. An error will be thrown if at least one index was not found
     * @param indices Indices of the entries
+    * @returns An array of keys at the specified index positions
     */
     getKeysByIndices(indices: number[]): K[];
     /**
    * Gets the keys by a List of indices. An error will be thrown if at least one index was not found
    * @param indices Indices of the entries
+   * @returns An array of keys at the specified index positions
    */
     getKeysByIndices(indices: List<number>): K[];
     /**
      * Gets the keys by an array of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of keys at the specified index positions
      */
     getKeysByIndicesAsList(indices: number[]): List<K>;
     /**
      * Gets the keys by a List of indices and returns them as List. An error will be thrown if at least one index was not found
      * @param indices Indices of the entries
+     * @returns A List of keys at the specified index positions
      */
     getKeysByIndicesAsList(indices: List<number>): List<K>;
     /**
@@ -65,12 +75,14 @@ export declare class SortedDictionary<K, V> extends Dictionary<K, V> {
      * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the arrays of the indices and values don't have the same length or if at least one index was not found
      * @param indices Indices as array
      * @param values Values as array
+     * @throws Throws an error if the number of indices and values is not identical
      */
     setByIndices(indices: number[], values: V[]): void;
     /**
      * Updates the value at the passed indices. The keys will not be changed. An error will be thrown if the Lists of the indices and values don't have the same length or if at least one index was not found
      * @param indices Indices as List
      * @param values Values as List
+     * @throws Throws an error if the number of indices and values is not identical
      */
     setByIndices(indices: List<number>, values: List<V>): void;
     /**
@@ -110,12 +122,14 @@ export declare class SortedDictionary<K, V> extends Dictionary<K, V> {
      * Validates the passed index
      * @param index Index to check
      * @param length length of the dictionary
+     * @throws Throws an error if the index position is out of bound
      */
     private checkIndex(index, length);
     /**Internal method to sort the dictionary by its keys or values
      *
      * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
      * @param sortFunction Optional comparison function
+     * @throws Throws an error if no suitable sorting function could be found for the type of the keys or values
      */
     private sortInternal(byKey, sortFunction?);
 }
