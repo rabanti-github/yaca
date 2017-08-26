@@ -4,10 +4,12 @@
  */
 export class IteratorItem<T> implements IteratorResult<T>
 {
+    // I N T E R F A C E   I M P L E M E N T A T I O N
     /**
      * If true, the last item of the iterator is reached
      */
-    public isLastEntry: boolean;
+    done: boolean;
+
     /**
      * The value of the iterator item
      */
@@ -36,11 +38,11 @@ export class IteratorItem<T> implements IteratorResult<T>
         }
         if (finished !== undefined)
         {
-            this.isLastEntry = finished;
+            this.done = finished;
         }
         else
         {
-            this.isLastEntry = false;
+            this.done = false;
         }
     }
 }

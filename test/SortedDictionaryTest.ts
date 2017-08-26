@@ -1,7 +1,7 @@
 import {SortedDictionary} from '../src/SortedDictionary';
 import {Comparer} from '../src/Comparer';
 import {IComparer} from '../src/interfaces/IComparer';
-import List from '../src/List';
+import { List } from '../src/List';
 import { expect } from 'chai';
 import 'mocha';
 

@@ -1,31 +1,29 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var TestClass_1 = require("./utils/TestClass");
-var chai_1 = require("chai");
-require("mocha");
+import { TestClass } from './utils/TestClass';
+import { expect } from 'chai';
+import 'mocha';
 // Test of the TestClass
-describe("TestClass\n  #########\n", function () {
-    describe('compareTo function', function () {
-        it('should return -1 if object A has a value2 of 2 and object B a value2 of 3', function () {
-            var objA = new TestClass_1.TestClass();
-            var objB = new TestClass_1.TestClass();
+describe("TestClass\n  #########\n", () => {
+    describe('compareTo function', () => {
+        it('should return -1 if object A has a value2 of 2 and object B a value2 of 3', () => {
+            let objA = new TestClass();
+            let objB = new TestClass();
             objA.value2 = 2;
             objB.value2 = 3;
-            chai_1.expect(objA.compareTo(objB)).to.equal(-1);
+            expect(objA.compareTo(objB)).to.equal(-1);
         });
-        it('should return 0 if object A has a value2 of 22 and object B a value2 of 22', function () {
-            var objA = new TestClass_1.TestClass();
-            var objB = new TestClass_1.TestClass();
+        it('should return 0 if object A has a value2 of 22 and object B a value2 of 22', () => {
+            let objA = new TestClass();
+            let objB = new TestClass();
             objA.value2 = 22;
             objB.value2 = 22;
-            chai_1.expect(objA.compareTo(objB)).to.equal(0);
+            expect(objA.compareTo(objB)).to.equal(0);
         });
-        it('should return 1 if object A has a value2 of 25.8 and object B a value2 of 3', function () {
-            var objA = new TestClass_1.TestClass();
-            var objB = new TestClass_1.TestClass();
+        it('should return 1 if object A has a value2 of 25.8 and object B a value2 of 3', () => {
+            let objA = new TestClass();
+            let objB = new TestClass();
             objA.value2 = 25.8;
             objB.value2 = 3;
-            chai_1.expect(objA.compareTo(objB)).to.equal(1);
+            expect(objA.compareTo(objB)).to.equal(1);
         });
     });
     /************ */

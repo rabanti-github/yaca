@@ -1,6 +1,6 @@
 import {Dictionary} from '../src/Dictionary';
 import {KeyValuePair} from '../src/KeyValuePair';
-import List from '../src/List';
+import { List } from '../src/List';
 import {Comparer} from '../src/Comparer';
 import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
@@ -880,7 +880,7 @@ describe('next method', () => {
         let state: boolean;
         for(let i: number = 0; i < 5; i++)
         {
-            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).isLastEntry;
+            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).done;
         }
         expect(state).to.equal(true);
     });
@@ -894,7 +894,7 @@ describe('next method', () => {
                 {
                     dict.forEach(item =>{ dummy = item; });
                 }
-            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).isLastEntry;
+            state = (dict.next() as IteratorItem<KeyValuePair<number,number>>).done;
         }
         expect(state).to.equal(true);
     });
@@ -913,7 +913,7 @@ describe('next method', () => {
                 item = dict.next() as IteratorItem<KeyValuePair<number,number>>;
             }
             counter++;
-            if (item.isLastEntry === true) { break; }
+            if (item.done === true) { break; }
         }
         expect(counter).to.equal(3);
     });

@@ -1,0 +1,451 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Yet Another Collection Approach - ES6</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">Yet Another Collection Approach - ES6</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> Yet Another Collection Approach - ES6</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="yaca">YACA</h1>
+				<p><strong>Y</strong>et <strong>A</strong>nother <strong>C</strong>ollection <strong>A</strong>pproach</p>
+				<h2 id="introduction">Introduction</h2>
+				<p>YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.</p>
+				<p><a href="https://coveralls.io/github/rabanti-github/yaca?branch=master"><img src="https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master" alt="Coverage Status"></a>
+					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=86400" alt="npm">
+				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
+				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong>, <strong>Dictionary&lt;K,V&gt;</strong> and <strong>SortedDictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack) are planned.</p>
+				<h2 id="important-features">Important features</h2>
+				<ul>
+					<li>Multiple add and remove functions like add, addRange, insertAtIndex, push or set</li>
+					<li>Multiple check functions like contains, containsKey, containsValues or containsKeyAsList</li>
+					<li>Multiple copy functions like copyToArray or getRange</li>
+					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
+					<li>Build-in break and (optional) continue calls within forEach loops as control elements</li>
+					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
+					<li>Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)</li>
+					<li>Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function</li>
+					<li>Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)</li>
+				</ul>
+				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
+				<h2 id="installation">Installation</h2>
+				<pre><code class="lang-bash">npm install -S yaca
+</code></pre>
+				<h2 id="list-lt-t-gt-">List&lt;T&gt;</h2>
+				<p>A list stores values similar to an array. In comparison to an array, several functions like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<ul>
+					<li>add</li>
+					<li>addRange</li>
+					<li>break (used in forEach)</li>
+					<li>clear</li>
+					<li>contains</li>
+					<li>continue (used in forEach)</li>
+					<li>dequeue</li>
+					<li>distinct</li>
+					<li>enqueue</li>
+					<li>forEach</li>
+					<li>get</li>
+					<li>getRange</li>
+					<li>indexOf</li>
+					<li>indicesOf</li>
+					<li>indicesOfAsList</li>
+					<li>insertAtIndices</li>
+					<li>lastIndexOf</li>
+					<li>next</li>
+					<li>peek</li>
+					<li>pop</li>
+					<li>remove</li>
+					<li>removeAll</li>
+					<li>removeAt</li>
+					<li>removeAtIndices</li>
+					<li>reverse</li>
+					<li>set</li>
+					<li>sort</li>
+					<li>swapValues</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+
+<span class="hljs-comment">// Default constructor</span>
+<span class="hljs-keyword">let</span> numberList: List&lt;<span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">number</span>&gt;();
+
+<span class="hljs-comment">// Constructor with initial value</span>
+<span class="hljs-keyword">var</span> stringList: List&lt;<span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">string</span>&gt;(<span class="hljs-string">"initial value"</span>);
+
+<span class="hljs-comment">// Constructor with array as initial value</span>
+<span class="hljs-keyword">let</span> booelanList: List&lt;<span class="hljs-built_in">boolean</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">boolean</span>&gt;([<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>]);
+
+<span class="hljs-comment">// Usage of more complex types</span>
+<span class="hljs-keyword">var</span> otherList: List&lt;SomeType&gt; = <span class="hljs-keyword">new</span> List&lt;SomeType&gt;();
+
+numberList.add(<span class="hljs-number">22</span>);
+
+numberList.addRange([<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>]);
+
+numberList.sort();
+
+numberList.forEach(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(element);
+            <span class="hljs-keyword">if</span> (element === <span class="hljs-number">2</span>)
+            {
+                numberList.continue(); <span class="hljs-comment">// Optional / syntactic call to skip this iteration</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory! -&gt; sufficient as continue call</span>
+            }
+            <span class="hljs-keyword">if</span> (element === <span class="hljs-number">4</span>)
+            {
+                numberList.break(); <span class="hljs-comment">// Breaks the forEach loop immediately</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory!</span>
+            }
+
+        });
+
+numberList.clear();
+</code></pre>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
+				<ul>
+					<li>Constructors</li>
+					<li>Properties</li>
+					<li>Methods</li>
+				</ul>
+				<h2 id="dictionary-lt-k-v-gt-">Dictionary&lt;K,V&gt;</h2>
+				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString function must be implemented in those classes or the function overrideHashFunction must be used in the Dictionary.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<ul>
+					<li>add</li>
+					<li>addRange</li>
+					<li>break (used in forEach)</li>
+					<li>clear</li>
+					<li>containsKey</li>
+					<li>containsKeys</li>
+					<li>containsValue</li>
+					<li>containsValues</li>
+					<li>continue (used in forEach)</li>
+					<li>distinct</li>
+					<li>forEach</li>
+					<li>get</li>
+					<li>getKeys</li>
+					<li>getKeysAsList</li>
+					<li>getKeysByValue</li>
+					<li>getKeysByValueAsList</li>
+					<li>getKeysByValues</li>
+					<li>getKeysByValuesAsList</li>
+					<li>getRange</li>
+					<li>getRageByValue</li>
+					<li>getValues</li>
+					<li>getValuesAsList</li>
+					<li>next</li>
+					<li>overrideHashFunction</li>
+					<li>remove</li>
+					<li>removeByValue</li>
+					<li>set</li>
+					<li>swapValues</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {Dictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+
+<span class="hljs-comment">// Default constructor</span>
+<span class="hljs-keyword">let</span> dictionary: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;();
+
+<span class="hljs-comment">// Constructor with initial value</span>
+<span class="hljs-keyword">let</span> dictionary2: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-string">"one"</span>,<span class="hljs-string">"two"</span>,<span class="hljs-string">"three"</span>]]);
+
+<span class="hljs-comment">// Constructor with custom function to override the hashing of the keys (defaul is toString)</span>
+<span class="hljs-keyword">let</span> dictionary3: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">Date</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">Date</span>&gt;(MyUtils.DateHashingFunction);
+
+<span class="hljs-comment">// Usage of more complex types</span>
+<span class="hljs-keyword">var</span> otherDictionary: Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">Date</span>, SomeType&gt;();
+
+dictionary.add(<span class="hljs-number">22</span>, <span class="hljs-string">"twenty two"</span>);
+
+<span class="hljs-keyword">let</span> value:<span class="hljs-built_in">string</span> = dictionary2.get(<span class="hljs-number">2</span>);
+
+dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"key:"</span> + item.key + <span class="hljs-string">" -&gt; value:"</span> + item.value);
+
+            <span class="hljs-keyword">if</span> (item.value === <span class="hljs-string">"two"</span>)
+            {
+                dictionary2.continue(); <span class="hljs-comment">// Optional / syntactic call to skip this iteration</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory! -&gt; sufficient as continue call</span>
+            }
+            <span class="hljs-keyword">if</span> (item.key === <span class="hljs-number">3</span>)
+            {
+                dictionary2.break(); <span class="hljs-comment">// Breaks the forEach loop immediately</span>
+                <span class="hljs-keyword">return</span>; <span class="hljs-comment">// Mandatory!</span>
+            }
+
+        });
+
+dictionary3.clear();
+</code></pre>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>
+				<ul>
+					<li>Constructors</li>
+					<li>Properties</li>
+					<li>Methods</li>
+				</ul>
+				<h2 id="sorteddictionary-lt-k-v-gt-">SortedDictionary&lt;K,V&gt;</h2>
+				<p>A sorted dictionary has the same behavior properties and functions like a standard dictionary. Additionally, there are many functions regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
+				<h3 id="supported-functions">Supported functions</h3>
+				<p><b>All functions of Dictionary &lt;K,V&gt;</b></p>
+				<ul>
+					<li>getByIndex</li>
+					<li>getByIndices</li>
+					<li>getByIndicesAsList</li>
+					<li>getKeyByIndex</li>
+					<li>getKeysByIndices</li>
+					<li>getKeysByIndicesAsList</li>
+					<li>removeByIndex</li>
+					<li>removeByIndices</li>
+					<li>setByIndex</li>
+					<li>setByIndices</li>
+					<li>sortByKey</li>
+					<li>sortByValue</li>
+				</ul>
+				<h3 id="usage">Usage</h3>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+<span class="hljs-keyword">import</span> {Comparer} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+
+<span class="hljs-comment">// Default constructor</span>
+<span class="hljs-keyword">let</span> dictionary: SortedDictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> SortedDictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;();
+
+<span class="hljs-comment">// Constructor with initial value</span>
+<span class="hljs-keyword">let</span> dictionary2: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-string">"one"</span>,<span class="hljs-string">"two"</span>,<span class="hljs-string">"three"</span>]]);
+
+<span class="hljs-comment">// -&gt; All operation of the standard Dictionary&lt;K,V&gt; class possible</span>
+
+<span class="hljs-keyword">let</span> value: <span class="hljs-built_in">string</span> = dictionary2.getByIndex(<span class="hljs-number">1</span>); <span class="hljs-comment">// Returns "two" (key=2; index=1; value="two")</span>
+
+dictionary2.removeByIndex(<span class="hljs-number">2</span>); <span class="hljs-comment">// Removes the third element (key=3; index=2; value="three")</span>
+
+dictionary2.sortByKey(); <span class="hljs-comment">// Sort the dictionary by its keys (using default behavior of number)</span>
+
+dictionary2.sortByKey(Comparer.compareNumbers); <span class="hljs-comment">// Sort the dictionary by its keys (using a comparison function)</span>
+
+dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by its values (using default behavior of string)</span>
+</code></pre>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
+				<ul>
+					<li>Constructors</li>
+					<li>Properties</li>
+					<li>Methods</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_index_.html">"index"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_comparer_.html">"src/<wbr>Comparer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_dictionary_.html">"src/<wbr>Dictionary"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_iteratoritem_.html">"src/<wbr>Iterator<wbr>Item"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_keyvaluepair_.html">"src/<wbr>Key<wbr>Value<wbr>Pair"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_list_.html">"src/<wbr>List"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_sorteddictionary_.html">"src/<wbr>Sorted<wbr>Dictionary"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_sorter_.html">"src/<wbr>Sorter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_icomparer_.html">"src/interfaces/IComparer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_iforeachinterfacedictionary_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_iforeachinterfacelist_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>List"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_ilist_.html">"src/interfaces/IList"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_isortinterface_.html">"src/interfaces/ISort<wbr>Interface"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_src_interfaces_isorter_.html">"src/interfaces/ISorter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_comparertest_.html">"test/<wbr>Comparer<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_dictionarytest_.html">"test/<wbr>Dictionary<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_iteratoritemtest_.html">"test/<wbr>Iterator<wbr>Item<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_keyvaluepairtest_.html">"test/<wbr>Key<wbr>Value<wbr>Pair<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_sorteddictionarytest_.html">"test/<wbr>Sorted<wbr>Dictionary<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_sortertest_.html">"test/<wbr>Sorter<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_testclasstest_.html">"test/<wbr>Test<wbr>Class<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_testtest_.html">"test/<wbr>Test<wbr>Test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_utils_testclass_.html">"test/utils/<wbr>Test<wbr>Class"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_utils_types_.html">"test/utils/<wbr>Types"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_test_utils_utils_.html">"test/utils/<wbr>Utils"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

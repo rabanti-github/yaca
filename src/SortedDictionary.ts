@@ -1,7 +1,7 @@
 import {Dictionary} from './Dictionary';
 import {KeyValuePair} from './KeyValuePair';
 import ISortInterFace from './interfaces/ISortInterface';
-import  List  from './List';
+import { List }  from './List';
 import {Sorter} from './Sorter';
 
 /**

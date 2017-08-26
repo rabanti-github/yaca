@@ -1,6 +1,6 @@
 import { Dictionary } from './Dictionary';
 import ISortInterFace from './interfaces/ISortInterface';
-import List from './List';
+import { List } from './List';
 /**
  * Class representing a sorted Dictionary (Key and Value pairs) for generic Types with various Dictionary operations. The class is based ob the standard Dictionary<K,V>
  */

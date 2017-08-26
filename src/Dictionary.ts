@@ -1,13 +1,13 @@
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import {KeyValuePair} from './KeyValuePair';
 import { IteratorItem } from './IteratorItem';
-import  List  from './List';
+import { List }  from './List';
 var isEqual  = require('lodash.isequal');
 
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
-export class Dictionary<K,V> implements  Iterator<V>
+export class Dictionary<K,V> 
 {
 
 // ############### P R I V A T E   V A R I A B L E S ###############
@@ -316,7 +316,7 @@ export class Dictionary<K,V> implements  Iterator<V>
                 return;
             }
             item = this.next() as IteratorItem<KeyValuePair<K,V>>;
-            done = item.isLastEntry;
+            done = item.done;
             callback(item.value);
         }
     }

@@ -1,4 +1,4 @@
-import List from '../src/List';
+import { List } from '../src/List';
 import {IteratorItem} from '../src/IteratorItem';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
@@ -562,7 +562,7 @@ describe('next method', () => {
         let state: boolean;
         for(let i: number = 0; i < 5; i++)
         {
-            state = (list.next() as IteratorItem<string>).isLastEntry;
+            state = (list.next() as IteratorItem<string>).done;
         }
         expect(state).to.equal(true);
     });
@@ -592,7 +592,7 @@ describe('next method', () => {
                 item = list.next() as IteratorItem<string>;
             }
             value = value + item.value;
-            if (item.isLastEntry === true) {break;}
+            if (item.done === true) {break;}
         }
         expect(value).to.equal("122333");
     });

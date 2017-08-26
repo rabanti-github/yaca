@@ -1,5 +1,5 @@
 import {Dictionary} from '../src/Dictionary';
-import List from '../src/List';
+import { List } from '../src/List';
 import { Utils } from './utils/Utils';
 import {Types} from './utils/Types';
 import { expect } from 'chai';

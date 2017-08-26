@@ -1,5 +1,5 @@
 import { Types } from './Types';
-import List from '../../src/List';
+import { List } from '../../src/List';
 import {Dictionary} from '../../src/Dictionary';
 
 /**

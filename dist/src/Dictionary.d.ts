@@ -1,11 +1,10 @@
-/// <reference types="node" />
 import IForEachInterface from './interfaces/IForEachInterfaceDictionary';
 import { KeyValuePair } from './KeyValuePair';
-import List from './List';
+import { List } from './List';
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
-export declare class Dictionary<K, V> implements Iterator<V> {
+export declare class Dictionary<K, V> {
     private _iDict;
     private _length;
     private _iCounter;

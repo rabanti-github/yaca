@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Static module with comparer functions
  */
-var Comparer;
+export var Comparer;
 (function (Comparer) {
     /**
      * Function to compare two numbers
@@ -63,10 +61,10 @@ var Comparer;
      * @returns A number 1-, 0 or 1 that indicates whether the current date is smaller, equal or bigger than the other date
      */
     function compareDates(date1, date2) {
-        var n1 = date1.getTime();
-        var n2 = date2.getTime();
+        let n1 = date1.getTime();
+        let n2 = date2.getTime();
         return Comparer.compareNumbers(n1, n2);
     }
     Comparer.compareDates = compareDates;
-})(Comparer = exports.Comparer || (exports.Comparer = {}));
+})(Comparer || (Comparer = {}));
 //# sourceMappingURL=Comparer.js.map

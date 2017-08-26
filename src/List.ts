@@ -8,7 +8,7 @@ var isEqual  = require('lodash.isequal');
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
  */
-export default class List<T> implements Iterator<T>, IList<T>
+export class List<T> implements Iterator<T>, IList<T>
 {
 
 // ############### P R I V A T E   V A R I A B L E S ###############
@@ -75,7 +75,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         {
             throw new Error("An undefined value cannot be added to a list");
         }
-        this.addInternal(value);
+        this._addInternal(value);
     }
 
     /**
@@ -166,7 +166,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         if (this._length === 0) { return new Array() as T[]; }
         if (start === undefined) { start = 0; }
         if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, true) as T[];
+        return this._copyToInternal(start, end, true) as T[];
     }
 
     /**
@@ -190,7 +190,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         let newList: List<T> = new List<T>();
         for (let i = 0; i < this._length; i++) {
             if (newList.contains(this._iList[i]) === false) {
-                newList.addInternal(this._iList[i]);
+                newList._addInternal(this._iList[i]);
             }
         }
         this.clear()
@@ -220,12 +220,12 @@ export default class List<T> implements Iterator<T>, IList<T>
         this._iCounter = 0;
         while (done === false)
         {
-            if (this.getForEachControlCondition() === 1) // break
+            if (this._getForEachControlCondition() === 1) // break
             {
                 return;
             }
             item = this.next() as IteratorItem<T>;
-            done = item.isLastEntry;
+            done = item.done;
             callback(item.value);
         }
     }
@@ -268,7 +268,7 @@ export default class List<T> implements Iterator<T>, IList<T>
     {
         if (start === undefined) { start = 0; }
         if (end === undefined) { end = this._length - 1; }
-        return this.copyToInternal(start, end, false) as List<T>;
+        return this._copyToInternal(start, end, false) as List<T>;
     }
 
     /**
@@ -296,7 +296,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public indicesOf(value: T): number[]
     {
-        return this.indicesOfInternal(value, false) as number[];
+        return this._indicesOfInternal(value, false) as number[];
     }
     /**
      * Gets a List of the indices of all occurrences of the passed value
@@ -305,7 +305,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public indicesOfAsList(value: T): List<number>
     {
-        return this.indicesOfInternal(value, true) as List<number>;
+        return this._indicesOfInternal(value, true) as List<number>;
     }
 
      /**
@@ -315,19 +315,19 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public insertAtIndex(index: number, value: T): void
     {
-        this.indexCheck(index, true);// allowed 0 to length (insert after last item)
+        this._indexCheck(index, true);// allowed 0 to length (insert after last item)
         let firstPart, secondPart: T[];
         if (index === 0) {
             firstPart = [];
         }
         else {
-            firstPart = this.copyToInternal(0, index - 1, true) as T[];
+            firstPart = this._copyToInternal(0, index - 1, true) as T[];
         }
         if (index === this._length) {
             secondPart = [];
         }
         else {
-            secondPart = this.copyToInternal(index, this._length - 1, true) as T[];
+            secondPart = this._copyToInternal(index, this._length - 1, true) as T[];
         }
         this.clear();
         this.addRange(firstPart);
@@ -471,12 +471,12 @@ export default class List<T> implements Iterator<T>, IList<T>
         let newList: List<T> = new List<T>();
         for(let i: number = 0; i < iLen; i++)
         {
-            this.indexCheck(list.get(i));     
+            this._indexCheck(list.get(i));     
         }
         for (let i: number = 0; i < this._length; i++) {
             
             if (list.contains(i)) { continue; }
-            newList.addInternal(this._iList[i]);
+            newList._addInternal(this._iList[i]);
         }
         this.clear();
         this.addRange(newList);
@@ -494,7 +494,7 @@ export default class List<T> implements Iterator<T>, IList<T>
         let i2 = this._length - 1;
         var temp: T = new Object as T;
         for (let i = 0; i < halfLength; i++) {
-            this.swapValuesInternal(i1, i2, temp);
+            this._swapValuesInternal(i1, i2, temp);
             i1++;
             i2--;
         }
@@ -508,7 +508,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public set(index: number, value: T): void
     {
-        this.indexCheck(index);
+        this._indexCheck(index);
         if (value === undefined)
         {
             throw new Error("An undefined value cannot be set as value of a list");
@@ -559,10 +559,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      */
     public swapValues(index1: number, index2: number): void
     {
-        this.indexCheck(index1);
-        this.indexCheck(index2);
+        this._indexCheck(index1);
+        this._indexCheck(index2);
         var temp: T = new Object as T;
-        this.swapValuesInternal(index1, index2, temp);
+        this._swapValuesInternal(index1, index2, temp);
     }
 
 // ############### P R I V A T E   F U N C T I O N S ###############
@@ -571,7 +571,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Internal method to add a value to the list (without checks)
      * @param value Value to add
      */
-    private addInternal(value: T) : void
+    private _addInternal(value: T) : void
     {
         this._iList[this._length] = value;
         this._length++;
@@ -585,10 +585,10 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @throws Throws an error if the start index was bigger than the end index
      * @returns An Array or List of the copied values
      */
-    private copyToInternal(start: number, end: number, toArray: boolean): T[] | List<T>
+    private _copyToInternal(start: number, end: number, toArray: boolean): T[] | List<T>
     {
-        this.indexCheck(start);
-        this.indexCheck(end);
+        this._indexCheck(start);
+        this._indexCheck(end);
         if (start > end) {
             throw new Error("The passed start index " + start + " cannot be greater than the end index " + end);
         }
@@ -605,7 +605,7 @@ export default class List<T> implements Iterator<T>, IList<T>
                 counter++;
             }
             else {
-                output.addInternal(this._iList[i]);
+                output._addInternal(this._iList[i]);
             }
         }
         return output;
@@ -615,7 +615,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * Internal function to get the state of a forEach flow control action (break or continue)
      * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
      */
-    private getForEachControlCondition(): number
+    private _getForEachControlCondition(): number
     {
         return this._iForEachControlCondition;
     }    
@@ -625,7 +625,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index Index position to check
      * @param allowUpperBound If true, an index position of n is valid, otherwise n-1
      */
-    private indexCheck(index: number, allowUpperBound?: boolean): void
+    private _indexCheck(index: number, allowUpperBound?: boolean): void
     {
         if (allowUpperBound !== undefined && allowUpperBound === true)
         {
@@ -653,11 +653,11 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param asList If true, a List of indices will be returned, otherwise an Array
      * @returns An Array or List of indices
      */
-    private indicesOfInternal(value: T, asList: boolean): number[] | List<number> {
+    private _indicesOfInternal(value: T, asList: boolean): number[] | List<number> {
         let indices: List<number> = new List<number>();
         for (let i = 0; i < this._length; i++) {
             if (isEqual(this._iList[i], value) === true) {
-                indices.addInternal(i);
+                indices._addInternal(i);
             }
         }
         if (asList !== undefined && asList === true) {
@@ -674,7 +674,7 @@ export default class List<T> implements Iterator<T>, IList<T>
      * @param index2 Index position 1
      * @param tempParameter Temporary variable (Define it once outside of this method)
      */
-    private swapValuesInternal(index1: number, index2: number, tempParameter: T): void
+    private _swapValuesInternal(index1: number, index2: number, tempParameter: T): void
     {
         tempParameter = this._iList[index1];
         this._iList[index1] = this._iList[index2];

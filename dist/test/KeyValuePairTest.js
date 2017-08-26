@@ -1,29 +1,27 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var KeyValuePair_1 = require("../src/KeyValuePair");
-var chai_1 = require("chai");
-require("mocha");
+import { KeyValuePair } from '../src/KeyValuePair';
+import { expect } from 'chai';
+import 'mocha';
 // Test of the KeyValuePair Class
-describe("KeyValuePair\n  ############\n", function () {
-    describe('Constructor', function () {
-        it('should not throw an error when creating an object with K:string and V:number with initial parameters', function () {
-            chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair("xyz", 42); test.value.toString(); }).to.not.throw();
+describe("KeyValuePair\n  ############\n", () => {
+    describe('Constructor', () => {
+        it('should not throw an error when creating an object with K:string and V:number with initial parameters', () => {
+            expect(function () { let test = new KeyValuePair("xyz", 42); test.value.toString(); }).to.not.throw();
         });
-        it('should throw an error when creating an object with K:string and V:number with undefined as value', function () {
-            chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair("xyz", undefined); test.value.toString(); }).to.throw();
+        it('should throw an error when creating an object with K:string and V:number with undefined as value', () => {
+            expect(function () { let test = new KeyValuePair("xyz", undefined); test.value.toString(); }).to.throw();
         });
-        it('should throw an error when creating an object with K:string and V:number with undefined as key', function () {
-            chai_1.expect(function () { var test = new KeyValuePair_1.KeyValuePair(undefined, 42); test.value.toString(); }).to.throw();
+        it('should throw an error when creating an object with K:string and V:number with undefined as key', () => {
+            expect(function () { let test = new KeyValuePair(undefined, 42); test.value.toString(); }).to.throw();
         });
     });
-    describe('getter', function () {
-        it('should return 42 as key if the the object was initialized with this key', function () {
-            var test = new KeyValuePair_1.KeyValuePair(42, "abc");
-            chai_1.expect(test.key).to.equal(42);
+    describe('getter', () => {
+        it('should return 42 as key if the the object was initialized with this key', () => {
+            let test = new KeyValuePair(42, "abc");
+            expect(test.key).to.equal(42);
         });
-        it('should return "abc" as value if the the object was initialized with this value', function () {
-            var test = new KeyValuePair_1.KeyValuePair(42, "abc");
-            chai_1.expect(test.value).to.equal("abc");
+        it('should return "abc" as value if the the object was initialized with this value', () => {
+            let test = new KeyValuePair(42, "abc");
+            expect(test.value).to.equal("abc");
         });
     });
     /************ */

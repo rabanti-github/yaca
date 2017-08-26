@@ -28,7 +28,7 @@ describe('getter', () => {
     });
     it('should return true as parameter isLastEntry if the the object was initialized with this value', () => {
         let test: IteratorItem<string> = new IteratorItem<string>("xyz",true);
-        expect(test.isLastEntry).to.equal(true);
+        expect(test.done).to.equal(true);
     });
 });
 
