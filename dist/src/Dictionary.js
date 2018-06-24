@@ -1,13 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var KeyValuePair_1 = require("./KeyValuePair");
 var IteratorItem_1 = require("./IteratorItem");
-var List_1 = require("./List");
+var List_1 = __importDefault(require("./List"));
 var isEqual = require('lodash.isequal');
 /**
  * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
  */
-var Dictionary = (function () {
+var Dictionary = /** @class */ (function () {
     function Dictionary(keys, values) {
         this._iCounter = 0;
         this._length = 0;
@@ -29,7 +32,8 @@ var Dictionary = (function () {
                 if (keys instanceof Function) {
                     this.overrideHashFunction(keys);
                 }
-                else {
+                else // if (keys instanceof Dictionary)
+                 {
                     this.addRange(keys);
                 }
             }
@@ -68,7 +72,8 @@ var Dictionary = (function () {
             keys = p1.copyToArray();
             values = p2.copyToArray();
         }
-        else {
+        else //if (p1 instanceof Dictionary)
+         {
             keys = p1.getKeys();
             values = p1.getValues();
         }
@@ -219,7 +224,8 @@ var Dictionary = (function () {
         this._iCounter = 0;
         this._iForEachControlCondition = 0;
         while (done === false) {
-            if (this.getForEachControlCondition() === 1) {
+            if (this.getForEachControlCondition() === 1) // break
+             {
                 return;
             }
             item = this.next();
@@ -505,7 +511,8 @@ var Dictionary = (function () {
             throw new Error("No valid key was defined. The key must not be empty or undefined");
         }
         if (this._iOverrideToStringFunction === undefined) {
-            if (key instanceof Date) {
+            if (key instanceof Date) // Workaround for dates as common type (milliseconds are not considered in toString)
+             {
                 return key.getTime().toString();
             }
             else {

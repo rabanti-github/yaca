@@ -18,7 +18,7 @@ var SorterType;
 /**
  * Class for sorter algorithms
  */
-var Sorter = (function () {
+var Sorter = /** @class */ (function () {
     function Sorter(sample, tupleSort) {
         // ############### P R I V A T E   V A R I A B L E S ###############
         this._iCompareToImplemented = false;

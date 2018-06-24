@@ -1,12 +1,12 @@
 {
   "name": "yaca",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Yet Another Collection Approach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "documentation": "typedoc --out ./docs --readme README.md --target ES5 --name 'Yet Another Collection Approach' && cp .nojekyll ./docs/.nojekyll",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "tsc && npm run documentation",
     "test-mocha": "mocha -r ts-node/register ./test/**/*Test.ts",
     "test": "nyc --reporter=html --reporter=text mocha -r ts-node/register --timeout=3000",
@@ -46,21 +46,21 @@
     "url": "https://github.com/rabanti-github/yaca/issues"
   },
   "homepage": "https://github.com/rabanti-github/yaca#readme",
-  "devDependencies": {
-    "@types/chai": "^4.0.3",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.22",
-    "chai": "^4.1.1",
-    "coveralls": "^2.13.1",
-    "istanbul": "^0.4.5",
-    "mocha": "^3.5.0",
-    "nyc": "^11.1.0",
-    "ts-node": "^3.3.0",
-    "tslint": "^5.6.0",
-    "typedoc": "^0.8.0",
-    "typescript": "^2.4.1"
-  },
   "dependencies": {
     "lodash.isequal": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.3",
+    "@types/node": "^10.3.5",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.10.0",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.9.2"
   }
 }

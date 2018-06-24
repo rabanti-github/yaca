@@ -89,7 +89,7 @@ export declare class Sorter<T> implements ISorter<T> {
      * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
      * @param comparisonFunction Comparison function (optional) in case of sorting by function
      */
-    private internalSort(data, lowIndex, highIndex, type, comparisonFunction?);
+    private internalSort;
     /**
      * Internal function to perform a quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function
      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
@@ -98,29 +98,29 @@ export declare class Sorter<T> implements ISorter<T> {
      * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
      * @param comparisonFunction Comparison function (optional) in case of sorting by function
      */
-    private internalTupleSort(data, lowIndex, highIndex, type, comparisonFunction?);
+    private internalTupleSort;
     /**
      * Internal swap method for quicksort
      * @param data Data as array of the type T
      * @param index1 Index position 1 of the data to swap
      * @param index2 Index position 2 of the data to swap
      */
-    private swap(data, index1, index2);
+    private swap;
     /**
      * Internal swap method for quicksort of tuples
      * @param data Data as array of the type KeyValuePair<T,any>
      * @param index1 Index position 1 of the data to swap
      * @param index2 Index position 2 of the data to swap
      */
-    private swapTuple(data, index1, index2);
+    private swapTuple;
     /**
      * Checks whether the type is comparable due to the implementation of a compareTo function
      * @param obj Object toc check
      */
-    private isComparable(obj);
+    private isComparable;
     /**
      * Checks the type of the passed object and sets the appropriate compareTo function if applicable
      * @param obj object to check
      */
-    private checkBasicCommonType(obj);
+    private checkBasicCommonType;
 }

@@ -6,5 +6,5 @@ export declare enum Types {
     number = 1,
     boolean = 2,
     date = 3,
-    testClass = 4,
+    testClass = 4
 }

@@ -234,7 +234,7 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * Internal method to add a value to the list (without checks)
      * @param value Value to add
      */
-    private addInternal(value);
+    private addInternal;
     /**
      * Internal method to copy a range of values in the List to a List or Array
      * @param start Start index
@@ -243,30 +243,30 @@ export default class List<T> implements Iterator<T>, IList<T> {
      * @throws Throws an error if the start index was bigger than the end index
      * @returns An Array or List of the copied values
      */
-    private copyToInternal(start, end, toArray);
+    private copyToInternal;
     /**
      * Internal function to get the state of a forEach flow control action (break or continue)
      * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
      */
-    private getForEachControlCondition();
+    private getForEachControlCondition;
     /**
      * Checks the validity of an index position (>= 0 < length, integer)
      * @param index Index position to check
      * @param allowUpperBound If true, an index position of n is valid, otherwise n-1
      */
-    private indexCheck(index, allowUpperBound?);
+    private indexCheck;
     /**
      * Internal method to get the indices of a value in the List
      * @param value Value to check
      * @param asList If true, a List of indices will be returned, otherwise an Array
      * @returns An Array or List of indices
      */
-    private indicesOfInternal(value, asList);
+    private indicesOfInternal;
     /**
      * Internal method to swap the values at the two defined index positions in the List. The method performs no validation and uses a predefined variable as temporary variable
      * @param index1 Index position 1
      * @param index2 Index position 1
      * @param tempParameter Temporary variable (Define it once outside of this method)
      */
-    private swapValuesInternal(index1, index2, tempParameter);
+    private swapValuesInternal;
 }

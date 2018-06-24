@@ -9,15 +9,18 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("./Dictionary");
 var KeyValuePair_1 = require("./KeyValuePair");
-var List_1 = require("./List");
+var List_1 = __importDefault(require("./List"));
 var Sorter_1 = require("./Sorter");
 /**
  * Class representing a sorted Dictionary (Key and Value pairs) for generic Types with various Dictionary operations. The class is based ob the standard Dictionary<K,V>
  */
-var SortedDictionary = (function (_super) {
+var SortedDictionary = /** @class */ (function (_super) {
     __extends(SortedDictionary, _super);
     function SortedDictionary() {
         return _super !== null && _super.apply(this, arguments) || this;

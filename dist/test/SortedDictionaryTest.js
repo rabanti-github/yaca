@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var SortedDictionary_1 = require("../src/SortedDictionary");
 var Comparer_1 = require("../src/Comparer");
-var List_1 = require("../src/List");
+var List_1 = __importDefault(require("../src/List"));
 var chai_1 = require("chai");
 require("mocha");
 // This file is to test the SortedDictionary<K,V> class
@@ -492,7 +495,7 @@ describe("SORTEDDICTIONARY<K,V>\n  #####################\nThe class is derived f
     });
     /************ */
 });
-var SortTestClass = (function () {
+var SortTestClass = /** @class */ (function () {
     function SortTestClass(value) {
         this.value = value;
     }
@@ -504,7 +507,7 @@ var SortTestClass = (function () {
     };
     return SortTestClass;
 }());
-var SortTestClass2 = (function () {
+var SortTestClass2 = /** @class */ (function () {
     function SortTestClass2(value) {
         this.value = value;
     }

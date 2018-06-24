@@ -6,7 +6,7 @@ var isEqual = require('lodash.isequal');
 /**
  * Class representing a standard ArrayList for generic Types with various List operations
  */
-var List = (function () {
+var List = /** @class */ (function () {
     function List(values) {
         this._iCounter = 0;
         this._length = 0;
@@ -160,7 +160,8 @@ var List = (function () {
         this._iForEachControlCondition = 0;
         this._iCounter = 0;
         while (done === false) {
-            if (this.getForEachControlCondition() === 1) {
+            if (this.getForEachControlCondition() === 1) // break
+             {
                 return;
             }
             item = this.next();

@@ -1,12 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Types_1 = require("./Types");
-var List_1 = require("../../src/List");
+var List_1 = __importDefault(require("../../src/List"));
 var Dictionary_1 = require("../../src/Dictionary");
 /**
  * Utils class for testing
  */
-var Utils = (function () {
+var Utils = /** @class */ (function () {
     function Utils() {
     }
     /**
