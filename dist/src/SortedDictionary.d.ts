@@ -124,12 +124,12 @@ export declare class SortedDictionary<K, V> extends Dictionary<K, V> {
      * @param length length of the dictionary
      * @throws Throws an error if the index position is out of bound
      */
-    private checkIndex(index, length);
+    private checkIndex;
     /**Internal method to sort the dictionary by its keys or values
      *
      * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
      * @param sortFunction Optional comparison function
      * @throws Throws an error if no suitable sorting function could be found for the type of the keys or values
      */
-    private sortInternal(byKey, sortFunction?);
+    private sortInternal;
 }

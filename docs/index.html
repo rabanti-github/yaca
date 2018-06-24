@@ -78,17 +78,17 @@
 					<li>Multiple check functions like contains, containsKey, containsValues or containsKeyAsList</li>
 					<li>Multiple copy functions like copyToArray or getRange</li>
 					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
-					<li>Build-in break and (optional) continue calls within forEach loops as control elements</li>
+					<li>Built-in break and (optional) continue calls within forEach loops as control elements</li>
 					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
 					<li>Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)</li>
-					<li>Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function</li>
+					<li>Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined comparison method or an implementation of a compareTo function</li>
 					<li>Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)</li>
 				</ul>
 				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
 				<h2 id="installation">Installation</h2>
 				<pre><code class="lang-bash">npm install -S yaca
 </code></pre>
-				<h2 id="list-lt-t-gt-">List&lt;T&gt;</h2>
+				<h2 id="listt">List&lt;T&gt;</h2>
 				<p>A list stores values similar to an array. In comparison to an array, several functions like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
 				<h3 id="supported-functions">Supported functions</h3>
 				<ul>
@@ -165,7 +165,7 @@ numberList.clear();
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="dictionary-lt-k-v-gt-">Dictionary&lt;K,V&gt;</h2>
+				<h2 id="dictionaryk-v">Dictionary&lt;K,V&gt;</h2>
 				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString function must be implemented in those classes or the function overrideHashFunction must be used in the Dictionary.</p>
 				<h3 id="supported-functions">Supported functions</h3>
 				<ul>
@@ -241,10 +241,10 @@ dictionary3.clear();
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="sorteddictionary-lt-k-v-gt-">SortedDictionary&lt;K,V&gt;</h2>
+				<h2 id="sorteddictionaryk-v">SortedDictionary&lt;K,V&gt;</h2>
 				<p>A sorted dictionary has the same behavior properties and functions like a standard dictionary. Additionally, there are many functions regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
 				<h3 id="supported-functions">Supported functions</h3>
-				<p><b>All functions of Dictionary &lt;K,V&gt;</b></p>
+				<p><b>All functions of Dictionary &lt;K,V&gt;</b>, and additionally...</p>
 				<ul>
 					<li>getByIndex</li>
 					<li>getByIndices</li>
@@ -280,6 +280,7 @@ dictionary2.sortByKey(); <span class="hljs-comment">// Sort the dictionary by it
 dictionary2.sortByKey(Comparer.compareNumbers); <span class="hljs-comment">// Sort the dictionary by its keys (using a comparison function)</span>
 
 dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by its values (using default behavior of string)</span>
+
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
 				<ul>

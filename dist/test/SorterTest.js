@@ -71,7 +71,7 @@ describe("Sorter\n  ######n", function () {
 /**
  * Dummy class for sorter testing
  */
-var Dummy1 = (function () {
+var Dummy1 = /** @class */ (function () {
     function Dummy1() {
         this.compareTo = 0;
     }
@@ -80,7 +80,7 @@ var Dummy1 = (function () {
 /**
  * Dummy class for sorter testing
  */
-var Dummy2 = (function () {
+var Dummy2 = /** @class */ (function () {
     function Dummy2() {
     }
     Dummy2.prototype.compareTo = function (value) {

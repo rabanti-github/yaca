@@ -1,5 +1,15 @@
 # CHANGE LOG
 
+***v1.2.1***
+
+---
+Date: 2018-06-24
+
+Release type: Minor release / Maintenance / Non-critical
+
+* Pushed DevDependencies to the most recent versions
+* Fixed deprecation issue regarding prepublish
+
 ***v1.2.0***
 
 ---

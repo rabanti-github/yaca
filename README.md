@@ -18,10 +18,10 @@ YACA contains at the moment **List&lt;T&gt;**, **Dictionary&lt;K,V&gt;** and **S
 * Multiple check functions like contains, containsKey, containsValues or containsKeyAsList
 * Multiple copy functions like copyToArray or getRange
 * forEach method provided (returns KeyValuePair for Dictionaries)
-* Build-in break and (optional) continue calls within forEach loops as control elements
+* Built-in break and (optional) continue calls within forEach loops as control elements
 * Native sorting of the types number, string, boolean and Date (in List class)
 * Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)
-* Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function
+* Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined comparison method or an implementation of a compareTo function
 * Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)
 
 See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/changelog.md)** for recent updates.
@@ -202,7 +202,7 @@ A sorted dictionary has the same behavior properties and functions like a standa
 
 ### Supported functions
 
-<b>All functions of Dictionary &lt;K,V&gt;</b>
+<b>All functions of Dictionary &lt;K,V&gt;</b>, and additionally...
 
 * getByIndex
 * getByIndices

@@ -292,44 +292,44 @@ export declare class Dictionary<K, V> implements Iterator<V> {
      * @param value Value to add
      * @throws Throws an error if no key or value was defined
      */
-    private addInternal(key, value);
+    private addInternal;
     /**
      * Internal method to copy dictionary according to a a list of hashcodes
      * @param keys hashcodes of the items to copy
      * @returns A new Dictionary with the copied tuples
      */
-    private copyToInternal(keys);
+    private copyToInternal;
     /**
      * Internal function to get the state of a forEach flow control action (break or continue)
      * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
      */
-    private getForEachControlCondition();
+    private getForEachControlCondition;
     /**
      * Method to calculate the hash code of the key (default: toString)
      * @param key Key to process
      * @returns The hash code internally used as key. Default is the toString function of the passed key
      */
-    private getHashCode(key);
+    private getHashCode;
     /**
      * Internal function to get keys by values as list
      * @param values values to look fot keys
      * @param all if true, all entries will be queried. Otherwise, the method returns after the first hit
      * @returns A list of all determined keys
      */
-    private getKeysByValuesAsListInternal(values, all);
+    private getKeysByValuesAsListInternal;
     /**
      * Internal method to get key value pairs as object with two properties 'key' and 'value'
      * @returns Object array with key value pairs
      */
-    private getKeyValuePairsInternal();
+    private getKeyValuePairsInternal;
     /**
      * Internal method to refresh the key index of the dictionary
      */
-    private refreshKeyIndex();
+    private refreshKeyIndex;
     /**
      * Internal method to remove an entry
      * @param key Key to remove (with value)
      * @returns True if the item could be removed
      */
-    private removeInternal(key);
+    private removeInternal;
 }

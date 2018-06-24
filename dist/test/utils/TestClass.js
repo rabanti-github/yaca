@@ -4,7 +4,7 @@ var Comparer_1 = require("../../src/Comparer");
 /**
  * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
  */
-var TestClass = (function () {
+var TestClass = /** @class */ (function () {
     /**
      * Default constructor
      */
