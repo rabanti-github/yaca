@@ -108,7 +108,7 @@ numberList.forEach(element => {
 numberList.clear();
 ```
 
-See  [The List documentation page](https://rabanti-github.github.io/yaca/classes/_src_list_.list.html) for further details:
+See  [The List documentation page](https://rabanti-github.github.io/yaca/classes/_list_.list.html) for further details:
 
 * Constructors
 * Properties
@@ -190,7 +190,7 @@ dictionary2.forEach(item => {
 dictionary3.clear();
 ```
 
-See  [The Dictionary documentation page](https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html) for further details:
+See  [The Dictionary documentation page](https://rabanti-github.github.io/yaca/classes/_dictionary_.dictionary.html) for further details:
 
 * Constructors
 * Properties
@@ -243,7 +243,7 @@ dictionary2.sortByValue(); // Sort the dictionary by its values (using default b
 
 ```
 
-See  [The SortedDictionary documentation page](https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html) for further details:
+See  [The SortedDictionary documentation page](https://rabanti-github.github.io/yaca/classes/_sorteddictionary_.sorteddictionary.html) for further details:
 
 * Constructors
 * Properties
