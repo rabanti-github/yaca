@@ -4,7 +4,7 @@
 
 ## Introduction
 
-YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.
+YACA is another approach to introduce collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing. YACA provides (among common methods like add, remove or clear) a big variety of different non-standard methods, such as swapping of values, lookup of values according to a list of keys, or sorting of lists based on predefined or user-defined comparison methods. YACA is fully tested with hundred of assertions and a code coverage of 100%.
 
 [![Coverage Status](https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master)](https://coveralls.io/github/rabanti-github/yaca?branch=master)
 ![npm](https://img.shields.io/npm/v/yaca.svg?maxAge=86400)
@@ -14,13 +14,14 @@ YACA contains at the moment **List&lt;T&gt;**, **Dictionary&lt;K,V&gt;** and **S
 
 ## Important features
 
-* Multiple add and remove functions like add, addRange, insertAtIndex, push or set
-* Multiple check functions like contains, containsKey, containsValues or containsKeyAsList
-* Multiple copy functions like copyToArray or getRange
+* Multiple add and remove methods like add, addRange, insertAtIndex, push or set
+* Multiple check methods like contains, containsKey, containsValues or containsKeyAsList
+* Multiple copy methods like copyToArray or getRange
 * forEach method provided (returns KeyValuePair for Dictionaries)
+* Built-in break and (optional) continue calls within forEach loops as control elements
 * Native sorting of the types number, string, boolean and Date (in List class)
 * Possibility of the implementation of a compareTo function in classes for sorting purpose (interface IComparer)
-* Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined compariosn method or an implementation of a compareTo function
+* Possibility to sort SortedDictionary by key or value, according to the default behavior, a defined comparison method or an implementation of a compareTo function
 * Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)
 
 See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/changelog.md)** for recent updates.
@@ -31,7 +32,42 @@ See the **[Change Log](https://github.com/rabanti-github/yaca/blob/master/change
 npm install -S yaca
 ```
 
-## Usage (List&lt;T&gt;)
+## List&lt;T&gt;
+
+A list stores values similar to an array. In comparison to an array, several methods like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.
+
+### Supported methods
+
+* add
+* addRange
+* break (used in forEach)
+* clear
+* contains
+* continue (used in forEach)
+* dequeue
+* distinct
+* enqueue
+* forEach
+* get
+* getRange
+* indexOf
+* indicesOf
+* indicesOfAsList
+* insertAtIndices
+* lastIndexOf
+* next
+* peek
+* pop
+* remove
+* removeAll
+* removeAt
+* removeAtIndices
+* reverse
+* set
+* sort
+* swapValues
+
+### Usage
 
 ```ts
 import {List} from 'yaca';
@@ -56,6 +92,17 @@ numberList.sort();
 
 numberList.forEach(element => {
             console.log(element);
+            if (element === 2)
+            {
+                numberList.continue(); // Optional / syntactic call to skip this iteration
+                return; // Mandatory! -> sufficient as continue call
+            }
+            if (element === 4)
+            {
+                numberList.break(); // Breaks the forEach loop immediately
+                return; // Mandatory!
+            }
+
         });
 
 numberList.clear();
@@ -68,7 +115,42 @@ See  [The List documentation page](https://rabanti-github.github.io/yaca/classes
 * Methods
 
 
-## Usage (Dictionary&lt;K,V&gt;)
+## Dictionary&lt;K,V&gt;
+
+A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString method must be implemented in those classes or the method overrideHashFunction must be used in the Dictionary.
+
+### Supported methods
+
+* add
+* addRange
+* break (used in forEach)
+* clear
+* containsKey
+* containsKeys
+* containsValue
+* containsValues
+* continue (used in forEach)
+* distinct
+* forEach
+* get
+* getKeys
+* getKeysAsList
+* getKeysByValue
+* getKeysByValueAsList
+* getKeysByValues
+* getKeysByValuesAsList
+* getRange
+* getRangeByValue
+* getValues
+* getValuesAsList
+* next
+* overrideHashFunction
+* remove
+* removeByValue
+* set
+* swapValues
+
+### Usage
 
 ```ts
 import {Dictionary} from 'yaca';
@@ -91,6 +173,18 @@ let value:string = dictionary2.get(2);
 
 dictionary2.forEach(item => {
             console.log("key:" + item.key + " -> value:" + item.value);
+
+            if (item.value === "two")
+            {
+                dictionary2.continue(); // Optional / syntactic call to skip this iteration
+                return; // Mandatory! -> sufficient as continue call
+            }
+            if (item.key === 3)
+            {
+                dictionary2.break(); // Breaks the forEach loop immediately
+                return; // Mandatory!
+            }
+
         });
 
 dictionary3.clear();
@@ -102,8 +196,28 @@ See  [The Dictionary documentation page](https://rabanti-github.github.io/yaca/c
 * Properties
 * Methods
 
+## SortedDictionary&lt;K,V&gt;
 
-## Usage (SortedDictionary&lt;K,V&gt;)
+A sorted dictionary has the same behavior properties and methods like a standard dictionary. Additionally, there are many methods regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.
+
+### Supported methods
+
+<b>All methods of Dictionary &lt;K,V&gt;</b>, and additionally...
+
+* getByIndex
+* getByIndices
+* getByIndicesAsList
+* getKeyByIndex
+* getKeysByIndices
+* getKeysByIndicesAsList
+* removeByIndex
+* removeByIndices
+* setByIndex
+* setByIndices
+* sortByKey
+* sortByValue
+
+### Usage
 
 ```ts
 import {SortedDictionary} from 'yaca';

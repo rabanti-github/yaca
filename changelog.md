@@ -1,5 +1,52 @@
 # CHANGE LOG
 
+***v1.2.2***
+
+---
+Date: 2018-10-25
+
+Release type: Minor release / Maintenance
+
+* Pushed DevDependencies to the most recent versions
+* Fixed typos and improved documentation
+* Code formatting
+* Updated package.json for better multi-platform support (dev)
+
+***v1.2.1***
+
+---
+Date: 2018-06-24
+
+Release type: Minor release / Maintenance / Non-critical
+
+* Pushed DevDependencies to the most recent versions
+* Fixed deprecation issue regarding prepublish
+
+***v1.2.0***
+
+---
+Date: 2017-08-18
+
+Release type: Minor release / Bugfix
+
+* Fixed handling of forEach behavior (break condition)
+* Added continue (optional) and break functions for better forEach control
+* Added more tests
+* Added more documentation
+* Fixed typos
+
+***v1.1.1***
+
+---
+Date: 2017-08-16
+
+Release type: Minor release
+
+* Added class SortedDictionary<K,V>
+* Added more tests
+* Updated dependencies
+* Updated changelog (v1.1.0 to 1.1.1)
+
 ***v1.0.4***
 
 ---
@@ -40,7 +87,7 @@ Date: 2017-08-04
 
 Release type: Major release
 
-* Coverage upt to 100%
+* Coverage up to 100%
 * New module Comparer with static compareTo functions
 * New interface IComparer: compareTo function implementation can be used for sorting
 * Sorting of lists is now working without declaration of a compareTo function for number, string, boolean and Date

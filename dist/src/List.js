@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var IteratorItem_1 = require("./IteratorItem");
 var Sorter_1 = require("./Sorter");
-var isEqual = require('lodash.isequal');
+var isEqual = require("lodash.isequal");
 /**
- * Class representing a standard ArrayList for generic Types with various List operations
+ * The class represents a standard (array)list for generic types with various list, stack and queue operations
  */
-var List = (function () {
+var List = /** @class */ (function () {
     function List(values) {
         this._iCounter = 0;
         this._length = 0;
@@ -26,7 +26,7 @@ var List = (function () {
     Object.defineProperty(List.prototype, "length", {
         // ############### P R O P E R T I E S ###############
         /**
-         * Gets the number of elements of the List
+         * Gets the number of elements of the list
          */
         get: function () {
             this._length = Object.keys(this._iList).length;
@@ -37,7 +37,7 @@ var List = (function () {
     });
     // ############### P U B L I C   F U N C T I O N S ###############
     /**
-     * Adds an element at the end of the List
+     * Adds an element at the end of the list
      * @param value Value to add
      */
     List.prototype.add = function (value) {
@@ -59,7 +59,13 @@ var List = (function () {
         }
     };
     /**
-     * Removes all elements of the List
+     * Called in a forEach loop before a return keyword, the loop will be terminated immediately (break)
+     */
+    List.prototype.break = function () {
+        this._iForEachControlCondition = 1;
+    };
+    /**
+     * Removes all elements of the list
      */
     List.prototype.clear = function () {
         if (this._length === 0) {
@@ -71,9 +77,10 @@ var List = (function () {
         }
     };
     /**
- * Check whether the List contains the specified value
- * @param value True if the value exists, otherwise false
- */
+     * Check whether the list contains the specified value
+     * @param value Value to check for existence
+     * @returns True if the value exists, otherwise false
+     */
     List.prototype.contains = function (value) {
         if (this._length === 0) {
             return false;
@@ -85,6 +92,12 @@ var List = (function () {
         else {
             return true;
         }
+    };
+    /**
+     * Optional / syntactic method: Called in a forEach loop before a return keyword, the current iteration will be skipped (continue). It is sufficient only to call return for the same behavior
+     */
+    List.prototype.continue = function () {
+        this._iForEachControlCondition = 2;
     };
     List.prototype.copyToArray = function (start, end) {
         if (this._length === 0) {
@@ -99,7 +112,8 @@ var List = (function () {
         return this.copyToInternal(start, end, true);
     };
     /**
-     * Removes the top element of the List and returns its value (end position / last element). undefined will be returned if the List is empty
+     * Removes the top element of the list and returns its value (end position / last element). undefined will be returned if the list is empty
+     * @returns The dequeued value or undefined if the list is empty
      */
     List.prototype.dequeue = function () {
         if (this._length === 0) {
@@ -110,7 +124,7 @@ var List = (function () {
         return value;
     };
     /**
-     * Removes all duplicates of values in the List. All duplicates after the first occurrence of each value will be removed
+     * Removes all duplicates of values in the list. All duplicates after the first occurrence of each value will be removed
      */
     List.prototype.distinct = function () {
         if (this._length === 0) {
@@ -126,7 +140,7 @@ var List = (function () {
         this.addRange(newList);
     };
     /**
-     * Inserts a new value at the top position of the List (end position / last element). This method is synonymous with add()
+     * Inserts a new value at the top position of the list (end position / last element). This method is synonymous with add()
      * @param value Value to insert
      */
     List.prototype.enqueue = function (value) {
@@ -135,7 +149,7 @@ var List = (function () {
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the List
+     * @param callback Callback function to process the items of the list
      */
     List.prototype.forEach = function (callback) {
         if (this._length === 0) {
@@ -143,16 +157,22 @@ var List = (function () {
         }
         var done = false;
         var item;
+        this._iForEachControlCondition = 0;
         this._iCounter = 0;
         while (done === false) {
+            if (this.getForEachControlCondition() === 1) {
+                // break
+                return;
+            }
             item = this.next();
             done = item.isLastEntry;
             callback(item.value);
         }
     };
     /**
-     * Gets the value of the List at the specified index position
+     * Gets the value of the list at the specified index position
      * @param index Index position (0 to n)
+     * @returns The value at the defined index position
      */
     List.prototype.get = function (index) {
         var value = this._iList[index];
@@ -160,7 +180,7 @@ var List = (function () {
             return value;
         }
         else {
-            throw new Error("The index " + index + " was not found in the List");
+            throw new Error("The index " + index + " was not found in the list");
         }
     };
     List.prototype.getRange = function (start, end) {
@@ -175,6 +195,7 @@ var List = (function () {
     /**
      * Gets the index of the first occurrence of the passed value
      * @param value Value to check
+     * @returns The index position of the value in the list. If not found, -1 will be returned
      */
     List.prototype.indexOf = function (value) {
         for (var i = 0; i < this._length; i++) {
@@ -185,24 +206,26 @@ var List = (function () {
         return -1;
     };
     /**
-     * Gets an Array of the indices of all occurrences of the passed value
+     * Gets an array of the indices of all occurrences of the passed value
      * @param value Value to check
+     * @returns An array of indices of the specified value
      */
     List.prototype.indicesOf = function (value) {
         return this.indicesOfInternal(value, false);
     };
     /**
-     * Gets a List of the indices of all occurrences of the passed value
+     * Gets a list of the indices of all occurrences of the passed value
      * @param value Value to check
+     * @returns A list of indices of the specified value
      */
     List.prototype.indicesOfAsList = function (value) {
         return this.indicesOfInternal(value, true);
     };
     /**
-    * Inserts a new value at the defined index position. All values above (index +1) will be shifted to the next higher index. The last item of the List will be shifted to a new value
-    * @param index Index position where to insert the value
-    * @param value Value to insert
-    */
+     * Inserts a new value at the defined index position. All values above (index +1) will be pushed to the next higher index. The last item of the list will be pushed to a new value
+     * @param index Index position where to insert the value
+     * @param value Value to insert
+     */
     List.prototype.insertAtIndex = function (index, value) {
         this.indexCheck(index, true); // allowed 0 to length (insert after last item)
         var firstPart, secondPart;
@@ -226,6 +249,7 @@ var List = (function () {
     /**
      * Gets the index of the last occurrence of the passed value
      * @param value Value to check
+     * @returns The last index position of the specified value in the list
      */
     List.prototype.lastIndexOf = function (value) {
         var indices = this.indicesOfAsList(value);
@@ -237,9 +261,10 @@ var List = (function () {
     };
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
-    * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
-    * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
-    */
+     * Method to get the next value of an iterator. If the last item of the list is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
+     * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
+     * @returns An IteratorResult object containing a value
+     */
     List.prototype.next = function (value) {
         var val = this._iList[this._iCounter];
         var lastItem;
@@ -258,6 +283,7 @@ var List = (function () {
     };
     /**
      * Returns the last element of a list without removing it (end of list). Returns undefined if the list is empty
+     * @return The last value of the list. Undefined will be returned if the list is empty
      */
     List.prototype.peek = function () {
         if (this._length === 0) {
@@ -266,7 +292,8 @@ var List = (function () {
         return this._iList[this._length - 1];
     };
     /**
-     * Removes the bottom element of the List and returns its value (index position 0). undefined will be returned if the List is empty
+     * Removes the bottom element of the list and returns its value (index position 0). Undefined will be returned if the list is empty
+     * @return The last removed value. Undefined will be returned if the list is empty
      */
     List.prototype.pop = function () {
         if (this._length === 0) {
@@ -277,15 +304,16 @@ var List = (function () {
         return value;
     };
     /**
-     * Inserts a new value at the bottom position of the List (index position 0)
+     * Inserts a new value at the bottom position of the list (index position 0)
      * @param value Value to insert
      */
     List.prototype.push = function (value) {
         this.insertAtIndex(0, value);
     };
     /**
-     * Removes the passed value at the first occurrence in the List
+     * Removes the passed value at the first occurrence in the list
      * @param value Value to remove
+     * @returns True if the value could be removed
      */
     List.prototype.remove = function (value) {
         if (this._length === 0) {
@@ -302,8 +330,9 @@ var List = (function () {
         }
     };
     /**
-     * Removes the passed value at all positions in the List
+     * Removes the passed value at all positions in the list
      * @param value Value to remove
+     * @returns True if the value could be removed in the whole list
      */
     List.prototype.removeAll = function (value) {
         if (this._length === 0) {
@@ -319,7 +348,7 @@ var List = (function () {
         }
     };
     /**
-     * Removes the value at the defined index. All values above will be shifted one index position down (index - 1)
+     * Removes the value at the defined index. All values above will be pushed back one index position down (index - 1)
      * @param index Index where to remove a value
      */
     List.prototype.removeAt = function (index) {
@@ -353,7 +382,7 @@ var List = (function () {
         this._length = this.length;
     };
     /**
-     * Method to reverse the List
+     * Method to reverse the list
      */
     List.prototype.reverse = function () {
         if (this._length === 0) {
@@ -362,7 +391,7 @@ var List = (function () {
         var halfLength = Math.floor(this._length / 2);
         var i1 = 0;
         var i2 = this._length - 1;
-        var temp = new Object;
+        var temp = new Object();
         for (var i = 0; i < halfLength; i++) {
             this.swapValuesInternal(i1, i2, temp);
             i1++;
@@ -370,9 +399,10 @@ var List = (function () {
         }
     };
     /**
-     * Updates a value of the List at the specified index position
+     * Updates a value of the list at the specified index position
      * @param index Index position (0 to n)
      * @param value New value
+     * @throws Throws an error if an undefined values was added
      */
     List.prototype.set = function (index, value) {
         this.indexCheck(index);
@@ -402,14 +432,14 @@ var List = (function () {
         }
     };
     /**
-     * Swaps the values at the two defined index positions in the List
+     * Swaps the values at the two defined index positions in the list
      * @param index1 Index position 1
      * @param index2 Index position 1
      */
     List.prototype.swapValues = function (index1, index2) {
         this.indexCheck(index1);
         this.indexCheck(index2);
-        var temp = new Object;
+        var temp = new Object();
         this.swapValuesInternal(index1, index2, temp);
     };
     // ############### P R I V A T E   F U N C T I O N S ###############
@@ -422,16 +452,21 @@ var List = (function () {
         this._length++;
     };
     /**
-     * Internal method to copy a range of values in the List to a List or Array
+     * Internal method to copy a range of values in the list to a list or array
      * @param start Start index
-     * @param end End Index
-     * @param toArray If true, an Array will be returned, otherwise a List
+     * @param end End index
+     * @param toArray If true, an array will be returned, otherwise a list
+     * @throws Throws an error if the start index was bigger than the end index
+     * @returns An array or list of the copied values
      */
     List.prototype.copyToInternal = function (start, end, toArray) {
         this.indexCheck(start);
         this.indexCheck(end);
         if (start > end) {
-            throw new Error("The passed start index " + start + " cannot be greater than the end index " + end);
+            throw new Error("The passed start index " +
+                start +
+                " cannot be greater than the end index " +
+                end);
         }
         var output;
         if (toArray === true) {
@@ -451,6 +486,13 @@ var List = (function () {
             }
         }
         return output;
+    };
+    /**
+     * Internal method to get the state of a forEach flow control action (break or continue)
+     * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
+     */
+    List.prototype.getForEachControlCondition = function () {
+        return this._iForEachControlCondition;
     };
     /**
      * Checks the validity of an index position (>= 0 < length, integer)
@@ -473,9 +515,10 @@ var List = (function () {
         }
     };
     /**
-     * Internal method to get the indices of a value in the List
+     * Internal method to get the indices of a value in the list
      * @param value Value to check
-     * @param asList If true, a List of indices will be returned, otherwise an Array
+     * @param asList If true, a list of indices will be returned, otherwise an array
+     * @returns An array or list of indices
      */
     List.prototype.indicesOfInternal = function (value, asList) {
         var indices = new List();
@@ -492,7 +535,7 @@ var List = (function () {
         }
     };
     /**
-     * Internal method to swap the values at the two defined index positions in the List. The method performs no validation and uses a predefined variable as temporary variable
+     * Internal method to swap the values at the two defined index positions in the list. The method performs no validation and uses a predefined variable as temporary variable
      * @param index1 Index position 1
      * @param index2 Index position 1
      * @param tempParameter Temporary variable (Define it once outside of this method)

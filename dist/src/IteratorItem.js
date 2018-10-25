@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Class representing an iterator item
+ * The class represents an iterator item
  */
-var IteratorItem = (function () {
+var IteratorItem = /** @class */ (function () {
     function IteratorItem(value, finished) {
         if (value !== undefined) {
             this.value = value;

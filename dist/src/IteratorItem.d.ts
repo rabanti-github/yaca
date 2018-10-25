@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /**
- * Class representing an iterator item
+ * The class represents an iterator item
  */
 export declare class IteratorItem<T> implements IteratorResult<T> {
     /**
@@ -18,9 +18,9 @@ export declare class IteratorItem<T> implements IteratorResult<T> {
      */
     constructor(value: T, finished: boolean);
     /**
- * Constructor with value
- * @param value Value of the iterator item
- */
+     * Constructor with value
+     * @param value Value of the iterator item
+     */
     constructor(value: T);
     /**
      * Default constructor

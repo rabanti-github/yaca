@@ -1,5 +1,5 @@
 /**
- * Class representing an Key-Value pair
+ * The class represents a key-value pair
  */
 export declare class KeyValuePair<K, V> {
     private _key;

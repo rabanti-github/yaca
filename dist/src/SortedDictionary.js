@@ -1,23 +1,29 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Dictionary_1 = require("./Dictionary");
 var KeyValuePair_1 = require("./KeyValuePair");
-var List_1 = require("./List");
+var List_1 = __importDefault(require("./List"));
 var Sorter_1 = require("./Sorter");
 /**
- * Class representing a sorted Dictionary (Key and Value pairs) for generic Types with various Dictionary operations. The class is based ob the standard Dictionary<K,V>
+ * The class represents a sorted dictionary (key and value pairs) for generic types with various dictionary operations. The class is based ob the standard Dictionary<K,V>
  */
-var SortedDictionary = (function (_super) {
+var SortedDictionary = /** @class */ (function (_super) {
     __extends(SortedDictionary, _super);
     function SortedDictionary() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -26,6 +32,7 @@ var SortedDictionary = (function (_super) {
     /**
      * Gets the value by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The value at the specified index position
      */
     SortedDictionary.prototype.getByIndex = function (index) {
         var output = this.getByIndices([index]);
@@ -60,6 +67,7 @@ var SortedDictionary = (function (_super) {
     /**
      * Gets the key by index. An error will be thrown if the index was not found
      * @param index Index of the entry
+     * @returns The key at the specified index position
      */
     SortedDictionary.prototype.getKeyByIndex = function (index) {
         var output = this.getKeysByIndices([index]);
@@ -147,17 +155,19 @@ var SortedDictionary = (function (_super) {
     /**
      * Validates the passed index
      * @param index Index to check
-     * @param length length of the dictionary
+     * @param length Length of the dictionary
+     * @throws Throws an error if the index position is out of bound
      */
     SortedDictionary.prototype.checkIndex = function (index, length) {
         if (index < 0 || index >= length) {
             throw new Error("The index " + index + " is out of bound");
         }
     };
-    /**Internal method to sort the dictionary by its keys or values
-     *
-     * @param byKey If true, the dictionary will be sorted by key, otherwise ba value
+    /**
+     * Internal method to sort the dictionary by its keys or values
+     * @param byKey If true, the dictionary will be sorted by key, otherwise a value
      * @param sortFunction Optional comparison function
+     * @throws Throws an error if no suitable sorting function could be found for the type of the keys or values
      */
     SortedDictionary.prototype.sortInternal = function (byKey, sortFunction) {
         if (this.length === 0) {

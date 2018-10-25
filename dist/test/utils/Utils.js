@@ -1,23 +1,26 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Types_1 = require("./Types");
-var List_1 = require("../../src/List");
+var List_1 = __importDefault(require("../../src/List"));
 var Dictionary_1 = require("../../src/Dictionary");
 /**
  * Utils class for testing
  */
-var Utils = (function () {
+var Utils = /** @class */ (function () {
     function Utils() {
     }
     /**
-     * Function to test an overwritten hash function for dates (used in Dictionary)
+     * Method to test an overwritten hash function for dates (used in Dictionary)
      * @param date Date to get the hash
      */
     Utils.properDateHashFunction = function (date) {
         return date.getTime().toString();
     };
     /**
-     * Function to setup instances of the List class
+     * Method to setup instances of the List class
      * @param t Type of the list
      * @param initialValue Initial value as single value or array (optional)
      */
@@ -57,6 +60,13 @@ var Utils = (function () {
             }
         }
     };
+    /**
+     * Method to setup instances of the Dictionary class
+     * @param keyType Key type of the dictionary
+     * @param valueType Value type of the dictionary
+     * @param keys Initial keys as single value or array (optional)
+     * @param values Initial value as single value or array (optional)
+     */
     Utils.setupDictionary = function (keyType, valueType, keys, values) {
         if (keys === undefined || values === undefined) {
             if (keyType === Types_1.Types.boolean && valueType === Types_1.Types.boolean) {

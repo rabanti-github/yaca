@@ -1,13 +1,11 @@
-
 /**
- * Interface to handle a forEach loop
+ * Interface to handle a forEach loop in lists
  */
-export interface IForEachInterface<T>
-{
-    /**
-     * Callback function
-     */
-     (callback: T): void;
+export interface IForEachInterface<T> {
+  /**
+   * Callback function
+   */
+  (callback: T): void;
 }
 
-export default IForEachInterface
+export default IForEachInterface;
