@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Class representing an Key-Value pair
+ * The class represents a key-value pair
  */
 var KeyValuePair = /** @class */ (function () {
     /**

@@ -1,7 +1,7 @@
 /**
  * Static module with comparer functions
  */
-export declare module Comparer {
+export declare namespace Comparer {
     /**
      * Function to compare two numbers
      * @param value1 Number 1 to compare

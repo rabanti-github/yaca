@@ -1,4 +1,4 @@
-import { IComparer } from '../../src/interfaces/IComparer';
+import { IComparer } from "../../src/interfaces/IComparer";
 /**
  * Class for test purpose. The class contains several objects and can be used to test operations on complex / custom data types
  */

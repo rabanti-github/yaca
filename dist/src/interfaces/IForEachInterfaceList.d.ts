@@ -1,5 +1,5 @@
 /**
- * Interface to handle a forEach loop
+ * Interface to handle a forEach loop in lists
  */
 export interface IForEachInterface<T> {
     /**

@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var KeyValuePair_1 = require("./KeyValuePair");
 var IteratorItem_1 = require("./IteratorItem");
 var List_1 = __importDefault(require("./List"));
-var isEqual = require('lodash.isequal');
+var isEqual = require("lodash.isequal");
 /**
- * Class representing a standard Dictionary (Key and Value pairs) for generic Types with various Dictionary operations
+ * The class represents a standard dictionary (key and value pairs) for generic types with various dictionary operations
  */
 var Dictionary = /** @class */ (function () {
     function Dictionary(keys, values) {
@@ -31,9 +31,8 @@ var Dictionary = /** @class */ (function () {
             else {
                 if (keys instanceof Function) {
                     this.overrideHashFunction(keys);
-                }
-                else // if (keys instanceof Dictionary)
-                 {
+                } // if (keys instanceof Dictionary)
+                else {
                     this.addRange(keys);
                 }
             }
@@ -42,7 +41,7 @@ var Dictionary = /** @class */ (function () {
     Object.defineProperty(Dictionary.prototype, "length", {
         // ############### P R O P E R T I E S ###############
         /**
-         * Gets the number of elements of the Dictionary
+         * Gets the number of elements of the dictionary
          */
         get: function () {
             this._length = this._iKeyIndex.length;
@@ -53,7 +52,7 @@ var Dictionary = /** @class */ (function () {
     });
     // ############### P U B L I C   F U N C T I O N S ###############
     /**
-     * Adds an element to the Dictionary. This method is synonymous to set
+     * Adds an element to the dictionary. This method is synonymous to set
      * @param value Value to add
      * @param key Key to add
      */
@@ -71,9 +70,8 @@ var Dictionary = /** @class */ (function () {
         else if (p1 instanceof List_1.default && p2 instanceof List_1.default) {
             keys = p1.copyToArray();
             values = p2.copyToArray();
-        }
-        else //if (p1 instanceof Dictionary)
-         {
+        } //if (p1 instanceof Dictionary)
+        else {
             keys = p1.getKeys();
             values = p1.getValues();
         }
@@ -87,13 +85,13 @@ var Dictionary = /** @class */ (function () {
         this.refreshKeyIndex();
     };
     /**
-      * Called in a forEach loop before a return keyword, the loop will be terminated immediately (break)
-      */
+     * Called in a forEach loop before a return keyword, the loop will be terminated immediately (break)
+     */
     Dictionary.prototype.break = function () {
         this._iForEachControlCondition = 1;
     };
     /**
-     * Removes all elements of the Dictionary
+     * Removes all elements of the dictionary
      */
     Dictionary.prototype.clear = function () {
         if (this._length === 0) {
@@ -106,9 +104,9 @@ var Dictionary = /** @class */ (function () {
         }
     };
     /**
-     * Check whether the Dictionary contains the specified key
+     * Check whether the dictionary contains the specified key
      * @param key Key to check
-     * @returns True if the key was found in the Dictionary
+     * @returns True if the key was found in the dictionary
      */
     Dictionary.prototype.containsKey = function (key) {
         if (this._length === 0) {
@@ -153,9 +151,9 @@ var Dictionary = /** @class */ (function () {
         }
     };
     /**
-     * Check whether the Dictionary contains the specified value
+     * Check whether the dictionary contains the specified value
      * @param value Values to check
-     * @returns True if the value was found at least once in the Dictionary
+     * @returns True if the value was found at least once in the dictionary
      */
     Dictionary.prototype.containsValue = function (value) {
         var v = [value];
@@ -189,13 +187,13 @@ var Dictionary = /** @class */ (function () {
         }
     };
     /**
-     * Optional / syntactic function: Called in a forEach before a return keyword, the current iteration will be skipped (continue). It is sufficient only to call return for the same behavior
+     * Optional / syntactic method: Called in a forEach loop before a return keyword, the current iteration will be skipped (continue). It is sufficient only to call return for the same behavior
      */
     Dictionary.prototype.continue = function () {
         this._iForEachControlCondition = 2;
     };
     /**
-     * Removes all duplicates of values in the Dictionary. The keys of the remaining values cannot be determined
+     * Removes all duplicates of values in the dictionary. The keys of the remaining values cannot be determined
      */
     Dictionary.prototype.distinct = function () {
         if (this._length === 0) {
@@ -213,7 +211,7 @@ var Dictionary = /** @class */ (function () {
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
      * Implementation of a forEach loop
-     * @param callback Callback function to process the items of the List
+     * @param callback Callback function to process the items of the list
      */
     Dictionary.prototype.forEach = function (callback) {
         if (this._length === 0) {
@@ -224,8 +222,8 @@ var Dictionary = /** @class */ (function () {
         this._iCounter = 0;
         this._iForEachControlCondition = 0;
         while (done === false) {
-            if (this.getForEachControlCondition() === 1) // break
-             {
+            if (this.getForEachControlCondition() === 1) {
+                // break
                 return;
             }
             item = this.next();
@@ -234,7 +232,7 @@ var Dictionary = /** @class */ (function () {
         }
     };
     /**
-     * Gets the value of the Dictionary by the specified key
+     * Gets the value of the dictionary by the specified key
      * @param key Key
      * @throws Throws an error if the key does not exist
      * @returns The value to the specified key
@@ -245,11 +243,11 @@ var Dictionary = /** @class */ (function () {
             return this._iDict[k][1];
         }
         else {
-            throw new Error("The key " + key + " was not found in the Dictionary");
+            throw new Error("The key " + key + " was not found in the dictionary");
         }
     };
     /**
-     * Gets all key of the Dictionary as Array of the type K
+     * Gets all key of the dictionary as array of the type K
      * @returns An array of all keys
      */
     Dictionary.prototype.getKeys = function () {
@@ -259,13 +257,13 @@ var Dictionary = /** @class */ (function () {
         var temp = this.getKeyValuePairsInternal();
         var output = Array(temp.length);
         for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['value'][0];
+            output[i] = temp[i]["value"][0];
         }
         return output;
     };
     /**
-     * Gets all keys of the Dictionary as List of the type <K>
-     * @returns A List of all keys
+     * Gets all keys of the dictionary as list of the type <K>
+     * @returns A list of all keys
      */
     Dictionary.prototype.getKeysAsList = function () {
         var keys = this.getKeys();
@@ -280,9 +278,9 @@ var Dictionary = /** @class */ (function () {
         return this.getKeysByValuesAsListInternal([value], true).copyToArray();
     };
     /**
-     * Get the keys that matches to the passed value. The keys are returned as List ot the type K
+     * Get the keys that matches to the passed value. The keys are returned as list ot the type K
      * @param value Value to get all corresponding keys from
-     * @returns A List of keys according to the specified value
+     * @returns A list of keys according to the specified value
      */
     Dictionary.prototype.getKeysByValueAsList = function (value) {
         return this.getKeysByValuesAsListInternal([value], true);
@@ -298,32 +296,32 @@ var Dictionary = /** @class */ (function () {
         if (this._length === 0) {
             return new Dictionary();
         }
-        var hashcodes = new List_1.default();
+        var hashCodes = new List_1.default();
         var temp = new Array();
         if (keys !== undefined && Array.isArray(keys)) {
             temp = keys;
         }
-        else if (keys !== undefined && (Array.isArray(keys) === false)) {
+        else if (keys !== undefined && Array.isArray(keys) === false) {
             temp = keys.copyToArray();
         }
         var len2 = temp.length;
         var j;
         for (var i = 0; i < this._length; i++) {
             if (keys === undefined) {
-                hashcodes.add(this._iKeyIndex[i]);
+                hashCodes.add(this._iKeyIndex[i]);
                 continue;
             }
             for (j = 0; j < len2; j++) {
                 if (this.getHashCode(temp[j]) === this._iKeyIndex[i]) {
-                    hashcodes.add(this._iKeyIndex[i]);
+                    hashCodes.add(this._iKeyIndex[i]);
                     break;
                 }
             }
         }
         if (keys !== undefined) {
-            hashcodes.distinct();
+            hashCodes.distinct();
         }
-        return this.copyToInternal(hashcodes);
+        return this.copyToInternal(hashCodes);
     };
     Dictionary.prototype.getRangeByValues = function (values) {
         if (this._length === 0) {
@@ -334,7 +332,7 @@ var Dictionary = /** @class */ (function () {
     };
     /**
      * Gets all vales as array
-     * @returns An array of all Values
+     * @returns An array of all values
      */
     Dictionary.prototype.getValues = function () {
         if (this._length === 0) {
@@ -343,13 +341,13 @@ var Dictionary = /** @class */ (function () {
         var temp = this.getKeyValuePairsInternal();
         var output = Array(temp.length);
         for (var i = 0; i < this._length; i++) {
-            output[i] = temp[i]['value'][1];
+            output[i] = temp[i]["value"][1];
         }
         return output;
     };
     /**
-     * Gets all Values as List
-     * @returns A List of all Values
+     * Gets all values as list
+     * @returns A list of all values
      */
     Dictionary.prototype.getValuesAsList = function () {
         var values = this.getValues();
@@ -357,7 +355,7 @@ var Dictionary = /** @class */ (function () {
     };
     // >>> I N T E R F A C E    I M P L E M E N T A T I O N <<<
     /**
-     * Method to get the next value of an iterator. If the last item of the List is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
+     * Method to get the next value of an iterator. If the last item of the list is reached, the returned object indicates that the iterations are finished. Afterwards, the method starts again at index position 0. Calling of the forEach method will also reset the position to 0. If true (boolean) is passed as value to the method, the return value will indicate that the last item is reached (break emulation)
      * @param value Optional: If true (boolean) is passed, the current result item will indicate that is is the last entry (break emulation)
      * @returns An IteratorResult object containing a KeyValuePair
      */
@@ -379,13 +377,16 @@ var Dictionary = /** @class */ (function () {
     };
     /**
      * Overrides the default hashing method for keys. Usually toString is used to generate unique hashes. The toString method of a class can be overwritten or alternatively defined by this function.\n
-     * The passed function takes one value of the type K and should return a string.
+     * The passed function takes one value of the type K and should return a string
      * @param overrideFunction Function which replaces the default method of generating hashes for the keys
      * @throws Throws an error if the passed object is not a function
      */
     Dictionary.prototype.overrideHashFunction = function (overrideFunction) {
         var type = {};
-        if ((overrideFunction && type.toString.call(overrideFunction) === '[object Function]') === false || overrideFunction === undefined) {
+        if ((overrideFunction &&
+            type.toString.call(overrideFunction) === "[object Function]") ===
+            false ||
+            overrideFunction === undefined) {
             throw new Error("The passed object is not a function. It must be a function that accepts one variable of the key type (K) and returns a string");
         }
         this._iOverrideToStringFunction = overrideFunction;
@@ -394,21 +395,21 @@ var Dictionary = /** @class */ (function () {
         if (this._length === 0) {
             return false;
         }
-        var keylist;
+        var keyList;
         if (Array.isArray(keys)) {
-            keylist = keys;
+            keyList = keys;
         }
         else if (keys instanceof List_1.default) {
-            keylist = keys.copyToArray();
+            keyList = keys.copyToArray();
         }
         else {
-            keylist = [keys];
+            keyList = [keys];
         }
-        var len = keylist.length;
+        var len = keyList.length;
         var status = true;
         var status2;
         for (var i = len - 1; i >= 0; i--) {
-            status2 = this.removeInternal(keylist[i]);
+            status2 = this.removeInternal(keyList[i]);
             if (status2 === false) {
                 status = false;
             }
@@ -434,7 +435,7 @@ var Dictionary = /** @class */ (function () {
         return this.remove(keys);
     };
     /**
-     * Updates a value of the Dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
+     * Updates a value of the dictionary with the specified key. If the key does not exist, it will be added. This method is synonymous to add
      * @param key Key of the new value
      * @param value New value
      */
@@ -442,14 +443,18 @@ var Dictionary = /** @class */ (function () {
         this.add(key, value);
     };
     /**
-     * Swaps the values of the two defined keys in the Dictionary
+     * Swaps the values of the two defined keys in the dictionary
      * @param key1 Key 1
      * @param key2 Key 2
      * @throws Throws an error if one of the keys does not exist
      */
     Dictionary.prototype.swapValues = function (key1, key2) {
         if (this.containsKey(key1) === false || this.containsKey(key2) === false) {
-            throw new Error("One of the passed keys (" + key1.toString() + ", " + key2.toString() + ") does not exist");
+            throw new Error("One of the passed keys (" +
+                key1.toString() +
+                ", " +
+                key2.toString() +
+                ") does not exist");
         }
         var hc1 = this.getHashCode(key1);
         var hc2 = this.getHashCode(key2);
@@ -466,36 +471,33 @@ var Dictionary = /** @class */ (function () {
      */
     Dictionary.prototype.addInternal = function (key, value) {
         if (key === undefined) {
-            throw new Error("No key was defined to add as Dictionary element");
+            throw new Error("No key was defined to add as dictionary element");
         }
         if (value === undefined) {
-            throw new Error("No value was defined to add as Dictionary element");
+            throw new Error("No value was defined to add as dictionary element");
         }
-        var hashcode = this.getHashCode(key);
-        this._iDict[hashcode] = { 0: key, 1: value };
-        if (this._iKeyIndex.indexOf(hashcode) < 0) {
+        var hashCode = this.getHashCode(key);
+        this._iDict[hashCode] = { 0: key, 1: value };
+        if (this._iKeyIndex.indexOf(hashCode) < 0) {
             this._length++;
         }
     };
     /**
-     * Internal method to copy dictionary according to a a list of hashcodes
-     * @param keys hashcodes of the items to copy
-     * @returns A new Dictionary with the copied tuples
+     * Internal method to copy dictionary according to a a list of hash codes
+     * @param keys Hash codes of the items to copy
+     * @returns A new dictionary with the copied tuples
      */
     Dictionary.prototype.copyToInternal = function (keys) {
         var output = new Dictionary();
         var len = keys.length;
         for (var i = 0; i < len; i++) {
-            //if (typeof this._iDict[keys[i]] !== undefined)
-            //{
             output.addInternal(this._iDict[keys.get(i)][0], this._iDict[keys.get(i)][1]);
-            // }
         }
         output.refreshKeyIndex();
         return output;
     };
     /**
-     * Internal function to get the state of a forEach flow control action (break or continue)
+     * Internal method to get the state of a forEach flow control action (break or continue)
      * @returns Returns 1 at a break condition and 2 at a continue condition (0 is default)
      */
     Dictionary.prototype.getForEachControlCondition = function () {
@@ -504,15 +506,15 @@ var Dictionary = /** @class */ (function () {
     /**
      * Method to calculate the hash code of the key (default: toString)
      * @param key Key to process
-     * @returns The hash code internally used as key. Default is the toString function of the passed key
+     * @returns The hash code internally used as key. Default is the toString method of the passed key
      */
     Dictionary.prototype.getHashCode = function (key) {
         if (key === undefined) {
             throw new Error("No valid key was defined. The key must not be empty or undefined");
         }
         if (this._iOverrideToStringFunction === undefined) {
-            if (key instanceof Date) // Workaround for dates as common type (milliseconds are not considered in toString)
-             {
+            if (key instanceof Date) {
+                // Workaround for dates as common type (milliseconds are not considered in toString)
                 return key.getTime().toString();
             }
             else {
@@ -524,7 +526,7 @@ var Dictionary = /** @class */ (function () {
         }
     };
     /**
-     * Internal function to get keys by values as list
+     * Internal method to get keys by values as list
      * @param values values to look fot keys
      * @param all if true, all entries will be queried. Otherwise, the method returns after the first hit
      * @returns A list of all determined keys
@@ -573,7 +575,7 @@ var Dictionary = /** @class */ (function () {
         var item;
         var i = 0;
         this._iKeyIndex.forEach(function (key) {
-            item = { 'key': key, 'value': _this._iDict[key] };
+            item = { key: key, value: _this._iDict[key] };
             output[i] = item;
             i++;
         });
@@ -591,12 +593,12 @@ var Dictionary = /** @class */ (function () {
      * @returns True if the item could be removed
      */
     Dictionary.prototype.removeInternal = function (key) {
-        var hashcode = this.getHashCode(key);
-        if (this._iDict[hashcode] === undefined) {
+        var hashCode = this.getHashCode(key);
+        if (this._iDict[hashCode] === undefined) {
             return false;
         }
         else {
-            delete this._iDict[hashcode];
+            delete this._iDict[hashCode];
             this._length--;
             return true;
         }

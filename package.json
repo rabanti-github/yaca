@@ -1,11 +1,11 @@
 {
   "name": "yaca",
-  "version": "1.2.1",
-  "description": "Yet Another Collection Approach",
+  "version": "1.2.2",
+  "description": "Yet Another Collection Approach: A Collection library for TypeScript / JavaScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "documentation": "typedoc --out ./docs --readme README.md --target ES5 --name 'Yet Another Collection Approach' && cp .nojekyll ./docs/.nojekyll",
+    "documentation": "typedoc --out ./docs/ ./src/ --readme ./README.md  --target ES5 --name \"Yet Another Collection Approach\" && cpx ./.nojekyll ./docs/ -u",
     "prepare": "npm run build",
     "build": "tsc && npm run documentation",
     "test-mocha": "mocha -r ts-node/register ./test/**/*Test.ts",
@@ -33,6 +33,8 @@
     "TypeScript",
     "Collections",
     "List",
+    "Stack",
+    "Queue",
     "Dictionary",
     "Sorted Dictionary",
     "SortedDictionary",
@@ -40,7 +42,11 @@
     "ArrayList",
     "Generics"
   ],
-  "author": "Raphael Stoeckli <npm@rabanti.ch> (https://github.com/rabanti-github)",
+  "author": {
+    "name": "Raphael Stoeckli",
+    "email": "npm@rabanti.ch",
+    "url": "https://github.com/rabanti-github"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rabanti-github/yaca/issues"
@@ -50,17 +56,18 @@
     "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.4",
-    "@types/mocha": "^5.2.3",
-    "@types/node": "^10.3.5",
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.1",
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.0",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
+    "cpx": "^1.5.0",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
-    "nyc": "^12.0.2",
-    "ts-node": "^7.0.0",
-    "tslint": "^5.10.0",
-    "typedoc": "^0.11.1",
-    "typescript": "^2.9.2"
+    "nyc": "^13.1.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.1.3"
   }
 }

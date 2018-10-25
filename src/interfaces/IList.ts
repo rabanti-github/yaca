@@ -1,19 +1,17 @@
-import IForEachInterface from './IForEachInterfaceList';
-import ISortInterface from './ISortInterface';
+import IForEachInterface from "./IForEachInterfaceList";
+import ISortInterface from "./ISortInterface";
 
 /**
- * Interface for List (Delegating further interfaces)
+ * Interface for lists (delegating further interfaces)
  */
-export interface IList<T>
-{
-    /**
-     * Interface to handle foeEach loops
-     */
-    forEach(callback:IForEachInterface<T>): void;
+export interface IList<T> {
+  /**
+   * Interface to handle forEach loops
+   */
+  forEach(callback: IForEachInterface<T>): void;
 
-    /**
-     * Interface to handle sorting
-     */
-    sort(sortFunction:ISortInterface<T>): void;
-
+  /**
+   * Interface to handle sorting
+   */
+  sort(sortFunction: ISortInterface<T>): void;
 }

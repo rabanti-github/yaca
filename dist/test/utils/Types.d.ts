@@ -1,5 +1,5 @@
 /**
- * Enum used by the Utils and test classes when creating test cases
+ * Enum used by the utils and test classes when creating test cases
  */
 export declare enum Types {
     string = 0,

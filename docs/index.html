@@ -65,18 +65,18 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="yaca">YACA</h1>
-				<p><strong>Y</strong>et <strong>A</strong>nother <strong>C</strong>ollection <strong>A</strong>pproach</p>
+				<p><strong>Y*<em>et *</em>A</strong>nother <strong>C*<em>ollection *</em>A</strong>pproach</p>
 				<h2 id="introduction">Introduction</h2>
-				<p>YACA is another approach to introduce Collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing.</p>
+				<p>YACA is another approach to introduce collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing. YACA provides (among common methods like add, remove or clear) a big variety of different non-standard methods, such as swapping of values, lookup of values according to a list of keys, or sorting of lists based on predefined or user-defined comparison methods. YACA is fully tested with hundred of assertions and a code coverage of 100%.</p>
 				<p><a href="https://coveralls.io/github/rabanti-github/yaca?branch=master"><img src="https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master" alt="Coverage Status"></a>
 					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=86400" alt="npm">
 				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
 				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong>, <strong>Dictionary&lt;K,V&gt;</strong> and <strong>SortedDictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack) are planned.</p>
 				<h2 id="important-features">Important features</h2>
 				<ul>
-					<li>Multiple add and remove functions like add, addRange, insertAtIndex, push or set</li>
-					<li>Multiple check functions like contains, containsKey, containsValues or containsKeyAsList</li>
-					<li>Multiple copy functions like copyToArray or getRange</li>
+					<li>Multiple add and remove methods like add, addRange, insertAtIndex, push or set</li>
+					<li>Multiple check methods like contains, containsKey, containsValues or containsKeyAsList</li>
+					<li>Multiple copy methods like copyToArray or getRange</li>
 					<li>forEach method provided (returns KeyValuePair for Dictionaries)</li>
 					<li>Built-in break and (optional) continue calls within forEach loops as control elements</li>
 					<li>Native sorting of the types number, string, boolean and Date (in List class)</li>
@@ -86,11 +86,10 @@
 				</ul>
 				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
 				<h2 id="installation">Installation</h2>
-				<pre><code class="lang-bash">npm install -S yaca
-</code></pre>
+				<pre><code class="language-bash">npm install -S yaca</code></pre>
 				<h2 id="listt">List&lt;T&gt;</h2>
-				<p>A list stores values similar to an array. In comparison to an array, several functions like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
-				<h3 id="supported-functions">Supported functions</h3>
+				<p>A list stores values similar to an array. In comparison to an array, several methods like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
+				<h3 id="supported-methods">Supported methods</h3>
 				<ul>
 					<li>add</li>
 					<li>addRange</li>
@@ -122,7 +121,7 @@
 					<li>swapValues</li>
 				</ul>
 				<h3 id="usage">Usage</h3>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
 <span class="hljs-keyword">let</span> numberList: List&lt;<span class="hljs-built_in">number</span>&gt; = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-built_in">number</span>&gt;();
@@ -157,8 +156,7 @@ numberList.forEach(<span class="hljs-function"><span class="hljs-params">element
 
         });
 
-numberList.clear();
-</code></pre>
+numberList.clear();</code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
@@ -166,8 +164,8 @@ numberList.clear();
 					<li>Methods</li>
 				</ul>
 				<h2 id="dictionaryk-v">Dictionary&lt;K,V&gt;</h2>
-				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString function must be implemented in those classes or the function overrideHashFunction must be used in the Dictionary.</p>
-				<h3 id="supported-functions">Supported functions</h3>
+				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString method must be implemented in those classes or the method overrideHashFunction must be used in the Dictionary.</p>
+				<h3 id="supported-methods">Supported methods</h3>
 				<ul>
 					<li>add</li>
 					<li>addRange</li>
@@ -188,7 +186,7 @@ numberList.clear();
 					<li>getKeysByValues</li>
 					<li>getKeysByValuesAsList</li>
 					<li>getRange</li>
-					<li>getRageByValue</li>
+					<li>getRangeByValue</li>
 					<li>getValues</li>
 					<li>getValuesAsList</li>
 					<li>next</li>
@@ -199,7 +197,7 @@ numberList.clear();
 					<li>swapValues</li>
 				</ul>
 				<h3 id="usage">Usage</h3>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {Dictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {Dictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
 <span class="hljs-keyword">let</span> dictionary: Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt; = <span class="hljs-keyword">new</span> Dictionary&lt;<span class="hljs-built_in">number</span>, <span class="hljs-built_in">string</span>&gt;();
@@ -233,8 +231,7 @@ dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</
 
         });
 
-dictionary3.clear();
-</code></pre>
+dictionary3.clear();</code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
@@ -242,9 +239,9 @@ dictionary3.clear();
 					<li>Methods</li>
 				</ul>
 				<h2 id="sorteddictionaryk-v">SortedDictionary&lt;K,V&gt;</h2>
-				<p>A sorted dictionary has the same behavior properties and functions like a standard dictionary. Additionally, there are many functions regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
-				<h3 id="supported-functions">Supported functions</h3>
-				<p><b>All functions of Dictionary &lt;K,V&gt;</b>, and additionally...</p>
+				<p>A sorted dictionary has the same behavior properties and methods like a standard dictionary. Additionally, there are many methods regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
+				<h3 id="supported-methods">Supported methods</h3>
+				<p><b>All methods of Dictionary &lt;K,V&gt;</b>, and additionally...</p>
 				<ul>
 					<li>getByIndex</li>
 					<li>getByIndices</li>
@@ -260,7 +257,7 @@ dictionary3.clear();
 					<li>sortByValue</li>
 				</ul>
 				<h3 id="usage">Usage</h3>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 <span class="hljs-keyword">import</span> {Comparer} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
@@ -280,7 +277,6 @@ dictionary2.sortByKey(); <span class="hljs-comment">// Sort the dictionary by it
 dictionary2.sortByKey(Comparer.compareNumbers); <span class="hljs-comment">// Sort the dictionary by its keys (using a comparison function)</span>
 
 dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by its values (using default behavior of string)</span>
-
 </code></pre>
 				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
 				<ul>
@@ -297,82 +293,43 @@ dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by 
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_index_.html">"index"</a>
+						<a href="modules/_comparer_.html">"<wbr>Comparer"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_comparer_.html">"src/<wbr>Comparer"</a>
+						<a href="modules/_dictionary_.html">"<wbr>Dictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_dictionary_.html">"src/<wbr>Dictionary"</a>
+						<a href="modules/_iteratoritem_.html">"<wbr>Iterator<wbr>Item"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_iteratoritem_.html">"src/<wbr>Iterator<wbr>Item"</a>
+						<a href="modules/_keyvaluepair_.html">"<wbr>Key<wbr>Value<wbr>Pair"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_keyvaluepair_.html">"src/<wbr>Key<wbr>Value<wbr>Pair"</a>
+						<a href="modules/_list_.html">"<wbr>List"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_list_.html">"src/<wbr>List"</a>
+						<a href="modules/_sorteddictionary_.html">"<wbr>Sorted<wbr>Dictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_sorteddictionary_.html">"src/<wbr>Sorted<wbr>Dictionary"</a>
+						<a href="modules/_sorter_.html">"<wbr>Sorter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_sorter_.html">"src/<wbr>Sorter"</a>
+						<a href="modules/_interfaces_icomparer_.html">"interfaces/IComparer"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_icomparer_.html">"src/interfaces/IComparer"</a>
+						<a href="modules/_interfaces_iforeachinterfacedictionary_.html">"interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_iforeachinterfacedictionary_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>Dictionary"</a>
+						<a href="modules/_interfaces_iforeachinterfacelist_.html">"interfaces/IFor<wbr>Each<wbr>Interface<wbr>List"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_iforeachinterfacelist_.html">"src/interfaces/IFor<wbr>Each<wbr>Interface<wbr>List"</a>
+						<a href="modules/_interfaces_ilist_.html">"interfaces/IList"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_ilist_.html">"src/interfaces/IList"</a>
+						<a href="modules/_interfaces_isortinterface_.html">"interfaces/ISort<wbr>Interface"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_isortinterface_.html">"src/interfaces/ISort<wbr>Interface"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_src_interfaces_isorter_.html">"src/interfaces/ISorter"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_comparertest_.html">"test/<wbr>Comparer<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_dictionarytest_.html">"test/<wbr>Dictionary<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_iteratoritemtest_.html">"test/<wbr>Iterator<wbr>Item<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_keyvaluepairtest_.html">"test/<wbr>Key<wbr>Value<wbr>Pair<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_listtest_.html">"test/<wbr>List<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_sorteddictionarytest_.html">"test/<wbr>Sorted<wbr>Dictionary<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_sortertest_.html">"test/<wbr>Sorter<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_testclasstest_.html">"test/<wbr>Test<wbr>Class<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_testtest_.html">"test/<wbr>Test<wbr>Test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_utils_testclass_.html">"test/utils/<wbr>Test<wbr>Class"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_utils_types_.html">"test/utils/<wbr>Types"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_utils_utils_.html">"test/utils/<wbr>Utils"</a>
+						<a href="modules/_interfaces_isorter_.html">"interfaces/ISorter"</a>
 					</li>
 				</ul>
 			</nav>

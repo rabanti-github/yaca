@@ -1,5 +1,17 @@
 # CHANGE LOG
 
+***v1.2.2***
+
+---
+Date: 2018-10-25
+
+Release type: Minor release / Maintenance
+
+* Pushed DevDependencies to the most recent versions
+* Fixed typos and improved documentation
+* Code formatting
+* Updated package.json for better multi-platform support (dev)
+
 ***v1.2.1***
 
 ---
@@ -75,7 +87,7 @@ Date: 2017-08-04
 
 Release type: Major release
 
-* Coverage upt to 100%
+* Coverage up to 100%
 * New module Comparer with static compareTo functions
 * New interface IComparer: compareTo function implementation can be used for sorting
 * Sorting of lists is now working without declaration of a compareTo function for number, string, boolean and Date

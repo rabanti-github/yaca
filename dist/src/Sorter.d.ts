@@ -1,6 +1,6 @@
-import ISortInterFace from './interfaces/ISortInterface';
-import { ISorter } from './interfaces/ISorter';
-import { KeyValuePair } from './KeyValuePair';
+import ISortInterFace from "./interfaces/ISortInterface";
+import { ISorter } from "./interfaces/ISorter";
+import { KeyValuePair } from "./KeyValuePair";
 /**
  * Class for sorter algorithms
  */
@@ -28,7 +28,7 @@ export declare class Sorter<T> implements ISorter<T> {
     readonly isTupleSort: boolean;
     /**
      * Constructor of the sorter object as TupleSort. A known issue is that the Sorter object must be instanced with the type Sorter<any> instead of Sorter<KeyValuePair<string,any>>
-     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented. The test will be performed on the key of the KeyValuePair
+     * @param sample The sample is necessary to determine whether T is a basic / common type and whether a compareTo function was implemented. The test will be performed on the key of the key-value pair
      * @param tupleSort If true, the sort functions will be treated as tuple sort, otherwise as single-value sort
      */
     constructor(sample: KeyValuePair<T, any>, tupleSort: boolean);
@@ -38,60 +38,60 @@ export declare class Sorter<T> implements ISorter<T> {
      */
     constructor(sample: T);
     /**
-     * Implementation of a quicksort algorithm using a static compareTo function. This method is called recursively
-     * @param comparisonFunction Comparison function to compare the List entry of the passed lower and higher index position
+     * Implementation of a Quicksort algorithm using a static compareTo function. This method is called recursively
+     * @param comparisonFunction Comparison function to compare the list entry of the passed lower and higher index position
      * @param data Data as array of the type T
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      */
     sortByFunction(comparisonFunction: ISortInterFace<T>, data: T[], lowIndex: number, highIndex: number): void;
     /**
-     * Implementation of a quicksort algorithm using the class implementation of a compareTo function. This method is called recursively
+     * Implementation of a Quicksort algorithm using the class implementation of a compareTo function. This method is called recursively
      * @param data Data as array of the type T
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      */
     sortByImplementation(data: T[], lowIndex: number, highIndex: number): void;
     /**
-     * Implementation of a quicksort algorithm using the previous determined default compareTo function. This method is called recursively
+     * Implementation of a Quicksort algorithm using the previous determined default compareTo function. This method is called recursively
      * @param data Data as array of the type T
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      */
     sortByDefault(data: T[], lowIndex: number, highIndex: number): void;
     /**
-     * Implementation of a quicksort algorithm for Key-Value pairs, using a static compareTo function. This method is called recursively
+     * Implementation of a Quicksort algorithm for key-value pairs, using a static compareTo function. This method is called recursively
      * @param comparisonFunction Comparison function to compare the temporary array entry of the passed lower and higher index position
      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      */
     sortTupleByFunction(comparisonFunction: ISortInterFace<T>, data: KeyValuePair<T, any>[], lowIndex: number, highIndex: number): void;
     /**
-     * Implementation of a quicksort algorithm for Key-Value pairs, using the class implementation of a compareTo function. This method is called recursively
+     * Implementation of a Quicksort algorithm for key-value pairs, using the class implementation of a compareTo function. This method is called recursively
      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      */
     sortTupleByImplementation(data: KeyValuePair<T, any>[], lowIndex: number, highIndex: number): void;
     /**
-      * Implementation of a quicksort algorithm for Key-Value pairs, using the previous determined default compareTo function. This method is called recursively
-      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
-      * @param lowIndex Lower index within the List to check
-      * @param highIndex Higher index within the List to check
-      */
+     * Implementation of a Quicksort algorithm for key-value pairs, using the previous determined default compareTo function. This method is called recursively
+     * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
+     */
     sortTupleByDefault(data: KeyValuePair<T, any>[], lowIndex: number, highIndex: number): void;
     /**
-     * Internal function to perform a quicksort by default, by a passed comparison function or by an implementation of the compareTo function
+     * Internal function to perform a Quicksort by default, by a passed comparison function or by an implementation of the compareTo function
      * @param data Data as array of the type T
-     * @param lowIndex Lower index within the List to check
-     * @param highIndex Higher index within the List to check
+     * @param lowIndex Lower index within the list to check
+     * @param highIndex Higher index within the list to check
      * @param type Type of the sorting implementation (byDefault, byFunction, byImplementation)
      * @param comparisonFunction Comparison function (optional) in case of sorting by function
      */
     private internalSort;
     /**
-     * Internal function to perform a quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function
+     * Internal function to perform a Quicksort on a data tuple by default, by a passed comparison function or by an implementation of the compareTo function
      * @param data Data as array of the type KeyValuePair<T,any>, whereas T may be K (when sorted by key) or V (when sorted by value). The any parameter is either V or K as opposite value
      * @param lowIndex Lower index within the temporary array to check
      * @param highIndex Higher index within the temporary array to check
@@ -100,14 +100,14 @@ export declare class Sorter<T> implements ISorter<T> {
      */
     private internalTupleSort;
     /**
-     * Internal swap method for quicksort
+     * Internal swap method for Quicksort
      * @param data Data as array of the type T
      * @param index1 Index position 1 of the data to swap
      * @param index2 Index position 2 of the data to swap
      */
     private swap;
     /**
-     * Internal swap method for quicksort of tuples
+     * Internal swap method for Quicksort of tuples
      * @param data Data as array of the type KeyValuePair<T,any>
      * @param index1 Index position 1 of the data to swap
      * @param index2 Index position 2 of the data to swap

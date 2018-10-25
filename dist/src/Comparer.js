@@ -33,7 +33,8 @@ var Comparer;
         if (value1 === false && value2 === true) {
             return -1;
         }
-        else if ((value1 === false && value2 === false) || value1 === true && value2 === true) {
+        else if ((value1 === false && value2 === false) ||
+            (value1 === true && value2 === true)) {
             return 0;
         }
         else {
@@ -48,7 +49,7 @@ var Comparer;
      * @returns A number 1-, 0 or 1 that indicates whether the current string is smaller, equal or bigger than the other string
      */
     function compareStrings(value1, value2) {
-        if (typeof value1 === 'string' && typeof value2 === 'string') {
+        if (typeof value1 === "string" && typeof value2 === "string") {
             return value1.localeCompare(value2);
         }
         else {

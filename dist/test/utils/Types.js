@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Enum used by the Utils and test classes when creating test cases
+ * Enum used by the utils and test classes when creating test cases
  */
 var Types;
 (function (Types) {
