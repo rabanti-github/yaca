@@ -55,7 +55,7 @@ Date: 2017-08-15
 Release type: Bugfix
 
 * Fixed a bug in the method of getValues() in the Dictionary class
-* Added the possibility to sort any types ob objects using the static string comparison method
+* Added the possibility to sort any types of objects using the static string comparison method
 
 ***v1.0.3***
 
