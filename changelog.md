@@ -1,5 +1,14 @@
 # CHANGE LOG
 
+***v1.2.3***
+
+---
+Date: 2019-07-30
+
+Release type: Minor release / Maintenance
+
+* Security updates of dev dependencies
+
 ***v1.2.2***
 
 ---

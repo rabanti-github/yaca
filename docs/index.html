@@ -64,15 +64,21 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="yaca">YACA</h1>
-				<p><strong>Y*<em>et *</em>A</strong>nother <strong>C*<em>ollection *</em>A</strong>pproach</p>
-				<h2 id="introduction">Introduction</h2>
+				<a href="#yaca" id="yaca" style="color: inherit; text-decoration: none;">
+					<h1>YACA</h1>
+				</a>
+				<p><strong>Y</strong>et <strong>A</strong>nother <strong>C</strong>ollection <strong>A</strong>pproach</p>
+				<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+					<h2>Introduction</h2>
+				</a>
 				<p>YACA is another approach to introduce collections to TypeScript / JavaScript like known in Java, C# or other object-oriented programming languages. There are other approaches, but sometimes, small things regarding the convenience are missing. YACA provides (among common methods like add, remove or clear) a big variety of different non-standard methods, such as swapping of values, lookup of values according to a list of keys, or sorting of lists based on predefined or user-defined comparison methods. YACA is fully tested with hundred of assertions and a code coverage of 100%.</p>
 				<p><a href="https://coveralls.io/github/rabanti-github/yaca?branch=master"><img src="https://coveralls.io/repos/github/rabanti-github/yaca/badge.svg?branch=master" alt="Coverage Status"></a>
 					<img src="https://img.shields.io/npm/v/yaca.svg?maxAge=86400" alt="npm">
 				<img src="https://img.shields.io/github/license/rabanti-github/yaca.svg" alt="license"></p>
 				<p>YACA contains at the moment <strong>List&lt;T&gt;</strong>, <strong>Dictionary&lt;K,V&gt;</strong> and <strong>SortedDictionary&lt;K,V&gt;</strong> as collection types. Further types (e.g. Stack) are planned.</p>
-				<h2 id="important-features">Important features</h2>
+				<a href="#important-features" id="important-features" style="color: inherit; text-decoration: none;">
+					<h2>Important features</h2>
+				</a>
 				<ul>
 					<li>Multiple add and remove methods like add, addRange, insertAtIndex, push or set</li>
 					<li>Multiple check methods like contains, containsKey, containsValues or containsKeyAsList</li>
@@ -85,11 +91,17 @@
 					<li>Provided static compareTo functions for the types number, string, boolean and Date (module Comparer)</li>
 				</ul>
 				<p>See the <strong><a href="https://github.com/rabanti-github/yaca/blob/master/changelog.md">Change Log</a></strong> for recent updates.</p>
-				<h2 id="installation">Installation</h2>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
 				<pre><code class="language-bash">npm install -S yaca</code></pre>
-				<h2 id="listt">List&lt;T&gt;</h2>
+				<a href="#listlttgt" id="listlttgt" style="color: inherit; text-decoration: none;">
+					<h2>List&lt;T&gt;</h2>
+				</a>
 				<p>A list stores values similar to an array. In comparison to an array, several methods like copies of a range, clearing or sorting can be applied out of the box. Additionally, operations for stacks and queues are included.</p>
-				<h3 id="supported-methods">Supported methods</h3>
+				<a href="#supported-methods" id="supported-methods" style="color: inherit; text-decoration: none;">
+					<h3>Supported methods</h3>
+				</a>
 				<ul>
 					<li>add</li>
 					<li>addRange</li>
@@ -120,7 +132,9 @@
 					<li>sort</li>
 					<li>swapValues</li>
 				</ul>
-				<h3 id="usage">Usage</h3>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h3>Usage</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {List} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
@@ -157,15 +171,19 @@ numberList.forEach(<span class="hljs-function"><span class="hljs-params">element
         });
 
 numberList.clear();</code></pre>
-				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_list_.list.html">The List documentation page</a> for further details:</p>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_list_.list.html">The List documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="dictionaryk-v">Dictionary&lt;K,V&gt;</h2>
+				<a href="#dictionaryltkvgt" id="dictionaryltkvgt" style="color: inherit; text-decoration: none;">
+					<h2>Dictionary&lt;K,V&gt;</h2>
+				</a>
 				<p>A dictionary stores tuples of keys and an values. The type of both can be arbitrary. However, keys must be unique. Thus, a dictionary with boolean as keys allows only two tuples (true and false) in the Dictionary. If custom classes are used as keys, a valid toString method must be implemented in those classes or the method overrideHashFunction must be used in the Dictionary.</p>
-				<h3 id="supported-methods">Supported methods</h3>
+				<a href="#supported-methods-1" id="supported-methods-1" style="color: inherit; text-decoration: none;">
+					<h3>Supported methods</h3>
+				</a>
 				<ul>
 					<li>add</li>
 					<li>addRange</li>
@@ -196,7 +214,9 @@ numberList.clear();</code></pre>
 					<li>set</li>
 					<li>swapValues</li>
 				</ul>
-				<h3 id="usage">Usage</h3>
+				<a href="#usage-1" id="usage-1" style="color: inherit; text-decoration: none;">
+					<h3>Usage</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {Dictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
 <span class="hljs-comment">// Default constructor</span>
@@ -232,15 +252,19 @@ dictionary2.forEach(<span class="hljs-function"><span class="hljs-params">item</
         });
 
 dictionary3.clear();</code></pre>
-				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_dictionary_.dictionary.html">The Dictionary documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
 					<li>Properties</li>
 					<li>Methods</li>
 				</ul>
-				<h2 id="sorteddictionaryk-v">SortedDictionary&lt;K,V&gt;</h2>
+				<a href="#sorteddictionaryltkvgt" id="sorteddictionaryltkvgt" style="color: inherit; text-decoration: none;">
+					<h2>SortedDictionary&lt;K,V&gt;</h2>
+				</a>
 				<p>A sorted dictionary has the same behavior properties and methods like a standard dictionary. Additionally, there are many methods regarding the indices of the key value tuples and the possibility to sorting the dictionary by keys or values.</p>
-				<h3 id="supported-methods">Supported methods</h3>
+				<a href="#supported-methods-2" id="supported-methods-2" style="color: inherit; text-decoration: none;">
+					<h3>Supported methods</h3>
+				</a>
 				<p><b>All methods of Dictionary &lt;K,V&gt;</b>, and additionally...</p>
 				<ul>
 					<li>getByIndex</li>
@@ -256,7 +280,9 @@ dictionary3.clear();</code></pre>
 					<li>sortByKey</li>
 					<li>sortByValue</li>
 				</ul>
-				<h3 id="usage">Usage</h3>
+				<a href="#usage-2" id="usage-2" style="color: inherit; text-decoration: none;">
+					<h3>Usage</h3>
+				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> {SortedDictionary} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 <span class="hljs-keyword">import</span> {Comparer} <span class="hljs-keyword">from</span> <span class="hljs-string">'yaca'</span>;
 
@@ -278,7 +304,7 @@ dictionary2.sortByKey(Comparer.compareNumbers); <span class="hljs-comment">// So
 
 dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by its values (using default behavior of string)</span>
 </code></pre>
-				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_src_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
+				<p>See  <a href="https://rabanti-github.github.io/yaca/classes/_sorteddictionary_.sorteddictionary.html">The SortedDictionary documentation page</a> for further details:</p>
 				<ul>
 					<li>Constructors</li>
 					<li>Properties</li>
@@ -352,6 +378,7 @@ dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by 
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -400,7 +427,7 @@ dictionary2.sortByValue(); <span class="hljs-comment">// Sort the dictionary by 
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
