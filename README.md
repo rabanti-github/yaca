@@ -1,5 +1,7 @@
 # YACA
 
+## DEPRECATED - This library is deprecated and not maintained for a long time. It is probably not even compatible with recent versions of TypeScript 
+
 **Y**et **A**nother **C**ollection **A**pproach
 
 ## Introduction
